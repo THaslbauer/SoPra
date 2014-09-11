@@ -1,0 +1,3 @@
+Wo kommen die ganzen enums rein??
+Macht create... auf map auch den attach()?
+Game constants? Z.B. für int-range beim type von buoy
