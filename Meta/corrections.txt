@@ -1,0 +1,41 @@
+attach: auch setTile für Schiff machen
+detach: auch setTile(null) für Schiff
+analog: setTile soll auch attachen/detachen
+
+-> verhindert, dass das eine vergessen wird
+
+zusätzlich: testen, ob Änderung, sonst Endlosschleife
+
+getLoad & getMorale für move: entweder direkt am Anfang speichern oder mehrmals im Kontrollfluss?
+
+moveInstr: createTreasure von der Factory: new(id, value, tile) einfügen
+
+cleanup: eigentlich nur für move nötig
+	-> weglassen?
+
+Superklasse für else-Instructions
+
+
+
+
+WHAT IS NCURSES? -> wurde von Reviewer vorgeschlagen!
+	Goal: terminal over ssh?
+
+
+
+_lustige Ideen_
+ NCURSES into 3d oder mit Hintergrund-Kacheln, die dann aufgedeckt werden
+ Intro-Video in ASCII
+
+
+
+Maven checks mvn-site:
+	findbugs
+
+code-review:
+	einigermaßen gleichmäßig verteilte commitstatistiken
+	Tests: werden ausgeführt und werden getestet, ob sie arbeiten
+	findbugs
+	Code wird entfernt, wir müssen neu implementieren (einer)
+	
+	
