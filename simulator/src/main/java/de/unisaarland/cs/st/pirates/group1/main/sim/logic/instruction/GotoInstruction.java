@@ -1,4 +1,4 @@
-package sim.logic.instruction;
+package de.unisaarland.cs.st.pirates.group1.main.sim.logic.instruction;
 
 
 public class GotoInstruction extends Instruction {
