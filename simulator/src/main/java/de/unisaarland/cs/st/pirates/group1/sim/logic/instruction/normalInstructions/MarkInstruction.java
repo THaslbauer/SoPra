@@ -1,6 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions;
 
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
@@ -8,8 +8,8 @@ public class MarkInstruction extends Instruction {
 	
 	private int type;
 
-	public MarkInstruction(InfoPoint infoPoint, int type) {
-		super(infoPoint);
+	public MarkInstruction(ExtendedLogWriter logger, int type) {
+		super(logger);
 		this.type = type;
 	}
 

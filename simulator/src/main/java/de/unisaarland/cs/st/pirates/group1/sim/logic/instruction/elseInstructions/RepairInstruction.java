@@ -2,13 +2,13 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructio
 
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 
 public class RepairInstruction extends ElseInstruction {
 	Direction dir;
 
-	public RepairInstruction(InfoPoint infoPoint, int elsePC, Direction dir) {
-		super(infoPoint, elsePC);
+	public RepairInstruction(ExtendedLogWriter logger, int elsePC, Direction dir) {
+		super(logger, elsePC);
 		this.dir = dir;
 	}
 
