@@ -1,9 +1,14 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import de.unisaarland.cs.st.pirates.group1.main.sim.logger.InfoPoint;
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.Direction;
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 
+/**
+ * Abstract class representing a map
+ * @author Jens Kreber
+ *
+ */
 public abstract class Map {
 	private InfoPoint infoPoint;
 	private EntityFactory entityFactory;

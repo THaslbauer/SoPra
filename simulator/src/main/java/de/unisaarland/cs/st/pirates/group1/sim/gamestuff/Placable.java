@@ -1,5 +1,10 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+/**
+ * Abstract class for game objects which can be placed on the map and identified with an id
+ * @author Jens Kreber
+ *
+ */
 public abstract class Placable {
 	private final int id;
 	private Tile myTile;

@@ -1,5 +1,10 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+/**
+ * Representation of a Kraken on the sea
+ * @author Jens Kreber
+ *
+ */
 public class Kraken extends Placable {
 
 	/** 

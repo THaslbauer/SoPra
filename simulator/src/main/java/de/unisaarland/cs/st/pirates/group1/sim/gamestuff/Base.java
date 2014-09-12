@@ -1,7 +1,12 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.CellType;
+import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 
+/**
+ * The representation of a pirate base tile in the map
+ * @author Jens Kreber
+ *
+ */
 public class Base extends Tile {
 
 	private Faction faction;
