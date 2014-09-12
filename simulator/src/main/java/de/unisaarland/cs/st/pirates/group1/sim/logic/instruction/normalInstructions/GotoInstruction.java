@@ -4,10 +4,19 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
-
+/**
+ * An Instruction that sets the PC of a ship
+ * @author thomas
+ *
+ */
 public class GotoInstruction extends Instruction {
 	private int address;
 
+	/**
+	 * Creates the Instruction
+	 * @param logger
+	 * @param address The new PC of the ship
+	 */
 	public GotoInstruction(ExtendedLogWriter logger, int address) {
 		super(logger);
 		this.address = address;
