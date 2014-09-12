@@ -9,6 +9,7 @@ public class GreaterOperator extends Operator{
 	 */
 	public GreaterOperator(RegisterCall leftval, Primary rightval){
 		
+		super(leftval, rightval);
 		//TODO: implement this
 	}
 	
@@ -17,5 +18,6 @@ public class GreaterOperator extends Operator{
 	 */
 	public int evaluate (int[] registers){
 		//TODO: implement this
+		return 0;
 	}
 }

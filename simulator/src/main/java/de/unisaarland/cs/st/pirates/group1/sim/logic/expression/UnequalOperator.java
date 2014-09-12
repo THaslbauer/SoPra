@@ -9,6 +9,7 @@ public class UnequalOperator extends Operator{
 	 */
 	public UnequalOperator(RegisterCall leftval, Primary rightval){
 		
+		super(leftval, rightval);
 		//TODO: implement this
 	}
 
@@ -17,5 +18,6 @@ public class UnequalOperator extends Operator{
 	 */
 	public int evaluate (int[] registers){
 		//TODO: implement this
+		return 0;
 	}
 }

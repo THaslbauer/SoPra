@@ -9,7 +9,9 @@ public class LessOperator extends Operator{
 	 */
 	public LessOperator(RegisterCall leftval, Primary rightval){
 		
+		super(leftval, rightval);
 		//TODO: implement this
+		
 	}
 	
 	/**
@@ -17,5 +19,6 @@ public class LessOperator extends Operator{
 	 */
 	public int evaluate(int[] registers){
 		//TODO: implement this
+		return 0;
 	}
 }
