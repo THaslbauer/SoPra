@@ -1,12 +1,9 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
-public class LessOperator extends Operator{
-
-	/**
-	 * 
-	 * @param leftval
-	 * @param rightval
-	 */
+public class LessOperator extends Operator
+{
+	
+	
 	public LessOperator(RegisterCall leftval, Primary rightval){
 		
 		super(leftval, rightval);
@@ -15,6 +12,8 @@ public class LessOperator extends Operator{
 	}
 	
 	/**
+	 * This method returns if the register in leftval is smaler
+	 * than the register in rightval
 	 * 
 	 */
 	public int evaluate(int[] registers){
