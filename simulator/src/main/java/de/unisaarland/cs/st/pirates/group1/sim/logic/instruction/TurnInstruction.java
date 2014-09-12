@@ -1,4 +1,4 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.logic.instruction;
+package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction;
 
 public class TurnInstruction extends Instruction {
 	private boolean left;
