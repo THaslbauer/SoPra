@@ -8,7 +8,7 @@
  * @author christopher
  */
 
-package sim.logger;
+package de.unisaarland.cs.st.pirates.group1.sim.logger;
 
 public interface ExtendedLogWriter extends LogWriter{
 	
