@@ -1,4 +1,4 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.driver;
+package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
 import java.util.List;
 
@@ -10,6 +10,10 @@ import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.main.sim.logger.InfoPoint;
 
+/**
+ * @author Nico
+ * @version 1.0
+ */
 public class Simulator
 {
 	private List<Kraken> krakens;
