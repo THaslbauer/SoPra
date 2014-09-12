@@ -4,7 +4,7 @@
  * It tracks the changes important for logging and the GUI.
  * 
  * 
- * @version 1.0
+ * @version 1.1
  * @author christopher
  */
 
@@ -14,6 +14,27 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class InfoPoint implements ExtendedLogWriter{
+
+	private LogWriter refLogger;
+	private ExtendedLogWriter GUI;
+	
+
+	//The getter and Setter
+	public LogWriter getRefLogger() {
+		return refLogger;
+	}
+
+	public void setRefLogger(LogWriter refLogger) {
+		this.refLogger = refLogger;
+	}
+
+	public ExtendedLogWriter getGUI() {
+		return GUI;
+	}
+
+	public void setGUI(ExtendedLogWriter gUI) {
+		GUI = gUI;
+	}
 
 	
 /**
