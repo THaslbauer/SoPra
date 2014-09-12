@@ -41,6 +41,9 @@ public class Simulator
 	 * 
 	 */
 	public void step()
+	{
+		//TODO
+	}
 	
 	/**
 	 * This method creates a ship via the entitiyFactory. It calls the infoPoint and
@@ -51,6 +54,10 @@ public class Simulator
 	 * @return		   the created ship
 	 */
 	public Ship createShip(Faction faction, Tile tile)
+	{
+		//TODO
+		return null;
+	}
 	
 	/**
 	 * This method creates a kraken via the entityFactory. It calls the infoPoint and
@@ -60,6 +67,10 @@ public class Simulator
 	 * @return         the created kraken
 	 */
 	public Kraken createKraken(Tile tile)
+	{
+		//TODO
+		return null;
+	}
 	
 	/**
 	 * This method removes a ship from the list of ships.
@@ -67,6 +78,9 @@ public class Simulator
 	 * @param ship     the ship which should be removed
 	 */
 	public void removeShip(Ship ship)
+	{
+		//TODO
+	}
 	
 	
 }

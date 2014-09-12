@@ -20,7 +20,9 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Ship createShip(Faction faction, Tile tile){
+		
 		//TODO: implement this
+		return null;
 	}
 	
 	/**
@@ -34,6 +36,7 @@ public class EntityFactory {
 	 */
 	public Buoy createBuoy(int type, Faction faction, Tile tile){
 		//TODO: implement this
+		return null;
 	}
 	
 	/**
@@ -45,6 +48,7 @@ public class EntityFactory {
 	 */
 	public Treasure createTreasure(int value, Tile tile){
 		//TODO: implement this
+		return null;
 	}
 	
 	/**
@@ -54,6 +58,31 @@ public class EntityFactory {
 	 */
 	public Kraken releaseTheKraken(Tile tile){
 		//TODO: implement this
+		return null;
+	}
+
+	public int getShipNextId() {
+		return shipNextId;
+	}
+
+	public void setShipNextId(int shipNextId) {
+		this.shipNextId = shipNextId;
+	}
+
+	public int getTreasureNextId() {
+		return treasureNextId;
+	}
+
+	public void setTreasureNextId(int treasureNextId) {
+		this.treasureNextId = treasureNextId;
+	}
+
+	public int getBuoyNextId() {
+		return buoyNextId;
+	}
+
+	public void setBuoyNextId(int buoyNextId) {
+		this.buoyNextId = buoyNextId;
 	}
 	
 }

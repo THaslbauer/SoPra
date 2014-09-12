@@ -18,5 +18,9 @@ public class Literal extends Primary
 	 * @return
 	 */
 	public int evaluate(int[] registers)
+	{
+		//TODO
+		return 0;
+	}
 	
 }
