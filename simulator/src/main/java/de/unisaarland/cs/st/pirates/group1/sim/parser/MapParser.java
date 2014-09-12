@@ -1,8 +1,16 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.parser;
+
+package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.stream.Stream;
 
+/**
+ * This is the parser for the whole world (namely the map and its entities).
+ * 
+ * @author Kerstin
+ * @version Version 1.0
+ */
 public class MapParser {
 	
 	
