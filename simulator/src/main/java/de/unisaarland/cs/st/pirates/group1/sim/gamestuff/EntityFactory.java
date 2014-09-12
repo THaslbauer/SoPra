@@ -12,6 +12,10 @@ public class EntityFactory {
 	private int treasureNextId;
 	private int buoyNextId;
 	
+	public EntityFactory(){
+		//TODO:implement this
+	}
+	
 	/**
 	 * This method creates a ship using its faction and tile.
 	 * 
