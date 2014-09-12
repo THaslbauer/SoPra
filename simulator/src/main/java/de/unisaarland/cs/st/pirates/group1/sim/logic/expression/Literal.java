@@ -1,6 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
-public class Literal
+public class Literal extends Primary
 {
 	
 	private int val;
