@@ -1,11 +1,18 @@
 package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
 
 import de.unisaarland.cs.st.pirates.group1.main.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.main.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.main.sim.util.Heading;
 
 public abstract class Map {
 	private InfoPoint infoPoint;
 	private EntityFactory entityFactory;
 	
+	/**
+	 * Map constructor
+	 * @param infoPoint the mighty infoPoint
+	 * @param entityFactory
+	 */
 	public Map(InfoPoint infoPoint, EntityFactory entityFactory) {
 		this.infoPoint = infoPoint;
 		this.entityFactory = entityFactory;
