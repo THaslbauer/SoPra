@@ -6,6 +6,9 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 
 /**
+ * This class can simulate game cycles. It knows all ships and krakens and
+ * ends the game by showing the scores of each faction.
+ * 
  * @author Nico
  * @version 1.0
  */
