@@ -36,9 +36,9 @@ public class Simulator
 	}
 	
 	/**
-	 * This method simulates one cycle of the game. At first, it iterates throught
-	 * the krakens and simply calls step() and secondly it iterates throught the
-	 * ships and symply calls step().
+	 * This method simulates a single cycle of the game. At first, it iterates through
+	 * the krakens and calls step(). Secondly, it iterates through the
+	 * ships and calls step().
 	 * 
 	 */
 	public void step()
