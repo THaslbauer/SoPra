@@ -1,5 +1,10 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+/**
+ * A small class to represent a positon on a map. Read only.
+ * @author Jens Kreber
+ *
+ */
 public class Position {
 	public final int x, y;
 	

@@ -2,13 +2,8 @@ package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
 import java.util.List;
 
-import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.EntityFactory;
-import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.Faction;
-import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.Kraken;
-import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.Map;
-import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.Ship;
-import de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff.Tile;
-import de.unisaarland.cs.st.pirates.group1.main.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 
 /**
  * @author Nico

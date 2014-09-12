@@ -1,12 +1,18 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import java.util.HashMap;
 import java.util.List;
 
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.CellType;
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.Direction;
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 
+/**
+ * Abstract class for a tile. 
+ * Features consistency methods.
+ * @author Jens Kreber
+ *
+ */
 public abstract class Tile {
 	private Map map;
 	private Position position;
@@ -41,7 +47,7 @@ public abstract class Tile {
 	 * @param ship the ship to attach
 	 */
 	public void attach(Ship ship)  {
-		
+		//TODO
 	}
 	
 	/**
@@ -49,7 +55,7 @@ public abstract class Tile {
 	 * @param kraken the kraken to attach
 	 */
 	public void attach(Kraken kraken) {
-		
+		//TODO
 	}
 	
 	/**
@@ -57,7 +63,7 @@ public abstract class Tile {
 	 * @param treasure the treasure to attach
 	 */
 	public void attach(Treasure treasure) {
-		
+		//TODO
 	}
 	
 	/**
@@ -65,7 +71,7 @@ public abstract class Tile {
 	 * @param buoy the buoy to attach
 	 */
 	public void attach(Buoy buoy) {
-		
+		//TODO
 	}
 	
 	/**
@@ -78,8 +84,8 @@ public abstract class Tile {
 	 * and/or heading is illegal for the map geometry
 	 */
 	public Tile getNeighbour(Heading heading, Direction direction) {
-		
-		return null;
+		return map.getTile(map.calcPosition(this.position, heading, direction));
+		//TODO
 	}
 	
 	/**
@@ -88,7 +94,7 @@ public abstract class Tile {
 	 * @param value how much you'd like to increase the treasure count here
 	 */
 	public void increaseTreasure(int value) {
-		
+		//TODO
 	}
 	
 	/**
@@ -98,6 +104,6 @@ public abstract class Tile {
 	 * @throws IllegalArgumentException if you want to take more than there is
 	 */
 	public void decreaseTreasure(int value) {
-		
+		//TODO
 	}
 }
