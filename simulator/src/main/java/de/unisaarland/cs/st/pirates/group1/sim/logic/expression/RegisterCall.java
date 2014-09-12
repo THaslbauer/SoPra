@@ -16,4 +16,8 @@ public class RegisterCall extends Primary
 	 * 
 	 */
 	public int evaluate(int[] registers)
+	{
+		//TODO
+		return 0;
+	}
 }
