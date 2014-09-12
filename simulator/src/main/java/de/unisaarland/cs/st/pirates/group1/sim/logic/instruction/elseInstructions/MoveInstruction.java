@@ -1,12 +1,12 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 
 public class MoveInstruction extends ElseInstruction {
 
-	public MoveInstruction(InfoPoint infoPoint, int elsePC) {
-		super(infoPoint, elsePC);
+	public MoveInstruction(ExtendedLogWriter logger, int elsePC) {
+		super(logger, elsePC);
 	}
 
 	@Override
