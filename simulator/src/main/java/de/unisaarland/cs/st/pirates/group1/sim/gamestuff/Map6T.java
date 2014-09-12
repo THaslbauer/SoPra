@@ -1,16 +1,21 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import de.unisaarland.cs.st.pirates.group1.main.sim.logger.InfoPoint;
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.Direction;
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 
+/**
+ * A end-of-world-to-other-end-of-world-mapping, haxagon torus based map implementation
+ * @author Jens Kreber
+ *
+ */
 public class Map6T extends Map {
 
 	private Tile[][] tiles;
 	private int width, height;
 	
 	/**
-	 * Constructor for a end-of-world-to-other-end-of-world-mapping, haxagon torus based map
+	 * Constructor for this end-of-world-to-other-end-of-world-mapping, haxagon torus based map
 	 * @param width the widht of the map
 	 * @param height the height (!) of the map
 	 * @param infoPoint the mighty infoPoint

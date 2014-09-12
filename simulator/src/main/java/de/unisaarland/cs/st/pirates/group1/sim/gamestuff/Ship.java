@@ -1,7 +1,12 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import de.unisaarland.cs.st.pirates.group1.main.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 
+/**
+ * The representation of a pirate ship
+ * @author Jens Kreber
+ *
+ */
 public class Ship extends Placable {
 	private Faction faction;
 	static private final int maxLoad = 4;
@@ -18,14 +23,14 @@ public class Ship extends Placable {
 	
 	/**
 	 * Ship constructor
-	 * @param id
-	 * @param tile
+	 * @param id the ship id
+	 * @param tile the tile to place the ship on
 	 */
 	public Ship(Faction faction, int id, Tile tile) {
 		super(id, tile);
 		this.load = maxLoad;
 	}
 	
-	//TODO: A lot of stuff
+//TODO
 
 }

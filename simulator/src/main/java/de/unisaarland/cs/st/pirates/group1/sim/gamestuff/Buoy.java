@@ -1,5 +1,10 @@
-package de.unisaarland.cs.st.pirates.group1.main.sim.gamestuff;
+package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+/**
+ * Represents a Buoy on the far sea
+ * @author Jens Kreber
+ *
+ */
 public class Buoy extends Placable {
 	private final int type;
 	private final Faction faction;
