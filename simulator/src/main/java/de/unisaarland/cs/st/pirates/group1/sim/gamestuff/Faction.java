@@ -11,6 +11,18 @@ public class Faction {
 	private int score;
 	private int shipCount;
 	private Instruction[] tactics;
+	
+	/**
+	 * create a Faction
+	 * @param name
+	 */
+	public Faction(String name){
+		this.name = name;
+		this.score = 0;
+		this.shipCount = 0;
+		this.tactics = null;
+	}
+	
 	public int getScore() {
 		return score;
 	}
@@ -36,13 +48,6 @@ public class Faction {
 	}
 
 	private String name;
-	
-	public Faction(String name){
-		this.name = name;
-		this.score = 0;
-		this.shipCount = 0;
-		this.tactics = null;
-	}
 	
 	/**
 	 * increases the ship counter of the Faction
