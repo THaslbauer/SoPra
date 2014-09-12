@@ -1,6 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
 import java.io.InputStream;
+import java.util.Random;
 
 /**
  * 

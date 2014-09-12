@@ -3,7 +3,10 @@ package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.stream.Stream;
+
+
+import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 
 /**
  * This is the parser for the whole world (namely the map and its entities).
