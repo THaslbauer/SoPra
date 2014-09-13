@@ -4,7 +4,7 @@
  * This is an additional logger, tracking fights and krakens.
  * It implements the given LogWriter.
  * 
- * @version 1.0
+ * @version 1.1
  * @author christopher
  */
 

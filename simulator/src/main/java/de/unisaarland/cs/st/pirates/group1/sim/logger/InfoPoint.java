@@ -4,7 +4,7 @@
  * It tracks the changes important for logging and the GUI.
  * 
  * 
- * @version 1.1
+ * @version 1.2
  * @author christopher
  */
 
@@ -12,6 +12,9 @@ package de.unisaarland.cs.st.pirates.group1.sim.logger;
 
 import java.io.IOException;
 import java.io.OutputStream;
+
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
 public class InfoPoint implements ExtendedLogWriter{
 
@@ -36,18 +39,7 @@ public class InfoPoint implements ExtendedLogWriter{
 		GUI = gUI;
 	}
 
-	
-/**
- * The fight method messaging a fight to the viewer
- * 
- * @param
- * @return
- */
-	@Override
-	public void fight() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 @Override
 public LogWriter addCell(Cell type, Integer faction, int x, int y)
@@ -128,6 +120,18 @@ public LogWriter notify(Entity entity, int id, Key key, int value)
 		IllegalStateException {
 	// TODO Auto-generated method stub
 	return null;
+}
+
+@Override
+public void fight(Ship ship, Ship otherShip) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void fight(Ship ship, Kraken kraken) {
+	// TODO Auto-generated method stub
+	
 }
 
 }
