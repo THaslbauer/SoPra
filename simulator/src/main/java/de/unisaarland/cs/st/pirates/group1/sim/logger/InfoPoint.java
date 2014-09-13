@@ -21,6 +21,13 @@ public class InfoPoint implements ExtendedLogWriter{
 	private LogWriter refLogger;
 	private ExtendedLogWriter GUI;
 	
+	/**
+	 * Default constructor
+	 */
+	public InfoPoint(){
+		
+	}
+	
 
 	//The getter and Setter
 	public LogWriter getRefLogger() {

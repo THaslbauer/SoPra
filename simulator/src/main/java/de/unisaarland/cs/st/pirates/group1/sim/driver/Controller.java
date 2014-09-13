@@ -21,7 +21,24 @@ public class Controller {
 	private InputStream mapFile;
 	private List<InputStream> tacticsFile;
 
+	/**
+	 * the Constructor for the Controller
+	 * 
+	 * @param simulator the simulator which the controller controls
+	 * @param mapParser the Map parser which the controller starts
+	 * @param tacticsParser the Tactic parser which the controller starts
+	 * @param mapFile the mapfile, for parsing the map
+	 * @param tacticsFile the tacticsfile for parsing the tactics
+	 */
+public Controller(Simulator simulator, MapParser mapParser,
+		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile){
+	this.simulator = simulator;
+	this.mapParser = mapParser;
+	this.tacticsParser = tacticsParser;
+	this.mapFile = mapFile;
+	this.tacticsFile = tacticsFile;
 	
+}
 	
 	/*
 	 * 
