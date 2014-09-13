@@ -23,6 +23,10 @@ public class PickupInstruction extends ElseInstruction {
 		this.dir = dir;
 	}
 
+	public Direction getDir() {
+		return dir;
+	}
+
 	@Override
 	public void execute(Ship ship) {
 		// TODO Auto-generated method stub

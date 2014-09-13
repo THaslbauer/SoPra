@@ -24,7 +24,10 @@ public class SenseInstruction extends Instruction {
 		this.dir = dir;
 	}
 	
-	
+	public Direction getDir() {
+		return dir;
+	}
+
 	@Override
 	public void execute(Ship ship){
 		//TODO implement

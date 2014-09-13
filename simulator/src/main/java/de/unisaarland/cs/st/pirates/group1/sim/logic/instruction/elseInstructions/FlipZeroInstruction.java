@@ -19,6 +19,10 @@ public class FlipZeroInstruction extends ElseInstruction {
 		this.rand = rand;
 	}
 
+	public Random getRand() {
+		return rand;
+	}
+
 	@Override
 	public void execute(Ship ship) {
 		// TODO Auto-generated method stub

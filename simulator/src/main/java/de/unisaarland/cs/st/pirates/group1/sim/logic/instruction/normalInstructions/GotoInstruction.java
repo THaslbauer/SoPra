@@ -22,6 +22,10 @@ public class GotoInstruction extends Instruction {
 		this.address = address;
 	}
 	
+	public int getAddress() {
+		return address;
+	}
+
 	public void execute(Ship ship){
 		//TODO implement
 	}

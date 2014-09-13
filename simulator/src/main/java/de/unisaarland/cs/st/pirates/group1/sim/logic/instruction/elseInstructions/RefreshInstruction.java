@@ -7,7 +7,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 /**
  * Represents an instruction to refresh the morale of a ship.
  * @author thomas
- *
+ 
  */
 public class RefreshInstruction extends ElseInstruction {
 	Direction dir;
@@ -21,6 +21,10 @@ public class RefreshInstruction extends ElseInstruction {
 	public RefreshInstruction(ExtendedLogWriter logger, int elsePC, Direction dir) {
 		super(logger, elsePC);
 		this.dir = dir;
+	}
+
+	public Direction getDir() {
+		return dir;
 	}
 
 	@Override

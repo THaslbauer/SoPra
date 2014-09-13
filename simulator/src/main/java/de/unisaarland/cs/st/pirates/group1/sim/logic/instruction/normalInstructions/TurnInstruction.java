@@ -22,6 +22,10 @@ public class TurnInstruction extends Instruction {
 		this.left = left;
 	}
 
+	public boolean isLeft() {
+		return left;
+	}
+
 	public void execute(Ship ship){
 		//TODO implement
 	}

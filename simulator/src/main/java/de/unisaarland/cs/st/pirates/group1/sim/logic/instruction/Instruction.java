@@ -34,4 +34,8 @@ public abstract class Instruction {
 	 * @param ship
 	 */
 	public abstract void execute(Ship ship);
+	
+	public ExtendedLogWriter getLogger(){
+		return this.logger;
+	}
 }

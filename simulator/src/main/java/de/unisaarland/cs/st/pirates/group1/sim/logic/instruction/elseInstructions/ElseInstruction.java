@@ -22,6 +22,10 @@ public abstract class ElseInstruction extends Instruction {
 		this.elsePC = elsePC;
 	}
 	
+	public int getElsePC() {
+		return elsePC;
+	}
+
 	/**
 	 * Sets the PC of the given ship to the value of elsePC
 	 * @param ship

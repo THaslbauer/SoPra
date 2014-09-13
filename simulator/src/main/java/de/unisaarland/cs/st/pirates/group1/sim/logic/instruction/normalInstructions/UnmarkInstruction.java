@@ -23,6 +23,10 @@ public class UnmarkInstruction extends Instruction {
 		this.type = type;
 	}
 	
+	public int getType() {
+		return type;
+	}
+
 	@Override
 	public void execute(Ship ship){
 		//TODO implement

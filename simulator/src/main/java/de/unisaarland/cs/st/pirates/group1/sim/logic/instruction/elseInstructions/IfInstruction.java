@@ -23,6 +23,10 @@ public class IfInstruction extends ElseInstruction {
 		this.condition = condition;
 	}
 
+	public Expression getCondition() {
+		return condition;
+	}
+
 	@Override
 	public void execute(Ship ship) {
 		// TODO Auto-generated method stub
