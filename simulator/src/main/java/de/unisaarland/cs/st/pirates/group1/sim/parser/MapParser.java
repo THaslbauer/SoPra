@@ -1,8 +1,10 @@
 
 package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
+
 
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
@@ -37,7 +39,8 @@ public class MapParser {
 	 * @param stream 
 	 * @param simulator
 	 */
-	public void parseMap(InputStream stream, Simulator simulator){
+	public void parseMap(InputStream stream, Simulator simulator) throws IllegalArgumentException,
+	FileNotFoundException, NullPointerException{
 		//TODO: implement this
 	}
 }
