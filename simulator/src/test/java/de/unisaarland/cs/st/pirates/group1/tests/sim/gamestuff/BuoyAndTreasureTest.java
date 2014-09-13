@@ -9,19 +9,19 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 
 public class BuoyAndTreasureTest {
 
-	private Buoy buoy;
-	private int type;
-	private Faction faction;
-	private int id;
-	private Tile tile;
+	private static Buoy buoy;
+	private static int type;
+	private static Faction faction;
+	private static int id;
+	private static Tile tile;
 	
-	private Treasure treasure;
-	private int value;
-	private int id2;
+	private static Treasure treasure;
+	private static int value;
+	private static int id2;
 	
 	
 	@BeforeClass
-	public void init(){
+	public static void init(){
 		
 		//Everything that is needed for a buoy
 	    type = 0;

@@ -37,15 +37,15 @@ public class ShipTest {
 		
 	}
 	
-	private Ship ship1;
-	private int id1;
-	private Tile tile1;
-	private Faction faction1;
-	private TestInstruction instruction1;
+	private static Ship ship1;
+	private static int id1;
+	private static Tile tile1;
+	private static Faction faction1;
+	private static TestInstruction instruction1;
 	
 	
 	@BeforeClass
-	public void init(){
+	public static void init(){
 		
 		//Everything that is needed for a ship
 		faction1 = new Faction("a");
