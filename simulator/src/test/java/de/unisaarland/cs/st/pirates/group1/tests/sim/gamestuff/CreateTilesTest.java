@@ -9,11 +9,11 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 
 
 public class CreateTilesTest {
-	private static Map map;
+	private static Worldmap map;
 	
 	@BeforeClass
 	public static void init() {
-		map = new Map6T(1, 2, null, null);
+		map = new Worldmap6T(1, 2, null, null);
 	}
 	
 	@Test
