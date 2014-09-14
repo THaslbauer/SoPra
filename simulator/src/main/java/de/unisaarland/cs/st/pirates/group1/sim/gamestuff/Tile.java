@@ -14,19 +14,21 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
  *
  */
 public abstract class Tile {
-	private Map map;
+	private Worldmap map;
 	private Position position;
-	private Placable [] placables;
-	private HashMap<Faction, List<Buoy>> bouyMap;
+	private Placable [] placables; // {Ship, Kraken, Treasure}
+	private HashMap<Faction, List<Buoy>> buoyMap;
 	
 	/**
 	 * Tile constructor
 	 * @param map the map the tile is on
 	 * @param position the position where the tile should be at
 	 */
-	public Tile(Map map, Position position) {
+	public Tile(Worldmap map, Position position) {
 		this.map = map;
 		this.position = position;
+		placables = new Placable[3];
+		buoyMap = new HashMap<Faction, List<Buoy>>();
 	}
 	
 	/**
@@ -45,6 +47,7 @@ public abstract class Tile {
 	/**
 	 * Attaches a ship to this tile
 	 * @param ship the ship to attach
+	 * @throws IllegalCallException if there is already a ship on this tile
 	 */
 	public void attach(Ship ship)  {
 		//TODO
@@ -53,6 +56,7 @@ public abstract class Tile {
 	/**
 	 * Attaches a kraken to this tile
 	 * @param kraken the kraken to attach
+	 * @throws IllegalCallException if there is already a kraken on this tile
 	 */
 	public void attach(Kraken kraken) {
 		//TODO
@@ -61,17 +65,64 @@ public abstract class Tile {
 	/**
 	 * Attaches a treasure to this tile
 	 * @param treasure the treasure to attach
+	 * @throws IllegalCallException if there is already a Treasure on this tile
 	 */
 	public void attach(Treasure treasure) {
 		//TODO
 	}
 	
 	/**
-	 * Attaches a buoy to this tile
-	 * @param buoy the buoy to attach
+	 * Detaches a ship from this tile
+	 * @param ship the ship to attach
+	 * @throws IllegalCallException if there is no ship on this tile
+	 * @throws IllegalArgumentException if there is a ship, but not this ship on this tile
 	 */
-	public void attach(Buoy buoy) {
+	public void detach(Ship ship) {
 		//TODO
+	}
+	
+	/**
+	 * Detaches a kraken from this tile
+	 * @param kraken the kraken to attach
+	 * @throws IllegalCallException if there is no kraken on this tile
+	 * @throws IllegalArgumentException if there is a kraken, but not this kraken on this tile
+	 */
+	public void detach(Kraken kraken) {
+		//TODO
+	}
+	
+	/**
+	 * Detaches a treasure from this tile
+	 * @param treasure the treasure to attach
+	 * @throws IllegalCallException if there is no treasure on this tile
+	 * @throws IllegalArgumentException if there is a treasure, but not this treasure on this tile
+	 */
+	public void detach(Treasure treasure) {
+		//TODO	
+	}
+	
+	/**
+	 * Returns a Ship. Can be null.
+	 * @return the ship / null
+	 */
+	public Ship getShip() {
+		return (Ship) placables[0];
+	}
+	
+	/**
+	 * Returns a Kraken. Can be null.
+	 * @return the kraken / null
+	 */
+	public Kraken getKraken() {
+		return (Kraken) placables[1];
+	}
+	
+	/**
+	 * Returns a Treasure. Can be null.
+	 * @return the treasure / null
+	 */
+	public Treasure getTreasure() {
+		return (Treasure) placables[2];
 	}
 	
 	/**
@@ -105,5 +156,9 @@ public abstract class Tile {
 	 */
 	public void decreaseTreasure(int value) {
 		//TODO
+	}
+	
+	public HashMap<Faction, List<Buoy>> getBuoyMap() {
+		return buoyMap;
 	}
 }

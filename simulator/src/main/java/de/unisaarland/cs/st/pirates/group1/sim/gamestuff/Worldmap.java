@@ -9,7 +9,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
  * @author Jens Kreber
  *
  */
-public abstract class Map {
+public abstract class Worldmap {
 	private InfoPoint infoPoint;
 	private EntityFactory entityFactory;
 	
@@ -18,7 +18,7 @@ public abstract class Map {
 	 * @param infoPoint the mighty infoPoint
 	 * @param entityFactory
 	 */
-	public Map(InfoPoint infoPoint, EntityFactory entityFactory) {
+	public Worldmap(InfoPoint infoPoint, EntityFactory entityFactory) {
 		this.infoPoint = infoPoint;
 		this.entityFactory = entityFactory;
 	}

@@ -15,7 +15,7 @@ public class Sea extends Tile {
 	 * @param map the map this tile should be on
 	 * @param position the position of this tile
 	 */
-	public Sea(Map map, Position position) {
+	public Sea(Worldmap map, Position position) {
 		super(map, position);
 	}
 	

@@ -17,7 +17,7 @@ public class Base extends Tile {
 	 * @param map the map this tile is on
 	 * @param position the position of this tile
 	 */
-	public Base(Faction faction, Map map, Position position) {
+	public Base(Faction faction, Worldmap map, Position position) {
 		super(map, position);
 		this.faction = faction;
 	}

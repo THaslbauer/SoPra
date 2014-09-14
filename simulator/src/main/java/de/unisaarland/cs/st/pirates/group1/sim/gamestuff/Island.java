@@ -17,7 +17,7 @@ public class Island extends Tile {
 	 * @param map the map
 	 * @param position the position
 	 */
-	public Island(boolean supply, Map map, Position position) {
+	public Island(boolean supply, Worldmap map, Position position) {
 		super(map, position);
 		this.supply = supply;
 	}

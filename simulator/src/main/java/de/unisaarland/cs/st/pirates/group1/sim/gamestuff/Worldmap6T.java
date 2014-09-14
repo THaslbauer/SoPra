@@ -9,7 +9,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
  * @author Jens Kreber
  *
  */
-public class Map6T extends Map {
+public class Worldmap6T extends Worldmap {
 
 	private Tile[][] tiles;
 	private int width, height;
@@ -22,7 +22,7 @@ public class Map6T extends Map {
 	 * @param entityFactory the factory for entities
 	 * @throws IllegalArgumentsException for non-positive size arguments and odd height values
 	 */
-	public Map6T(int width, int height, InfoPoint infoPoint, EntityFactory entityFactory) {
+	public Worldmap6T(int width, int height, InfoPoint infoPoint, EntityFactory entityFactory) {
 		super(infoPoint, entityFactory);
 		if(width <= 0)
 			throw new IllegalArgumentException("Width <= 0");
