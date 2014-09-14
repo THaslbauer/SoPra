@@ -76,6 +76,10 @@ public class ShipTest {
 		assertTrue(ship1.getBoredom() == 0);
 		assertTrue(ship1.getRestTime() == 0);
 		assertTrue(ship1.getPC() == 0);
+		assertTrue(ship1.getFaction() == faction1);
+		assertTrue(ship1.getId() == id1);
+		assertTrue(ship1.getMyTile() == tile1);
+		//TODO: test if ship is attached to tile
 		
 		
 		assertTrue(ship1.getRegister(Register.SENSE_CELLTYPE) == -1);
@@ -172,6 +176,15 @@ public class ShipTest {
 		
 	}
 
+	@Test
+	public void shipIncreaseBoredomTest(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		ship1.increaseBoredom();
+		
+		assertTrue(ship1.getBoredom() == 1);
+	}
 	
 	@Test
 	public void shipResetAndIncreaseBoredomTest(){
@@ -196,14 +209,13 @@ public class ShipTest {
 	//TODO: find out what controls the following invariants
 	
 	@Test
-	public void setMoraleTest(){
+	public void setMorale1Test(){
 		
 		ship1 = new Ship(faction1, id1, tile1);
 		
 		
 		try{
 			ship1.setMorale(5);
-			ship1.setMorale(-1);
 		}
 		//TODO:Find out which exception is thrown!!!
 		
@@ -216,13 +228,48 @@ public class ShipTest {
 	}
 	
 	@Test
-	public void setConditionTest(){
+	public void setMorale2Test(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		
+		try{
+			ship1.setMorale(-1);
+		}
+		//TODO:Find out which exception is thrown!!!
+		
+		catch(Exception e){
+			return;
+		}
+		
+		fail("Wrong value in field morale");
+	}
+	
+	@Test
+	public void setCondition1Test(){
 		
 		ship1 = new Ship(faction1, id1, tile1);
 		
 		
 		try{
 			ship1.setCondition(4);
+		}
+		
+		//TODO: find out which exception is thrown
+		catch(Exception e){
+			return;
+		}
+		
+		fail("Wrong value in field condition");
+	}
+	
+	@Test
+	public void setCondition2Test(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		
+		try{
 			ship1.setCondition(0);
 		}
 		
@@ -234,6 +281,98 @@ public class ShipTest {
 		fail("Wrong value in field condition");
 	}
 	
+	@Test
+	public void setload1Test(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		try{
+			ship1.setLoad(5);
+		}
+		
+		catch(Exception e){
+			return;
+		}
+		
+		fail("Wrong value in field load");
+	}
+	
+	@Test
+	public void setload2Test(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		try{
+			ship1.setLoad(-1);
+		}
+		
+		catch(Exception e){
+			return;
+		}
+		
+		fail("Wrong value in field load");
+	}
 	
 	
+	@Test
+	public void maxTest(){
+		
+		assertTrue(Ship.getMaxmorale() == 4);
+		assertTrue(Ship.getMaxload() == 4);
+		assertTrue(Ship.getMaxboredom() == 40);
+		
+		//TODO: ask if we should have Maxcondition too
+	}
+	
+	@Test
+	public void setRestTimeTest(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		try{
+			ship1.setRestTime(9);
+		}
+		
+		catch(Exception e){
+			return;
+		}
+		
+		fail("Resttime cannot be greater than 8");
+	}
+	
+	@Test
+	public void setRestTime2Test(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		try{
+			ship1.setRestTime(-1);
+		}
+		
+		catch(Exception e){
+			return;
+		}
+		
+		fail("Resttime cannot be less than 0");
+	}
+	
+	@Test
+	public void boredom3Test(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		for(int i = 0; i<39; i++){
+			ship1.increaseBoredom();
+		}
+		
+		ship1.increaseBoredom();
+		
+		assertTrue(ship1.getBoredom() == 0);
+		assertTrue(ship1.getMorale() == 3);
+	}
+	
+	@Test
+	public void shipmoved(){
+		//Test if setMyTile works
+	}
 }
