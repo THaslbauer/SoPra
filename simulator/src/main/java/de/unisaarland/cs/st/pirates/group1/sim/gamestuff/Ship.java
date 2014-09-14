@@ -16,11 +16,13 @@ public class Ship extends Placable {
 	private int morale;
 	static private final int maxBoredom = 40;
 	private int boredom;
+	static private final int maxCondition = 3;
+	private int condition;
 	private int pc;
 	private int [] registers;
 	private int restTime;
 	private Heading heading;
-	private int condition;
+
 	
 	/**
 	 * Ship constructor
@@ -30,6 +32,10 @@ public class Ship extends Placable {
 	public Ship(Faction faction, int id, Tile tile) {
 		super(id, tile);
 		this.load = maxLoad;
+		this.morale = maxMorale;
+		this.boredom = 0;
+		this.condition = maxCondition;
+		clearRegisters();
 	}
 	
 	/**
@@ -153,6 +159,10 @@ public class Ship extends Placable {
 
 	public int getBoredom() {
 		return boredom;
+	}
+	
+	public static int getMaxcondition() {
+		return maxCondition;
 	}
 
 }

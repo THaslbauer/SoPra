@@ -1,1 +1,1 @@
-Such logic =)
+krasse logik =)
