@@ -39,8 +39,7 @@ public class MapParser {
 	 * @param stream 
 	 * @param simulator
 	 */
-	public void parseMap(InputStream stream, Simulator simulator) throws IllegalArgumentException,
-	FileNotFoundException, NullPointerException{
+	public void parseMap(InputStream stream, Simulator simulator) throws IllegalArgumentException, NullPointerException{
 		//TODO: implement this
 	}
 }
