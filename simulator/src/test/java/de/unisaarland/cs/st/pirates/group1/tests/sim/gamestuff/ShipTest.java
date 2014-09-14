@@ -14,6 +14,11 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 
+/**
+ * A test class for ships
+ * @author Kerstin
+ *
+ */
 public class ShipTest {
 	
 	//A test class for testing the step method 
@@ -78,7 +83,7 @@ public class ShipTest {
 		assertTrue(ship1.getPC() == 0);
 		assertTrue(ship1.getFaction() == faction1);
 		assertTrue(ship1.getId() == id1);
-		assertTrue(ship1.getMyTile() == tile1);
+		assertTrue(ship1.getMyTile().equals(tile1));
 		//TODO: test if ship is attached to tile
 		
 		
