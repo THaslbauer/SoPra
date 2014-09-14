@@ -18,7 +18,7 @@ public class Simulator
 	
 	private List<Ship> ships;
 	
-	private Map map;
+	private Worldmap worldmap;
 	
 	private List<Faction> factions;
 	
@@ -83,6 +83,62 @@ public class Simulator
 	public void removeShip(Ship ship)
 	{
 		//TODO
+	}
+
+	public List<Kraken> getKrakens() {
+		return krakens;
+	}
+
+	public void setKrakens(List<Kraken> krakens) {
+		this.krakens = krakens;
+	}
+
+	public List<Ship> getShips() {
+		return ships;
+	}
+
+	public void setShips(List<Ship> ships) {
+		this.ships = ships;
+	}
+
+	public Worldmap getWorldmap() {
+		return worldmap;
+	}
+
+	public void setWorldmap(Worldmap worldmap) {
+		this.worldmap = worldmap;
+	}
+
+	public List<Faction> getFactions() {
+		return factions;
+	}
+
+	public void setFactions(List<Faction> factions) {
+		this.factions = factions;
+	}
+
+	public int getCycle() {
+		return cycle;
+	}
+
+	public void setCycle(int cycle) {
+		this.cycle = cycle;
+	}
+
+	public InfoPoint getInfoPoint() {
+		return infoPoint;
+	}
+
+	public void setInfoPoint(InfoPoint infoPoint) {
+		this.infoPoint = infoPoint;
+	}
+
+	public EntityFactory getEntityFactory() {
+		return entityFactory;
+	}
+
+	public void setEntityFactory(EntityFactory entityFactory) {
+		this.entityFactory = entityFactory;
 	}
 	
 	
