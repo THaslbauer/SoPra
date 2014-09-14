@@ -7,6 +7,11 @@ import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 
+/**
+ * A test class for buoys and treasures
+ * @author Kerstin
+ *
+ */
 public class BuoyAndTreasureTest {
 
 	private static Buoy buoy;
@@ -40,23 +45,25 @@ public class BuoyAndTreasureTest {
 	}
 	
 	@Test
-	public void buoy1Test(){
+	public void buoyConstructorTest(){
 		
-		assertTrue(this.type == buoy.getType());
-		assertTrue(this.faction.equals(buoy.getFaction()));
-		assertTrue(this.id == buoy.getId());
-		assertTrue(this.tile.equals(buoy.getMyTile()));
+		assertTrue(type == buoy.getType());
+		assertTrue(faction.equals(buoy.getFaction()));
+		assertTrue(id == buoy.getId());
+		assertTrue(tile.equals(buoy.getMyTile()));
 		
+		//TODO: Test if tile noticed that a buoy is attached to it
 	}
 		
 	
 	@Test
-	public void Treasure1Test(){
+	public void treasureConstructorTest(){
 		
-		assertTrue(this.id2 == treasure.getId());
-		assertTrue(this.value == treasure.getValue());
-		assertTrue(this.tile.equals(treasure.getMyTile()));
+		assertTrue(id2 == treasure.getId());
+		assertTrue(value == treasure.getValue());
+		assertTrue(tile.equals(treasure.getMyTile()));
 	}
 	
+	//TODO: test if tile noticed that a treasure is attached to it
 
 }
