@@ -5,6 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 
 public class InfoPointTest
@@ -28,7 +30,7 @@ public class InfoPointTest
 	}
 	
 	@Test
-	public void fightTest()
+	public void fight1Test()
 	{
 		int valTestLogger     = testLogger.value;
 		int expectedValLogger = valTestLogger += 1;
@@ -36,7 +38,22 @@ public class InfoPointTest
 		int valTestGui        = testGui.value;
 		int expectedValGui    = valTestGui += 1;
 		
-		infoPoint.fight();
+		infoPoint.fight(new Ship(null, 0, null), new Ship(null, 0, null));
+		
+		assertTrue(expectedValLogger == testLogger.value);
+		assertTrue(expectedValGui == testGui.value);
+	}
+	
+	@Test
+	public void fight2Test()
+	{
+		int valTestLogger     = testLogger.value;
+		int expectedValLogger = valTestLogger += 1;
+		
+		int valTestGui        = testGui.value;
+		int expectedValGui    = valTestGui += 1;
+		
+		infoPoint.fight(new Ship(null, 0, null), new Kraken(0, null));
 		
 		assertTrue(expectedValLogger == testLogger.value);
 		assertTrue(expectedValGui == testGui.value);
