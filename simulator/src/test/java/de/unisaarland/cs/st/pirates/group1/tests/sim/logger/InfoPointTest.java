@@ -42,8 +42,8 @@ public class InfoPointTest
 		
 		infoPoint.fight(new Ship(null, 0, null), new Ship(null, 0, null));
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method fight(ship, ship) was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method fight(ship, ship) was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -57,8 +57,8 @@ public class InfoPointTest
 		
 		infoPoint.fight(new Ship(null, 0, null), new Kraken(0, null));
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method fight(ship, kraken) was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method fight(ship, kraken) was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -72,8 +72,8 @@ public class InfoPointTest
 		
 		infoPoint.addCell(null, 0, 0, 0);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method addcell() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method addcell() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -87,8 +87,8 @@ public class InfoPointTest
 		
 		infoPoint.addCustomHeaderData(null);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method addCustomHeaderData() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method addCustomHeaderData() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -102,8 +102,8 @@ public class InfoPointTest
 		
 		infoPoint.beginTransaction(null, 0);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method beginTransaction() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method beginTransaction() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -124,8 +124,8 @@ public class InfoPointTest
 			fail();
 		}
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method closeTest() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method closeTest() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -139,8 +139,8 @@ public class InfoPointTest
 		
 		infoPoint.commitTransaction(null);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method commitTransaction() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method commitTransaction() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -154,8 +154,8 @@ public class InfoPointTest
 		
 		infoPoint.create(null, 0, null, null);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method createTest() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method createTest() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -169,8 +169,8 @@ public class InfoPointTest
 		
 		infoPoint.destroy(null, 0);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method destroy() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method destroy() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -184,8 +184,8 @@ public class InfoPointTest
 		
 		infoPoint.fleetScore(0, 0);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method fleetScore() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method fleetScore() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -206,8 +206,8 @@ public class InfoPointTest
 			fail();
 		}
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method init() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method init() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -228,8 +228,8 @@ public class InfoPointTest
 			fail();
 		}
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method logStep() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method logStep() was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
@@ -243,8 +243,8 @@ public class InfoPointTest
 		
 		infoPoint.notify(null, 0, null, 0);
 		
-		assertTrue(expectedValLogger == testLogger.value);
-		assertTrue(expectedValGui == testGui.value);
+		assertTrue("The logger's method notify() was not called.", expectedValLogger == testLogger.value);
+		assertTrue("The gui's method notify() was not called.", expectedValGui == testGui.value);
 	}
 	
 	

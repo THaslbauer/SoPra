@@ -10,21 +10,9 @@ import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Controller;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Base;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Island;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Sea;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
-import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
-import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 
 public class ControllerTest
 {
