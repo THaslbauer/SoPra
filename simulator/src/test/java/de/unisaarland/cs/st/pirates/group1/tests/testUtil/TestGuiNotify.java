@@ -1,4 +1,4 @@
-package de.unisaarland.cs.st.pirates.group1.tests.sim.logger;
+package de.unisaarland.cs.st.pirates.group1.tests.testUtil;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
