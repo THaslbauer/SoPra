@@ -25,9 +25,9 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.ElseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
-import de.unisaarland.cs.st.pirates.group1.tests.sim.logger.TestGui;
-import de.unisaarland.cs.st.pirates.group1.tests.sim.logger.TestGuiDropInstr;
-import de.unisaarland.cs.st.pirates.group1.tests.sim.logger.TestGuiNotify;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiNotify;
 
 public class InstructionTest {
 	
