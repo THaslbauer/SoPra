@@ -18,8 +18,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
  */
 public class KrakenTest {
 
-	private static Worldmap myMap1, myMap2, myMap3;
-	private static Tile tile1, tile2, tile31, tile32, tile33,tile34;
+	private static Worldmap myMap1, myMap2, myMap3, myMap4;
+	private static Tile tile1, tile2, tile31, tile32, tile33,tile34, tile4;
 	
 	@BeforeClass
 	public static void init(){
@@ -37,6 +37,7 @@ public class KrakenTest {
 		myMap2.createSeaTile(new Position(1,1));
 		myMap2.createSeaTile(new Position(0,1));
 		myMap2.createSeaTile(new Position(0,0));
+		
 
 		//map with 4 sea tiles and four kraken attached to them
 		myMap3 = new Worldmap6T(2,2,null,null);
@@ -45,6 +46,14 @@ public class KrakenTest {
 		myMap3.createSeaTile(new Position(0,1));
 		myMap3.createSeaTile(new Position(0,0));
 		
+		//another map with 4 sea tiles and one kraken attached to one tile
+		myMap4 = new Worldmap6T(2,2, null, null);
+		myMap4.createSeaTile(new Position(1,0));
+		myMap4.createSeaTile(new Position(1,1));
+		myMap4.createSeaTile(new Position(0,1));
+		myMap4.createSeaTile(new Position(0,0));
+
+		
 		
 		tile1 = myMap1.getTile(new Position(1,0));
 		tile2 = myMap2.getTile(new Position(1,0));
@@ -52,6 +61,7 @@ public class KrakenTest {
 		tile32 = myMap3.getTile(new Position(1,1));
 		tile33 = myMap3.getTile(new Position(0,1));
 		tile34 = myMap3.getTile(new Position(0,0));
+		tile4 = myMap4.getTile(new Position(1,0));
 		
 	}
 	
@@ -108,6 +118,16 @@ public class KrakenTest {
 		//the tile's kraken should not change
 		assertTrue("the tile's kraken should not change",tile31.getKraken().equals(kraken1));
 		
+		
+	}
+	
+	@Test
+	public void krakenMoveRightTest(){
+		
+		Kraken kraken = new Kraken(1, tile4);
+		kraken.step();
+		
+		myMap4.random.getLastInt();
 		
 	}
 }
