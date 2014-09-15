@@ -1,5 +1,8 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegative;
+
+
 /**
  * The representation of a treasure
  * @author Jens Kreber
@@ -16,7 +19,7 @@ public class Treasure extends Placable {
 	 */
 	public Treasure(int value, int id, Tile tile) {
 		super(id, tile);
-		this.value = value;
+		setValue(value);
 	}
 
 	public int getValue() {
@@ -24,6 +27,7 @@ public class Treasure extends Placable {
 	}
 
 	public void setValue(int value) {
+		notNegative(value);
 		this.value = value;
 	}
 	

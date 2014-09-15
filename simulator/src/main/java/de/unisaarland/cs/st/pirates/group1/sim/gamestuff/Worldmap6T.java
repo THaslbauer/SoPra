@@ -1,8 +1,11 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
+
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegative;
+
 
 /**
  * A end-of-world-to-other-end-of-world-mapping, haxagon torus based map implementation
@@ -18,16 +21,14 @@ public class Worldmap6T extends Worldmap {
 	 * Constructor for this end-of-world-to-other-end-of-world-mapping, haxagon torus based map
 	 * @param width the widht of the map
 	 * @param height the height (!) of the map
-	 * @param infoPoint the mighty infoPoint
+	 * @param logger the mighty logger
 	 * @param entityFactory the factory for entities
 	 * @throws IllegalArgumentsException for non-positive size arguments and odd height values
 	 */
-	public Worldmap6T(int width, int height, InfoPoint infoPoint, EntityFactory entityFactory) {
-		super(infoPoint, entityFactory);
-		if(width <= 0)
-			throw new IllegalArgumentException("Width <= 0");
-		if(height <= 0)
-			throw new IllegalArgumentException("Height <= 0");
+	public Worldmap6T(int width, int height, ExtendedLogWriter logger, EntityFactory entityFactory) {
+		super(logger, entityFactory);
+		notNegative(width, "Width <= 0");
+		notNegative(height, "Height <= 0");
 		if(height % 2 != 0)
 			throw new IllegalArgumentException("Height is odd!");
 		this.width = width;
@@ -37,8 +38,12 @@ public class Worldmap6T extends Worldmap {
 
 	@Override
 	public Tile getTile(Position position) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			return tiles[position.y][position.x];
+		} catch(ArrayIndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Coordinates are outside the map");
+		}
+		// LOL it works :)
 	}
 
 	@Override

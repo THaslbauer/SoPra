@@ -75,7 +75,7 @@ public class ShipTest {
 		ship1 = new Ship(faction1, id1, tile1);
 		
 		assertTrue(ship1.getCondition() == 3);
-		assertTrue(ship1.getHeading() == Heading.HO);
+		assertTrue(ship1.getHeading() == Heading.H0);
 		assertTrue(ship1.getMorale() == 4);
 		assertTrue(ship1.getLoad() == 0);
 		assertTrue(ship1.getBoredom() == 0);
@@ -84,7 +84,7 @@ public class ShipTest {
 		assertTrue(ship1.getFaction() == faction1);
 		assertTrue(ship1.getId() == id1);
 		assertTrue(ship1.getMyTile().equals(tile1));
-		//TODO: test if ship is attached to tile
+		assertTrue(ship1.getMyTile().getShip().equals(ship1));
 		
 		
 		assertTrue(ship1.getRegister(Register.SENSE_CELLTYPE) == -1);
@@ -110,7 +110,7 @@ public class ShipTest {
 		
 		ship1.increasePC();
 		
-		assertTrue(ship1.getPC() == 1);
+		assertTrue("PC should be increased",ship1.getPC() == 1);
 	}
 	
 	@Test
@@ -120,10 +120,12 @@ public class ShipTest {
 		
 		int test = instruction1.getValue();
 		
+		assertTrue(test == 0);
+		
 		ship1.step();
 		
-		assertTrue(ship1.getPC() == 1);
-		assertTrue(instruction1.getValue() == 1);
+		assertTrue("PC should be increased",ship1.getPC() == 1);
+		assertTrue("instruction must be executed",instruction1.getValue() == 1);
 	}
 	
 	@Test
@@ -188,7 +190,7 @@ public class ShipTest {
 		
 		ship1.increaseBoredom();
 		
-		assertTrue(ship1.getBoredom() == 1);
+		assertTrue("boredom should be increased by one",ship1.getBoredom() == 1);
 	}
 	
 	@Test
@@ -208,10 +210,9 @@ public class ShipTest {
 		//Tests if resetBoredom works
 		ship1.resetBoredom();
 		
-		assertTrue(ship1.getBoredom() == 0);
+		assertTrue("boredom should be resetted (0)",ship1.getBoredom() == 0);
 	}
 	
-	//TODO: find out what controls the following invariants
 	
 	@Test
 	public void setMorale1Test(){
@@ -222,12 +223,13 @@ public class ShipTest {
 		try{
 			ship1.setMorale(5);
 		}
-		//TODO:Find out which exception is thrown!!!
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
 		}
-		
+		catch(Exception e){
+			fail("Wrong exception thrown");
+		}
 		fail("Wrong value in field morale");
 		
 	}
@@ -241,10 +243,13 @@ public class ShipTest {
 		try{
 			ship1.setMorale(-1);
 		}
-		//TODO:Find out which exception is thrown!!!
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
 		
 		catch(Exception e){
-			return;
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field morale");
@@ -260,9 +265,12 @@ public class ShipTest {
 			ship1.setCondition(4);
 		}
 		
-		//TODO: find out which exception is thrown
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field condition");
@@ -278,9 +286,12 @@ public class ShipTest {
 			ship1.setCondition(0);
 		}
 		
-		//TODO: find out which exception is thrown
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field condition");
@@ -295,8 +306,12 @@ public class ShipTest {
 			ship1.setLoad(5);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field load");
@@ -311,8 +326,12 @@ public class ShipTest {
 			ship1.setLoad(-1);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field load");
@@ -325,8 +344,7 @@ public class ShipTest {
 		assertTrue(Ship.getMaxmorale() == 4);
 		assertTrue(Ship.getMaxload() == 4);
 		assertTrue(Ship.getMaxboredom() == 40);
-		
-		//TODO: ask if we should have Maxcondition too
+		assertTrue(Ship.getMaxcondition() == 3);
 	}
 	
 	@Test
@@ -338,8 +356,12 @@ public class ShipTest {
 			ship1.setRestTime(9);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Resttime cannot be greater than 8");
@@ -354,8 +376,12 @@ public class ShipTest {
 			ship1.setRestTime(-1);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Resttime cannot be less than 0");
@@ -372,12 +398,12 @@ public class ShipTest {
 		
 		ship1.increaseBoredom();
 		
-		assertTrue(ship1.getBoredom() == 0);
-		assertTrue(ship1.getMorale() == 3);
+		assertTrue("boredom should be resetted after forty cycles",ship1.getBoredom() == 0);
+		assertTrue("morale must be lowered after forty cycles",ship1.getMorale() == 3);
 	}
 	
 	@Test
 	public void shipmoved(){
-		//Test if setMyTile works
+		
 	}
 }

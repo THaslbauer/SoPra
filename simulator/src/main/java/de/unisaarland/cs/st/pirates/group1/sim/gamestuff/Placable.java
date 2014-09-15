@@ -1,5 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegative;
+
 /**
  * Abstract class for game objects which can be placed on the map and identified with an id
  * @author Jens Kreber
@@ -17,6 +19,7 @@ public abstract class Placable {
 	 * @see setMyTile()
 	 */
 	public Placable(int id, Tile tile) {
+		notNegative(id);
 		this.id = id;
 		setMyTile(tile);
 	}

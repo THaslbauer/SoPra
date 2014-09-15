@@ -23,6 +23,6 @@ public class Kraken extends Placable {
 	 * That's alle it does.
 	 */
 	public void step() {
-		
+		//TODO
 	}
 }

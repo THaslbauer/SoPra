@@ -60,10 +60,9 @@ public class KrakenTest {
 		
 		Kraken kraken = new Kraken(1, tile1);	
 		
-		assertTrue(kraken.getId() == 1);
-		assertTrue(kraken.getMyTile().equals(tile1));
-		
-		//TODO:Test if tile notices kraken
+		assertTrue("the kraken's id should be 1",kraken.getId() == 1);
+		assertTrue("the tile should be correct",kraken.getMyTile().equals(tile1));
+		assertTrue("the kraken should be correct",kraken.getMyTile().getKraken().equals(kraken));
 		
 	}
 	
@@ -73,7 +72,11 @@ public class KrakenTest {
 		Kraken kraken = new Kraken(1, tile1);	
 		kraken.step();
 		
-		assertTrue(kraken.getMyTile().equals(tile1));
+		//the kraken's tile should not change
+		assertTrue("the kraken's tile should not change",kraken.getMyTile().equals(tile1));
+		
+		//the tile's kraken should not change
+		assertTrue("the tile's kraken should not change",tile1.getKraken().equals(kraken));
 	}
 	
 	@Test
@@ -82,7 +85,11 @@ public class KrakenTest {
 		Kraken kraken = new Kraken(1, tile2);
 		kraken.step();
 		
-		assertFalse(kraken.getMyTile().equals(tile2));
+		//the tile of the kraken should be a new one
+		assertFalse("the tile of the kraken should be a new one",kraken.getMyTile().equals(tile2));
+		
+		//the former tile of the kraken should not have a kraken anymore
+		assertFalse("the former tile of the kraken should not have a kraken anymore",tile2.getKraken() == null);
 	}
 	
 	@Test
@@ -95,7 +102,11 @@ public class KrakenTest {
 		
 		kraken1.step();
 		
-		assertTrue(kraken1.getMyTile().equals(tile31));
+		//the kraken's tile should remain the same
+		assertTrue("the kraken's tile changed",kraken1.getMyTile().equals(tile31));
+		
+		//the tile's kraken should not change
+		assertTrue("the tile's kraken should not change",tile31.getKraken().equals(kraken1));
 		
 		
 	}

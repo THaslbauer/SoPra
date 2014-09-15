@@ -1,5 +1,8 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import java.util.Random;
+
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
@@ -10,16 +13,40 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
  *
  */
 public abstract class Worldmap {
-	private InfoPoint infoPoint;
+	public static class sRandom extends Random {
+		
+		private long seed;
+		private int lastInt;
+		
+		public sRandom(long seed) {
+			super(seed);
+			this.seed = seed;
+		}
+		public int nextInt(int bits) {
+			lastInt = super.nextInt(bits);
+			return lastInt;
+		}
+		
+		public long getSeed() {
+			return seed;
+		}
+		
+		public int getLastInt() {
+			return lastInt;
+		}
+	}
+	
+	private ExtendedLogWriter logger;
 	private EntityFactory entityFactory;
+	public sRandom random;
 	
 	/**
 	 * Map constructor
-	 * @param infoPoint the mighty infoPoint
+	 * @param logger the mighty logger
 	 * @param entityFactory
 	 */
-	public Worldmap(InfoPoint infoPoint, EntityFactory entityFactory) {
-		this.infoPoint = infoPoint;
+	public Worldmap(ExtendedLogWriter logger, EntityFactory entityFactory) {
+		this.logger = logger;
 		this.entityFactory = entityFactory;
 	}
 
@@ -95,8 +122,8 @@ public abstract class Worldmap {
 	 */
 	public abstract Treasure createTreasure(int value, Tile tile);
 	
-	public InfoPoint getInfoPoint() {
-		return infoPoint;
+	public ExtendedLogWriter getExtendedLogWriter() {
+		return logger;
 	}
 
 	public EntityFactory getEntityFactory() {
