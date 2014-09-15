@@ -40,15 +40,22 @@ public class InstructionTest {
 	private static Position position;
 	
 	@BeforeClass
-	public void init(){
+	public static void init(){
 		
 		//A worldMap with exactly one seatile
-		worldMap = new Worldmap6T(0,0,null,null);
+		worldMap = new Worldmap6T(2,2,null,null);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a");
-		position = new Position(0,0);
-		waterTile = new Sea(worldMap,position);
+		Position position1 = new Position(0,0);
+		Position position2 = new Position(1,0);
+		Position position3 = new Position(0,1);
+		Position position4 = new Position(1,1);
+		
+		waterTile = new Sea(worldMap,position1);
+		waterTile = new Sea(worldMap, position2);
+		waterTile = new Sea(worldMap, position3);
+		waterTile = new Sea(worldMap, position4);
 		
 		
 		//A Test ship of the TestFaction with ID 1
@@ -77,6 +84,8 @@ public class InstructionTest {
 		}
 		assertTrue(ship.getPC() == pc + 1);
 	}
+	
+	
 	
 	/**
 	 * testing if the jump to 0 is valid
@@ -113,7 +122,7 @@ public class InstructionTest {
 	 * checks if notify and create method in gui is called
 	 */
 	@Test
-	public void ShipDropsLoadTest(){
+	public void ShipDropNotifyTest(){
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
@@ -122,6 +131,28 @@ public class InstructionTest {
 		dropInstruction.execute(ship);
 		assertTrue(testGui.value == -1);
 		assertTrue(testGui.val == 42);
+	}
+	
+	/**
+	 * checks if right amount of treasure value is on tile after drop
+	 */
+	
+	@Test
+	public void ShipDropsLoadTest(){
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction dropInstruction = new DropInstruction(testGui);
+		
+		int val;
+		try{ 
+			val = ship.getMyTile().getTreasure().getValue();
+		} catch (NullPointerException e) {
+			val = 0;
+		}
+		ship.setLoad(4);
+		//checks if there is a treasure on the watertile after dropping
+		
+		dropInstruction.execute(ship);
+		assertTrue(val+4 == ship.getMyTile().getTreasure().getValue());
 	}
 	
 	/**
