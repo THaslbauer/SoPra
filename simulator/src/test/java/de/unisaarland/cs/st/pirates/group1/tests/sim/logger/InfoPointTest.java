@@ -8,6 +8,8 @@ import org.junit.Test;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestLogger;
 
 public class InfoPointTest
 {

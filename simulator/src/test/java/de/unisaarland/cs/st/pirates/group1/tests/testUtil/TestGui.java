@@ -1,13 +1,15 @@
-package de.unisaarland.cs.st.pirates.group1.tests.sim.logger;
+package de.unisaarland.cs.st.pirates.group1.tests.testUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
 
-public class TestLogger implements LogWriter
+public class TestGui implements ExtendedLogWriter
 {
-	
 	public int value = 0;
 
 	@Override
@@ -90,7 +92,14 @@ public class TestLogger implements LogWriter
 		value += 1;
 		return null;
 	}
-	
-	
-	
+
+	@Override
+	public void fight(Ship ship, Ship otherShip) {
+		value += 1;
+	}
+
+	@Override
+	public void fight(Ship ship, Kraken kraken) {
+		value += 1;
+	}
 }
