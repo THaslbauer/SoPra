@@ -75,7 +75,7 @@ public class ShipTest {
 		ship1 = new Ship(faction1, id1, tile1);
 		
 		assertTrue(ship1.getCondition() == 3);
-		assertTrue(ship1.getHeading() == Heading.HO);
+		assertTrue(ship1.getHeading() == Heading.H0);
 		assertTrue(ship1.getMorale() == 4);
 		assertTrue(ship1.getLoad() == 0);
 		assertTrue(ship1.getBoredom() == 0);
