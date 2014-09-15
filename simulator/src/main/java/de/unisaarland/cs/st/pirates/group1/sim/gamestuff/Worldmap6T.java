@@ -1,5 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
@@ -22,8 +23,8 @@ public class Worldmap6T extends Worldmap {
 	 * @param entityFactory the factory for entities
 	 * @throws IllegalArgumentsException for non-positive size arguments and odd height values
 	 */
-	public Worldmap6T(int width, int height, InfoPoint infoPoint, EntityFactory entityFactory) {
-		super(infoPoint, entityFactory);
+	public Worldmap6T(int width, int height, ExtendedLogWriter logger, EntityFactory entityFactory) {
+		super(logger, entityFactory);
 		if(width <= 0)
 			throw new IllegalArgumentException("Width <= 0");
 		if(height <= 0)
@@ -37,8 +38,12 @@ public class Worldmap6T extends Worldmap {
 
 	@Override
 	public Tile getTile(Position position) {
-		// TODO Auto-generated method stub
-		return null;
+		try{
+			return tiles[position.y][position.x];
+		} catch(ArrayIndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Coordinates are outside the map");
+		}
+		// LOL it works :)
 	}
 
 	@Override

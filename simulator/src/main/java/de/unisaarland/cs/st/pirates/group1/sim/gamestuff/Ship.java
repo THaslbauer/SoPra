@@ -3,6 +3,9 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.throwIAException;
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegative;
+
 /**
  * The representation of a pirate ship
  * @author Jens Kreber
@@ -16,11 +19,13 @@ public class Ship extends Placable {
 	private int morale;
 	static private final int maxBoredom = 40;
 	private int boredom;
+	static private final int maxCondition = 3;
+	private int condition;
 	private int pc;
 	private int [] registers;
 	private int restTime;
 	private Heading heading;
-	private int condition;
+
 	
 	/**
 	 * Ship constructor
@@ -30,6 +35,10 @@ public class Ship extends Placable {
 	public Ship(Faction faction, int id, Tile tile) {
 		super(id, tile);
 		this.load = maxLoad;
+		this.morale = maxMorale;
+		this.boredom = 0;
+		this.condition = maxCondition;
+		clearRegisters();
 	}
 	
 	/**
@@ -91,16 +100,36 @@ public class Ship extends Placable {
 		return load;
 	}
 
-	public void setLoad(int load) {
-		this.load = load;
+	/**
+	 * Sets ship load. 
+	 * @param load
+	 * @throws IllegalArgumentException if value is too high.
+	 */
+	public void setLoad(int load) throws IllegalArgumentException {
+		notNegative(load);
+		this.load = load <= maxLoad ? load : (int) throwIAException("SETTER: Load too high");
+		/*
+		 * Equivalent to:
+		 *  if(load <= maxLoad) {
+		 *  	this.load = load;
+		 *  } else {
+		 *  	throw new IllegalArgumentException("SETTER: Load too high");
+		 *  }
+		 */
 	}
 
 	public int getMorale() {
 		return morale;
 	}
 
-	public void setMorale(int morale) {
-		this.morale = morale;
+	/**
+	 * Sets ship morale. 
+	 * @param morale
+	 * @throws IllegalArgumentException if value is too high.
+	 */
+	public void setMorale(int morale) throws IllegalArgumentException {
+		notNegative(morale);
+		this.morale = morale <= maxMorale ? morale : (int) throwIAException("SETTER: Morale too high");
 	}
 
 	public int getPC() {
@@ -108,6 +137,7 @@ public class Ship extends Placable {
 	}
 
 	public void setPC(int pc) {
+		notNegative(pc);
 		this.pc = pc;
 	}
 
@@ -116,6 +146,7 @@ public class Ship extends Placable {
 	}
 
 	public void setRestTime(int restTime) {
+		notNegative(restTime);
 		this.restTime = restTime;
 	}
 
@@ -131,8 +162,14 @@ public class Ship extends Placable {
 		return condition;
 	}
 
-	public void setCondition(int condition) {
-		this.condition = condition;
+	/**
+	 * Sets ship condition. 
+	 * @param condition
+	 * @throws IllegalArgumentException if value is too high.
+	 */
+	public void setCondition(int condition) throws IllegalArgumentException {
+		notNegative(condition);
+		this.condition = condition <= maxCondition ? condition : (int) throwIAException("SETTER: Morale too high");
 	}
 
 	public Faction getFaction() {
@@ -153,6 +190,10 @@ public class Ship extends Placable {
 
 	public int getBoredom() {
 		return boredom;
+	}
+	
+	public static int getMaxcondition() {
+		return maxCondition;
 	}
 
 }
