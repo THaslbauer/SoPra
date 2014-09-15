@@ -113,27 +113,5 @@ public class IllegalMapTest {
 		}
 		checkNFail(s,"Map too big(height)");
 	}
-	
-	
-	@Test
-	public void test () {
-		String s = "Rolf XD \nasdf COOl";
-		System.out.println(s);
-		try {
-			mp.parseMap(asIS(s), sim);
-			fail();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NullPointerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			
-		}
-		
-	}
+
 }

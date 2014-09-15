@@ -1,5 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
@@ -10,7 +11,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
  *
  */
 public abstract class Worldmap {
-	private InfoPoint infoPoint;
+	private ExtendedLogWriter logger;
 	private EntityFactory entityFactory;
 	
 	/**
@@ -18,8 +19,8 @@ public abstract class Worldmap {
 	 * @param infoPoint the mighty infoPoint
 	 * @param entityFactory
 	 */
-	public Worldmap(InfoPoint infoPoint, EntityFactory entityFactory) {
-		this.infoPoint = infoPoint;
+	public Worldmap(ExtendedLogWriter logger, EntityFactory entityFactory) {
+		this.logger = logger;
 		this.entityFactory = entityFactory;
 	}
 
@@ -95,8 +96,8 @@ public abstract class Worldmap {
 	 */
 	public abstract Treasure createTreasure(int value, Tile tile);
 	
-	public InfoPoint getInfoPoint() {
-		return infoPoint;
+	public ExtendedLogWriter getExtendedLogWriter() {
+		return logger;
 	}
 
 	public EntityFactory getEntityFactory() {
