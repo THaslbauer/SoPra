@@ -9,4 +9,9 @@ public class ThrowHelper {
 		if(value < 0)
 			throw new IllegalArgumentException("Value is negative");
 	}
+	
+	public static void notNegative (int value, String s) throws IllegalArgumentException {
+		if(value < 0) 
+			throw new IllegalArgumentException(s);
+	}
 }

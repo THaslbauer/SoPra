@@ -1,7 +1,5 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import java.lang.reflect.Array;
-
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 
 /**
