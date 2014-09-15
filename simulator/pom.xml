@@ -19,6 +19,14 @@
 </roles>
 <timezone>2</timezone>
 </developer><developer>
+<id>gerstner</id>
+<name>Nico Gerstner</name>
+<email>s9nigers@stud.uni-saarland.de</email>
+<roles>
+<role>Developer</role>
+</roles>
+<timezone>2</timezone>
+</developer><developer>
 <id>lenhof</id>
 <name>Kerstin Lenhof</name>
 <email>s9kelenh@stud.uni-saarland.de</email>
@@ -35,14 +43,6 @@
 </roles>
 <timezone>2</timezone>
 </developer><developer>
-<id>gerstner</id>
-<name>Nico Gerstner</name>
-<email>s9nigers@stud.uni-saarland.de</email>
-<roles>
-<role>Developer</role>
-</roles>
-<timezone>2</timezone>
-</developer><developer>
 <id>hahn</id>
 <name>Christopher Hahn</name>
 <email>s9chhahn@stud.uni-saarland.de</email>
@@ -52,6 +52,16 @@
 <timezone>2</timezone>
 </developer>
 	</developers>
+	<profiles>
+                <profile>
+                        <activation>
+                                <jdk>1.8</jdk>
+                        </activation>
+                        <properties>
+                                <disablelint>-Xdoclint:none</disablelint>
+                        </properties>
+                </profile>
+        </profiles>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -102,6 +112,11 @@
                         <artifactId>logger-core</artifactId>
                         <version>0.1-SNAPSHOT</version>
                 </dependency>
+		<dependency>
+			<groupId>de.unisaarland.cs.st.pirates</groupId>
+			<artifactId>logger-bypass</artifactId>
+			<version>0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<reporting>
 		<plugins>
@@ -131,6 +146,7 @@
 				<configuration>
 					<minmemory>128m</minmemory>
 					<maxmemory>512m</maxmemory>
+					<additionalparam>${disablelint}</additionalparam>
 				</configuration>
 				<version>2.9.1</version>
 			</plugin>
