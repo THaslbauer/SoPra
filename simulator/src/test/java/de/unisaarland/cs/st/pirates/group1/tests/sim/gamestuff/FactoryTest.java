@@ -267,4 +267,29 @@ public class FactoryTest extends TestCase {
 		assertTrue("Expected Buoy ID 0, instead had ID "+kraken.getId(), kraken.getId() == 0);
 	}
 
+	/**
+	 * Tests Setters / Getters
+	 */
+	public void testSetterGetter(){
+		factory.setBuoyNextId(5);
+		factory.setKrakenNextId(6);
+		factory.setShipNextId(7);
+		factory.setTreasureNextId(8);
+		assertTrue("BuoyNextID has problems after setting", factory.getBuoyNextId() == 5);
+		assertTrue("KrakenNextID has problems after setting", factory.getKrakenNextId() == 5);
+		assertTrue("ShipNextID has problems after setting", factory.getShipNextId() == 5);
+		assertTrue("TreasureNextID has problems after setting", factory.getTreasureNextId() == 5);
+	}
+	
+	/**
+	 * Tests Constructor
+	 */
+	public void testConstructor(){
+		factory = new EntityFactory();
+		assertTrue("Problem with BuoyNextID", factory.getBuoyNextId() == 0);
+		assertTrue("Problem with ShipNextID", factory.getShipNextId() == 0);
+		assertTrue("Problem with TreasureNextID", factory.getTreasureNextId() == 0);
+		assertTrue("Problem with KrakenNextID", factory.getKrakenNextId() == 0);
+	}
+	
 }
