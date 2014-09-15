@@ -1,5 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.throwIAException;
+
 /**
  * Represents a Buoy on the far sea
  * @author Jens Kreber
@@ -18,7 +20,7 @@ public class Buoy extends Placable {
 	 */
 	public Buoy(int type, Faction faction, int id, Tile tile) {
 		super(id, tile);
-		this.type = type;
+		this.type = type >= 0 && type <= 6 ? type : (int) throwIAException("Buoy Value is trash");
 		this.faction = faction;
 	}
 

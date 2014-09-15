@@ -38,6 +38,7 @@ public class Ship extends Placable {
 		this.morale = maxMorale;
 		this.boredom = 0;
 		this.condition = maxCondition;
+		heading = Heading.H0;
 		clearRegisters();
 	}
 	
