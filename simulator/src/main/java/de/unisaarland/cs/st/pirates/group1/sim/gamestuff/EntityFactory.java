@@ -11,7 +11,16 @@ public class EntityFactory {
 	private int shipNextId;
 	private int treasureNextId;
 	private int buoyNextId;
+	private int krakenNextId;
 	
+	public int getKrakenNextId() {
+		return krakenNextId;
+	}
+
+	public void setKrakenNextId(int krakenNextId) {
+		this.krakenNextId = krakenNextId;
+	}
+
 	public EntityFactory(){
 		//TODO:implement this
 	}
