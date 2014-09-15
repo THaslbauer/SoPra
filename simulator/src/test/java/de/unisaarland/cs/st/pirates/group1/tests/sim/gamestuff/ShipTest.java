@@ -110,7 +110,7 @@ public class ShipTest {
 		
 		ship1.increasePC();
 		
-		assertTrue(ship1.getPC() == 1);
+		assertTrue("PC should be increased",ship1.getPC() == 1);
 	}
 	
 	@Test
@@ -120,10 +120,12 @@ public class ShipTest {
 		
 		int test = instruction1.getValue();
 		
+		assertTrue(test == 0);
+		
 		ship1.step();
 		
-		assertTrue(ship1.getPC() == 1);
-		assertTrue(instruction1.getValue() == 1);
+		assertTrue("PC should be increased",ship1.getPC() == 1);
+		assertTrue("instruction must be executed",instruction1.getValue() == 1);
 	}
 	
 	@Test
@@ -188,7 +190,7 @@ public class ShipTest {
 		
 		ship1.increaseBoredom();
 		
-		assertTrue(ship1.getBoredom() == 1);
+		assertTrue("boredom should be increased by one",ship1.getBoredom() == 1);
 	}
 	
 	@Test
@@ -208,7 +210,7 @@ public class ShipTest {
 		//Tests if resetBoredom works
 		ship1.resetBoredom();
 		
-		assertTrue(ship1.getBoredom() == 0);
+		assertTrue("boredom should be resetted (0)",ship1.getBoredom() == 0);
 	}
 	
 	
@@ -342,7 +344,7 @@ public class ShipTest {
 		assertTrue(Ship.getMaxmorale() == 4);
 		assertTrue(Ship.getMaxload() == 4);
 		assertTrue(Ship.getMaxboredom() == 40);
-		assertTrue(Ship.getMa)
+		assertTrue(Ship.getMaxcondition() == 3);
 	}
 	
 	@Test
@@ -396,12 +398,12 @@ public class ShipTest {
 		
 		ship1.increaseBoredom();
 		
-		assertTrue(ship1.getBoredom() == 0);
-		assertTrue(ship1.getMorale() == 3);
+		assertTrue("boredom should be resetted after forty cycles",ship1.getBoredom() == 0);
+		assertTrue("morale must be lowered after forty cycles",ship1.getMorale() == 3);
 	}
 	
 	@Test
 	public void shipmoved(){
-		//Test if setMyTile works
+		
 	}
 }
