@@ -84,7 +84,7 @@ public class ShipTest {
 		assertTrue(ship1.getFaction() == faction1);
 		assertTrue(ship1.getId() == id1);
 		assertTrue(ship1.getMyTile().equals(tile1));
-		//TODO: test if ship is attached to tile
+		assertTrue(ship1.getMyTile().getShip().equals(ship1));
 		
 		
 		assertTrue(ship1.getRegister(Register.SENSE_CELLTYPE) == -1);
@@ -211,7 +211,6 @@ public class ShipTest {
 		assertTrue(ship1.getBoredom() == 0);
 	}
 	
-	//TODO: find out what controls the following invariants
 	
 	@Test
 	public void setMorale1Test(){
@@ -222,12 +221,13 @@ public class ShipTest {
 		try{
 			ship1.setMorale(5);
 		}
-		//TODO:Find out which exception is thrown!!!
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
 		}
-		
+		catch(Exception e){
+			fail("Wrong exception thrown");
+		}
 		fail("Wrong value in field morale");
 		
 	}
@@ -241,10 +241,13 @@ public class ShipTest {
 		try{
 			ship1.setMorale(-1);
 		}
-		//TODO:Find out which exception is thrown!!!
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
 		
 		catch(Exception e){
-			return;
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field morale");
@@ -260,9 +263,12 @@ public class ShipTest {
 			ship1.setCondition(4);
 		}
 		
-		//TODO: find out which exception is thrown
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field condition");
@@ -278,9 +284,12 @@ public class ShipTest {
 			ship1.setCondition(0);
 		}
 		
-		//TODO: find out which exception is thrown
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field condition");
@@ -295,8 +304,12 @@ public class ShipTest {
 			ship1.setLoad(5);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field load");
@@ -311,8 +324,12 @@ public class ShipTest {
 			ship1.setLoad(-1);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Wrong value in field load");
@@ -325,8 +342,7 @@ public class ShipTest {
 		assertTrue(Ship.getMaxmorale() == 4);
 		assertTrue(Ship.getMaxload() == 4);
 		assertTrue(Ship.getMaxboredom() == 40);
-		
-		//TODO: ask if we should have Maxcondition too
+		assertTrue(Ship.getMa)
 	}
 	
 	@Test
@@ -338,8 +354,12 @@ public class ShipTest {
 			ship1.setRestTime(9);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Resttime cannot be greater than 8");
@@ -354,8 +374,12 @@ public class ShipTest {
 			ship1.setRestTime(-1);
 		}
 		
-		catch(Exception e){
+		catch(IllegalArgumentException e){
 			return;
+		}
+		
+		catch(Exception e){
+			fail("Wrong exception thrown");
 		}
 		
 		fail("Resttime cannot be less than 0");
