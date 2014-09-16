@@ -103,6 +103,7 @@ public class IllegalMapTest {
 		checkNFail(s,"Map too big(width)");
 	}
 	
+	@Test
 	public void tooBigSizeTest2() {
 		String s = "2\n201\n";
 		for(int i = 0; i < 201; i++) {
@@ -113,5 +114,17 @@ public class IllegalMapTest {
 		}
 		checkNFail(s,"Map too big(height)");
 	}
-
+	
+	@Test
+	public void sizeNotMatchMapTest1() {
+		String s = "3\n4\n..5\n#&a\n...";
+		checkNFail(s,"Map size does not match map structure");
+	}
+	
+	@Test
+	public void sizeNotMatchMapTest2() {
+		String s = "4\n3\n1234\n..#&\na..";
+		checkNFail(s,"Map size does not match map structure");		
+	}
+	
 }
