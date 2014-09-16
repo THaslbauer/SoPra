@@ -33,7 +33,7 @@ public class Simulator
 	
 	
 	public Simulator(ExtendedLogWriter logger){
-		this.maxCicle = 10000;
+		this(logger, 10000);
 	}
 	
 	public Simulator(ExtendedLogWriter logger, int maxCycle)
@@ -144,6 +144,10 @@ public class Simulator
 
 	public void setEntityFactory(EntityFactory entityFactory) {
 		this.entityFactory = entityFactory;
+	}
+	
+	public int getMaxCycle(){
+		return this.maxCicle;
 	}
 	
 	
