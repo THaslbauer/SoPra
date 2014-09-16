@@ -93,4 +93,10 @@ public class DumbExtendedLogWriter implements ExtendedLogWriter{
 		
 	}
 
+	@Override
+	public void registerChange(Ship ship) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

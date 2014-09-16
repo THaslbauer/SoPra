@@ -141,4 +141,11 @@ public void fight(Ship ship, Kraken kraken) {
 	
 }
 
+
+@Override
+public void registerChange(Ship ship) {
+	// TODO Auto-generated method stub
+	
+}
+
 }
