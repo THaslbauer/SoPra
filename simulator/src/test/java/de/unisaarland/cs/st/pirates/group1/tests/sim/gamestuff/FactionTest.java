@@ -21,7 +21,7 @@ public class FactionTest {
 	}
 	
 	@Test
-	public void factionConstructorTest(){
+	public void factionConstructor1Test(){
 		
 		String faction_name = "test";
 		int id = 1;
@@ -34,6 +34,22 @@ public class FactionTest {
 		assertTrue("the id of the faction must be 1", faction.getFactionID() ==1);
 		
 		
+	}
+	
+	@Test
+	public void factionConstructor2Test(){
+		
+		try{
+		String faction_name = null;
+		
+		Faction faction = new Faction(faction_name,2);
+		}
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
+		
+		fail("a faction's name should not be null");
 	}
 	
 	@Test
@@ -55,7 +71,10 @@ public class FactionTest {
 		// test if tactics are added
 		Instruction ins = new ShipTest.TestInstruction();
 		Instruction [] instructions = new Instruction[2];
-		 
+		
+		instructions[0] = ins;
+		instructions[1] = ins;
+		
 		faction.setTactics(instructions);
 		
 		assertTrue("Instruction array must be correct",faction.getTactics().equals(instructions));
@@ -211,6 +230,8 @@ public class FactionTest {
 		
 		Instruction ins = new ShipTest.TestInstruction();
 		Instruction [] instructions = new Instruction[2];
+		instructions[0] = ins;
+		instructions[1] = ins;
 		 
 		faction.setTactics(instructions);
 		
@@ -228,6 +249,8 @@ public class FactionTest {
 		
 		Instruction ins = new ShipTest.TestInstruction();
 		Instruction [] instructions = new Instruction[2];
+		instructions[0] = ins;
+		instructions[1] = ins;
 		
 		try{
 			faction.getInstruction(2);
@@ -243,7 +266,7 @@ public class FactionTest {
 	@Test
 	public void getInstruction3Test(){
 		
-String faction_name = "test";
+		String faction_name = "test";
 		
 		Faction faction = new Faction(faction_name,1);
 		
@@ -260,4 +283,29 @@ String faction_name = "test";
 		
 		fail("index out of bounds exception should be thrown (wrong PC)");
 	}
+	
+	@Test
+	public void equalsTest(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		
+		//another faction for testing purposes
+		String faction_name2 ="test1";
+		Faction faction2 = new Faction(faction_name2,1);
+		
+		//another faction for testing purposes
+		String faction_name3 = "test";
+		Faction faction3 = new Faction(faction_name3, 3);
+		
+		assertTrue("a faction should equal itself",faction.equals(faction));
+		assertFalse("a faction should not equal null", faction.equals(null));
+		assertFalse("a faction should not equal true",faction.equals(true));
+		assertFalse("a faction should not equal another faction with different name", faction.equals(faction2));
+		assertFalse("a faction should not equal another faction with different id", faction.equals(faction3));
+	}
+	
+	
 }
