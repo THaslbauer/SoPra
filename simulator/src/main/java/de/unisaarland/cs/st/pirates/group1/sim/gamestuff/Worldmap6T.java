@@ -33,6 +33,7 @@ public class Worldmap6T extends Worldmap {
 			throw new IllegalArgumentException("Height is odd!");
 		this.width = width;
 		this.height = height;
+		tiles = new Tile[height][width];
 	}
 	
 

@@ -2,7 +2,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
 
-public class AddCell {
+public class AddCell extends LogOperation {
 	public LogWriter.Cell type;
 	public Integer affiliation;
 	public int x, y;

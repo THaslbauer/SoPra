@@ -1,23 +1,26 @@
 package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
 
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
 
-public class Destroy {
-	public LogWriter.Cell type;
-	public Integer affiliation;
+public class Destroy extends LogOperation {
+	public Entity entity;
+	public int id;
 	
-	Destroy(LogWriter.Cell type, Integer affiliation) {
-		this.type = type;
-		this.affiliation = affiliation;
+	public Destroy(Entity entity, int id) {
+		this.entity = entity;
+		this.id = id;
 	}
 	
-	public boolean equals (Object o) {
-		AddCell other;
+	public boolean equals(Object o) {
+		Destroy other;
 		try {
-			other = (AddCell) o;
-		} catch(ClassCastException e) {
+			other = (Destroy) o;
+		} catch (ClassCastException e) {
 			return false;
 		}
-		return type == other.type && affiliation == other.affiliation;		
+		
+		return entity == other.entity && id == other.id;
 	}
+	
+	
 }

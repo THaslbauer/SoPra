@@ -39,6 +39,10 @@ public class Base extends Tile {
 	public boolean isSupply() {
 		return false;
 	}
-
 	
+	//TODO TEST
+	public Faction getFacion() {
+		return faction;
+	}
+
 }
