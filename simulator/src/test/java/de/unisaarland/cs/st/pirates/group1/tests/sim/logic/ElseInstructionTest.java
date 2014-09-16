@@ -9,6 +9,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.logic;
 import static org.junit.Assert.assertTrue;
 
 import java.lang.reflect.Array;
+import java.util.Random;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,6 +24,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.ElseInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.FlipZeroInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAllInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAnyInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfInstruction;
@@ -74,6 +76,13 @@ public class ElseInstructionTest {
 	@Test
 	public void flipZeroInstructionPCTest(){
 		//TODO TEST
+		Random rand = new Random();
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand);
+		
+		flipZeroInstr.execute(ship);
+		
+		assertTrue(rand.equals(flipZeroInstr.getRand()));
 	}
 	
 	//IfALlInstruction Test should evaluate to false and set the new PC
