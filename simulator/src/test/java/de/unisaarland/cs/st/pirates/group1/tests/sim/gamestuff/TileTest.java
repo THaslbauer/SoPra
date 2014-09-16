@@ -6,6 +6,8 @@ import org.junit.Test;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Base;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
@@ -13,6 +15,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import junit.framework.TestCase;
 
 public class TileTest extends TestCase {
@@ -77,15 +81,53 @@ public class TileTest extends TestCase {
 	 * Tests attaching and detaching
 	 */
 	@Test
-	public void testAttachDetach(){
+	public void krakenAttachDetachTest()
+	{
+		// attaches and detaches a kraken
+		Kraken kraken = new Kraken(0, basicTile);
+		
+		assertTrue("Either the kraken doesn't attach itselve to the tile or the tile's getter for kraken is wrong.",
+				basicTile.getKraken() == kraken);
+
+		basicTile.detach(kraken);
+		
+		assertTrue("The tile's method detach(kraken) didn't detache the kraken.", basicTile.getKraken() == null);
+		
+		basicTile.attach(kraken);
+		
+		assertTrue("The tile's method attach(kraken) didn't attach the kraken", basicTile.getKraken() == kraken);
+		
+	}
+	
+	@Test
+	public void treasureAttachDetachTest()
+	{
+		// attaches and detaches a treasure
+		Treasure treasure = new Treasure(1, 1, basicTile);
+		
+		assertTrue("Either the treasure doesn't attach itselve to the tile or the tile's getter for treasure is wrong.",
+				basicTile.getTreasure() == treasure);
+		
+		basicTile.detach(treasure);
+		
+		assertTrue("The tile's method detach(treasure) didn't detach the kraken.", basicTile.getTreasure() == null);
+		
+		basicTile.attach(treasure);
+		
+		assertTrue("The tile's method attach(treasure) didn't attach the treasure", basicTile.getTreasure() == treasure);
+		
 	}
 	
 	/**
 	 * Tests getNeighbour
 	 */
 	@Test
-	public void testNeighbour(){
-		//TODO implement
+	public void testNeighbour()
+	{
+		Tile neighbourTile = worldmap.getTile(new Position(0,1));
+		
+		assertTrue("The tile's method getNeighbour() calculates the wrong neighbour tile.",
+				basicTile.getNeighbour(Heading.H4, Direction.D0) == neighbourTile);
 	}
 	
 	/**
