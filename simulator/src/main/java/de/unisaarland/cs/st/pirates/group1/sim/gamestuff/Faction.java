@@ -12,10 +12,12 @@ public class Faction {
 	private int shipCount;
 	private int factionID;
 	private Instruction[] tactics;
+	private String name;
 	
 	/**
 	 * create a Faction
-	 * @param name
+	 * @param name The name of the Faction.
+	 * @param id The ID of the Faction.
 	 */
 	public Faction(String name, int id){
 		this.name = name;
@@ -57,8 +59,6 @@ public class Faction {
 		this.tactics = tactics;
 	}
 
-	private String name;
-	
 	/**
 	 * increases the ship counter of the Faction
 	 */
@@ -103,6 +103,7 @@ public class Faction {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + factionID;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -116,6 +117,8 @@ public class Faction {
 		if (getClass() != obj.getClass())
 			return false;
 		Faction other = (Faction) obj;
+		if (factionID != other.factionID)
+			return false;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -123,5 +126,5 @@ public class Faction {
 			return false;
 		return true;
 	}
-	
+
 }
