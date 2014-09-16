@@ -13,8 +13,8 @@ public class EnumTest
 	public void cellTypeTest()
 	{
 		assertTrue(CellType.ISLAND.ordinal() == 0);
-		assertTrue(CellType.ENEMYHOME.ordinal() == 1);
-		assertTrue(CellType.HOME.ordinal() == 2);
+		assertTrue(CellType.HOME.ordinal() == 1);
+		assertTrue(CellType.ENEMYHOME.ordinal() == 2);
 		assertTrue(CellType.EMPTY.ordinal() == 3);
 	}
 	
@@ -64,7 +64,8 @@ public class EnumTest
 		assertTrue(Register.SHIP_CONDITION.ordinal() == 17);
 	}
 	
-	@Test void shipTypeTest()
+	@Test 
+	public void shipTypeTest()
 	{
 		assertTrue(ShipType.FRIEND.ordinal() == 0);
 		assertTrue(ShipType.ENEMY.ordinal()  == 1);
