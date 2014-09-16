@@ -201,7 +201,63 @@ public class FactionTest {
 		
 		fail("Score cannot be decreased by two if there is only one point left");
 	}
+
+	@Test
+	public void getInstruction1Test(){
 	
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		Instruction ins = new ShipTest.TestInstruction();
+		Instruction [] instructions = new Instruction[2];
+		 
+		faction.setTactics(instructions);
+		
+		Instruction instruction = faction.getInstruction(1);
+		
+		assertTrue("the right instruction should be returned",instruction.equals(ins));
+	}
 	
+	@Test
+	public void getInstruction2Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		Instruction ins = new ShipTest.TestInstruction();
+		Instruction [] instructions = new Instruction[2];
+		
+		try{
+			faction.getInstruction(2);
+		}
+		
+		catch(IndexOutOfBoundsException e){
+			return;
+		}
+		
+		fail("index out of bounds exception should be thrown (wrong PC)");
+	}
 	
+	@Test
+	public void getInstruction3Test(){
+		
+String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		Instruction ins = new ShipTest.TestInstruction();
+		Instruction [] instructions = new Instruction[2];
+		
+		try{
+			faction.getInstruction(-1);
+		}
+		
+		catch(IndexOutOfBoundsException e){
+			return;
+		}
+		
+		fail("index out of bounds exception should be thrown (wrong PC)");
+	}
 }
