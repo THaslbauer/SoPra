@@ -104,6 +104,7 @@ public class WorldMapTest extends TestCase {
 	public void testDirectionStuff(){
 		//testing direction switching
 		Position p = map.calcPosition(middle, Heading.H0, Direction.D0);
+		assertTrue("calcPosition returned no Position!", p == null);
 		assertTrue("calcPosition calculated wrong Position for H0, D0. Was ("+p.x+", "+p.y+") instead of (2,1)",p.x == 2 && p.y == 1);
 		p = map.calcPosition(middle, Heading.H0, Direction.D1);
 		assertTrue("calcPosition calculated wrong Position for H0, D1. Was ("+p.x+", "+p.y+") instead of (2,2)",p.x == 2 && p.y == 2);
