@@ -105,6 +105,36 @@ public class ControllerTest
 		assertTrue("the simulator's method step() was not called", expectedValueSimulator == testSimulator.value);
 	}
 	
+	@Test
+	public void getsetTest()
+	{
+		controller = new Controller(null, null, null, null, null);
+		
+		controller.setSimulator(testSimulator);
+		assertTrue("The controllers's setter or getter for the simulator was incorrect",
+				testSimulator.equals(controller.getSimulator()));
+		
+		
+		controller.setMapParser(testMapParser);
+		assertTrue("The controllers's setter or getter for the mapParser was incorrect",
+				testMapParser.equals(controller.getMapParser()));
+		
+		
+		controller.setTacticsParser(testTacticsParser);
+		assertTrue("The controllers's setter or getter for the tacticsParser was incorrect",
+				testTacticsParser.equals(controller.getTacticsParser()));
+		
+		
+		controller.setMapFile(null);
+		assertTrue("The controllers's setter or getter for the mapFile was incorrect",
+				controller.getMapFile() == null);
+		
+		
+		controller.setTacticsFile(null);
+		assertTrue("The controllers's setter or getter for the tacticsFile was incorrect",
+				controller.getTacticsFile() == null);
+	}
+	
 	
 	
 }

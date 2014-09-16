@@ -247,5 +247,19 @@ public class InfoPointTest
 		assertTrue("The gui's method notify() was not called.", expectedValGui == testGui.value);
 	}
 	
+	@Test
+	public void getsetTest()
+	{
+		infoPoint = new InfoPoint();
+		
+		infoPoint.setRefLogger(testLogger);
+		assertTrue("The infoPoint's setter or getter for the RefLogger was incorrect",
+				testLogger.equals(infoPoint.getRefLogger()));
+		
+		
+		infoPoint.setGUI(testGui);
+		assertTrue("The infoPoint's setter or getter for the GUI was incorrect",
+				testGui.equals(infoPoint.getGUI()));
+	}
 	
 }
