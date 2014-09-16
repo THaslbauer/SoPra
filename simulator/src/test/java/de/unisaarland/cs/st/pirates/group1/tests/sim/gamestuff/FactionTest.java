@@ -300,11 +300,16 @@ public class FactionTest {
 		String faction_name3 = "test";
 		Faction faction3 = new Faction(faction_name3, 3);
 		
+		//another faction for testing purposes
+		String faction_name4 = "test";
+		Faction faction4 = new Faction(faction_name4,1);
+		
 		assertTrue("a faction should equal itself",faction.equals(faction));
 		assertFalse("a faction should not equal null", faction.equals(null));
 		assertFalse("a faction should not equal true",faction.equals(true));
 		assertFalse("a faction should not equal another faction with different name", faction.equals(faction2));
 		assertFalse("a faction should not equal another faction with different id", faction.equals(faction3));
+		assertTrue("a faction equals a second faction with same data", faction.equals(faction4));
 	}
 	
 	

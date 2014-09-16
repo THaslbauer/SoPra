@@ -51,8 +51,45 @@ public class BuoyAndTreasureTest {
 		assertTrue(faction.equals(buoy.getFaction()));
 		assertTrue(id == buoy.getId());
 		assertTrue(tile.equals(buoy.getMyTile()));
+		assertTrue(tile.getBuoyMap().get(faction).contains(buoy));
+	}
+	
+	@Test
+	public void buoyConstructor2Test(){
 		
-		//TODO: Test if tile noticed that a buoy is attached to it
+		int type = -1;
+	    Faction faction = new Faction("a",0);	
+		int id = 1;
+		Tile tile = new Sea(null,new Position(1,1));
+		
+		try{
+			Buoy buoy = new Buoy(type,faction,id,tile);
+		}
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
+		
+		fail("type of buoy cannot be -1");
+	}
+	
+	@Test
+	public void buoyConstructor3Test(){
+		
+		int type = 6;
+	    Faction faction = new Faction("a",0);	
+		int id = 1;
+		Tile tile = new Sea(null,new Position(1,1));
+		
+		try{
+			Buoy buoy = new Buoy(type,faction,id,tile);
+		}
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
+		
+		fail("type of buoy cannot be 6");
 	}
 		
 	
@@ -62,8 +99,8 @@ public class BuoyAndTreasureTest {
 		assertTrue(id2 == treasure.getId());
 		assertTrue(value == treasure.getValue());
 		assertTrue(tile.equals(treasure.getMyTile()));
+		assertTrue(tile.getTreasure().equals(treasure));
 	}
 	
-	//TODO: test if tile noticed that a treasure is attached to it
 
 }
