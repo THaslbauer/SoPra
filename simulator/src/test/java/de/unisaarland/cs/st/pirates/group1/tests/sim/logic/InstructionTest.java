@@ -69,11 +69,22 @@ public class InstructionTest {
 	//GotoInstruction Tests
 	
 	/**
+	 * goTo address getter check
+	 */
+	@Test
+	public void goToAdressGetterTest(){
+		GotoInstruction goToInstruction = new GotoInstruction(null,-11);
+		
+		goToInstruction.execute(ship);
+		assertTrue(goToInstruction.getAddress() == -11);
+	}
+	
+	/**
 	 * testing if the pc after the goto is increased of the right amount
 	 * and also checks if a null logger is handled correctly
 	 */
 	@Test
-	public void GoToCorrectJumpTest(){
+	public void goToCorrectJumpTest(){
 		Instruction goToInstruction = new GotoInstruction(null,1);
 		
 		int pc = ship.getPC();
@@ -92,7 +103,7 @@ public class InstructionTest {
 	 */
 	
 	@Test
-	public void GoToCorrectZeroJumpTest(){
+	public void goToCorrectZeroJumpTest(){
 		Instruction goToInstruction = new GotoInstruction(null,0);
 		
 		//int pc = ship.getPC();
@@ -109,7 +120,7 @@ public class InstructionTest {
 	 */
 	
 	@Test
-	public void GoToLoggerReceives(){
+	public void goToLoggerReceives(){
 		TestGui testGui = new TestGuiNotify();
 		Instruction goToInstruction = new GotoInstruction(testGui,12);
 		
@@ -122,7 +133,7 @@ public class InstructionTest {
 	 * checks if notify and create method in gui is called
 	 */
 	@Test
-	public void ShipDropNotifyTest(){
+	public void shipDropNotifyTest(){
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
@@ -138,7 +149,7 @@ public class InstructionTest {
 	 */
 	
 	@Test
-	public void ShipDropsLoadTest(){
+	public void shipDropsLoadTest(){
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
@@ -159,7 +170,7 @@ public class InstructionTest {
 	 * checks if PC is increased after Drop
 	 */
 	@Test
-	public void DropInstructionIncreasePC(){
+	public void dropInstructionIncreasePC(){
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
