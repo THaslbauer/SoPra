@@ -382,17 +382,52 @@ public class InstructionTest {
 	}
 	
 	/**
-	 * Sense Test Buoy
+	 * Sense Test own Buoy
 	 */
 	@Test
-	public void BuoySenseTest(){
+	public void OwnBuoySenseTest(){
 		Direction d = Direction.D0;
 		TestGui testGui = new TestGuiNotify();
 		SenseInstruction senseInstruction = new SenseInstruction(testGui, d);
+		Buoy b = worldMap.createBuoy(5, faction, waterTile2);
 		
 		senseInstruction.execute(ship);
 		
+		assertTrue(ship.getRegister(Register.SENSE_ENEMYMARKER) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER5) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER0) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER1) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER2) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER3) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER4) == 0);
+		
 	}
+	/**
+	 * Sense Test enemy Buoy
+	 */
+	
+	@Test
+	public void EnemyBuoySenseTest(){
+		Direction d = Direction.D0;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui, d);
+		Faction enemyFaction = new Faction("b",1);
+		Buoy b = worldMap.createBuoy(5, enemyFaction, waterTile2);
+		
+		senseInstruction.execute(ship);
+		
+		assertTrue(ship.getRegister(Register.SENSE_ENEMYMARKER) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER5) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER0) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER1) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER2) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER3) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER4) == 0);
+		
+	}
+	
+	//TurnInstruction
+
 	
 /*
  * Christopher Tests END
