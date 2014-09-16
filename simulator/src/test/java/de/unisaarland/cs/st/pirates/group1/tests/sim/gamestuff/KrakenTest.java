@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
@@ -124,6 +125,31 @@ public class KrakenTest {
 		assertTrue("the tile's kraken should not change",tile31.getKraken().equals(kraken1));
 		
 		
+	}
+	
+	@Test
+	public void krakenfail3Test(){
+		
+		//faction for testing purposes
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		//world map with three base tiles and one sea tile
+		Worldmap6T myMap = new Worldmap6T(2,2, null, null);
+		myMap.createBaseTile(new Position(0,0), faction);
+		myMap.createBaseTile(new Position(0,1), faction);
+		myMap.createBaseTile(new Position(1,1), faction);
+		myMap.createSeaTile(new Position(1,0));
+		
+		Tile tile = myMap.getTile(new Position(1,0));
+		
+		Kraken kraken = new Kraken(2,tile);
+		
+		kraken.step();
+		
+		assertTrue("kraken should stay at its place", kraken.getMyTile().equals(tile));
+		assertTrue("", tile.getKraken().equals(kraken));
 	}
 	
 	@Test
