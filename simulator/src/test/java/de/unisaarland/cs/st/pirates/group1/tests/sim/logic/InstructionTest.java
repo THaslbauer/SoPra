@@ -54,7 +54,7 @@ public class InstructionTest {
 		worldMap = new Worldmap6T(2,2,null,null);
 		
 		//A TestFaction, Position and Tile
-		faction = new Faction("a");
+		faction = new Faction("a",0);
 		Position position1 = new Position(0,0);
 		Position position2 = new Position(1,0);
 		Position position3 = new Position(0,1);
@@ -283,6 +283,12 @@ public class InstructionTest {
 		
 		assertTrue(markInstruction.getType() == 4);
 	}
+	
+	//Sense Instruction
+	
+	/**
+	 * 
+	 */
 	
 /*
  * Christopher Tests END
