@@ -261,4 +261,24 @@ public class WorldMapTest extends TestCase {
 		assertTrue("Value not set properly", treasure.getValue() == value);
 	}
 
+	/**
+	 * Tests if going over map bounds with calculatePosition comes back from the other side
+	 */
+	@Test
+	public void testWraparound(){
+		Position upperLeft = new Position(0, 0);
+		Position lowerRight = new Position(3, 3);
+		Position test = map.calcPosition(upperLeft, Heading.H2, Direction.D0);
+		assertTrue("calcPosition didn't return Position (3,1) on a 4x4-Worldmap if sensing with H2 and D0 on Position (0,0)", test.x == 3 && test.y == 1);
+		test = map.calcPosition(upperLeft, Heading.H5, Direction.D0);
+		assertTrue("calcPosition didn't return Position (0,3) on a 4x4-Worldmap if sensing with H5 and D0 on Position (0,0)", test.x == 0 && test.y == 3);
+		test = map.calcPosition(upperLeft, Heading.H4, Direction.D0);
+		assertTrue("calcPosition didn't return Position (3,3) on a 4x4-Worldmap if sensing with H4 and D0 on Position (0,0)", test.x == 3 && test.y == 3);
+		test = map.calcPosition(lowerRight, Heading.H5, Direction.D0);
+		assertTrue("calcPosition didn't return Position (0,2) on a 4x4-Worldmap if sensing with H5 and D0 on Position (3,3)", test.x == 0 && test.y == 2);
+		test = map.calcPosition(lowerRight, Heading.H2, Direction.D0);
+		assertTrue("calcPosition didn't return Position (3,0) on a 4x4-Worldmap if sensing with H2 and D0 on Position (3,3)", test.x == 3 && test.y == 0);
+		test = map.calcPosition(lowerRight, Heading.H1, Direction.D0);
+		assertTrue("calcPosition didn't return Position (0,0) on a 4x4-Worldmap if sensing with H1 and D0 on Position (3,3)", test.x == 0 && test.y == 0);
+	}
 }
