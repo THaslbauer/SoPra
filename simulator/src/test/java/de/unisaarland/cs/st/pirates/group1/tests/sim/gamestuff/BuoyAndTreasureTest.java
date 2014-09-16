@@ -30,7 +30,7 @@ public class BuoyAndTreasureTest {
 		
 		//Everything that is needed for a buoy
 	    type = 0;
-	    faction = new Faction("a");	
+	    faction = new Faction("a",0);	
 		id = 1;
 		tile = new Sea(null,new Position(1,1));
 		

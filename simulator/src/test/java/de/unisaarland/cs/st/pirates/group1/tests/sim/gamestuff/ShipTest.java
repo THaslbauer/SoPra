@@ -55,7 +55,7 @@ public class ShipTest {
 	public void init(){
 		
 		//Everything that is needed for a ship
-		faction1 = new Faction("a");
+		faction1 = new Faction("a",1);
 		id1 = 1;
 		tile1 = new Sea(null, new Position(1,1));
 		
