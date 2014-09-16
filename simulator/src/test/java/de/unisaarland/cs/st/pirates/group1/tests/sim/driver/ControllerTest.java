@@ -111,19 +111,28 @@ public class ControllerTest
 		controller = new Controller(null, null, null, null, null);
 		
 		controller.setSimulator(testSimulator);
-		assertTrue(testSimulator.equals(controller.getSimulator()));
+		assertTrue("The controllers's setter or getter for the simulator was incorrect",
+				testSimulator.equals(controller.getSimulator()));
+		
 		
 		controller.setMapParser(testMapParser);
-		assertTrue(testMapParser.equals(controller.getMapParser()));
+		assertTrue("The controllers's setter or getter for the mapParser was incorrect",
+				testMapParser.equals(controller.getMapParser()));
+		
 		
 		controller.setTacticsParser(testTacticsParser);
-		assertTrue(testTacticsParser.equals(controller.getTacticsParser()));
+		assertTrue("The controllers's setter or getter for the tacticsParser was incorrect",
+				testTacticsParser.equals(controller.getTacticsParser()));
+		
 		
 		controller.setMapFile(null);
-		assertTrue(controller.getMapFile() == null);
+		assertTrue("The controllers's setter or getter for the mapFile was incorrect",
+				controller.getMapFile() == null);
+		
 		
 		controller.setTacticsFile(null);
-		assertTrue(controller.getTacticsFile() == null);
+		assertTrue("The controllers's setter or getter for the tacticsFile was incorrect",
+				controller.getTacticsFile() == null);
 	}
 	
 	
