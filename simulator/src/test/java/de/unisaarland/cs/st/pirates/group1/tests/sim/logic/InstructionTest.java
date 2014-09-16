@@ -40,15 +40,22 @@ public class InstructionTest {
 	private static Position position;
 	
 	@BeforeClass
-	public void init(){
+	public static void init(){
 		
 		//A worldMap with exactly one seatile
-		worldMap = new Worldmap6T(0,0,null,null);
+		worldMap = new Worldmap6T(2,2,null,null);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a");
-		position = new Position(0,0);
-		waterTile = new Sea(worldMap,position);
+		Position position1 = new Position(0,0);
+		Position position2 = new Position(1,0);
+		Position position3 = new Position(0,1);
+		Position position4 = new Position(1,1);
+		
+		waterTile = new Sea(worldMap,position1);
+		waterTile = new Sea(worldMap, position2);
+		waterTile = new Sea(worldMap, position3);
+		waterTile = new Sea(worldMap, position4);
 		
 		
 		//A Test ship of the TestFaction with ID 1
@@ -62,11 +69,22 @@ public class InstructionTest {
 	//GotoInstruction Tests
 	
 	/**
+	 * goTo address getter check
+	 */
+	@Test
+	public void goToAdressGetterTest(){
+		GotoInstruction goToInstruction = new GotoInstruction(null,-11);
+		
+		goToInstruction.execute(ship);
+		assertTrue(goToInstruction.getAddress() == -11);
+	}
+	
+	/**
 	 * testing if the pc after the goto is increased of the right amount
 	 * and also checks if a null logger is handled correctly
 	 */
 	@Test
-	public void GoToCorrectJumpTest(){
+	public void goToCorrectJumpTest(){
 		Instruction goToInstruction = new GotoInstruction(null,1);
 		
 		int pc = ship.getPC();
@@ -78,12 +96,14 @@ public class InstructionTest {
 		assertTrue(ship.getPC() == pc + 1);
 	}
 	
+	
+	
 	/**
 	 * testing if the jump to 0 is valid
 	 */
 	
 	@Test
-	public void GoToCorrectZeroJumpTest(){
+	public void goToCorrectZeroJumpTest(){
 		Instruction goToInstruction = new GotoInstruction(null,0);
 		
 		//int pc = ship.getPC();
@@ -100,7 +120,7 @@ public class InstructionTest {
 	 */
 	
 	@Test
-	public void GoToLoggerReceives(){
+	public void goToLoggerReceives(){
 		TestGui testGui = new TestGuiNotify();
 		Instruction goToInstruction = new GotoInstruction(testGui,12);
 		
@@ -113,7 +133,7 @@ public class InstructionTest {
 	 * checks if notify and create method in gui is called
 	 */
 	@Test
-	public void ShipDropsLoadTest(){
+	public void shipDropNotifyTest(){
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
@@ -125,10 +145,32 @@ public class InstructionTest {
 	}
 	
 	/**
+	 * checks if right amount of treasure value is on tile after drop
+	 */
+	
+	@Test
+	public void shipDropsLoadTest(){
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction dropInstruction = new DropInstruction(testGui);
+		
+		int val;
+		try{ 
+			val = ship.getMyTile().getTreasure().getValue();
+		} catch (NullPointerException e) {
+			val = 0;
+		}
+		ship.setLoad(4);
+		//checks if there is a treasure on the watertile after dropping
+		
+		dropInstruction.execute(ship);
+		assertTrue(val+4 == ship.getMyTile().getTreasure().getValue());
+	}
+	
+	/**
 	 * checks if PC is increased after Drop
 	 */
 	@Test
-	public void DropInstructionIncreasePC(){
+	public void dropInstructionIncreasePC(){
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
