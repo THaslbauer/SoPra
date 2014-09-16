@@ -94,8 +94,7 @@ public class ExpectLogger implements ExtendedLogWriter {
 
 	@Override
 	public void logStep() throws IllegalStateException, IOException {
-		// TODO Auto-generated method stub
-		
+		ops.add(new LogStep());
 	}
 
 	@Override
