@@ -31,6 +31,9 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiNotify;
@@ -287,8 +290,24 @@ public class InstructionTest {
 	//Sense Instruction
 	
 	/**
-	 * 
+	 * getter Tests Sense Instruction
 	 */
+	
+	@Test
+	public void senseInstructionGetterTest(){
+		Direction d = Direction.D3;
+		ExpectLogger testGui = new ExpectLogger();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui, d );
+		
+		assertTrue(senseInstruction.getDir() == Direction.D3);
+	}
+	
+	@Test
+	public void senseInstructionNotifyTest(){
+		Direction d = Direction.D3;
+		ExpectLogger testLogger = new ExpectLogger();
+		SenseInstruction senseInstruction = new SenseInstruction(testLogger,d);
+	}
 	
 /*
  * Christopher Tests END
