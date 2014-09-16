@@ -32,4 +32,11 @@ public void fight(Ship ship, Ship otherShip);
 
 public void fight(Ship ship, Kraken kraken);
 
+
+/**
+ * notifies the registerchanges of a senseinstruction, which is not implemented in the standard LogWriter Interface
+ * @param ship the ship whos registers have to be updated
+ */
+public void registerChange(Ship ship);
+
 }

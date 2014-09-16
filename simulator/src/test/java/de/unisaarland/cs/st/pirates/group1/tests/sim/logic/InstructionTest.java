@@ -302,11 +302,20 @@ public class InstructionTest {
 		assertTrue(senseInstruction.getDir() == Direction.D3);
 	}
 	
+	/**
+	 * test if notify is called correctly
+	 */
 	@Test
 	public void senseInstructionNotifyTest(){
 		Direction d = Direction.D3;
-		ExpectLogger testLogger = new ExpectLogger();
-		SenseInstruction senseInstruction = new SenseInstruction(testLogger,d);
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui,d);
+		
+		senseInstruction.execute(ship);
+		
+		//checks if checkRegisters is called
+		assertTrue(testGui.value == -2);
+		
 	}
 	
 /*

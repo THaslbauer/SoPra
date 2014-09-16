@@ -102,4 +102,10 @@ public class TestGui implements ExtendedLogWriter
 	public void fight(Ship ship, Kraken kraken) {
 		value += 1;
 	}
+
+	@Override
+	public void registerChange(Ship ship) {
+		// TODO Auto-generated method stub
+		
+	}
 }
