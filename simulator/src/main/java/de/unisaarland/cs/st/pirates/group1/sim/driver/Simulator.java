@@ -3,6 +3,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.driver;
 import java.util.List;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 
 /**
@@ -26,13 +27,13 @@ public class Simulator
 	
 	private final static int maxCicle = 10000;
 	
-	private InfoPoint infoPoint;
+	private ExtendedLogWriter logger;
 	
 	private EntityFactory entityFactory;
 	
 	
 	
-	public Simulator(InfoPoint infoPoint)
+	public Simulator(ExtendedLogWriter logger)
 	{
 		//TODO
 	}
@@ -125,12 +126,12 @@ public class Simulator
 		this.cycle = cycle;
 	}
 
-	public InfoPoint getInfoPoint() {
-		return infoPoint;
+	public ExtendedLogWriter getLogWriter() {
+		return logger;
 	}
 
-	public void setInfoPoint(InfoPoint infoPoint) {
-		this.infoPoint = infoPoint;
+	public void setLogWriter(ExtendedLogWriter logger) {
+		this.logger = logger;
 	}
 
 	public EntityFactory getEntityFactory() {
