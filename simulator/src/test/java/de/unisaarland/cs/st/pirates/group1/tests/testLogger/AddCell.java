@@ -7,7 +7,7 @@ public class AddCell extends LogOperation {
 	public Integer affiliation;
 	public int x, y;
 	
-	AddCell(LogWriter.Cell type, Integer affiliation, int x, int y) {
+	public AddCell(LogWriter.Cell type, Integer affiliation, int x, int y) {
 		this.type = type;
 		this.affiliation = affiliation;
 		this.x = x;

@@ -23,13 +23,14 @@ public class FactionTest {
 	public void factionConstructorTest(){
 		
 		String faction_name = "test";
-		
-		Faction faction = new Faction(faction_name);
+		int id = 1;
+		Faction faction = new Faction(faction_name, id);
 		
 		assertTrue("faction's name must be test", faction.getName().equals(faction_name));
 		assertTrue("the score must be 0", faction.getScore() == 0);
 		assertTrue("the number of ships must be 0", faction.getShipCount() == 0);
 		assertTrue("faction has no tactics yet", faction.getTactics() == null);
+		assertTrue("the id of the faction must be 1", faction.getFactionID() ==1);
 		
 		
 	}
@@ -38,8 +39,9 @@ public class FactionTest {
 	public void getterAndSetterTest(){
 		
 		String faction_name = "test";
+		int id = 1;
 		
-		Faction faction = new Faction(faction_name);
+		Faction faction = new Faction(faction_name,1);
 		
 		//set score on legal value
 		faction.setScore(20);		
