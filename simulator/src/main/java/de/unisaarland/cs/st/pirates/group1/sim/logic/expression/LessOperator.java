@@ -16,6 +16,7 @@ public class LessOperator extends Operator
 	 * than the register in rightval
 	 * 
 	 */
+	@Override
 	public int evaluate(int[] registers){
 		//TODO: implement this
 		return 0;

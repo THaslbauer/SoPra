@@ -1,11 +1,11 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
-public class EqualOperator
+public class EqualOperator extends Operator
 {
 	
 	public EqualOperator(RegisterCall leftval, Primary rightval)
 	{
-		//TODO
+		super(leftval,rightval);
 	}
 	
 	/**
@@ -15,7 +15,8 @@ public class EqualOperator
 	 * @param registers
 	 * @return
 	 */
-	public int evluate(int[] registers)
+	@Override
+	public int evaluate(int[] registers)
 	{
 		//TODO
 		return 0;

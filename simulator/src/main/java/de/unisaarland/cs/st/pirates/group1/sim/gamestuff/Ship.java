@@ -109,7 +109,6 @@ public class Ship extends Placable {
 	 */
 	public void setLoad(int load) throws IllegalArgumentException {
 		notNegative(load);
-		this.load = load <= maxLoad ? load : (int) throwIAException("SETTER: Load too high");
 		/*
 		 * Equivalent to:
 		 *  if(load <= maxLoad) {

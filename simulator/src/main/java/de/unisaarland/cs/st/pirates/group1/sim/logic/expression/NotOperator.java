@@ -4,9 +4,9 @@ public class NotOperator extends Operator
 {
 	
 	
-	public NotOperator(RegisterCall leftval, Literal rightval)
+	public NotOperator(RegisterCall val)
 	{
-		super(leftval, rightval);
+		super(val, null);
 		//TODO
 	}
 	

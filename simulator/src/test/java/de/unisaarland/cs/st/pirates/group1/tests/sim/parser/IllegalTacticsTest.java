@@ -2,6 +2,9 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.parser;
 
 import static de.unisaarland.cs.st.pirates.group1.tests.testUtil.StreamHelper.asIS;
 import static org.junit.Assert.fail;
+
+import org.junit.Test;
+
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap.sRandom;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
@@ -24,7 +27,7 @@ public class IllegalTacticsTest {
 		}
 	}
 	
-	
+	@Test
 	public void senselessTest() {
 		String s = new String("HOHOHOHOH\nTROLOLOLOL");
 		checkNFail(s,"Senseless input\n");

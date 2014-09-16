@@ -15,6 +15,7 @@ public class GreaterOperator extends Operator
 	 * the register in rightval.
 	 * 
 	 */
+	@Override
 	public int evaluate (int[] registers){
 		//TODO: implement this
 		return 0;
