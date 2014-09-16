@@ -12,12 +12,15 @@ public class Faction {
 	private int shipCount;
 	private int factionID;
 	private Instruction[] tactics;
+	private String name;
 	
 	/**
 	 * create a Faction
-	 * @param name
+	 * @param name The name of the Faction.
+	 * @param id The ID of the Faction.
+	 * @throws IllegalArgumentException if name is null
 	 */
-	public Faction(String name, int id){
+	public Faction(String name, int id) throws IllegalArgumentException{
 		this.name = name;
 		this.score = 0;
 		this.shipCount = 0;
@@ -33,7 +36,12 @@ public class Faction {
 		return score;
 	}
 
-	public void setScore(int score) {
+	/**
+	 * Setter for the Faction score
+	 * @param score
+	 * @throws IllegalArgumentException if Score would be set below 0
+	 */
+	public void setScore(int score) throws IllegalArgumentException{
 		this.score = score;
 	}
 
@@ -41,7 +49,12 @@ public class Faction {
 		return shipCount;
 	}
 
-	public void setShipCount(int shipCount) {
+	/**
+	 * Setter for the Faction's ship count
+	 * @param shipCount
+	 * @throws IllegalArgumentException if shipCount would be set below 0
+	 */
+	public void setShipCount(int shipCount) throws IllegalArgumentException{
 		this.shipCount = shipCount;
 	}
 
@@ -57,8 +70,6 @@ public class Faction {
 		this.tactics = tactics;
 	}
 
-	private String name;
-	
 	/**
 	 * increases the ship counter of the Faction
 	 */
@@ -68,8 +79,9 @@ public class Faction {
 	
 	/**
 	 * decreases the ship counter of the Faction
+	 * @throws IllegalArgumentException if shipCount would fall below 0
 	 */
-	public void removeShip(){
+	public void removeShip() throws IllegalArgumentException{
 		//TODO implement
 	}
 	
@@ -84,8 +96,9 @@ public class Faction {
 	/**
 	 * decreases the Factions score
 	 * @param i
+	 * @throws IllegalArgumentException if score would fall below 0
 	 */
-	public void decreaseScore(int i){
+	public void decreaseScore(int i) throws IllegalArgumentException{
 		//TODO implement
 	}
 	
@@ -93,8 +106,9 @@ public class Faction {
 	 * gets an Instruction from the Faction logic with the PC
 	 * @param pc The PC of the ship that wants an Instruction
 	 * @return
+	 * @throws IndexOutOfBoundsException if pc wasn't inside of the Faction's Instruction line count
 	 */
-	public Instruction getInstruction(int pc){
+	public Instruction getInstruction(int pc) throws IndexOutOfBoundsException{
 		//TODO implement
 		return null;
 	}
@@ -103,6 +117,7 @@ public class Faction {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + factionID;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -116,12 +131,11 @@ public class Faction {
 		if (getClass() != obj.getClass())
 			return false;
 		Faction other = (Faction) obj;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
+		if (factionID != other.factionID)
+			return false;
+		else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
-	
+
 }

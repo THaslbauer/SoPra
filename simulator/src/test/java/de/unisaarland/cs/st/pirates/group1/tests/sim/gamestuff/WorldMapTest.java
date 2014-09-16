@@ -14,25 +14,25 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
-import de.unisaarland.cs.st.pirates.group1.tests.testUtil.DumbWorldmap;
-import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestLoggerWithMapChecks;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import junit.framework.TestCase;
 
 public class WorldMapTest extends TestCase {
-
+	
 	private Worldmap map;
 	private EntityFactory factory;
-	private ExtendedLogWriter logger;
+	private ExpectLogger logger;
 	private Position middle;
 	
 	@Before
 	public void setUp(){
 		this.factory = new EntityFactory();
-		this.logger = new TestLoggerWithMapChecks();
-		this.map = new Worldmap6T(4, 4, new TestLoggerWithMapChecks(), new EntityFactory());
+		this.logger = new ExpectLogger();
+		this.map = new Worldmap6T(4, 4, logger, factory);
 		this.middle = new Position(1,1);
 	}
 	
@@ -41,9 +41,7 @@ public class WorldMapTest extends TestCase {
 	 */
 	@Test
 	public void testMapBuild(){
-		ExtendedLogWriter testlog = new TestLoggerWithMapChecks();
-		EntityFactory factory = new EntityFactory();
-		map = new Worldmap(testlog, factory) {
+		map = new Worldmap(logger, factory) {
 			
 			@Override
 			public Tile getTile(Position position) {
@@ -81,20 +79,55 @@ public class WorldMapTest extends TestCase {
 				return null;
 			}
 		};
+		//test general abstract Worldmap properties
 		assertTrue("EntityFactory of Worldmap wasnt set properly, was "+map.getEntityFactory(), map.getEntityFactory() == factory);
-		assertTrue("Logger of Worldmap wasn't set properly, was "+map.getExtendedLogWriter(), map.getExtendedLogWriter() == testlog);
+		assertTrue("Logger of Worldmap wasn't set properly, was "+map.getExtendedLogWriter(), map.getExtendedLogWriter() == logger);
 		int mapX = 6;
 		int mapY = 4;
-		Worldmap6T map6t = new Worldmap6T(mapX, mapY, testlog , factory);
+		Worldmap6T map6t = new Worldmap6T(mapX, mapY, logger , factory);
+		//test if Worldmap6T generates properly
 		assertTrue("Map width of Worldmap6T wasn't set properly, was "+map6t.getWidth()+" instead of "+mapX, map6t.getWidth() == mapX);
 		assertTrue("Map height of Worldmap6T wasn't set properly, was "+map6t.getHeight()+" instead of "+mapX, map6t.getHeight() == mapY);
 		assertTrue("EntityFactory of Worldmap6T wasnt set properly, was "+map6t.getEntityFactory(), map6t.getEntityFactory() == factory);
-		assertTrue("Logger of Worldmap6T wasn't set properly, was "+map6t.getExtendedLogWriter(), map6t.getExtendedLogWriter() == testlog);
+		assertTrue("Logger of Worldmap6T wasn't set properly, was "+map6t.getExtendedLogWriter(), map6t.getExtendedLogWriter() == logger);
 		for(int x = 0; x < mapX; x++){
 			for(int y = 0; x < mapY; y++){
 				assertTrue("Map had Tile at Position ("+x+", "+y+")", map6t.getTile(new Position(x, y)) == null);
 			}
 		}
+	}
+	
+	/**
+	 * Tests if improper constructors fail
+	 */
+	@Test
+	public void testImproperBuild(){
+		//test if Worldmap6T throws proper Exceptions
+		boolean notifiedError = false;
+		Worldmap6T map6t = null;
+		try{
+			map6t = new Worldmap6T(4, 3, logger, factory);
+		}
+		catch(IllegalArgumentException e){
+			notifiedError = true;
+		}
+		assertTrue("Worldmap6T didn't fail to create for size(4,3)", notifiedError);
+		notifiedError = false;
+		try{
+		map6t = new Worldmap6T(0, 2, logger, factory);
+		}
+		catch(IllegalArgumentException e){
+			notifiedError = true;
+		}
+		assertTrue("Worldmap6T didn't fail to create for size (0,2)", notifiedError);
+		notifiedError = false;
+		try{
+			map6t = new Worldmap6T(2, 0, logger, factory);
+		}
+		catch(IllegalArgumentException e){
+			notifiedError = true;
+		}
+		assertTrue("Worldmap6T didn't fail to create for size (0,2)", notifiedError);
 	}
 	
 	
@@ -147,8 +180,105 @@ public class WorldMapTest extends TestCase {
 	/**
 	 * Tests creation abilities and notification
 	 */
-	public void testCreation(){
-		
+	public void testBaseCreation(){
+		Faction testF = new Faction("test", 0);
+		Tile test = map.createBaseTile(middle, testF);
+		assertTrue("Base wasn't built", test == null);
+		assertTrue("Tile is not at specified position", test == map.getTile(middle));
+		assertTrue("Created Tile is not Base", test instanceof Base);
+		Base base = (Base)test;
+		assertTrue("Base faction wasn't set properly", base.getFaction() == testF);
+		assertTrue("Base Position wasn't set properly", base.getPosition().x == middle.x && base.getPosition().y == middle.y);
+		logger.expect(new AddCell(Cell.WATER, 0, middle.x, middle.y));
 	}
 	
+	/**
+	 * Tests Sea creation
+	 */
+	@Test
+	public void testSeaCreation(){
+		Tile test = map.createSeaTile(middle);
+		assertTrue("Tile is not at specified position", test == map.getTile(middle));
+		assertTrue("Created Tile is not Sea", test instanceof Sea);
+		Sea sea = (Sea)test;
+		assertTrue("Base Position wasn't set properly", sea.getPosition().x == middle.x && sea.getPosition().y == middle.y);
+		logger.expect(new AddCell(Cell.WATER, null, middle.x, middle.y));
+	}
+	
+	/**
+	 * Tests normal Island creation
+	 */
+	@Test
+	public void testIslandCreation(){
+		Tile test = map.createIslandTile(middle, false);
+		assertTrue("Tile is not at specified position", test == map.getTile(middle));
+		assertTrue("Created Tile is not Island", test instanceof Island);
+		Island island = (Island)test;
+		assertTrue("Island Position wasn't set properly", island.getPosition().x == middle.x && island.getPosition().y == middle.y);
+		assertTrue("isSupply boolean wasn't set properly for normal Island", island.isSupply() == false);
+		logger.expect(new AddCell(Cell.ISLAND, null, middle.x, middle.y));
+	}
+	
+	/**
+	 * Tests supply Island creation
+	 */
+	@Test
+	public void testSupplyIslandCreation(){
+		Tile test = map.createIslandTile(middle, true);
+		assertTrue("Tile is not at specified position", test == map.getTile(middle));
+		assertTrue("Created Tile is not SupplyIsland (aka Island)", test instanceof Island);
+		Island island = (Island)test;
+		assertTrue("SupplyIsland Position wasn't set properly", island.getPosition().x == middle.x && island.getPosition().y == middle.y);
+		assertTrue("isSupply boolean wasn't set properly for SupplyIsland", island.isSupply() == true);
+		logger.expect(new AddCell(Cell.SUPPLY, null, middle.x, middle.y));
+	}
+	
+	/**
+	 * Tests creation of Buoy
+	 */
+	@Test
+	public void testBuoyCreation(){
+		int type = 3;
+		Tile testTile = map.createSeaTile(middle);
+		Faction testFac = new Faction("test", 0);
+		Buoy buoy = map.createBuoy(type, testFac, testTile);
+		assertFalse("No Buoy returned", buoy == null);
+		assertTrue("Tile not set properly", buoy.getMyTile() == testTile);
+		assertTrue("Buoy type not set properly, was "+buoy.getType(), buoy.getType() == type);
+		assertTrue("Faction not set properly", buoy.getFaction() == testFac);
+	}
+	
+	/**
+	 * Tests creation of Treasure
+	 */
+	@Test
+	public void testTreasureCreation(){
+		int value = 3;
+		Tile testTile = map.createSeaTile(middle);
+		Treasure treasure = map.createTreasure(value, testTile);
+		assertFalse("No Treasure returned", treasure == null);
+		assertTrue("Tile not set properly", treasure.getMyTile() == testTile);
+		assertTrue("Value not set properly", treasure.getValue() == value);
+	}
+
+	/**
+	 * Tests if going over map bounds with calculatePosition comes back from the other side
+	 */
+	@Test
+	public void testWraparound(){
+		Position upperLeft = new Position(0, 0);
+		Position lowerRight = new Position(3, 3);
+		Position test = map.calcPosition(upperLeft, Heading.H2, Direction.D0);
+		assertTrue("calcPosition didn't return Position (3,1) on a 4x4-Worldmap if sensing with H2 and D0 on Position (0,0)", test.x == 3 && test.y == 1);
+		test = map.calcPosition(upperLeft, Heading.H5, Direction.D0);
+		assertTrue("calcPosition didn't return Position (0,3) on a 4x4-Worldmap if sensing with H5 and D0 on Position (0,0)", test.x == 0 && test.y == 3);
+		test = map.calcPosition(upperLeft, Heading.H4, Direction.D0);
+		assertTrue("calcPosition didn't return Position (3,3) on a 4x4-Worldmap if sensing with H4 and D0 on Position (0,0)", test.x == 3 && test.y == 3);
+		test = map.calcPosition(lowerRight, Heading.H5, Direction.D0);
+		assertTrue("calcPosition didn't return Position (0,2) on a 4x4-Worldmap if sensing with H5 and D0 on Position (3,3)", test.x == 0 && test.y == 2);
+		test = map.calcPosition(lowerRight, Heading.H2, Direction.D0);
+		assertTrue("calcPosition didn't return Position (3,0) on a 4x4-Worldmap if sensing with H2 and D0 on Position (3,3)", test.x == 3 && test.y == 0);
+		test = map.calcPosition(lowerRight, Heading.H1, Direction.D0);
+		assertTrue("calcPosition didn't return Position (0,0) on a 4x4-Worldmap if sensing with H1 and D0 on Position (3,3)", test.x == 0 && test.y == 0);
+	}
 }

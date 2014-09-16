@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 
 /**
  * This class tests if class faction works
@@ -20,7 +21,7 @@ public class FactionTest {
 	}
 	
 	@Test
-	public void factionConstructorTest(){
+	public void factionConstructor1Test(){
 		
 		String faction_name = "test";
 		int id = 1;
@@ -33,6 +34,22 @@ public class FactionTest {
 		assertTrue("the id of the faction must be 1", faction.getFactionID() ==1);
 		
 		
+	}
+	
+	@Test
+	public void factionConstructor2Test(){
+		
+		try{
+		String faction_name = null;
+		
+		Faction faction = new Faction(faction_name,2);
+		}
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
+		
+		fail("a faction's name should not be null");
 	}
 	
 	@Test
@@ -51,7 +68,244 @@ public class FactionTest {
 		faction.setShipCount(12);
 		assertTrue("ship count should be 12", faction.getShipCount() == 12);
 		
-		//TODO: tests if tactics are added
+		// test if tactics are added
+		Instruction ins = new ShipTest.TestInstruction();
+		Instruction [] instructions = new Instruction[2];
+		
+		instructions[0] = ins;
+		instructions[1] = ins;
+		
+		faction.setTactics(instructions);
+		
+		assertTrue("Instruction array must be correct",faction.getTactics().equals(instructions));
+		 
+		 
 	}
+	
+	
+	@Test
+	public void addShipTest(){
+		
+		String faction_name = "test";
+		int id = 1;
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		faction.addShip();
+		
+		assertTrue(faction.getScore() == 1);
+	}
+	
+	@Test
+	public void removeShipTest(){
+		
+		String faction_name = "test";
+		int id = 1;
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		faction.addShip();
+		faction.addShip();
+		
+		faction.removeShip();
+		
+		assertTrue(faction.getScore() == 1);
+	}
+	
+	@Test
+	public void increaseScore1Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		faction.increaseScore(1);
+		
+		assertTrue("score should be 1",faction.getScore() == 1);
+		
+	}
+	
+	@Test
+	public void increaseScore2Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		try{
+			faction.increaseScore(-1);
+		}
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
+		
+		fail("score is now -1");
+	}
+	
+	@Test
+	public void increaseScore3Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		try{
+			faction.increaseScore(5);
+		}
+		
+		catch(IllegalArgumentException e){
+			return;
+		}
+		
+		fail("score is now 5");		
+		
+	}
+	
+	@Test
+	public void decreaseScore1Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		faction.increaseScore(4);
+		
+		faction.decreaseScore(-2);
+		
+		assertTrue("score should be 2",faction.getScore() == 2);
+	}
+	
+	@Test
+	public void decreaseScore2Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		faction.increaseScore(4);
+		
+		try{
+			faction.decreaseScore(-1);
+			faction.decreaseScore(-3);
+		}
+		
+		catch(IllegalArgumentException e){
+			
+			return;
+		}
+		
+		fail("score cannot be decreased by one or three");
+		
+	}
+	
+	@Test
+	public void decreaseScore3test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		faction.increaseScore(1);
+		
+		try{
+			
+		faction.decreaseScore(-2);
+		
+		}
+		
+		catch(IllegalArgumentException e){
+			 return;
+		}
+		
+		fail("Score cannot be decreased by two if there is only one point left");
+	}
+
+	@Test
+	public void getInstruction1Test(){
+	
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		Instruction ins = new ShipTest.TestInstruction();
+		Instruction [] instructions = new Instruction[2];
+		instructions[0] = ins;
+		instructions[1] = ins;
+		 
+		faction.setTactics(instructions);
+		
+		Instruction instruction = faction.getInstruction(1);
+		
+		assertTrue("the right instruction should be returned",instruction.equals(ins));
+	}
+	
+	@Test
+	public void getInstruction2Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		Instruction ins = new ShipTest.TestInstruction();
+		Instruction [] instructions = new Instruction[2];
+		instructions[0] = ins;
+		instructions[1] = ins;
+		
+		try{
+			faction.getInstruction(2);
+		}
+		
+		catch(IndexOutOfBoundsException e){
+			return;
+		}
+		
+		fail("index out of bounds exception should be thrown (wrong PC)");
+	}
+	
+	@Test
+	public void getInstruction3Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		Instruction ins = new ShipTest.TestInstruction();
+		Instruction [] instructions = new Instruction[2];
+		
+		try{
+			faction.getInstruction(-1);
+		}
+		
+		catch(IndexOutOfBoundsException e){
+			return;
+		}
+		
+		fail("index out of bounds exception should be thrown (wrong PC)");
+	}
+	
+	@Test
+	public void equalsTest(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		
+		//another faction for testing purposes
+		String faction_name2 ="test1";
+		Faction faction2 = new Faction(faction_name2,1);
+		
+		//another faction for testing purposes
+		String faction_name3 = "test";
+		Faction faction3 = new Faction(faction_name3, 3);
+		
+		assertTrue("a faction should equal itself",faction.equals(faction));
+		assertFalse("a faction should not equal null", faction.equals(null));
+		assertFalse("a faction should not equal true",faction.equals(true));
+		assertFalse("a faction should not equal another faction with different name", faction.equals(faction2));
+		assertFalse("a faction should not equal another faction with different id", faction.equals(faction3));
+	}
+	
 	
 }
