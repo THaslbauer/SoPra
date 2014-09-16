@@ -39,6 +39,7 @@ public class Ship extends Placable {
 		this.boredom = 0;
 		this.condition = maxCondition;
 		heading = Heading.H0;
+		this.faction = faction;
 		clearRegisters();
 	}
 	

@@ -11,25 +11,9 @@
 	<inceptionYear>2014</inceptionYear>
 	<developers>
 <developer>
-<id>kreber</id>
-<name>Jens Kreber</name>
-<email>s9jekreb@stud.uni-saarland.de</email>
-<roles>
-<role>Developer</role>
-</roles>
-<timezone>2</timezone>
-</developer><developer>
-<id>gerstner</id>
-<name>Nico Gerstner</name>
-<email>s9nigers@stud.uni-saarland.de</email>
-<roles>
-<role>Developer</role>
-</roles>
-<timezone>2</timezone>
-</developer><developer>
-<id>lenhof</id>
-<name>Kerstin Lenhof</name>
-<email>s9kelenh@stud.uni-saarland.de</email>
+<id>hahn</id>
+<name>Christopher Hahn</name>
+<email>s9chhahn@stud.uni-saarland.de</email>
 <roles>
 <role>Developer</role>
 </roles>
@@ -43,9 +27,25 @@
 </roles>
 <timezone>2</timezone>
 </developer><developer>
-<id>hahn</id>
-<name>Christopher Hahn</name>
-<email>s9chhahn@stud.uni-saarland.de</email>
+<id>kreber</id>
+<name>Jens Kreber</name>
+<email>s9jekreb@stud.uni-saarland.de</email>
+<roles>
+<role>Developer</role>
+</roles>
+<timezone>2</timezone>
+</developer><developer>
+<id>lenhof</id>
+<name>Kerstin Lenhof</name>
+<email>s9kelenh@stud.uni-saarland.de</email>
+<roles>
+<role>Developer</role>
+</roles>
+<timezone>2</timezone>
+</developer><developer>
+<id>gerstner</id>
+<name>Nico Gerstner</name>
+<email>s9nigers@stud.uni-saarland.de</email>
 <roles>
 <role>Developer</role>
 </roles>
@@ -89,6 +89,16 @@
 						</manifest>
 					</archive>
 					<outputDirectory>${basedir}/target/assembly/</outputDirectory>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.17</version>
+				<configuration>
+					<includes>
+						<include>**/*.class</include>
+					</includes>
 				</configuration>
 			</plugin>
 		</plugins>
