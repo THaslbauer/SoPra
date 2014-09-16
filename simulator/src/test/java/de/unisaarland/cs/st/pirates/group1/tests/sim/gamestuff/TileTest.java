@@ -38,20 +38,23 @@ public class TileTest extends TestCase {
 		worldmap.createSeaTile(new Position(2, 0));
 		worldmap.createSeaTile(new Position(2, 1));
 		worldmap.createSeaTile(new Position(2, 2));
+		
 		this.middle = new Position(1,1);
 		this.basicTile = new Tile(worldmap, middle) {
-			
+
 			@Override
 			public CellType navigable(Ship ship) {
 				// TODO Auto-generated method stub
 				return null;
 			}
-			
+
 			@Override
 			public boolean isSupply() {
 				// TODO Auto-generated method stub
 				return false;
 			}
+			
+			
 		};
 		this.faction = new Faction("test", 0);
 	}
@@ -81,7 +84,7 @@ public class TileTest extends TestCase {
 	 * Tests attaching and detaching
 	 */
 	@Test
-	public void krakenAttachDetachTest()
+	public void testKrakenAttachDetach()
 	{
 		// attaches and detaches a kraken
 		Kraken kraken = new Kraken(0, basicTile);
@@ -100,7 +103,7 @@ public class TileTest extends TestCase {
 	}
 	
 	@Test
-	public void treasureAttachDetachTest()
+	public void testTreasureAttachDetach()
 	{
 		// attaches and detaches a treasure
 		Treasure treasure = new Treasure(1, 1, basicTile);
@@ -122,20 +125,41 @@ public class TileTest extends TestCase {
 	 * Tests getNeighbour
 	 */
 	@Test
-	public void testNeighbour()
+	public void testGetNeighbour()
 	{
-		Tile neighbourTile = worldmap.getTile(new Position(0,1));
-		
-		assertTrue("The tile's method getNeighbour() calculates the wrong neighbour tile.",
-				basicTile.getNeighbour(Heading.H4, Direction.D0) == neighbourTile);
+		try
+		{
+			Tile neighbourTile = worldmap.getTile(new Position(0,1));
+			
+			assertTrue("The tile's method getNeighbour() calculates the wrong neighbour tile.",
+					basicTile.getNeighbour(Heading.H4, Direction.D0) == neighbourTile);
+		}
+		catch(NullPointerException e)
+		{
+			fail();
+		}
 	}
 	
 	/**
 	 * Tests creating new treasure if increaseTreasure doesn't find any
 	 */
 	@Test
-	public void testNewTreasure(){
-		//TODO implement
+	public void testIncreaseDecreaseTreasure()
+	{
+		basicTile.increaseTreasure(2);
+		
+		assertTrue("The tile's method increaseTreasure() didn't place a treasure.", basicTile.getTreasure() != null);
+		
+		assertTrue("The tile's method increaseTreasure() has placed a bad treasure.", basicTile.getTreasure().getValue() == 2);
+		
+		basicTile.increaseTreasure(2);
+		
+		assertTrue("The tile's method increase Treasure() didn't add the treasure to the previous one.",
+				basicTile.getTreasure().getValue() == 4);
+		
+		basicTile.decreaseTreasure(4);
+		
+		assertTrue("The tile's method decreaseTreasure() didn't removed the treasure.", basicTile.getTreasure() == null);
 	}
 
 	/**
@@ -145,26 +169,4 @@ public class TileTest extends TestCase {
 	public void testIncreaseExistingTreasure(){
 		//TODO implement
 	}
-	
-	/**
-	 * Tile specific checks: navigability
-	 */
-	public void testNavigability(){
-		//TODO implement
-	}
-	
-	/**
-	 * Tile specific checks: supply availability
-	 */
-	public void testSupply(){
-		//TODO implement
-	}
-	
-	/**
-	 * Test setting and removing buoys
-	 */
-	public void testSetRemoveBuoy(){
-		//TODO implement
-	}
-	
 }
