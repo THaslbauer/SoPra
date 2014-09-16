@@ -3,9 +3,10 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstruct
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 
 /**
- * An Instruction to drop a treasure
+ * An Instruction to drop a {@link Treasure}
  * @author thomas
  *
  */

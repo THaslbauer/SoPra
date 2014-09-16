@@ -1,14 +1,17 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Base;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Island;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 
 /**
- * Represents an instruction to move a ship. Also handles all things that can go wrong:
- * Ship beaching on an island
+ * Represents an instruction to move a {@link Ship}. Also handles all things that can go wrong:
+ * Ship beaching on an {@link Island}
  * Ship fighting with another ship
- * Ship getting attacked by kraken
- * Ship trying to move onto an enemy base
+ * Ship getting attacked by {@link Kraken}
+ * Ship trying to move onto an enemy {@link Base}
  * @author thomas
  *
  */

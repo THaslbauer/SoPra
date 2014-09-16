@@ -1,10 +1,9 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
-import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 /**
- * Represents an instruction to repair a ship.
+ * Represents an instruction to repair a {@link Ship}.
  * @author thomas
  *
  */

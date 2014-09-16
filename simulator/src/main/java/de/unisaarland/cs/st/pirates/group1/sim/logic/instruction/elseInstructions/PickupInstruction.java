@@ -2,10 +2,11 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructio
 
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 
 /**
- * Represents an instruction to pick up a treasure.
+ * Represents an instruction for a {@link Ship} to pick up a {@link Treasure}.
  * @author thomas
  *
  */
@@ -16,7 +17,7 @@ public class PickupInstruction extends ElseInstruction {
 	 * Creates the instruction.
 	 * @param logger
 	 * @param elsePC
-	 * @param dir The direction where the treasure to be picked up should be.
+	 * @param dir The direction where the {@link Treasure} to be picked up should be.
 	 */
 	public PickupInstruction(ExtendedLogWriter logger, int elsePC, Direction dir) {
 		super(logger, elsePC);

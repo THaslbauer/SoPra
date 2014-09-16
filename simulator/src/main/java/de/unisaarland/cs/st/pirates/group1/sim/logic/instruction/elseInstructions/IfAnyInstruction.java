@@ -16,7 +16,7 @@ public class IfAnyInstruction extends ElseInstruction {
 	 * Creates the instruction.
 	 * @param logger
 	 * @param elsePC The PC to be set if no conditions evaluates as true
-	 * @param conditions The Expressions that are the conditions of the instruction
+	 * @param conditions The {@link Expression} Array that holds the conditions of the instruction
 	 */
 	public IfAnyInstruction(ExtendedLogWriter logger, int elsePC, Expression[] conditions) {
 		super(logger, elsePC);

@@ -16,7 +16,7 @@ public class IfAllInstruction extends ElseInstruction {
 	 * Creates the instruction
 	 * @param logger
 	 * @param elsePC The PC to set if one condition evaluates to false.
-	 * @param conditions The Expressions that are the conditions.
+	 * @param conditions The {@link Expression} Array that holds the conditions.
 	 */
 	public IfAllInstruction(ExtendedLogWriter logger, int elsePC, Expression[] conditions) {
 		super(logger, elsePC);

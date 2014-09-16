@@ -2,10 +2,11 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstruct
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
 /**
- * An Instruction that sets a buoy on a tile
+ * An Instruction that sets a {@link Buoy} on a tile
  * @author thomas
  *
  */
@@ -16,7 +17,7 @@ public class MarkInstruction extends Instruction {
 	/**
 	 * Creates the Instruction
 	 * @param logger
-	 * @param type The type of the buoy to set
+	 * @param type The type of the {@link Buoy} to set
 	 */
 	public MarkInstruction(ExtendedLogWriter logger, int type) {
 		super(logger);

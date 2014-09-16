@@ -5,7 +5,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 
 /**
- * Represents an instruction to refresh the morale of a ship.
+ * Represents an instruction to refresh the morale of a {@link Ship}.
  * @author thomas
  
  */
@@ -16,7 +16,7 @@ public class RefreshInstruction extends ElseInstruction {
 	 * Creates the instruction.
 	 * @param logger
 	 * @param elsePC The PC that is set when the instruction fails
-	 * @param dir The direction in which to look for the refresh
+	 * @param dir The {@link Direction} in which to look for the refresh
 	 */
 	public RefreshInstruction(ExtendedLogWriter logger, int elsePC, Direction dir) {
 		super(logger, elsePC);

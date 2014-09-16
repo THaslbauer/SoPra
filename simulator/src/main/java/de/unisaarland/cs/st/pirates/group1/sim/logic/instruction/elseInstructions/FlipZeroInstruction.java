@@ -18,7 +18,7 @@ public class FlipZeroInstruction extends ElseInstruction {
 	 * Creates the Instruction 
 	 * @param logger
 	 * @param elsePC The PC which the instruction jumps to if the next random int is 1
-	 * @param rand  The Random object which generates the int
+	 * @param rand  The {@link Random} object which generates the int
 	 */
 	public FlipZeroInstruction(ExtendedLogWriter logger, int elsePC, Random rand) {
 		super(logger, elsePC);

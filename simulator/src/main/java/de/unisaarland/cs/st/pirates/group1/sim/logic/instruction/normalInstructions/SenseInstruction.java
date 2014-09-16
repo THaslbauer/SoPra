@@ -3,10 +3,11 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstruct
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 
 /**
- * An Instruction that senses a Tile in a specific direction
+ * An Instruction that senses a {@link Tile} in a specific direction
  * @author thomas
  *
  */
@@ -17,7 +18,7 @@ public class SenseInstruction extends Instruction {
 	/**
 	 * Creates the Instruction
 	 * @param logger
-	 * @param dir The Direction in which to look
+	 * @param dir The {@link Direction} in which to look
 	 */
 	public SenseInstruction(ExtendedLogWriter logger, Direction dir){
 		super(logger);

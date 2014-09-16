@@ -16,7 +16,7 @@ public class IfInstruction extends ElseInstruction {
 	 * Creates the instruction
 	 * @param logger
 	 * @param elsePC
-	 * @param condition	The Expression that is the condition.
+	 * @param condition	The {@link Expression} that is the condition.
 	 */
 	public IfInstruction(ExtendedLogWriter logger, int elsePC, Expression condition) {
 		super(logger, elsePC);
