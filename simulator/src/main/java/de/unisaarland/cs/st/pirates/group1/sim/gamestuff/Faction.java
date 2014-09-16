@@ -10,19 +10,25 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 public class Faction {
 	private int score;
 	private int shipCount;
+	private int factionID;
 	private Instruction[] tactics;
 	
 	/**
 	 * create a Faction
 	 * @param name
 	 */
-	public Faction(String name){
+	public Faction(String name, int id){
 		this.name = name;
 		this.score = 0;
 		this.shipCount = 0;
 		this.tactics = null;
+		this.factionID = id;
 	}
 	
+	public int getFactionID() {
+		return factionID;
+	}
+
 	public int getScore() {
 		return score;
 	}
