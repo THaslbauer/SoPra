@@ -3,7 +3,6 @@
  * 
  * @version 1.1
  * @author christopher
- * @author Jens
  */
 
 package de.unisaarland.cs.st.pirates.group1.tests.sim.logic;
@@ -32,8 +31,11 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructi
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.TurnInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.UnmarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.sim.util.ShipType;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
@@ -427,18 +429,99 @@ public class InstructionTest {
 	}
 	
 	//TurnInstruction
+	/**
+	 * checks if its a valid turn to the right
+	 */
+	@Test
+	public void RightTurnTest(){
+		
+		TestGui testGui = new TestGuiNotify();
+		TurnInstruction turnInstruction = new TurnInstruction(testGui,false);
+		
+		turnInstruction.execute(ship);
+		assertTrue(ship.getHeading().equals(Heading.H1));
+		assertFalse(turnInstruction.isLeft());
+	}
+	/**
+	 * checks if its a valid turn to the left
+	 */
+	//TODO WAITTIME after turning?
+	@Test
+	public void LeftTurnTest(){
+		
+		TestGui testGui = new TestGuiNotify();
+		TurnInstruction turnInstruction = new TurnInstruction(testGui,true);
+		
+		turnInstruction.execute(ship);
+		assertTrue(ship.getHeading().equals(Heading.H5));
+		assertTrue(turnInstruction.isLeft());
+		
+	}
+	
+	/**
+	 * checks isleft
+	 */
+	@Test
+	public void LeftTurnInstructionTest(){
+		
+		TestGui testGui = new TestGuiNotify();
+		TurnInstruction turnInstruction = new TurnInstruction(testGui,true);
+		
+		turnInstruction.execute(ship);
+		//assertTrue(ship.getHeading().equals(Heading.H5));
+		assertTrue(turnInstruction.isLeft());
+		
+	}
+	
+	//UnMarkInstruction
+	/**
+	 * tests if an existing buoy is correctly deleted
+	 */
+	@Test
+	public void UnmarkInstructionTest(){
+		//add a buoy with id 1 to the tile
+		Tile water = worldMap.getTile(position1);
+		Buoy buoy = new Buoy(0, null, 0, water);
+		List<Buoy> xs = new ArrayList();
+		xs.add(buoy);
+		water.getBuoyMap().put(faction, xs);
+		
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction unmarkInstruction = new UnmarkInstruction(testGui,0);
+		
+		unmarkInstruction.execute(ship);
+		List<Buoy> buoyList = ship.getMyTile().getBuoyMap().get(ship.getFaction());
+		
+		for(Buoy b :buoyList){
+			if(b.getId() == 0){
+				fail("Buoy with id 1 is still in the list");
+			}else{
+				continue;
+			}
+		}
+	}
+	
+	
+	/**
+	 * TODO WHAT HAPPENS IF BUOY IS DELETED WHICH IS NOT ON THE TILE
+	 */
+	
+	/**
+	 * getter test
+	 */
+	@Test
+	public void UnmarkInstructionGetterTest(){
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		UnmarkInstruction unmarkInstruction = new UnmarkInstruction(testGui,5);
+		
+		assertTrue(unmarkInstruction.getType() == 5);
+	}
 
 	
 /*
  * Christopher Tests END
- */
-	
-/*
- * Jens Tests START
- */
-	
-/*
- * Jens Tests END
  */
 
 }
