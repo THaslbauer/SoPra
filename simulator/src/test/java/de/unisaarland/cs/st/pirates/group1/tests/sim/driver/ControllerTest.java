@@ -105,6 +105,27 @@ public class ControllerTest
 		assertTrue("the simulator's method step() was not called", expectedValueSimulator == testSimulator.value);
 	}
 	
+	@Test
+	public void getsetTest()
+	{
+		controller = new Controller(null, null, null, null, null);
+		
+		controller.setSimulator(testSimulator);
+		assertTrue(testSimulator.equals(controller.getSimulator()));
+		
+		controller.setMapParser(testMapParser);
+		assertTrue(testMapParser.equals(controller.getMapParser()));
+		
+		controller.setTacticsParser(testTacticsParser);
+		assertTrue(testTacticsParser.equals(controller.getTacticsParser()));
+		
+		controller.setMapFile(null);
+		assertTrue(controller.getMapFile() == null);
+		
+		controller.setTacticsFile(null);
+		assertTrue(controller.getTacticsFile() == null);
+	}
+	
 	
 	
 }
