@@ -81,7 +81,7 @@ public class TileTest extends TestCase {
 	 * Tests attaching and detaching
 	 */
 	@Test
-	public void testAttachDetach()
+	public void krakenAttachDetachTest()
 	{
 		// attaches and detaches a kraken
 		Kraken kraken = new Kraken(0, basicTile);
@@ -97,7 +97,11 @@ public class TileTest extends TestCase {
 		
 		assertTrue("The tile's method attach(kraken) didn't attach the kraken", basicTile.getKraken() == kraken);
 		
-		
+	}
+	
+	@Test
+	public void treasureAttachDetachTest()
+	{
 		// attaches and detaches a treasure
 		Treasure treasure = new Treasure(1, 1, basicTile);
 		
@@ -111,6 +115,7 @@ public class TileTest extends TestCase {
 		basicTile.attach(treasure);
 		
 		assertTrue("The tile's method attach(treasure) didn't attach the treasure", basicTile.getTreasure() == treasure);
+		
 	}
 	
 	/**
