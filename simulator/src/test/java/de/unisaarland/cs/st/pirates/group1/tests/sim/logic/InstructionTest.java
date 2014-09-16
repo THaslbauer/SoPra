@@ -33,6 +33,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructi
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
+import de.unisaarland.cs.st.pirates.group1.sim.util.ShipType;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
@@ -45,7 +47,9 @@ public class InstructionTest {
 	private static Ship ship;
 	private static Tile baseTile;
 	private static Tile waterTile1;
-	private static Tile islandTile;
+	private static Tile waterTile2;
+	private static Tile islandTile2;
+	private static Tile islandTile1;
 	private static Position position1;
 	private static int x;
 	
@@ -63,14 +67,16 @@ public class InstructionTest {
 		Position position3 = new Position(0,1);
 		Position position4 = new Position(1,1);
 		
-		waterTile1 = new Sea(worldMap,position1);
-		//waterTile = new Sea(worldMap, position2);
-		//waterTile = new Sea(worldMap, position3);
-		//waterTile = new Sea(worldMap, position4);
+		waterTile1 = worldMap.createSeaTile(position1);
+		waterTile2 = worldMap.createSeaTile(position2);
+		islandTile1 = worldMap.createSeaTile(position3);
+		islandTile2 = worldMap.createSeaTile(position4);
 		
 		
-		//A Test ship of the TestFaction with ID 1
+		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
+		
+		//waterTile1.attach(ship);
 		
 	}
 /*
@@ -317,6 +323,45 @@ public class InstructionTest {
 		assertTrue(testGui.value == -2);
 		
 	}
+	
+	/**
+	 * tests if other enemy ship is sense correctly
+	 */
+	@Test
+	public void CorrectEnemyShipSenseTest(){
+		//set a ship on another SeaTile of the TestMap
+		Faction enemyFaction = new Faction("b",1);
+		Ship enemyShip = new Ship(enemyFaction,2,waterTile2);
+		
+		
+		Direction d = Direction.D0;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui,d);
+		
+		senseInstruction.execute(ship);
+		Register enemyRegister = Register.SENSE_SHIPTYPE;
+		assertTrue(ship.getRegister(enemyRegister) == ShipType.ENEMY.ordinal());
+	}
+	/**
+	 * tests if ship of own faction is sensed corecctly
+	 */
+	@Test
+	public void CorrectOwnShipSenseTest(){
+		//set a ship on another SeaTile of the TestMap
+		Ship otherShip = new Ship(faction,2,waterTile2);
+		
+		Direction d = Direction.D0;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui,d);
+		
+		senseInstruction.execute(ship);
+		Register reg = Register.SENSE_SHIPTYPE;
+		assertTrue(ship.getRegister(reg) == ShipType.FRIEND.ordinal());
+	}
+	
+	/**
+	 * Tests if Island is sensed correctly
+	 */
 	
 /*
  * Christopher Tests END
