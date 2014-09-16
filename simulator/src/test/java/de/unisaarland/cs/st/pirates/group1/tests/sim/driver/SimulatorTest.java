@@ -256,44 +256,87 @@ public class SimulatorTest extends TestCase {
 		assertTrue("Setting / Getting of Worldmap didn't work", sim.getWorldmap() == worldmap);
 	}
 
+	
+	/**
+	 * TestShip is a Ship used for logging step()-calls.
+	 * Instead of executing some logic, step() increments a counter so you can see how often it was called.
+	 * @author thomas
+	 *
+	 */
 	private class TestShip extends Ship{
 		private int stepCount;
 		
+		/**
+		 * Constructor. See {@link Ship} for further info.
+		 * @param faction
+		 * @param id
+		 * @param tile
+		 */
 		public TestShip(Faction faction, int id, Tile tile) {
 			super(faction, id, tile);
 			this.stepCount = 0;
 		}
 
+		/**
+		 * increments stepCount
+		 */
 		@Override
 		public void step() {
 			stepCount++;
 		}
 		
+		/**
+		 * 
+		 * @return How often step was called
+		 */
 		public int getStepCount(){
 			return this.stepCount;
 		}
 
 	}
 	
+	/**
+	 * TestKraken is a Kraken that is used for logging step() calls.
+	 * Instead of executing some logic, step() increments a counter so you can see how often it is called.
+	 * @author thomas
+	 *
+	 */
 	private class TestKraken extends Kraken {
 		private int stepCount;
 
+		/**
+		 * Constructor. See {@link Kraken} for more info.
+		 * @param id
+		 * @param tile
+		 */
 		public TestKraken(int id, Tile tile) {
 			super(id, tile);
 			stepCount = 0;
 		}
 
+		/**
+		 * Increments stepCount()
+		 */
 		@Override
 		public void step() {
 			stepCount++;
 		}
 		
+		/**
+		 * 
+		 * @return How often step() was called.
+		 */
 		public int getStepCount(){
 			return stepCount;
 		}
 		
 	}
 	
+	/**
+	 * An {@link EntityFactory} that creates TestKrakens and TestShips instead of normal Krakens and Ships.
+	 * @author thomas
+	 *
+	 */
 	private class TestFactory extends EntityFactory{
 
 		@Override
