@@ -2,8 +2,8 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
 public interface Expression
 {
-	public static int TRUE = 1;
-	public static int FALSE = 0;
+	public static final int TRUE = 1;
+	public static final int FALSE = 0;
 	
 	/**
 	 * This method evaluates the expression.
