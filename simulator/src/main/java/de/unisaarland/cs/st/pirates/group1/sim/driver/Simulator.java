@@ -33,7 +33,7 @@ public class Simulator
 	
 	
 	
-	public Simulator(InfoPoint infoPoint)
+	public Simulator(ExtendedLogWriter logger)
 	{
 		//TODO
 	}
