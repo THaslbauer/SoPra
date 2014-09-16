@@ -56,9 +56,9 @@ public class SimulatorTest extends TestCase {
 		TestKraken testKraken = (TestKraken)kraken;
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; i < 20; i++){
+				sim.step();
 				if(j == 0 && testKraken.getStepCount() != (stepCount+1))
 					fail("Kraken wasn't stepped");
-				sim.step();
 			}
 			stepCount = testKraken.getStepCount();
 			assertTrue("Kraken was stepped more than once every 20 cycles between cycle "+i*20+" and "+(i+1)*20,
