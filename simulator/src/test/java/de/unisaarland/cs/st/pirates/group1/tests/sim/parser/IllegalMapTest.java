@@ -13,16 +13,14 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
+import static de.unisaarland.cs.st.pirates.group1.tests.testUtil.StreamHelper.asIS;
+
 public class IllegalMapTest {
 	
 	private static MapParser mp = new MapParser();
 	private static ExpectLogger elogger = new ExpectLogger();
 	private static Simulator sim;
 	
-	
-	private static InputStream asIS(String s) {
-		return new ByteArrayInputStream(s.getBytes());
-	}
 	
 	private static void checkNFail(String s, String exp) {
 		Simulator simulator = new Simulator(elogger);
