@@ -33,7 +33,7 @@ public class FactoryTest extends TestCase {
 	@Before
 	public void setUp(){
 		factory = new EntityFactory();
-		faction = new Faction("TestFaction");
+		faction = new Faction("TestFaction", 0);
 		tile = new Tile(map, new Position(0,0)) {
 			
 			@Override

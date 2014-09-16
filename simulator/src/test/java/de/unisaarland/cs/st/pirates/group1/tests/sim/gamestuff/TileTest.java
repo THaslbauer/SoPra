@@ -49,7 +49,7 @@ public class TileTest extends TestCase {
 				return false;
 			}
 		};
-		this.faction = new Faction("test");
+		this.faction = new Faction("test", 0);
 	}
 	
 	/**
