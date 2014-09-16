@@ -161,4 +161,8 @@ public abstract class Tile {
 	public HashMap<Faction, List<Buoy>> getBuoyMap() {
 		return buoyMap;
 	}
+	
+	public Position getPosition() {
+		return position;
+	}
 }

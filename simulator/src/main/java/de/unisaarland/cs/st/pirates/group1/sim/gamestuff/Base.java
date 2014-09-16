@@ -41,7 +41,7 @@ public class Base extends Tile {
 	}
 	
 	//TODO TEST
-	public Faction getFacion() {
+	public Faction getFaction() {
 		return faction;
 	}
 
