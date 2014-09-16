@@ -10,14 +10,19 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.logic;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Sea;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
@@ -25,6 +30,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.ElseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiNotify;
@@ -35,12 +41,14 @@ public class InstructionTest {
 	private static Faction faction;
 	private static Ship ship;
 	private static Tile baseTile;
-	private static Tile waterTile;
+	private static Tile waterTile1;
 	private static Tile islandTile;
-	private static Position position;
+	private static Position position1;
+	private static int x;
 	
 	@BeforeClass
 	public static void init(){
+		x = 0;
 		
 		//A worldMap with exactly one seatile
 		worldMap = new Worldmap6T(2,2,null,null);
@@ -52,14 +60,14 @@ public class InstructionTest {
 		Position position3 = new Position(0,1);
 		Position position4 = new Position(1,1);
 		
-		waterTile = new Sea(worldMap,position1);
-		waterTile = new Sea(worldMap, position2);
-		waterTile = new Sea(worldMap, position3);
-		waterTile = new Sea(worldMap, position4);
+		waterTile1 = new Sea(worldMap,position1);
+		//waterTile = new Sea(worldMap, position2);
+		//waterTile = new Sea(worldMap, position3);
+		//waterTile = new Sea(worldMap, position4);
 		
 		
 		//A Test ship of the TestFaction with ID 1
-		ship = new Ship(faction,1,waterTile);
+		ship = new Ship(faction,1,waterTile1);
 		
 	}
 /*
@@ -178,6 +186,102 @@ public class InstructionTest {
 		
 		dropInstruction.execute(ship);
 		assertTrue(pc == ship.getPC()+1);
+	}
+	
+	// Markinstruction Tests
+	
+	/**
+	 * checks if error raised if buoy id is >5
+	 */
+	@Test
+	public void illegalArgMarkInstructionTest(){
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		try{
+		Instruction markInstruction = new MarkInstruction(testGui,6);
+		fail("Nothing thrown");
+		}
+		catch(IllegalArgumentException e){
+			
+		}
+	}
+	/**
+	 * checks if error raised if buoy id is <0
+	 */
+	
+	@Test
+	public void illegalArgNegMarkInstructionTest(){
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		try{
+		Instruction markInstruction = new MarkInstruction(testGui,-1);
+		fail("Nothing thrown");
+		}
+		catch(IllegalArgumentException e){
+			
+		}
+	}
+	
+	/**
+	 * checks if ship marks the tile correctly
+	 */
+	@Test
+	public void correctMarkInstructionTest(){
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction markInstruction = new MarkInstruction(testGui,0);
+		
+		markInstruction.execute(ship);
+		List<Buoy> buoyList = ship.getMyTile().getBuoyMap().get(ship.getFaction());
+		
+		for(Buoy b :buoyList){
+			if(b.getId() == 0){
+				x += 1;
+			}else{
+				continue;
+			}
+		}
+		assertTrue(x == 1);
+	}
+	
+	/**
+	 * checks if a tile is marked only once, if its marked already
+	 */
+	
+	@Test
+	public void CorrectMarkedTwiceTest(){
+		
+		//adds a buoy to a list in the Hashmap
+		Tile water = worldMap.getTile(position1);
+		Buoy buoy = new Buoy(0, null, 0, water);
+		List<Buoy> xs = new ArrayList();
+		xs.add(buoy);
+		water.getBuoyMap().put(faction, xs);
+		
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction markInstruction = new MarkInstruction(testGui,0);
+		
+		markInstruction.execute(ship);
+		List<Buoy> buoyList = ship.getMyTile().getBuoyMap().get(ship.getFaction());
+		
+		//checks if there is only one buoy with ID 0 in the map
+		for(Buoy b :buoyList){
+			if(b.getId() == 0){
+				x += 1;
+			}else{
+				continue;
+			}
+		}
+		assertTrue(x == 1);
+	}
+	/**
+	 * getter Test MarkInstruction
+	 */
+	
+	@Test
+	public void markInstructionGetterTest(){
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		MarkInstruction markInstruction = new MarkInstruction(testGui,4);
+		
+		assertTrue(markInstruction.getType() == 4);
 	}
 	
 /*
