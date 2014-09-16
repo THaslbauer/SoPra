@@ -2,6 +2,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.gamestuff;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -50,8 +51,8 @@ public class ShipTest {
 	private static TestInstruction instruction1;
 	
 	
-	@BeforeClass
-	public static void init(){
+	@Before
+	public void init(){
 		
 		//Everything that is needed for a ship
 		faction1 = new Faction("a");
@@ -297,6 +298,21 @@ public class ShipTest {
 		fail("Wrong value in field condition");
 	}
 	
+	
+	@Test
+	public void setCondition3Test(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		ship1.setCondition(2);
+		
+		assertTrue("", ship1.getCondition() == 2);
+		
+	}
+	
+	//TODO: find out what program does, when trying to attach a second ship to tile
+	
+	
 	@Test
 	public void setload1Test(){
 		
@@ -404,6 +420,24 @@ public class ShipTest {
 	
 	@Test
 	public void shipmoved(){
-		
+		//TODO: when implemented writing this test
 	}
+	
+	@Test
+	public void addSecondShip(){
+		
+		ship1 = new Ship(faction1, id1, tile1);
+		
+		try{
+			Ship ship2 = new Ship(faction1 , 2, tile1);
+		}
+		
+		//TODO: find out which exception is thrown
+		catch(Exception e){
+			return;
+		}
+		
+		fail("Second ship is not attached to tile");
+	}
+	
 }

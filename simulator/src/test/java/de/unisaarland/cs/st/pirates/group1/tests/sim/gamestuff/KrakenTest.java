@@ -18,7 +18,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
  */
 public class KrakenTest {
 
-	private static Worldmap myMap1, myMap2, myMap3, myMap4;
+	private static Worldmap myMap1, myMap2, myMap3, myMap4, myMap5;
 	private static Tile tile1, tile2, tile31, tile32, tile33,tile34, tile4;
 	
 	@BeforeClass
@@ -53,7 +53,12 @@ public class KrakenTest {
 		myMap4.createSeaTile(new Position(0,1));
 		myMap4.createSeaTile(new Position(0,0));
 
-		
+		//another map (for test with second kraken)
+	    myMap5 = new Worldmap6T(2,2, null, null);
+		myMap5.createIslandTile(new Position(0,0), false);
+		myMap5.createIslandTile(new Position(0,1), false);
+		myMap5.createIslandTile(new Position(1,1), false);
+		myMap5.createSeaTile(new Position(1,0));
 		
 		tile1 = myMap1.getTile(new Position(1,0));
 		tile2 = myMap2.getTile(new Position(1,0));
@@ -127,7 +132,50 @@ public class KrakenTest {
 		Kraken kraken = new Kraken(1, tile4);
 		kraken.step();
 		
-		myMap4.random.getLastInt();
+		int movedirection = myMap4.random.getLastInt();
+		
+		if (movedirection == 0 || movedirection == 3){
+			
+			Tile newtile = myMap4.getTile(new Position(0,0));
+			assertTrue("kraken must move to tile with position (0,0)",kraken.getMyTile().equals(newtile));
+			assertTrue("tile must notice that a kraken is attached",newtile.getKraken().equals(kraken));
+			assertTrue ("tile must notice that kraken is detached",tile4.getKraken() == null);
+		}
+		
+		if(movedirection == 1 || movedirection == 4){
+			
+			Tile newtile = myMap4.getTile(new Position(1,1));
+			assertTrue("kraken must move to tile with position (1,1)",kraken.getMyTile().equals(newtile));
+			assertTrue("tile must notice that a kraken is attached",newtile.getKraken().equals(kraken));
+			assertTrue("tile must notice that a kraken is detached",tile4.getKraken() == null);
+		}
+		
+		if(movedirection == 2 || movedirection == 5){
+			
+			Tile newtile = myMap4.getTile(new Position(0,1));
+			assertTrue("kraken must be on tile with position (0,1)", kraken.getMyTile().equals(newtile));
+			assertTrue("tile must notice that a kraken is attached", newtile.getKraken().equals(kraken));
+			assertTrue("tile must notice that a kraken is detached", tile4.getKraken() == null);
+		}
+		
+	}
+	
+	
+	@Test
+	public void attachSecondKraken(){
+		
+		Kraken kraken1 = new Kraken(1, myMap4.getTile(new Position(0,0)));
+		
+		try{
+			Kraken kraken2 = new Kraken(2, myMap4.getTile(new Position(0,0)));
+		}
+		
+		//TODO: find out which exception is thrown
+		catch(Exception e){
+			return;
+		}
+		
+		fail("second kraken is now attached to tile");
 		
 	}
 }
