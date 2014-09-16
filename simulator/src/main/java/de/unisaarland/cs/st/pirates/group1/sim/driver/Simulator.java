@@ -25,17 +25,21 @@ public class Simulator
 	
 	private int cycle;
 	
-	private final static int maxCicle = 10000;
+	private final int maxCicle;
 	
 	private ExtendedLogWriter logger;
 	
 	private EntityFactory entityFactory;
 	
 	
+	public Simulator(ExtendedLogWriter logger){
+		this.maxCicle = 10000;
+	}
 	
-	public Simulator(ExtendedLogWriter logger)
+	public Simulator(ExtendedLogWriter logger, int maxCycle)
 	{
 		//TODO
+		this.maxCicle = maxCycle;
 	}
 	
 	/**
