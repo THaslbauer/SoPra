@@ -32,6 +32,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructi
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.sim.util.ShipType;
@@ -69,8 +70,8 @@ public class InstructionTest {
 		
 		waterTile1 = worldMap.createSeaTile(position1);
 		waterTile2 = worldMap.createSeaTile(position2);
-		islandTile1 = worldMap.createSeaTile(position3);
-		islandTile2 = worldMap.createSeaTile(position4);
+		islandTile1 = worldMap.createIslandTile(position3, true);
+		islandTile2 = worldMap.createIslandTile(position3, false);
 		
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
@@ -343,7 +344,7 @@ public class InstructionTest {
 		assertTrue(ship.getRegister(enemyRegister) == ShipType.ENEMY.ordinal());
 	}
 	/**
-	 * tests if ship of own faction is sensed corecctly
+	 * tests if ship of own faction is sensed correctly
 	 */
 	@Test
 	public void CorrectOwnShipSenseTest(){
@@ -362,6 +363,36 @@ public class InstructionTest {
 	/**
 	 * Tests if Island is sensed correctly
 	 */
+	@Test
+	public void SupplyIslandSenseTest(){
+		Direction d = Direction.D1;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui,d);
+		
+		senseInstruction.execute(ship);
+		
+		Register reg = Register.SENSE_CELLTYPE;
+		assertTrue(ship.getRegister(reg) == CellType.ISLAND.ordinal());
+		
+		Register sup = Register.SENSE_SUPPLY;
+		assertTrue(ship.getRegister(sup) == 1);
+		
+		Register no = Register.SENSE_TREASURE;
+		assertTrue(ship.getRegister(no) == 0);
+	}
+	
+	/**
+	 * Sense Test Buoy
+	 */
+	@Test
+	public void BuoySenseTest(){
+		Direction d = Direction.D0;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui, d);
+		
+		senseInstruction.execute(ship);
+		
+	}
 	
 /*
  * Christopher Tests END
