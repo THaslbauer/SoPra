@@ -3,8 +3,10 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.driver;
 import static org.junit.Assert.*;
 
 import java.io.InputStream;
+import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.Random;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -52,9 +54,13 @@ public class ControllerTest
 		}
 		
 		@Override
-		public void step()
+		synchronized public void step()
 		{
 			value += 1;
+		}
+		
+		synchronized public int getValue(){
+			return value;
 		}
 	}
 	
@@ -67,18 +73,32 @@ public class ControllerTest
 	
 	private static TestSimulator testSimulator;
 	
+	private Controller contr;
+	private TestMapParser mp;
+	private TestTacticsParser tp;
+	private TestSimulator sim;
+	
 	
 	@BeforeClass
 	public static void init()
 	{
 		testMapParser     = new TestMapParser();
 		testTacticsParser = new TestTacticsParser();
-		testSimulator     = new TestSimulator(null);
+		testSimulator     = new TestSimulator(new InfoPoint());
 		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null);
 	}
 	
+	@Before
+	public void setUp(){
+		mp = new TestMapParser();
+		tp = new TestTacticsParser();
+		sim = new TestSimulator(new InfoPoint());
+		contr = new Controller(sim, mp, tp, null, null);
+		contr.initializeSimulator();
+	}
+	
 	@Test
-	public void intiTest()
+	public void initTest()
 	{
 		int valueMapParser     = testMapParser.value;
 		int valueTacticsParser = testTacticsParser.value; 
@@ -135,6 +155,30 @@ public class ControllerTest
 				controller.getTacticsFile() == null);
 	}
 	
-	
+	/**
+	 * Tests if pause pauses the Controller concurrently
+	 */
+	@Test
+	public void testPause(){
+		Runnable contrRun = new Runnable() {
+			
+			@Override
+			public void run() {
+				contr.play();
+			}
+		};
+		Thread contrThread = new Thread(contrRun);
+		contrThread.run();
+		contr.pause();
+		int firstStepCount = sim.getValue();
+		try{
+			Thread.sleep(200);
+		}
+		catch(InterruptedException e){
+			throw new UnsupportedOperationException("Who the fuck interrupts a test?");
+		}
+		int secondStepCount = sim.getValue();
+		assertTrue("Controller didn't stop", firstStepCount == secondStepCount);
+	}
 	
 }
