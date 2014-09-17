@@ -276,9 +276,9 @@ public class FactoryTest extends TestCase {
 		factory.setShipNextId(7);
 		factory.setTreasureNextId(8);
 		assertTrue("BuoyNextID has problems after setting", factory.getBuoyNextId() == 5);
-		assertTrue("KrakenNextID has problems after setting", factory.getKrakenNextId() == 5);
-		assertTrue("ShipNextID has problems after setting", factory.getShipNextId() == 5);
-		assertTrue("TreasureNextID has problems after setting", factory.getTreasureNextId() == 5);
+		assertTrue("KrakenNextID has problems after setting", factory.getKrakenNextId() == 6);
+		assertTrue("ShipNextID has problems after setting", factory.getShipNextId() == 7);
+		assertTrue("TreasureNextID has problems after setting", factory.getTreasureNextId() == 8);
 	}
 	
 	/**
