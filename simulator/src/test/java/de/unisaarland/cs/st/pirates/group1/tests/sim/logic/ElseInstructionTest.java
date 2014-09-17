@@ -20,8 +20,11 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.EqualOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Primary;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.RegisterCall;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.ElseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.FlipZeroInstruction;
@@ -30,6 +33,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
 
 public class ElseInstructionTest {
@@ -71,34 +75,109 @@ public class ElseInstructionTest {
 		
 	}
 	
-	//FlipZeroInstruction Test TODO WHAT TO TEST?
-	
+	//FlipZeroInstruction Test
+	/**
+	 * tests if the randomint is generated correctly
+	 */
 	@Test
-	public void flipZeroInstructionPCTest(){
-		//TODO TEST
-		Random rand = new Random();
+	public void flipZeroInstructionRandTest(){
+		Random rand = new Random(0);
+		
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand);
 		
 		flipZeroInstr.execute(ship);
 		
-		assertTrue(rand.equals(flipZeroInstr.getRand()));
+		Random randTest = new Random(0);
+		assertTrue(randTest.nextInt(2) == (rand.nextInt(2)));
+	}
+	/**
+	 * tests if flipZeroInstr jumps correctly
+	 */
+	@Test
+	public void flipZeroInstructionPCTest(){
+		Random rand = new Random(0);
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand);
+		
+		flipZeroInstr.execute(ship);
+		
+		Random randTest = new Random(0);
+		if (randTest.nextInt(2) == 1){
+			assertTrue(ship.getPC() == 1);
+		}else{
+			assertTrue(ship.getPC() == 11);
+		}
 	}
 	
 	//IfALlInstruction Test should evaluate to false and set the new PC
+	
+	/**
+	 * tests if an exp array is evaluated to false correctly and the PC is set correctly
+	 */
 	@Test
 	public void ifAllInstructionTest(){
-		Expression[] expArray = new Expression[2];
-		expArray[0] = new Literal(42);
-		expArray[1] = new Literal(1);
-		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		Instruction ifAllInstruction = new IfAllInstruction(testGui, 12, expArray);
+		//simulates the registerArray
 		
-		//TODO check if this test is right!!
+		ship.setRegister(Register.SENSE_MARKER0, 1);
+		
+		//calls Register SENSE_MARKER0
+		RegisterCall call = new RegisterCall(3);
+		
+		//build a ExpressionArray for testing puropses
+		//and added two equalexpressions testing equality with 0 and 1
+		Primary exp = new Literal(0);
+		Primary exp2 = new Literal(1);
+		
+		Expression first = new EqualOperator(call,exp);
+		Expression second = new EqualOperator(call, exp2);
+		
+		Expression[] exparr = new Expression[2];
+		exparr[0] = first;
+		exparr[1] = second;
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction ifAllInstruction = new IfAllInstruction(testGui, 12, exparr);
+		
+		
 		ifAllInstruction.execute(ship);
 		
 		assertTrue(ship.getPC() == 12);
 	}
+	
+	/**
+	 * tests if an exp array is evaluated to true correctly and the PC is set correctly
+	 */
+	@Test
+	public void ifAllInstructionTrueTest(){
+		//simulates the registerArray
+		
+		ship.setRegister(Register.SENSE_MARKER0, 1);
+		
+		//calls Register SENSE_MARKER0
+		RegisterCall call = new RegisterCall(3);
+		
+		//build a ExpressionArray for testing puropses
+		//and added two equalexpressions testing equality with 0 and 1
+		Primary exp2 = new Literal(1);
+		
+		Expression second = new EqualOperator(call, exp2);
+		
+		Expression[] exparr = new Expression[1];
+		exparr[0] = second;
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction ifAllInstruction = new IfAllInstruction(testGui, 12, exparr);
+		
+		
+		ifAllInstruction.execute(ship);
+		
+		assertTrue(ship.getPC() == 1);
+	}
+	
+	/**
+	 * getterTest ifALL
+	 */
 	@Test
 	public void ifAllInstructionGetterTest(){
 		Expression[] expArray = new Expression[2];
@@ -111,19 +190,76 @@ public class ElseInstructionTest {
 	}
 	
 	//IF ANY INSTRUCTION
+	/**
+	 * tests if the instruction evaluates to true correctly and sets the pc correctly
+	 */
 	@Test
-	public void ifAnyInstructionTest(){
-		Expression[] expArray = new Expression[2];
-		expArray[0] = new Literal(42);
-		expArray[1] = new Literal(1);
-		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		Instruction ifAnyInstruction = new IfAnyInstruction(testGui, 12, expArray);
+	public void ifAnyInstructionTrueTest(){
+		//simulates the registerArray
 		
-		//TODO check if this test is right!!
+		ship.setRegister(Register.SENSE_MARKER0, 1);
+		
+		//calls Register SENSE_MARKER0
+		RegisterCall call = new RegisterCall(3);
+		
+		//build a ExpressionArray for testing puropses
+		//and added two equalexpressions testing equality with 0 and 1
+		Primary exp = new Literal(0);
+		Primary exp2 = new Literal(1);
+		
+		Expression first = new EqualOperator(call,exp);
+		Expression second = new EqualOperator(call, exp2);
+		
+		Expression[] exparr = new Expression[2];
+		exparr[0] = first;
+		exparr[1] = second;
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction ifAnyInstruction = new IfAnyInstruction(testGui, 12, exparr);
+		
+		
 		ifAnyInstruction.execute(ship);
 		
 		assertTrue(ship.getPC() == 1);
 	}
+	/**
+	 * tests if the instruction evaluates to false correctly and sets the pc correctly
+	 */
+	@Test
+	public void ifAnyInstructionFalseTest(){
+		//simulates the registerArray
+		
+		ship.setRegister(Register.SENSE_MARKER0, 1);
+		ship.setRegister(Register.SENSE_MARKER1, 0);
+		
+		//calls Register SENSE_MARKER0
+		RegisterCall call = new RegisterCall(3);
+		RegisterCall call2 = new RegisterCall(4);
+		
+		//build a ExpressionArray for testing puropses
+		//and added two equalexpressions testing equality with 0 and 1
+		Primary exp = new Literal(0);
+		Primary exp2 = new Literal(1);
+		
+		Expression first = new EqualOperator(call,exp);
+		Expression second = new EqualOperator(call2, exp2);
+		
+		Expression[] exparr = new Expression[2];
+		exparr[0] = first;
+		exparr[1] = second;
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction ifAnyInstruction = new IfAnyInstruction(testGui, 12, exparr);
+		
+		
+		ifAnyInstruction.execute(ship);
+		
+		assertTrue(ship.getPC() == 12);
+	}
+	
+	/**
+	 * getterTests
+	 */
 	
 	@Test
 	public void ifAnyInstructionGetterTest(){
@@ -137,28 +273,60 @@ public class ElseInstructionTest {
 	}
 	
 	//IF Instruction
+	/**
+	 * checks that pc is set correctly if condition is false
+	 */
 	@Test
 	public void ifInstructionTest(){
-		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		Instruction ifInstruction = new IfInstruction(testGui, 12, new Literal(1));
 		
-		//TODO check if this test is right!!
+				ship.setRegister(Register.SENSE_MARKER0, 1);
+				
+				//calls Register SENSE_MARKER0
+				RegisterCall call = new RegisterCall(3);
+				
+				//build a ExpressionArray for testing puropses
+				//and added two equalexpressions testing equality with 0 and 1
+				Primary exp = new Literal(0);
+				
+				Expression first = new EqualOperator(call,exp);
+				
+				TestGuiDropInstr testGui = new TestGuiDropInstr();
+				Instruction ifInstruction = new IfInstruction(testGui, 12, first);
+				
+				
+				ifInstruction.execute(ship);
+				
+				assertTrue(ship.getPC() == 12);
+	}
+	
+	/**
+	 * checks that pc is set correctly if condition is false
+	 */
+	
+	@Test
+	public void ifInstructionNegTest(){
+		ship.setRegister(Register.SENSE_MARKER0, 1);
+		
+		//calls Register SENSE_MARKER0
+		RegisterCall call = new RegisterCall(3);
+		
+		//build a ExpressionArray for testing puropses
+		//and added two equalexpressions testing equality with 0 and 1
+		Primary exp = new Literal(1);
+		
+		Expression first = new EqualOperator(call,exp);
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction ifInstruction = new IfInstruction(testGui, 12, first);
+		
+		
 		ifInstruction.execute(ship);
 		
 		assertTrue(ship.getPC() == 1);
 	}
-	
-	@Test
-	public void ifInstructionNegTest(){
-		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		Instruction ifInstruction = new IfInstruction(testGui, 12, new Literal(0));
-		
-		//TODO check if this test is right!!
-		ifInstruction.execute(ship);
-		
-		assertTrue(ship.getPC() == 12);
-	}
-	
+	/**
+	 * getterTest for Ifinstruction
+	 */
 	@Test
 	public void ifInstructionGetterTest(){
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
@@ -180,8 +348,12 @@ public class ElseInstructionTest {
 		assertTrue(ship.getCondition() == 1);
 	}
 	
+	/**
+	 * a repairtest, where the ships is on a BaseTile of its faction, 
+	 * but the faction has not enough score to repair
+	 */
 	@Test
-	public void RepairValidTest(){
+	public void RepairNotValidOnBaseTest(){
 		//build a testmap with only bases
 		Worldmap6T worldTest = new Worldmap6T(2,2,null,null);
 		
@@ -202,7 +374,39 @@ public class ElseInstructionTest {
 		ship.setCondition(1);
 		repInstr.execute(ship);
 		
+		assertTrue(ship.getCondition() == 1);
+	}
+	
+	/**
+	 * a repairtest, where the ships is on a BaseTile of its faction, 
+	 * and the faction has enough
+	 */
+	@Test
+	public void RepairValidTest(){
+		//build a testmap with only bases
+		Worldmap6T worldTest = new Worldmap6T(2,2,null,null);
+		
+		faction.setScore(2);
+		
+		Position position1 = new Position(0,0);
+		Position position2 = new Position(1,0);
+		Position position3 = new Position(0,1);
+		Position position4 = new Position(1,1);
+		
+		Tile baseTile1 = worldMap.createBaseTile(position1,faction);
+		Tile baseTile2 = worldMap.createBaseTile(position2,faction);
+		Tile baseTile3 = worldMap.createBaseTile(position3,faction);
+		Tile baseTile4 = worldMap.createBaseTile(position3,faction);
+		
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		RepairInstruction repInstr = new RepairInstruction(testGui, 12);
+		
+		ship.setCondition(1);
+		repInstr.execute(ship);
+		
 		assertTrue(ship.getCondition() == 3);
+		assertTrue(faction.getScore() == 0);
 	}
 	
 }
