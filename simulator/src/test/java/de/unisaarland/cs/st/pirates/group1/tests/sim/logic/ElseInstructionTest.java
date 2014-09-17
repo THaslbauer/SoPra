@@ -34,6 +34,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAnyInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
@@ -474,5 +475,34 @@ public class ElseInstructionTest {
 		
 		assertTrue(pickupInstr.getDir().equals(d));
 	}
+	//Refresh Instruction
 	
+	/**
+	 * test if moral is refreshed correctly
+	 */
+	@Test
+	public void RefreshValidInstructionTest(){
+		Direction d = Direction.D1;
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		RefreshInstruction refreshInstr = new RefreshInstruction(testGui, 2, d);
+		
+		refreshInstr.execute(ship);
+		
+		assertTrue(ship.getMaxmorale() == ship.getMorale());
+	}
+	/**
+	 * test if refreshment fails
+	 */
+	@Test
+	public void RefreshInstructionFailTest(){
+		Direction d = Direction.D0;
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		RefreshInstruction refreshInstr = new RefreshInstruction(testGui, 2, d);
+		
+		int morale = ship.getMorale();
+		refreshInstr.execute(ship);
+		
+		assertTrue(morale == ship.getMorale());
+		assertTrue(ship.getPC() == 2);
+	}
 }
