@@ -12,6 +12,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -56,7 +57,7 @@ public class InstructionTest {
 	private static Position position1;
 	private static int x;
 	
-	@BeforeClass
+	@Before
 	public static void init(){
 		x = 0;
 		

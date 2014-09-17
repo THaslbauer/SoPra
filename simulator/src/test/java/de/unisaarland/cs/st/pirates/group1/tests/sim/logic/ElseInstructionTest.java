@@ -11,6 +11,7 @@ import static org.junit.Assert.assertTrue;
 import java.lang.reflect.Array;
 import java.util.Random;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -48,7 +49,7 @@ public class ElseInstructionTest {
 	private static Position position1;
 	private static int x;
 	
-	@BeforeClass
+	@Before
 	public static void init(){
 		x = 0;
 		
@@ -408,5 +409,13 @@ public class ElseInstructionTest {
 		assertTrue(ship.getCondition() == 3);
 		assertTrue(faction.getScore() == 0);
 	}
+	//PickUpInstruction Tests
 	
+	/**
+	 * 
+	 */
+	@Test
+	public void PickUpInstruction(){
+		
+	}
 }
