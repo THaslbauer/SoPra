@@ -11,14 +11,6 @@
 	<inceptionYear>2014</inceptionYear>
 	<developers>
 <developer>
-<id>hahn</id>
-<name>Christopher Hahn</name>
-<email>s9chhahn@stud.uni-saarland.de</email>
-<roles>
-<role>Developer</role>
-</roles>
-<timezone>2</timezone>
-</developer><developer>
 <id>haslbauer</id>
 <name>Thomas Haslbauer</name>
 <email>s9thhasl@stud.uni-saarland.de</email>
@@ -35,14 +27,6 @@
 </roles>
 <timezone>2</timezone>
 </developer><developer>
-<id>lenhof</id>
-<name>Kerstin Lenhof</name>
-<email>s9kelenh@stud.uni-saarland.de</email>
-<roles>
-<role>Developer</role>
-</roles>
-<timezone>2</timezone>
-</developer><developer>
 <id>gerstner</id>
 <name>Nico Gerstner</name>
 <email>s9nigers@stud.uni-saarland.de</email>
@@ -50,16 +34,43 @@
 <role>Developer</role>
 </roles>
 <timezone>2</timezone>
+</developer><developer>
+<id>hahn</id>
+<name>Christopher Hahn</name>
+<email>s9chhahn@stud.uni-saarland.de</email>
+<roles>
+<role>Developer</role>
+</roles>
+<timezone>2</timezone>
+</developer><developer>
+<id>lenhof</id>
+<name>Kerstin Lenhof</name>
+<email>s9kelenh@stud.uni-saarland.de</email>
+<roles>
+<role>Developer</role>
+</roles>
+<timezone>2</timezone>
 </developer>
 	</developers>
-	<profiles>
+        <profiles>
                 <profile>
+                        <id>antilint</id>
                         <activation>
                                 <jdk>1.8</jdk>
                         </activation>
                         <properties>
                                 <disablelint>-Xdoclint:none</disablelint>
                         </properties>
+                </profile>
+                <profile>
+                        <id>integration</id>
+                        <dependencies>
+                                <dependency>
+                                        <groupId>de.unisaarland.cs.st.pirates</groupId>
+                                        <artifactId>logger-binary</artifactId>
+                                        <version>0.1-SNAPSHOT</version>
+                                </dependency>
+                        </dependencies>
                 </profile>
         </profiles>
 	<properties>
