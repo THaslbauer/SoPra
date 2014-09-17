@@ -239,20 +239,33 @@ public class SimulatorTest extends TestCase {
 	 */
 	@Test
 	public void testSetterGetter(){
-		sim.setCycle(5);
-		assertTrue("Setting / Getting cycle didn't work", sim.getCycle()== 0);
+		//setCycle
+		int cycle = 5;
+		sim.setCycle(cycle);
+		assertTrue("Setting / Getting cycle didn't work", sim.getCycle()== cycle);
+		//setEntityFactory
 		EntityFactory fact = new EntityFactory();
 		sim.setEntityFactory(fact);
 		assertTrue("Setting / Getting of EntityFactory didn't work", sim.getEntityFactory() == fact);
+		//setFactions
 		List<Faction>factions = new LinkedList<>();
 		sim.setFactions(factions);
 		assertTrue("Setting / Getting of Factions didn't work", sim.getFactions() == factions);
+		//setKrakens
 		List<Kraken>krakens = new LinkedList<>();
 		sim.setKrakens(krakens);
+		assertTrue("Setting / Getting of Krakens didn't work", sim.getKrakens() == krakens);
+		//setShips
+		List<Ship>ships = new LinkedList<>();
+		sim.setShips(ships);
+		assertTrue("Setting / Getting of Ships didn't work", sim.getShips() == ships);
+		//setLogWriter
 		ExtendedLogWriter logWriter = new DumbExtendedLogWriter();
 		sim.setLogWriter(logWriter);
 		assertTrue("Setting / Getting of logWriter didn't work", sim.getLogWriter() == logWriter);
+		//setWorldmap
 		Worldmap worldmap = new DumbWorldmap();
+		sim.setWorldmap(worldmap);
 		assertTrue("Setting / Getting of Worldmap didn't work", sim.getWorldmap() == worldmap);
 	}
 
