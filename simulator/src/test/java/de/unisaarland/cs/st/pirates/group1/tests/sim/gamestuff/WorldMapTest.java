@@ -91,7 +91,7 @@ public class WorldMapTest extends TestCase {
 		assertTrue("EntityFactory of Worldmap6T wasnt set properly, was "+map6t.getEntityFactory(), map6t.getEntityFactory() == factory);
 		assertTrue("Logger of Worldmap6T wasn't set properly, was "+map6t.getExtendedLogWriter(), map6t.getExtendedLogWriter() == logger);
 		for(int x = 0; x < mapX; x++){
-			for(int y = 0; x < mapY; y++){
+			for(int y = 0; y < mapY; y++){
 				assertTrue("Map had Tile at Position ("+x+", "+y+")", map6t.getTile(new Position(x, y)) == null);
 			}
 		}
