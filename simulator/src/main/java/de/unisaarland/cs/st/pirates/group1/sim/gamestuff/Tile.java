@@ -2,10 +2,14 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap.sRandom;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.*;
 
 /**
  * Abstract class for a tile. 
@@ -49,8 +53,12 @@ public abstract class Tile {
 	 * @param ship the ship to attach
 	 * @throws IllegalCallException if there is already a ship on this tile
 	 */
-	public void attach(Ship ship)  {
-		//TODO
+	public void attach(Ship ship) throws IllegalCallException  {
+		if(placables[0] != null)
+			throw new IllegalCallException("Ship already on this tile");
+		placables[0] = ship;
+		if(ship.getMyTile() != this)
+			ship.setMyTile(this);
 	}
 	
 	/**
@@ -58,8 +66,12 @@ public abstract class Tile {
 	 * @param kraken the kraken to attach
 	 * @throws IllegalCallException if there is already a kraken on this tile
 	 */
-	public void attach(Kraken kraken) {
-		//TODO
+	public void attach(Kraken kraken) throws IllegalCallException {
+		if(placables[1] != null)
+			throw new IllegalCallException("Kraken already on this tile");
+		placables[1] = kraken;
+		if(kraken.getMyTile() != this)
+			kraken.setMyTile(this);
 	}
 	
 	/**
@@ -67,8 +79,12 @@ public abstract class Tile {
 	 * @param treasure the treasure to attach
 	 * @throws IllegalCallException if there is already a Treasure on this tile
 	 */
-	public void attach(Treasure treasure) {
-		//TODO
+	public void attach(Treasure treasure) throws IllegalCallException {
+		if(placables[2] != null)
+			throw new IllegalCallException("Treasue already on this tile");
+		placables[2] = treasure;
+		if(treasure.getMyTile() != this)
+			treasure.setMyTile(this);
 	}
 	
 	/**
@@ -77,8 +93,12 @@ public abstract class Tile {
 	 * @throws IllegalCallException if there is no ship on this tile
 	 * @throws IllegalArgumentException if there is a ship, but not this ship on this tile
 	 */
-	public void detach(Ship ship) {
-		//TODO
+	public void detach(Ship ship) throws IllegalCallException {
+		if(placables[0] == null)
+			throw new IllegalCallException("No ship here!");
+		if(placables[0] == ship)
+			throw new IllegalArgumentException("Wrong ship detached");
+		placables[0] = null;
 	}
 	
 	/**
@@ -87,8 +107,12 @@ public abstract class Tile {
 	 * @throws IllegalCallException if there is no kraken on this tile
 	 * @throws IllegalArgumentException if there is a kraken, but not this kraken on this tile
 	 */
-	public void detach(Kraken kraken) {
-		//TODO
+	public void detach(Kraken kraken) throws IllegalCallException {
+		if(placables[0] == null)
+			throw new IllegalCallException("No kraken here!");
+		if(placables[0] == kraken)
+			throw new IllegalArgumentException("Wrong kraken detached");
+		placables[0] = null;
 	}
 	
 	/**
@@ -97,8 +121,12 @@ public abstract class Tile {
 	 * @throws IllegalCallException if there is no treasure on this tile
 	 * @throws IllegalArgumentException if there is a treasure, but not this treasure on this tile
 	 */
-	public void detach(Treasure treasure) {
-		//TODO	
+	public void detach(Treasure treasure) throws IllegalCallException {
+		if(placables[0] == null)
+			throw new IllegalCallException("No treasure here!");
+		if(placables[0] == treasure)
+			throw new IllegalArgumentException("Wrong treasure detached");
+		placables[0] = null;
 	}
 	
 	/**
@@ -136,7 +164,6 @@ public abstract class Tile {
 	 */
 	public Tile getNeighbour(Heading heading, Direction direction) {
 		return map.getTile(map.calcPosition(this.position, heading, direction));
-		//TODO
 	}
 	
 	/**
@@ -145,7 +172,18 @@ public abstract class Tile {
 	 * @param value how much you'd like to increase the treasure count here
 	 */
 	public void increaseTreasure(int value) {
-		//TODO
+		if(placables[2] == null) {
+			Treasure treasure = map.createTreasure(value, this);
+			try {
+				attach(treasure);
+			} catch (IllegalCallException e) {
+				//this should definetly (TODO) not happen!
+				throw new IllegalStateException("What the fuck?!");
+			}
+		} else {
+			Treasure treasure = (Treasure)placables[2];
+			treasure.setValue(treasure.getValue()+value);
+		}
 	}
 	
 	/**
@@ -155,7 +193,10 @@ public abstract class Tile {
 	 * @throws IllegalArgumentException if you want to take more than there is
 	 */
 	public void decreaseTreasure(int value) {
-		//TODO
+		if(placables[2] == null)
+			throw new IllegalArgumentException("No treasure here :(");
+		Treasure treasure = (Treasure)placables[2];
+		treasure.setValue(treasure.getValue() >= value ? treasure.getValue() - value : (int) throwIAException("You can't take this much of a treasure!"));
 	}
 	
 	public HashMap<Faction, List<Buoy>> getBuoyMap() {
@@ -164,5 +205,9 @@ public abstract class Tile {
 	
 	public Position getPosition() {
 		return position;
+	}
+	
+	public sRandom getRandom() {
+		return map.random;
 	}
 }

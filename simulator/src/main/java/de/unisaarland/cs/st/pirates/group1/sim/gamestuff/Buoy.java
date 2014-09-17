@@ -31,5 +31,11 @@ public class Buoy extends Placable {
 	public Faction getFaction() {
 		return faction;
 	}
+
+	@Override
+	protected void detachFrom(Tile tile) { }
+
+	@Override
+	protected void attachTo(Tile tile) { }
 	
 }

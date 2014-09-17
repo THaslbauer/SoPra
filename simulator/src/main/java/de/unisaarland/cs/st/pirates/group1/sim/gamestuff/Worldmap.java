@@ -36,8 +36,8 @@ public abstract class Worldmap {
 		}
 	}
 	
-	private ExtendedLogWriter logger;
-	private EntityFactory entityFactory;
+	protected ExtendedLogWriter logger;
+	protected EntityFactory entityFactory;
 	public sRandom random;
 	
 	/**

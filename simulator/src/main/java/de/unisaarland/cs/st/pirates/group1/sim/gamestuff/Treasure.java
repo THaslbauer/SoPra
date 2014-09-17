@@ -1,6 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegative;
+import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
 
 
 /**
@@ -29,6 +30,16 @@ public class Treasure extends Placable {
 	public void setValue(int value) {
 		notNegative(value);
 		this.value = value;
+	}
+
+	@Override
+	protected void detachFrom(Tile tile) throws IllegalCallException, IllegalArgumentException {
+		tile.detach(this);
+	}
+
+	@Override
+	protected void attachTo(Tile tile) throws IllegalCallException {
+		tile.attach(this);
 	}
 	
 }

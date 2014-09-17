@@ -1,6 +1,8 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 
 import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.throwIAException;
@@ -14,15 +16,12 @@ import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegati
 public class Ship extends Placable {
 	private Faction faction;
 	static private final int maxLoad = 4;
-	private int load;
 	static private final int maxMorale = 4;
-	private int morale;
 	static private final int maxBoredom = 40;
 	private int boredom;
 	static private final int maxCondition = 3;
-	private int condition;
 	private int pc;
-	private int [] registers;
+	private int [] registers = new int[18];
 	private int restTime;
 	private Heading heading;
 
@@ -34,27 +33,49 @@ public class Ship extends Placable {
 	 */
 	public Ship(Faction faction, int id, Tile tile) {
 		super(id, tile);
-		this.load = maxLoad;
-		this.morale = maxMorale;
+		registers[Register.SHIP_LOAD.ordinal()] = maxLoad;
+		registers[Register.SHIP_MORAL.ordinal()] = maxMorale;
 		this.boredom = 0;
-		this.condition = maxCondition;
+		registers[Register.SHIP_CONDITION.ordinal()] = maxCondition;
 		heading = Heading.H0;
+		registers[Register.SHIP_DIRECTION.ordinal()] = heading.ordinal();
 		this.faction = faction;
-		clearRegisters();
+		clearSenseRegisters();
 	}
 	
 	/**
 	 * Executes a cycle for this ship
 	 */
 	public void step() {
-		//TODO
+		try {
+			Instruction i = faction.getTactics()[pc];
+			i.execute(this);
+		} catch(ArrayIndexOutOfBoundsException e) {
+			// Sink ship
+			setCondition(0);
+			setMyTile(null);
+		}
 	}
 	
 	/**
 	 * Clears all registers (to unset / false)
 	 */
-	public void clearRegisters() {
-		//TODO
+	public void clearSenseRegisters() {
+		
+		registers[0] = -1;	//SENSE_CELLTYPE,
+		registers[1] = 0;	//SENSE_SUPPLY,
+		registers[2] = 0;	//SENSE_TREASURE,
+		registers[3] = 0;	//SENSE_MARKER0,
+		registers[4] = 0;	//SENSE_MARKER1,
+		registers[5] = 0;	//SENSE_MARKER2,
+		registers[6] = 0;	//SENSE_MARKER3,
+		registers[7] = 0;	//SENSE_MARKER4,
+		registers[8] = 0;	//SENSE_MARKER5,
+		registers[9] = 0;	//SENSE_ENEMYMARKER,
+		registers[10] = -1;	//SENSE_SHIPTYPE,
+		registers[11] = -1;	//SENSE_SHIPDIRECTION,
+		registers[12] = -1;	//SENSE_SHIPLOADED,
+		registers[13] = -1;	//SENSE_SHIPCONDITION,
 	}
 	
 	/**
@@ -63,8 +84,7 @@ public class Ship extends Placable {
 	 * @return the value of sense and ship state registers
 	 */
 	public int getRegister(Register register) {
-		//TODO
-		return 0;
+		return registers[register.ordinal()];
 	}
 	
 	/**
@@ -73,33 +93,33 @@ public class Ship extends Placable {
 	 * @param value the value to set
 	 */
 	public void setRegister(Register register, int value) {
-		//TODO
+		registers[register.ordinal()] = value;
 	}
 	
 	/**
 	 * Resets the boredom of this ship
 	 */
 	public void resetBoredom() {
-		//TODO
+		boredom = 0;
 	}
 	
 	/**
 	 * Increases the boredom of this ship by one
 	 */
 	public void increaseBoredom() {
-		//TODO
+		boredom += 1;
 	}
 	
 	/**
 	 * Increases the program counter of this ship by one
 	 */
 	public void increasePC() {
-		//TODO
+		pc += 1;
 	}
 
 	
 	public int getLoad() {
-		return load;
+		return registers[Register.SHIP_LOAD.ordinal()];
 	}
 
 	/**
@@ -109,10 +129,11 @@ public class Ship extends Placable {
 	 */
 	public void setLoad(int load) throws IllegalArgumentException {
 		notNegative(load);
+		registers[Register.SHIP_LOAD.ordinal()] = load <= maxLoad ? load : (int) throwIAException("SETTER: Load too high");
 		/*
 		 * Equivalent to:
 		 *  if(load <= maxLoad) {
-		 *  	this.load = load;
+		 *  	registers[Register.SHIP_LOAD.ordinal()] = load;
 		 *  } else {
 		 *  	throw new IllegalArgumentException("SETTER: Load too high");
 		 *  }
@@ -120,7 +141,7 @@ public class Ship extends Placable {
 	}
 
 	public int getMorale() {
-		return morale;
+		return registers[Register.SHIP_MORAL.ordinal()];
 	}
 
 	/**
@@ -130,7 +151,7 @@ public class Ship extends Placable {
 	 */
 	public void setMorale(int morale) throws IllegalArgumentException {
 		notNegative(morale);
-		this.morale = morale <= maxMorale ? morale : (int) throwIAException("SETTER: Morale too high");
+		registers[Register.SHIP_MORAL.ordinal()] = morale <= maxMorale ? morale : (int) throwIAException("SETTER: Morale too high");
 	}
 
 	public int getPC() {
@@ -160,7 +181,7 @@ public class Ship extends Placable {
 	}
 
 	public int getCondition() {
-		return condition;
+		return registers[Register.SHIP_CONDITION.ordinal()];
 	}
 
 	/**
@@ -170,7 +191,7 @@ public class Ship extends Placable {
 	 */
 	public void setCondition(int condition) throws IllegalArgumentException {
 		notNegative(condition);
-		this.condition = condition <= maxCondition ? condition : (int) throwIAException("SETTER: Morale too high");
+		registers[Register.SHIP_CONDITION.ordinal()] = condition <= maxCondition ? condition : (int) throwIAException("SETTER: Morale too high");
 	}
 
 	public Faction getFaction() {
@@ -195,6 +216,16 @@ public class Ship extends Placable {
 	
 	public static int getMaxcondition() {
 		return maxCondition;
+	}
+
+	@Override
+	protected void detachFrom(Tile tile) throws IllegalCallException, IllegalArgumentException {
+		tile.detach(this);
+	}
+
+	@Override
+	protected void attachTo(Tile tile) throws IllegalCallException {
+		tile.attach(this);
 	}
 
 }

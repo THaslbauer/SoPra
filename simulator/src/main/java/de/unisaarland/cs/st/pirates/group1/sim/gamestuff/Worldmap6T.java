@@ -14,7 +14,7 @@ import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegati
  */
 public class Worldmap6T extends Worldmap {
 
-	private Tile[][] tiles;
+	private Tile[][] tiles; // [y][x]
 	private int width, height;
 	
 	/**
@@ -50,38 +50,45 @@ public class Worldmap6T extends Worldmap {
 	@Override
 	public Position calcPosition(Position position, Heading heading,
 			Direction direction) {
-		// TODO Auto-generated method stub
+		if(direction == Direction.D6)
+			return position;
+		int dir = heading.ordinal() + direction.ordinal();
+		dir %= 6;
+		
+		//TODO a lot of fun
+		
 		return null;
 	}
 
 	@Override
 	public Island createIslandTile(Position position, boolean supply) {
-		// TODO Auto-generated method stub
-		return null;
+		Island island = new Island(supply, this, position);
+		tiles[position.y][position.x] = island;
+		return island;
 	}
 
 	@Override
 	public Sea createSeaTile(Position position) {
-		// TODO Auto-generated method stub
-		return null;
+		Sea sea = new Sea(this, position);
+		tiles[position.y][position.x] = sea;
+		return sea;
 	}
 
 	@Override
 	public Base createBaseTile(Position position, Faction faction) {
-		// TODO Auto-generated method stub
-		return null;
+		Base base = new Base(faction, this, position);
+		tiles[position.y][position.x] = base;
+		return base;
 	}
 
 	@Override
 	public Buoy createBuoy(int type, Faction faction, Tile tile) {
-		// TODO Auto-generated method stub
-		return null;
+		return entityFactory.createBuoy(type, faction, tile);
 	}
 
 	@Override
 	public Treasure createTreasure(int value, Tile tile) {
-		// TODO Auto-generated method stub
-		return null;
+		return entityFactory.createTreasure(value, tile);
 	}
 
 	public int getWidth() {

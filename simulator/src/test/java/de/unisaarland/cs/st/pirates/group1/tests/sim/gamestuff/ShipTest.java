@@ -164,7 +164,7 @@ public class ShipTest {
 		assertTrue(ship1.getRegister(Register.SENSE_SUPPLY) == 1);
 		assertTrue(ship1.getRegister(Register.SENSE_TREASURE) == 1);
 		
-		ship1.clearRegisters();
+		ship1.clearSenseRegisters();
 		
 		assertTrue(ship1.getRegister(Register.SENSE_CELLTYPE) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_ENEMYMARKER) == 0);

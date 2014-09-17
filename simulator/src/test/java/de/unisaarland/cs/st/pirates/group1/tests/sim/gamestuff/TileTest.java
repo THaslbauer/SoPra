@@ -17,6 +17,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
 import junit.framework.TestCase;
 
 public class TileTest extends TestCase {
@@ -66,17 +67,21 @@ public class TileTest extends TestCase {
 	public void testTileBuild(){
 		assertTrue("Tile shouldn't have a ship before one is attached", basicTile.getShip() == null);
 		Ship ship = new Ship(faction, 0, basicTile);
-		if(basicTile.getShip() == ship){
-			basicTile.detach(ship);
-			assertTrue(basicTile.getShip() == null);
-			basicTile.attach(ship);
-			assertTrue(basicTile.getShip() == ship);
-		}
-		else{
-			basicTile.attach(ship);
-			assertTrue(basicTile.getShip() == ship);
-			basicTile.detach(ship);
-			assertTrue(basicTile.getShip() == null);
+		try { // von Jens
+			if(basicTile.getShip() == ship){
+				basicTile.detach(ship);
+				assertTrue(basicTile.getShip() == null);
+				basicTile.attach(ship);
+				assertTrue(basicTile.getShip() == ship);
+			}
+			else{
+				basicTile.attach(ship);
+				assertTrue(basicTile.getShip() == ship);
+				basicTile.detach(ship);
+				assertTrue(basicTile.getShip() == null);
+			}
+		} catch(IllegalArgumentException | IllegalCallException e) {
+			fail("No exception should happen here");
 		}
 	}
 	
@@ -92,13 +97,19 @@ public class TileTest extends TestCase {
 		assertTrue("Either the kraken doesn't attach itselve to the tile or the tile's getter for kraken is wrong.",
 				basicTile.getKraken() == kraken);
 
-		basicTile.detach(kraken);
+		try { // von Jens
 		
-		assertTrue("The tile's method detach(kraken) didn't detache the kraken.", basicTile.getKraken() == null);
+			basicTile.detach(kraken);
 		
-		basicTile.attach(kraken);
+			assertTrue("The tile's method detach(kraken) didn't detache the kraken.", basicTile.getKraken() == null);
 		
-		assertTrue("The tile's method attach(kraken) didn't attach the kraken", basicTile.getKraken() == kraken);
+			basicTile.attach(kraken);
+		
+			assertTrue("The tile's method attach(kraken) didn't attach the kraken", basicTile.getKraken() == kraken);
+			
+		} catch (IllegalArgumentException | IllegalCallException e) {
+			fail("No exception should happen here");
+		}
 		
 	}
 	
@@ -111,6 +122,8 @@ public class TileTest extends TestCase {
 		assertTrue("Either the treasure doesn't attach itselve to the tile or the tile's getter for treasure is wrong.",
 				basicTile.getTreasure() == treasure);
 		
+		try{ //von Jens
+		
 		basicTile.detach(treasure);
 		
 		assertTrue("The tile's method detach(treasure) didn't detach the kraken.", basicTile.getTreasure() == null);
@@ -118,6 +131,9 @@ public class TileTest extends TestCase {
 		basicTile.attach(treasure);
 		
 		assertTrue("The tile's method attach(treasure) didn't attach the treasure", basicTile.getTreasure() == treasure);
+		} catch (IllegalArgumentException | IllegalCallException e) {
+			fail("No exception should happen here");
+		}
 		
 	}
 	
