@@ -46,19 +46,19 @@ import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiNotify;
 
 public class InstructionTest {
 	
-	private static Worldmap worldMap;
-	private static Faction faction;
-	private static Ship ship;
-	private static Tile baseTile;
-	private static Tile waterTile1;
-	private static Tile waterTile2;
-	private static Tile islandTile2;
-	private static Tile islandTile1;
-	private static Position position1;
-	private static int x;
+	private Worldmap worldMap;
+	private Faction faction;
+	private Ship ship;
+	private Tile baseTile;
+	private Tile waterTile1;
+	private Tile waterTile2;
+	private Tile islandTile2;
+	private Tile islandTile1;
+	private Position position1;
+	private int x;
 	
 	@Before
-	public static void init(){
+	public void init(){
 		x = 0;
 		
 		//A worldMap with exactly one seatile

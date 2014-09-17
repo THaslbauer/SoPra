@@ -32,25 +32,27 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAllInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAnyInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
 
 public class ElseInstructionTest {
-	private static Worldmap worldMap;
-	private static Faction faction;
-	private static Ship ship;
-	private static Tile baseTile;
-	private static Tile waterTile1;
-	private static Tile waterTile2;
-	private static Tile islandTile2;
-	private static Tile islandTile1;
-	private static Position position1;
-	private static int x;
+	private Worldmap worldMap;
+	private Faction faction;
+	private Ship ship;
+	private Tile baseTile;
+	private Tile waterTile1;
+	private Tile waterTile2;
+	private Tile islandTile2;
+	private Tile islandTile1;
+	private Position position1;
+	private int x;
 	
 	@Before
-	public static void init(){
+	public void init(){
 		x = 0;
 		
 		//A worldMap with exactly one seatile
@@ -416,6 +418,8 @@ public class ElseInstructionTest {
 	 */
 	@Test
 	public void PickUpInstruction(){
-		
+		Direction d = Direction.D0;
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		PickupInstruction repInstr = new PickupInstruction(testGui, 12, d);
 	}
 }
