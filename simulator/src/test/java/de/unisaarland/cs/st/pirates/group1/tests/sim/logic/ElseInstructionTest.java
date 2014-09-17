@@ -19,6 +19,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.EqualOperator;
@@ -414,12 +415,64 @@ public class ElseInstructionTest {
 	//PickUpInstruction Tests
 	
 	/**
-	 * 
+	 * tests if the ship can pickup
 	 */
 	@Test
-	public void PickUpInstruction(){
+	public void PickUpValidInstructionTest(){
 		Direction d = Direction.D0;
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		PickupInstruction repInstr = new PickupInstruction(testGui, 12, d);
+		PickupInstruction pickupInstr = new PickupInstruction(testGui, 12, d);
+		
+		//attach treasure on watertile2
+		Treasure tr = new Treasure(2,1,waterTile2);
+		pickupInstr.execute(ship);
+		
+		assertTrue(ship.getLoad() == 2);
 	}
+	
+	/**
+	 * tests if the ship can pickup wraparound
+	 */
+	@Test
+	public void PickUpWrapAroundInstructionTest(){
+		Direction d = Direction.D3;
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		PickupInstruction pickupInstr = new PickupInstruction(testGui, 12, d);
+		
+		//attach treasure on watertile2
+		Treasure tr = new Treasure(2,1,waterTile2);
+		pickupInstr.execute(ship);
+		
+		assertTrue(ship.getLoad() == 2);
+		assertTrue(ship.getPC() == 1);
+	}
+	
+	/**
+	 * tests if the PC is set correctly after fail
+	 */
+	@Test
+	public void PickUpFailInstructionTest(){
+		Direction d = Direction.D3;
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		PickupInstruction pickupInstr = new PickupInstruction(testGui, 12, d);
+		
+		pickupInstr.execute(ship);
+		
+		assertTrue(ship.getPC() == 12);
+		assertTrue(ship.getLoad() == 0);
+	}
+	/**
+	 * getter Tests
+	 */
+	@Test
+	public void PickUpGetterTest(){
+		Direction d = Direction.D3;
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		PickupInstruction pickupInstr = new PickupInstruction(testGui, 12, d);
+		
+		pickupInstr.execute(ship);
+		
+		assertTrue(pickupInstr.getDir().equals(d));
+	}
+	
 }
