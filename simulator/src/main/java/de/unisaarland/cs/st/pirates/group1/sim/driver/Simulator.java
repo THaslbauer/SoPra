@@ -84,7 +84,7 @@ public class Simulator
 	 */
 	public Ship createShip(Faction faction, Tile tile)
 	{
-		// every key which 
+		// every key which the ship needs
 		Key[] keys = new Key[8];
 		keys[0]    = Key.DIRECTION;
 		keys[1]    = Key.FLEET;
@@ -95,18 +95,21 @@ public class Simulator
 		keys[6]    = Key.X_COORD;
 		keys[7]    = Key.Y_COORD;
 		
+		// every value wich are matching the keys
 		int[] values = new int[8];
 		values[0]    = 0;
-		values[1]    = 0;
+		values[1]    = faction.getFactionID();
 		values[2]    = 4;
 		values[3]    = 0;
 		values[4]    = 0;
 		values[5]    = 0;
 		values[6]    = tile.getPosition().x;
-		values[7]    = 0;
+		values[7]    = tile.getPosition().y;
 		
-		logger.create(Entity.SHIP, entityFactory.getShipNextId(), keys, null);
+		// logs the creation before creating the ship
+		logger.create(Entity.SHIP, entityFactory.getShipNextId(), keys, values);
 		
+		// creates the ship and returns it
 		return entityFactory.createShip(faction, tile);
 	}
 	
