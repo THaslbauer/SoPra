@@ -31,6 +31,11 @@ public class Simulator
 	private Random random;										// an instance of the random class
 	
 	
+	public Simulator()
+	{
+		this(null, 10000, null);
+	}
+	
 	public Simulator(ExtendedLogWriter logger, Random random){
 		this(logger, 10000, random);
 	}
