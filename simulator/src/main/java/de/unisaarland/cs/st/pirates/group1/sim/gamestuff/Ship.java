@@ -113,8 +113,8 @@ public class Ship extends Placable {
 	/**
 	 * Increases the program counter of this ship by one
 	 */
-	public void increasePC() {
-		pc += 1;
+	public int increasePC() {
+		return ++pc;
 	}
 
 	
@@ -228,4 +228,8 @@ public class Ship extends Placable {
 		tile.attach(this);
 	}
 
+	public int[] getRegisters() {
+		return registers;
+	}
+	
 }
