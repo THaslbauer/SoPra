@@ -128,6 +128,8 @@ public class WorldMapTest extends TestCase {
 			notifiedError = true;
 		}
 		assertTrue("Worldmap6T didn't fail to create for size (0,2)", notifiedError);
+		//Only to remove the warning and make sure nothing gets deleted from this method
+		map6t.getHeight();
 	}
 	
 	

@@ -86,7 +86,7 @@ public class FactoryTest extends TestCase {
 		assertFalse("No Buoy returned by factory", buoy == null);
 		assertTrue("Buoy's ID wasn't 0, was "+buoy.getId(), buoy.getId() == 0);
 		assertTrue("Buoy's tile wasn't set properly", buoy.getMyTile() == tile);
-		assertTrue("Buoy's type wasn't 0, was "+buoy.getType(), buoy.getType() == type);
+		assertTrue("Buoy's type wasn't "+type+", was "+buoy.getType(), buoy.getType() == type);
 	}
 	
 	/**
