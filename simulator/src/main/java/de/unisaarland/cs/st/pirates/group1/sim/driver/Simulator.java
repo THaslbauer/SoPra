@@ -1,45 +1,53 @@
 package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 
 /**
  * This class can simulate game cycles. It knows all ships and krakens and
  * ends the game by showing the scores of each faction.
  * 
  * @author Nico
- * @version 1.0
+ * @version 1.1
  */
 public class Simulator
 {
-	private List<Kraken> krakens;
-	
-	private List<Ship> ships;
-	
-	private Worldmap worldmap;
-	
-	private List<Faction> factions;
-	
-	private int cycle;
-	
-	private final int maxCicle;
-	
-	private ExtendedLogWriter logger;
-	
-	private EntityFactory entityFactory;
+	private List<Faction> factions;								// the list of factions in the game
+	private List<Ship> ships;									// the list of ships in the game
+	private List<Kraken> krakens;								// the list of krakens in the game
+	private Worldmap worldmap;									// the map
+	private int cycle;											// the current cycle of the game
+	private final int maxCycle;									// the maximal cycles the game is running
+	private int krakenWaittime;									// all kraken's current waittime
+	private final int maxKrakenWaittime;						// the maximal waittime of every kraken until it can step() again
+	private ExtendedLogWriter logger;							// the logger wich logs the creation of placables
+	private EntityFactory entityFactory;						// the factory which creates the placables
+	private Random random;										// an instance of the random class
 	
 	
-	public Simulator(ExtendedLogWriter logger){
-		this(logger, 10000);
+	public Simulator(ExtendedLogWriter logger, Random random){
+		this(logger, 10000, random);
 	}
 	
-	public Simulator(ExtendedLogWriter logger, int maxCycle)
+	public Simulator(ExtendedLogWriter logger, int maxCycle, Random random)
 	{
-		//TODO
-		this.maxCicle = maxCycle;
+		this.factions      = new LinkedList<Faction>();
+		this.ships         = new LinkedList<Ship>();
+		this.krakens       = new LinkedList<Kraken>();
+		this.worldmap      = null;
+		this.cycle         = 0;
+		this.maxCycle      = maxCycle;
+		this.logger        = logger;
+		this.entityFactory = null;
+		this.random        = null;
+		this.krakenWaittime = 0;
+		this.maxKrakenWaittime = 20;
 	}
 	
 	/**
@@ -50,7 +58,15 @@ public class Simulator
 	 */
 	public void step()
 	{
-		//TODO
+		//TODO unsupportedOperationException
+		
+		if(krakenWaittime == 0)
+		{
+			for(Kraken kraken : krakens)
+			{
+				kraken.step();
+			}
+		}
 	}
 	
 	/**
@@ -63,8 +79,21 @@ public class Simulator
 	 */
 	public Ship createShip(Faction faction, Tile tile)
 	{
-		//TODO
-		return null;
+		// every key which 
+		Key[] keys = new Key[8];
+		keys[0]    = Key.DIRECTION;
+		keys[1]    = Key.FLEET;
+		keys[2]    = Key.MORAL;
+		keys[3]    = Key.PC;
+		keys[4]    = Key.RESTING;
+		keys[5]    = Key.VALUE;
+		keys[6]    = Key.X_COORD;
+		keys[7]    = Key.Y_COORD;
+		
+		
+		logger.create(Entity.SHIP, entityFactory.getShipNextId(), keys, null);
+		
+		return entityFactory.createShip(faction, tile);
 	}
 	
 	/**
@@ -76,8 +105,7 @@ public class Simulator
 	 */
 	public Kraken createKraken(Tile tile)
 	{
-		//TODO
-		return null;
+		return entityFactory.releaseTheKraken(tile);
 	}
 	
 	/**
@@ -87,7 +115,12 @@ public class Simulator
 	 */
 	public void removeShip(Ship ship)
 	{
-		//TODO
+		if(ship == null || ships == null)
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		ships.remove(ship);
 	}
 
 	public List<Kraken> getKrakens() {
@@ -147,8 +180,12 @@ public class Simulator
 	}
 	
 	public int getMaxCycle(){
-		return this.maxCicle;
+		return this.maxCycle;
 	}
 	
+	public void setRandom(Random random)
+	{
+		this.random = random;
+	}
 	
 }
