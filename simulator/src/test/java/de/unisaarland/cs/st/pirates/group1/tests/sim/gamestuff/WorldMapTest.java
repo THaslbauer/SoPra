@@ -136,6 +136,7 @@ public class WorldMapTest extends TestCase {
 	/**
 	 * Tests directional stuff (calcPosition)
 	 */
+	@Test
 	public void testDirectionStuff(){
 		//testing direction switching
 		Position p = map.calcPosition(middle, Heading.H0, Direction.D0);

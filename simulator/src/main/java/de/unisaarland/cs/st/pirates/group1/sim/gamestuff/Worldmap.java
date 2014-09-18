@@ -3,7 +3,6 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 import java.util.Random;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 
@@ -14,6 +13,11 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
  */
 public abstract class Worldmap {
 	public static class sRandom extends Random {
+		
+		/**
+		 * I have no idea what this does.
+		 */
+		private static final long serialVersionUID = 618966912020603967L;
 		
 		private long seed;
 		private int lastInt;

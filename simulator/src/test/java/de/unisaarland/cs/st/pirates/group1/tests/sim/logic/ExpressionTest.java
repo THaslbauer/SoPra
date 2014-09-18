@@ -9,14 +9,10 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.logic;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.fail;
-
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.*;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
-import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Primary;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.RegisterCall;
-import de.unisaarland.cs.st.pirates.group1.tests.testUtil.DummyExpression;
 
 public class ExpressionTest {
 
