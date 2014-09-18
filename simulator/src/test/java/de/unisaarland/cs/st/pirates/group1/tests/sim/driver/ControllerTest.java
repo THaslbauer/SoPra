@@ -13,6 +13,7 @@ import org.junit.Test;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Controller;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
 
@@ -38,9 +39,10 @@ public class ControllerTest
 		public int value = 0;
 		
 		@Override
-		public void parseTactics(InputStream stream, Random random)
+		public Instruction[] parseTactics(InputStream stream, Random random)
 		{
 			value += 1;
+			return null;
 		}
 	}
 	
@@ -50,7 +52,7 @@ public class ControllerTest
 		public int value = 0;
 		
 		public TestSimulator(InfoPoint infoPoint) {
-			super(infoPoint);
+			super(infoPoint, null);
 		}
 		
 		@Override
@@ -85,7 +87,7 @@ public class ControllerTest
 		testMapParser     = new TestMapParser();
 		testTacticsParser = new TestTacticsParser();
 		testSimulator     = new TestSimulator(new InfoPoint());
-		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null);
+		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null, 0, null);
 	}
 	
 	@Before
@@ -93,7 +95,7 @@ public class ControllerTest
 		mp = new TestMapParser();
 		tp = new TestTacticsParser();
 		sim = new TestSimulator(new InfoPoint());
-		contr = new Controller(sim, mp, tp, null, null);
+		contr = new Controller(sim, mp, tp, null, null, 0, null);
 		contr.initializeSimulator();
 	}
 	
@@ -128,7 +130,7 @@ public class ControllerTest
 	@Test
 	public void getsetTest()
 	{
-		controller = new Controller(null, null, null, null, null);
+		controller = new Controller(null, null, null, null, null, 0, null);
 		
 		controller.setSimulator(testSimulator);
 		assertTrue("The controllers's setter or getter for the simulator was incorrect",
