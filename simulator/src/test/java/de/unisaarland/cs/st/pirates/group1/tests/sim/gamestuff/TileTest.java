@@ -65,20 +65,27 @@ public class TileTest extends TestCase {
 	 */
 	@Test
 	public void testTileBuild(){
-		assertTrue("Tile shouldn't have a ship before one is attached", basicTile.getShip() == null);
-		Ship ship = new Ship(faction, 0, basicTile);
-			if(basicTile.getShip() == ship){
-				basicTile.detach(ship);
-				assertTrue(basicTile.getShip() == null);
-				basicTile.attach(ship);
-				assertTrue(basicTile.getShip() == ship);
-			}
-			else{
-				basicTile.attach(ship);
-				assertTrue(basicTile.getShip() == ship);
-				basicTile.detach(ship);
-				assertTrue(basicTile.getShip() == null);
-			}
+		try
+		{
+			assertTrue("Tile shouldn't have a ship before one is attached", basicTile.getShip() == null);
+			Ship ship = new Ship(faction, 0, basicTile);
+				if(basicTile.getShip() == ship){
+					basicTile.detach(ship);
+					assertTrue(basicTile.getShip() == null);
+					basicTile.attach(ship);
+					assertTrue(basicTile.getShip() == ship);
+				}
+				else{
+					basicTile.attach(ship);
+					assertTrue(basicTile.getShip() == ship);
+					basicTile.detach(ship);
+					assertTrue(basicTile.getShip() == null);
+				}
+		}
+		catch(Exception e)
+		{
+			fail();
+		}
 	}
 	
 	/**
@@ -87,39 +94,52 @@ public class TileTest extends TestCase {
 	@Test
 	public void testKrakenAttachDetach()
 	{
-		// attaches and detaches a kraken
-		Kraken kraken = new Kraken(0, basicTile);
-		
-		assertTrue("Either the kraken doesn't attach itselve to the tile or the tile's getter for kraken is wrong.",
-				basicTile.getKraken() == kraken);
-
-			basicTile.detach(kraken);
-		
-			assertTrue("The tile's method detach(kraken) didn't detache the kraken.", basicTile.getKraken() == null);
-		
-			basicTile.attach(kraken);
-		
-			assertTrue("The tile's method attach(kraken) didn't attach the kraken", basicTile.getKraken() == kraken);
+		try
+		{
+			// attaches and detaches a kraken
+			Kraken kraken = new Kraken(0, basicTile);
+			
+			assertTrue("Either the kraken doesn't attach itselve to the tile or the tile's getter for kraken is wrong.",
+					basicTile.getKraken() == kraken);
+	
+				basicTile.detach(kraken);
+			
+				assertTrue("The tile's method detach(kraken) didn't detache the kraken.", basicTile.getKraken() == null);
+			
+				basicTile.attach(kraken);
+			
+				assertTrue("The tile's method attach(kraken) didn't attach the kraken", basicTile.getKraken() == kraken);
+		}
+		catch(Exception e)
+		{
+			fail();
+		}
 
 	}
 	
 	@Test
 	public void testTreasureAttachDetach()
 	{
-		// attaches and detaches a treasure
-		Treasure treasure = new Treasure(1, 1, basicTile);
-		
-		assertTrue("Either the treasure doesn't attach itselve to the tile or the tile's getter for treasure is wrong.",
-				basicTile.getTreasure() == treasure);
-
-		basicTile.detach(treasure);
-		
-		assertTrue("The tile's method detach(treasure) didn't detach the kraken.", basicTile.getTreasure() == null);
-		
-		basicTile.attach(treasure);
-		
-		assertTrue("The tile's method attach(treasure) didn't attach the treasure", basicTile.getTreasure() == treasure);
-		
+		try
+		{
+			// attaches and detaches a treasure
+			Treasure treasure = new Treasure(1, 1, basicTile);
+			
+			assertTrue("Either the treasure doesn't attach itselve to the tile or the tile's getter for treasure is wrong.",
+					basicTile.getTreasure() == treasure);
+	
+			basicTile.detach(treasure);
+			
+			assertTrue("The tile's method detach(treasure) didn't detach the kraken.", basicTile.getTreasure() == null);
+			
+			basicTile.attach(treasure);
+			
+			assertTrue("The tile's method attach(treasure) didn't attach the treasure", basicTile.getTreasure() == treasure);
+		}
+		catch(Exception e)
+		{
+			fail();
+		}
 	}
 	
 	/**

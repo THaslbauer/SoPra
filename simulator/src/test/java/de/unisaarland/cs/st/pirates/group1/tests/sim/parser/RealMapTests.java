@@ -16,7 +16,6 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.*;
-import de.unisaarland.cs.st.pirates.group1.tests.testUtil.DummyEntityFactory;
 
 import static de.unisaarland.cs.st.pirates.group1.tests.testUtil.StreamHelper.asIS;
 
