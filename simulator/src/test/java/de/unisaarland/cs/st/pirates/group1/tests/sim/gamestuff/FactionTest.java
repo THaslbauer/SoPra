@@ -93,7 +93,7 @@ public class FactionTest {
 		
 		faction.addShip();
 		
-		assertTrue(faction.getScore() == 1);
+		assertTrue(faction.getShipCount() == 1);
 	}
 	
 	@Test
@@ -109,7 +109,25 @@ public class FactionTest {
 		
 		faction.removeShip();
 		
-		assertTrue(faction.getScore() == 1);
+		assertTrue(faction.getShipCount() == 1);
+	}
+	
+	@Test
+	public void removeShipTest1(){
+		
+		String faction_name = "test";
+		int id = 1;
+		
+		Faction faction = new Faction(faction_name, 1);
+		
+		try{
+			faction.removeShip();
+		}
+		catch(UnsupportedOperationException e){
+			return;
+		}
+		
+		fail("there is no ship which can be removed");
 	}
 	
 	@Test
@@ -171,33 +189,11 @@ public class FactionTest {
 		
 		faction.increaseScore(4);
 		
-		faction.decreaseScore(-2);
+		faction.decreaseScore();
 		
 		assertTrue("score should be 2",faction.getScore() == 2);
 	}
 	
-	@Test
-	public void decreaseScore2Test(){
-		
-		String faction_name = "test";
-		
-		Faction faction = new Faction(faction_name,1);
-		
-		faction.increaseScore(4);
-		
-		try{
-			faction.decreaseScore(-1);
-			faction.decreaseScore(-3);
-		}
-		
-		catch(IllegalArgumentException e){
-			
-			return;
-		}
-		
-		fail("score cannot be decreased by one or three");
-		
-	}
 	
 	@Test
 	public void decreaseScore3test(){
@@ -210,16 +206,18 @@ public class FactionTest {
 		
 		try{
 			
-		faction.decreaseScore(-2);
+		faction.decreaseScore();
 		
 		}
 		
-		catch(IllegalArgumentException e){
+		catch(UnsupportedOperationException e){
 			 return;
 		}
 		
 		fail("Score cannot be decreased by two if there is only one point left");
 	}
+	
+	
 
 	@Test
 	public void getInstruction1Test(){
@@ -282,6 +280,24 @@ public class FactionTest {
 		}
 		
 		fail("index out of bounds exception should be thrown (wrong PC)");
+	}
+	
+	@Test
+	public void getInstruction4Test(){
+		
+		String faction_name = "test";
+		
+		Faction faction = new Faction(faction_name,1);
+		
+		try{
+			faction.getInstruction(1);
+		}
+		
+		catch(UnsupportedOperationException e){
+			return;
+		}
+		
+		fail("there is no tactic to be chose");
 	}
 	
 	@Test

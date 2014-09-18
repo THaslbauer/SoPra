@@ -27,7 +27,7 @@ public class Kraken extends Placable {
 	 * That's alle it does.
 	 */
 	public void step() {
-		int dir = myTile.getRandom().nextInt(6);
+		int dir = myTile.getWorldmap().getRandom().nextInt(6);
 		Heading heading = Heading.values()[dir];
 		try {
 			Tile aim = myTile.getNeighbour(heading, Direction.D0);

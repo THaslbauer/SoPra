@@ -129,5 +129,15 @@ public abstract class Worldmap {
 	public EntityFactory getEntityFactory() {
 		return entityFactory;
 	}
+
+
+	public sRandom getRandom() {
+		return random;
+	}
+
+
+	public void setRandom(sRandom random) {
+		this.random = random;
+	}
 	
 }

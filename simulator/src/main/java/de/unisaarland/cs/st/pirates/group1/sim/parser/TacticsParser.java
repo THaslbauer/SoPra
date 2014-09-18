@@ -3,6 +3,8 @@ package de.unisaarland.cs.st.pirates.group1.sim.parser;
 import java.io.InputStream;
 import java.util.Random;
 
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
+
 /**
  * 
  * This is the parser for the tactics of each faction.
@@ -20,7 +22,8 @@ public class TacticsParser {
 	 * @param input
 	 * @param random
 	 */
-	public void parseTactics(InputStream input, Random random){
+	public Instruction[] parseTactics(InputStream input, Random random){
 		//TODO: implement this
+		return null;
 	}
 }
