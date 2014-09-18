@@ -54,10 +54,44 @@ public class Worldmap6T extends Worldmap {
 			return position;
 		int dir = heading.ordinal() + direction.ordinal();
 		dir %= 6;
+		int dx = 0, dy = 0;
 		
-		//TODO a lot of fun
+		switch(dir) {
+			case 0 : {
+				dx = 1;
+				break;
+			}
+			case 1 : {
+				dx = 1;
+				dy = 1;
+				break;
+			}
+			case 2 : {
+				dx = -1;
+				dy = 1;
+				break;
+			}
+			case 3 : {
+				dx = -1;
+				break;
+			}
+			case 4 : {
+				dx = -1;
+				dy = -1;
+				break;
+			}
+			case 5 : {
+				dx = 1;
+				dy = -1;
+			}
+			default : { }
+		}
+		int newx = position.x + dx;
+		int newy = position.y + dy;
+		newx = newx >= width ? 0 : ( newx < 0 ? width-1 : newx );
+		newy = newy >= height ? 0 : ( newy < 0 ? height-1 : newy );
 		
-		return null;
+		return new Position(newx, newy);
 	}
 
 	@Override

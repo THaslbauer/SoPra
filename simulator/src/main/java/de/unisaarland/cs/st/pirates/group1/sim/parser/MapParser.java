@@ -7,6 +7,10 @@ import java.util.HashMap;
 
 
 
+import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
+
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 
@@ -40,6 +44,30 @@ public class MapParser {
 	 * @param simulator
 	 */
 	public void parseMap(InputStream stream, Simulator simulator) throws IllegalArgumentException, NullPointerException{
-		//TODO: implement this
+		
+		
+		int width, height;
+		try(Scanner scan = new Scanner(stream)){
+			
+			try{
+				width = scan.nextInt();
+				
+				if(!(scan.nextLine().equals(""))){
+					throw new IllegalArgumentException();
+				}
+				
+				height = scan.nextInt();
+				
+				if(!(scan.nextLine().equals(""))){
+					throw new IllegalArgumentException();
+				}
+				
+				
+				
+			}
+			catch(NoSuchElementException | IllegalStateException c){
+				throw new IllegalArgumentException();
+			}
+		}
 	}
 }

@@ -136,6 +136,7 @@ public class WorldMapTest extends TestCase {
 	/**
 	 * Tests directional stuff (calcPosition)
 	 */
+	@Test
 	public void testDirectionStuff(){
 		//testing direction switching
 		Position p = map.calcPosition(middle, Heading.H0, Direction.D0);
@@ -182,6 +183,7 @@ public class WorldMapTest extends TestCase {
 	/**
 	 * Tests creation abilities and notification
 	 */
+	@Test
 	public void testBaseCreation(){
 		Faction testF = new Faction("test", 0);
 		Tile test = map.createBaseTile(middle, testF);

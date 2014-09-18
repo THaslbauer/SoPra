@@ -2,9 +2,6 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap.sRandom;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
