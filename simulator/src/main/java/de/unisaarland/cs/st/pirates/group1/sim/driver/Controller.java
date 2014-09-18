@@ -7,14 +7,18 @@
 
 package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Semaphore;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
@@ -33,7 +37,9 @@ public class Controller {
 	//the random object
 	private Random random;
 	private OutputStream output;
-
+	private boolean paused;
+	private Semaphore sema;
+	
 	/**
 	 * the Constructor for the Controller
 	 * 
@@ -46,7 +52,7 @@ public class Controller {
 	 * @param output the Output Steam, which is needed so the Controller can initialize the InfoPoint
 	 */
 public Controller(Simulator simulator, MapParser mapParser,
-		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile,int seed, OutputStream output){
+		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, int seed, OutputStream output){
 	this.simulator = simulator;
 	this.mapParser = mapParser;
 	this.tacticsParser = tacticsParser;
@@ -55,7 +61,7 @@ public Controller(Simulator simulator, MapParser mapParser,
 	this.seed = seed;
 	this.random = new Random(seed);
 	this.output = output;
-	
+	sema = new Semaphore(1);
 }
 	
 	/*
@@ -153,7 +159,15 @@ public void initializeSimulator(){
 	String[] strings = (String[])stringList.toArray();
 	
 	//initializes the LogWriter
-	simulator.getLogWriter().init(output, convertStreamToString(mapFile) , strings);
+	try {
+		simulator.getLogWriter().init(output, convertStreamToString(mapFile) , strings);
+	} catch (ArrayIndexOutOfBoundsException e1) {
+		throw new IllegalStateException();
+	} catch (NullPointerException e1) {
+		throw new IllegalStateException();
+	} catch (IOException e1) {
+		throw new IllegalStateException();
+	}
 	
 	
 	//sets the randomobject to the simulator
@@ -186,29 +200,57 @@ public void initializeSimulator(){
 }
 
 	/**
-	 * The order for the Simulator to do one step.
+	 * The order for the Simulator to do all steps.
 	 * 
 	 * @param
 	 * @return void
 	 */
 public void play(){
-	/*
-	 * TODO IMPLEMENT THIS
-	 */
-	
+	try {
+		sema.acquire();
+	} catch (InterruptedException e1) {
+		return;
+	}
+	//let the simulator do one step
+	boolean ende = false;
+	while(!ende && waitForUnpaused() && Thread.interrupted()){
+		try{
+		simulator.step();
+		}catch(UnsupportedOperationException e){
+			ende = true;
+		}
+	}
+	sema.release();
 }
 
 	/**
-	 * The order for the Simulator to pause.
+	 * The order for the controller to pause the simulation loop
 	 * 
 	 * @param
 	 * @return void
 	 */
-public void pause(){
-	/*
-	 * TODO IMPLEMENT THIS
-	 */
+synchronized public void pause(){
+	paused = true;
 	
+}
+	/**
+	 * the order for the controller to unpause the simulation loop
+	 */
+
+synchronized public void unpause(){
+	paused = false;
+	notifyAll();
+}
+
+synchronized private boolean waitForUnpaused(){
+	while(paused){
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			return false;
+		}
+	}
+	return true;
 }
 
 }
