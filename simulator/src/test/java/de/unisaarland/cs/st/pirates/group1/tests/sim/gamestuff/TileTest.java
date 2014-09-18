@@ -143,20 +143,27 @@ public class TileTest extends TestCase {
 	@Test
 	public void testIncreaseDecreaseTreasure()
 	{
-		basicTile.increaseTreasure(2);
-		
-		assertTrue("The tile's method increaseTreasure() didn't place a treasure.", basicTile.getTreasure() != null);
-		
-		assertTrue("The tile's method increaseTreasure() has placed a bad treasure.", basicTile.getTreasure().getValue() == 2);
-		
-		basicTile.increaseTreasure(2);
-		
-		assertTrue("The tile's method increase Treasure() didn't add the treasure to the previous one.",
-				basicTile.getTreasure().getValue() == 4);
-		
-		basicTile.decreaseTreasure(4);
-		
-		assertTrue("The tile's method decreaseTreasure() didn't removed the treasure.", basicTile.getTreasure() == null);
+		try
+		{
+			basicTile.increaseTreasure(2);
+			
+			assertTrue("The tile's method increaseTreasure() didn't place a treasure.", basicTile.getTreasure() != null);
+			
+			assertTrue("The tile's method increaseTreasure() has placed a bad treasure.", basicTile.getTreasure().getValue() == 2);
+			
+			basicTile.increaseTreasure(2);
+			
+			assertTrue("The tile's method increase Treasure() didn't add the treasure to the previous one.",
+					basicTile.getTreasure().getValue() == 4);
+			
+			basicTile.decreaseTreasure(4);
+			
+			assertTrue("The tile's method decreaseTreasure() didn't removed the treasure.", basicTile.getTreasure() == null);
+		}
+		catch(Exception e)
+		{
+			fail();
+		}
 	}
 
 	/**
