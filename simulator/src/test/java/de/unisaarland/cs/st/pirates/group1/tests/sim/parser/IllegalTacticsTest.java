@@ -5,10 +5,8 @@ import static org.junit.Assert.fail;
 
 import org.junit.Test;
 
-import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap.sRandom;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
 public class IllegalTacticsTest {
 	private static TacticsParser tp = new TacticsParser();
