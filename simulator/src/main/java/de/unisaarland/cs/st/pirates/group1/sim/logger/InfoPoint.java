@@ -52,14 +52,16 @@ public class InfoPoint implements ExtendedLogWriter{
 public LogWriter addCell(Cell type, Integer faction, int x, int y)
 		throws NullPointerException, ArrayIndexOutOfBoundsException,
 		IllegalArgumentException, IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.addCell(type, faction, x, y);
+	GUI.addCell(type, faction, x, y);
 	return null;
 }
 
 @Override
 public LogWriter addCustomHeaderData(String data) throws NullPointerException,
 		ArrayIndexOutOfBoundsException, IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.addCustomHeaderData(data);
+	GUI.addCustomHeaderData(data);
 	return null;
 }
 
@@ -67,21 +69,23 @@ public LogWriter addCustomHeaderData(String data) throws NullPointerException,
 public Transaction beginTransaction(Entity entity, int id)
 		throws NullPointerException, IllegalArgumentException,
 		IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.beginTransaction(entity, id);
+	GUI.beginTransaction(entity, id);
 	return null;
 }
 
 @Override
 public void close() throws IllegalStateException, IOException {
-	// TODO Auto-generated method stub
-	
+	refLogger.close();
+	GUI.close();
 }
 
 @Override
 public LogWriter commitTransaction(Transaction transaction)
 		throws NullPointerException, IllegalArgumentException,
 		IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.commitTransaction(transaction);
+	GUI.commitTransaction(transaction);
 	return null;
 }
 
@@ -89,21 +93,24 @@ public LogWriter commitTransaction(Transaction transaction)
 public LogWriter create(Entity entity, int id, Key[] keys, int[] values)
 		throws NullPointerException, IllegalArgumentException,
 		ArrayIndexOutOfBoundsException, IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.create(entity, id, keys, values);
+	GUI.create(entity, id, keys, values);
 	return null;
 }
 
 @Override
 public LogWriter destroy(Entity entity, int id) throws NullPointerException,
 		IllegalArgumentException, IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.destroy(entity, id);
+	GUI.destroy(entity, id);
 	return null;
 }
 
 @Override
 public LogWriter fleetScore(int id, int value) throws IllegalArgumentException,
 		ArrayIndexOutOfBoundsException, IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.fleetScore(id, value);
+	GUI.fleetScore(id, value);
 	return null;
 }
 
@@ -111,41 +118,40 @@ public LogWriter fleetScore(int id, int value) throws IllegalArgumentException,
 public void init(OutputStream logStream, String map, String... programs)
 		throws NullPointerException, IOException,
 		ArrayIndexOutOfBoundsException {
-	// TODO Auto-generated method stub
+	refLogger.init(logStream, map, programs);
+	GUI.init(logStream, map, programs);
 	
 }
 
 @Override
 public void logStep() throws IllegalStateException, IOException {
-	// TODO Auto-generated method stub
-	
+	refLogger.logStep();
+	GUI.logStep();
 }
 
 @Override
 public LogWriter notify(Entity entity, int id, Key key, int value)
 		throws NullPointerException, IllegalArgumentException,
 		IllegalStateException {
-	// TODO Auto-generated method stub
+	refLogger.notify(entity, id, key, value);
+	GUI.notify(entity, id, key, value);
 	return null;
 }
 
 @Override
 public void fight(Ship ship, Ship otherShip) {
-	// TODO Auto-generated method stub
-	
+	GUI.fight(ship, otherShip);
 }
 
 @Override
 public void fight(Ship ship, Kraken kraken) {
-	// TODO Auto-generated method stub
-	
+	GUI.fight(ship, kraken);
 }
 
 
 @Override
 public void registerChange(Ship ship) {
-	// TODO Auto-generated method stub
-	
+	GUI.registerChange(ship);
 }
 
 }
