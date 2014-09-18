@@ -91,35 +91,34 @@ public class Faction {
 	 */
 	public int removeShip() {
 		if(shipCount == 0)
-			throw new IllegalArgumentException("Ship count is 0, no more ships can be lost.");
+			throw new UnsupportedOperationException("Ship count is 0, no more ships can be lost.");
 		return --shipCount;
 	}
 	
 	/**
 	 * increases the Factions score
 	 * @param i By how much the score should be increased
-	 * @throws IllegalArgumentException if i is below 0
+	 * @throws IllegalArgumentException if i is below 0 or above 4
+	 * (above 4 because at the moment we shouldn't increase score by more than 4 with a ship)
 	 * @return The new score
 	 */
 	public int increaseScore(int i) {
-		if(i < 0)
+		if(i < 0 || i > 4)
 			throw new IllegalArgumentException("Score has to be increased by non-negative value");
 		score = score + i;
 		return score;
 	}
 	
 	/**
-	 * decreases the Factions score
-	 * @param i By how much the score should be decreased
-	 * @throws IllegalArgumentException If score would fall below 0 or if i is below 0
+	 * decreases the Factions score by 2
+	 * @throws UnsupportedOperationException If score would fall below 0
+	 * (last case as we shouldn't decrease by more with repairs)
 	 * @return The new score
 	 */
-	public int decreaseScore(int i) throws IllegalArgumentException {
-		if(i < 0)
-			throw new IllegalArgumentException("Score has to be decreased by non-negative value");
-		if(score - i < 0)
-			throw new IllegalArgumentException("Score can't be negative");
-		score = score - i;
+	public int decreaseScore() throws UnsupportedOperationException {
+		if(score - 2 < 0)
+			throw new UnsupportedOperationException("Score can't be negative");
+		score = score - 2;
 		return score;
 	}
 	
