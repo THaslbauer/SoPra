@@ -207,7 +207,7 @@ public abstract class Tile {
 		return position;
 	}
 	
-	public sRandom getRandom() {
-		return map.random;
+	public Worldmap getWorldmap() {
+		return map;
 	}
 }

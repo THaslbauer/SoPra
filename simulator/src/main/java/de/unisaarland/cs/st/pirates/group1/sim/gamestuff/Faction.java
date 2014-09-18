@@ -21,6 +21,8 @@ public class Faction {
 	 * @throws IllegalArgumentException if name is null
 	 */
 	public Faction(String name, int id) throws IllegalArgumentException{
+		if(name == null)
+			throw new IllegalArgumentException("A Faction's name should not be null");
 		this.name = name;
 		this.score = 0;
 		this.shipCount = 0;
@@ -39,9 +41,11 @@ public class Faction {
 	/**
 	 * Setter for the Faction score
 	 * @param score
-	 * @throws IllegalArgumentException if Score would be set below 0
+	 * @throws IllegalArgumentException If Score would be set below 0
 	 */
-	public void setScore(int score) throws IllegalArgumentException{
+	public void setScore(int score) {
+		if(score < 0)
+			throw new IllegalArgumentException("Score can't be below 0");
 		this.score = score;
 	}
 
@@ -52,9 +56,11 @@ public class Faction {
 	/**
 	 * Setter for the Faction's ship count
 	 * @param shipCount
-	 * @throws IllegalArgumentException if shipCount would be set below 0
+	 * @throws IllegalArgumentException If shipCount would be set below 0
 	 */
-	public void setShipCount(int shipCount) throws IllegalArgumentException{
+	public void setShipCount(int shipCount) {
+		if(shipCount < 0)
+			throw new IllegalArgumentException("Ship count can't be less than 0");
 		this.shipCount = shipCount;
 	}
 
@@ -62,8 +68,8 @@ public class Faction {
 		return name;
 	}
 
-	public Instruction[] getTactics(){
-		return this.tactics.clone();
+	public Instruction[] getTactics() {
+		return this.tactics;
 	}
 	
 	public void setTactics(Instruction[] tactics) {
@@ -72,34 +78,49 @@ public class Faction {
 
 	/**
 	 * increases the ship counter of the Faction
+	 * @return The new amount of ships in the faction
 	 */
-	public void addShip(){
-		//TODO implement
+	public int addShip() {
+		return ++shipCount;
 	}
 	
 	/**
 	 * decreases the ship counter of the Faction
-	 * @throws IllegalArgumentException if shipCount would fall below 0
+	 * @throws IllegalArgumentException If shipCount would fall below 0
+	 * @return The new amount of ships in the faction
 	 */
-	public void removeShip() throws IllegalArgumentException{
-		//TODO implement
+	public int removeShip() {
+		if(shipCount == 0)
+			throw new IllegalArgumentException("Ship count is 0, no more ships can be lost.");
+		return --shipCount;
 	}
 	
 	/**
 	 * increases the Factions score
-	 * @param i
+	 * @param i By how much the score should be increased
+	 * @throws IllegalArgumentException if i is below 0
+	 * @return The new score
 	 */
-	public void increaseScore(int i){
-		//TODO implement
+	public int increaseScore(int i) {
+		if(i < 0)
+			throw new IllegalArgumentException("Score has to be increased by non-negative value");
+		score = score + i;
+		return score;
 	}
 	
 	/**
 	 * decreases the Factions score
-	 * @param i
-	 * @throws IllegalArgumentException if score would fall below 0
+	 * @param i By how much the score should be decreased
+	 * @throws IllegalArgumentException If score would fall below 0 or if i is below 0
+	 * @return The new score
 	 */
-	public void decreaseScore(int i) throws IllegalArgumentException{
-		//TODO implement
+	public int decreaseScore(int i) throws IllegalArgumentException {
+		if(i < 0)
+			throw new IllegalArgumentException("Score has to be decreased by non-negative value");
+		if(score - i < 0)
+			throw new IllegalArgumentException("Score can't be negative");
+		score = score - i;
+		return score;
 	}
 	
 	/**
@@ -109,8 +130,7 @@ public class Faction {
 	 * @throws IndexOutOfBoundsException if pc wasn't inside of the Faction's Instruction line count
 	 */
 	public Instruction getInstruction(int pc) throws IndexOutOfBoundsException{
-		//TODO implement
-		return null;
+			return this.tactics[pc];
 	}
 
 	@Override
