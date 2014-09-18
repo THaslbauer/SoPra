@@ -95,6 +95,15 @@ public class Simulator
 		keys[6]    = Key.X_COORD;
 		keys[7]    = Key.Y_COORD;
 		
+		int[] values = new int[8];
+		values[0]    = 0;
+		values[1]    = 0;
+		values[2]    = 4;
+		values[3]    = 0;
+		values[4]    = 0;
+		values[5]    = 0;
+		values[6]    = tile.getPosition().x;
+		values[7]    = 0;
 		
 		logger.create(Entity.SHIP, entityFactory.getShipNextId(), keys, null);
 		
