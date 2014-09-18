@@ -2,6 +2,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.driver;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,7 @@ public class SimulatorTest extends TestCase {
 	private Tile testTile;
 	private Faction testFaction;
 	private List<Faction>factions;
+	private Random rand;
 
 	/**
 	 * Useful note: Setup creates an EntityFactory that creates TestShips and TestKrakens instead of Ships and Krakens.
@@ -46,8 +48,9 @@ public class SimulatorTest extends TestCase {
 		this.map = new DumbWorldmap();
 		this.testFaction = new Faction("test", 0);
 		this.factions = new LinkedList<Faction>();
+		this.rand = new Random();
 		factions.add(testFaction);
-		this.sim = new Simulator(logger);
+		this.sim = new Simulator(logger, rand);
 		this.sim.setEntityFactory(new TestFactory());
 		sim.setWorldmap(map);
 		sim.setFactions(factions);
@@ -96,13 +99,13 @@ public class SimulatorTest extends TestCase {
 	 */
 	@Test
 	public void testCorrectConstructor(){
-		sim = new Simulator(logger);
+		sim = new Simulator(logger, rand);
 		assertTrue("Simulator cycle should be 0 at the beginning", sim.getCycle() == 0);
 		assertTrue("Default maxCycle should be 10000, was "+sim.getMaxCycle()+" instead",
 				sim.getMaxCycle() == 10000);
 		assertTrue("Logger wasn't set properly", sim.getLogWriter() == logger);
 		int maxCycle = 30;
-		sim = new Simulator(logger, maxCycle);
+		sim = new Simulator(logger, maxCycle, rand);
 		assertTrue("Simulator cycle should be 0 at the beginning", sim.getCycle() == 0);
 		assertTrue("Simulator maxCycle should be "+maxCycle+" instead was "+sim.getMaxCycle(),
 				sim.getMaxCycle() == maxCycle);
@@ -122,7 +125,7 @@ public class SimulatorTest extends TestCase {
 	public void testIncorrectConstructor(){
 		boolean notifiedError = false;
 		try{
-			sim = new Simulator(logger, -5);
+			sim = new Simulator(logger, -5, rand);
 		}
 		catch(IllegalArgumentException e){
 			notifiedError = true;
@@ -130,7 +133,7 @@ public class SimulatorTest extends TestCase {
 		assertTrue("Constructor did not fail with negative maxCycles", notifiedError);
 		notifiedError = false;
 		try{
-			sim = new Simulator(logger, 0);
+			sim = new Simulator(logger, 0, rand);
 		}
 		catch(IllegalArgumentException e){
 			notifiedError = true;
@@ -146,7 +149,7 @@ public class SimulatorTest extends TestCase {
 	@Test
 	public void testExceptionAtMaxCycles(){
 		boolean notifiedMaxCycle = false;
-		sim = new Simulator(logger, 1);
+		sim = new Simulator(logger, 1, rand);
 		sim.step();
 		try{
 			sim.step();
