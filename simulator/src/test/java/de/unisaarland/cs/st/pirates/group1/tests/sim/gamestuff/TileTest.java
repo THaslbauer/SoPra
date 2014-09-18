@@ -67,7 +67,6 @@ public class TileTest extends TestCase {
 	public void testTileBuild(){
 		assertTrue("Tile shouldn't have a ship before one is attached", basicTile.getShip() == null);
 		Ship ship = new Ship(faction, 0, basicTile);
-		try { // von Jens
 			if(basicTile.getShip() == ship){
 				basicTile.detach(ship);
 				assertTrue(basicTile.getShip() == null);
@@ -80,9 +79,6 @@ public class TileTest extends TestCase {
 				basicTile.detach(ship);
 				assertTrue(basicTile.getShip() == null);
 			}
-		} catch(IllegalArgumentException | IllegalCallException e) {
-			fail("No exception should happen here");
-		}
 	}
 	
 	/**
@@ -97,8 +93,6 @@ public class TileTest extends TestCase {
 		assertTrue("Either the kraken doesn't attach itselve to the tile or the tile's getter for kraken is wrong.",
 				basicTile.getKraken() == kraken);
 
-		try { // von Jens
-		
 			basicTile.detach(kraken);
 		
 			assertTrue("The tile's method detach(kraken) didn't detache the kraken.", basicTile.getKraken() == null);
@@ -106,11 +100,7 @@ public class TileTest extends TestCase {
 			basicTile.attach(kraken);
 		
 			assertTrue("The tile's method attach(kraken) didn't attach the kraken", basicTile.getKraken() == kraken);
-			
-		} catch (IllegalArgumentException | IllegalCallException e) {
-			fail("No exception should happen here");
-		}
-		
+
 	}
 	
 	@Test
@@ -121,9 +111,7 @@ public class TileTest extends TestCase {
 		
 		assertTrue("Either the treasure doesn't attach itselve to the tile or the tile's getter for treasure is wrong.",
 				basicTile.getTreasure() == treasure);
-		
-		try{ //von Jens
-		
+
 		basicTile.detach(treasure);
 		
 		assertTrue("The tile's method detach(treasure) didn't detach the kraken.", basicTile.getTreasure() == null);
@@ -131,9 +119,6 @@ public class TileTest extends TestCase {
 		basicTile.attach(treasure);
 		
 		assertTrue("The tile's method attach(treasure) didn't attach the treasure", basicTile.getTreasure() == treasure);
-		} catch (IllegalArgumentException | IllegalCallException e) {
-			fail("No exception should happen here");
-		}
 		
 	}
 	
@@ -143,17 +128,13 @@ public class TileTest extends TestCase {
 	@Test
 	public void testGetNeighbour()
 	{
-		try
-		{
+
 			Tile neighbourTile = worldmap.getTile(new Position(0,1));
 			
 			assertTrue("The tile's method getNeighbour() calculates the wrong neighbour tile.",
 					basicTile.getNeighbour(Heading.H4, Direction.D0) == neighbourTile);
-		}
-		catch(NullPointerException e)
-		{
-			fail();
-		}
+	
+
 	}
 	
 	/**
