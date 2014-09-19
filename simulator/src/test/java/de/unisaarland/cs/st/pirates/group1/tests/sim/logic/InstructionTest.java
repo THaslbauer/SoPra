@@ -17,6 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Sea;
@@ -60,9 +61,11 @@ public class InstructionTest {
 	@Before
 	public void init(){
 		x = 0;
+		ExpectLogger x = new ExpectLogger();
+		EntityFactory y = new EntityFactory();
 		
 		//A worldMap with exactly one seatile
-		worldMap = new Worldmap6T(2,2,null,null);
+		worldMap = new Worldmap6T(2,2,x,y);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);

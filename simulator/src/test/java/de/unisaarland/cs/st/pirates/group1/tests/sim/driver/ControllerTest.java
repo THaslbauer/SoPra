@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,6 +22,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
 public class ControllerTest
 {
@@ -56,8 +58,8 @@ public class ControllerTest
 	{
 		public int value = 0;
 		
-		public TestSimulator(InfoPoint infoPoint) {
-			super(infoPoint, null);
+		public TestSimulator(ExpectLogger infoPoint) {
+			super(infoPoint, new Random());
 		}
 		
 		@Override
@@ -94,7 +96,7 @@ public class ControllerTest
 	{
 		testMapParser     = new TestMapParser();
 		testTacticsParser = new TestTacticsParser();
-		testSimulator     = new TestSimulator(new InfoPoint());
+		testSimulator     = new TestSimulator(new ExpectLogger());
 		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null, 0, null);
 	}
 	
@@ -102,9 +104,17 @@ public class ControllerTest
 	public void setUp(){
 		mp = new TestMapParser();
 		tp = new TestTacticsParser();
-		sim = new TestSimulator(new InfoPoint());
-		InputStream mapInput = new ByteArrayInputStream(mapStr.getBytes());
-		InputStream tacticsInput = new ByteArrayInputStream(tactics.getBytes());
+		sim = new TestSimulator(new ExpectLogger());
+		InputStream mapInput;
+		InputStream tacticsInput;
+		try {
+			mapInput = new ByteArrayInputStream(mapStr.getBytes("UTF-8"));
+			tacticsInput = new ByteArrayInputStream(tactics.getBytes("UTF-8"));
+		}
+		catch(UnsupportedEncodingException e) {
+			mapInput = null;
+			tacticsInput = null;
+		}
 		List<InputStream> tactics = new LinkedList<>();
 		OutputStream out = new ByteArrayOutputStream();
 		tactics.add(tacticsInput);
