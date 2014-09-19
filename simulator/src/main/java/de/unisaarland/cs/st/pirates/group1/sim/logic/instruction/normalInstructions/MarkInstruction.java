@@ -45,11 +45,7 @@ public class MarkInstruction extends Instruction {
 		Faction shipFact = ship.getFaction();
 		List<Buoy> buoys = buoyMap.get(shipFact);
 		boolean exists = false;
-		if(buoys == null){
-			buoys = new LinkedList<>();
-			buoyMap.put(shipFact, buoys);
-		}
-		else {
+		if(buoys != null){
 			for(int i = 0; i < buoys.size(); i++) {
 				if(buoys.get(i).getType() == type) {
 					exists = true;
@@ -57,7 +53,7 @@ public class MarkInstruction extends Instruction {
 			}
 		}
 		if(!exists)
-			buoys.add(tile.getWorldmap().createBuoy(type, shipFact, tile));
+			tile.getWorldmap().createBuoy(type, shipFact, tile);
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
