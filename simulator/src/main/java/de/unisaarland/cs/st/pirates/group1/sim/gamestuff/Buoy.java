@@ -23,10 +23,12 @@ public class Buoy extends Placable {
 	 * @param tile the tile this buoy is on
 	 */
 	public Buoy(int type, Faction faction, int id, Tile tile) {
-		super(id, tile);
+		super(id,tile);
 		this.type = type >= 0 && type < 6 ? type : (int) throwIAException("Buoy Value is trash");
-		this.faction = faction;
+		this.faction = faction;	
+		setMyTile(tile);
 	}
+	
 
 	public int getType() {
 		return type;
