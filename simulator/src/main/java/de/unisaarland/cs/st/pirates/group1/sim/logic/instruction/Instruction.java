@@ -18,6 +18,8 @@ public abstract class Instruction {
 	 * @param logger
 	 */
 	public Instruction(ExtendedLogWriter logger){
+		if(logger == null)
+			throw new IllegalArgumentException("Needs a logger");
 		this.logger = logger;
 	}
 	

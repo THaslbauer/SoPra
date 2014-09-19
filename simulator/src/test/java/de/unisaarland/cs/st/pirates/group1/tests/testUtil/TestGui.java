@@ -69,7 +69,7 @@ public class TestGui implements ExtendedLogWriter
 	public LogWriter fleetScore(int id, int value)
 			throws IllegalArgumentException, ArrayIndexOutOfBoundsException,
 			IllegalStateException {
-		value += 1;
+		this.value += 1;
 		return null;
 	}
 
@@ -89,7 +89,7 @@ public class TestGui implements ExtendedLogWriter
 	public LogWriter notify(Entity entity, int id, Key key, int value)
 			throws NullPointerException, IllegalArgumentException,
 			IllegalStateException {
-		value += 1;
+		this.value += 1;
 		return null;
 	}
 

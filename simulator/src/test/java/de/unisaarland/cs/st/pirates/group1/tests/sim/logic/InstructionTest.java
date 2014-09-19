@@ -57,15 +57,17 @@ public class InstructionTest {
 	private Tile islandTile1;
 	private Position position1;
 	private int x;
+	private ExpectLogger expectLogger;
+	private EntityFactory entityFactory;
 	
 	@Before
 	public void init(){
 		x = 0;
-		ExpectLogger x = new ExpectLogger();
-		EntityFactory y = new EntityFactory();
+		expectLogger = new ExpectLogger();
+		entityFactory = new EntityFactory();
 		
 		//A worldMap with exactly one seatile
-		worldMap = new Worldmap6T(2,2,x,y);
+		worldMap = new Worldmap6T(2,2,expectLogger,entityFactory);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);
@@ -97,7 +99,7 @@ public class InstructionTest {
 	 */
 	@Test
 	public void goToAdressGetterTest(){
-		GotoInstruction goToInstruction = new GotoInstruction(null,-11);
+		GotoInstruction goToInstruction = new GotoInstruction(expectLogger,-11);
 		
 		goToInstruction.execute(ship);
 		assertTrue(goToInstruction.getAddress() == -11);
@@ -109,7 +111,7 @@ public class InstructionTest {
 	 */
 	@Test
 	public void goToCorrectJumpTest(){
-		Instruction goToInstruction = new GotoInstruction(null,1);
+		Instruction goToInstruction = new GotoInstruction(expectLogger,1);
 		
 		int pc = ship.getPC();
 		try{
@@ -128,7 +130,7 @@ public class InstructionTest {
 	
 	@Test
 	public void goToCorrectZeroJumpTest(){
-		Instruction goToInstruction = new GotoInstruction(null,0);
+		Instruction goToInstruction = new GotoInstruction(expectLogger,0);
 		
 		//int pc = ship.getPC();
 		try{
@@ -144,12 +146,12 @@ public class InstructionTest {
 	 */
 	
 	@Test
-	public void goToLoggerReceives(){
+	public void goToLoggerReceivesTest(){
 		TestGui testGui = new TestGuiNotify();
 		Instruction goToInstruction = new GotoInstruction(testGui,12);
 		
 		goToInstruction.execute(ship);
-		assertTrue(testGui.value == -1);
+		assertTrue(Integer.toString(testGui.value), testGui.value == -1);
 	}
 	
 	//DropInstruction Tests
@@ -201,7 +203,7 @@ public class InstructionTest {
 		int pc = ship.getPC();
 		
 		dropInstruction.execute(ship);
-		assertTrue(pc == ship.getPC()+1);
+		assertTrue(pc+1 == ship.getPC());
 	}
 	
 	// Markinstruction Tests
