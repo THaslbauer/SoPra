@@ -202,7 +202,6 @@ public class SimulatorTest extends TestCase {
 		Ship ship = sim.createShip(testFaction, testTile);
 		sim.removeShip(ship);
 		assertTrue("Ship wasn't removed", sim.getShips().isEmpty());
-		assertTrue("Ship wasn't removed from faction", testFaction.getShipCount() == 0);
 	}
 	
 	/**
@@ -216,7 +215,6 @@ public class SimulatorTest extends TestCase {
 		ship.setCondition(0);
 		sim.step();
 		assertTrue("Ship wasn't autoremoved", sim.getShips().isEmpty());
-		assertTrue("Ship wasn't removed from faction", testFaction.getShipCount() == 0);
 	}
 	
 	/**
