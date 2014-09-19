@@ -194,26 +194,26 @@ public class ShipTest {
 		assertTrue("boredom should be increased by one",ship1.getBoredom() == 1);
 	}
 	
-	@Test
-	public void shipResetAndIncreaseBoredomTest(){
-		
-		ship1 = new Ship(faction1, id1, tile1);
-		
-		//Tests if increaseBoredom works
-		ship1.increaseBoredom();
-		ship1.increaseBoredom();
-		ship1.increaseBoredom();
-		ship1.increaseBoredom();
-		ship1.increaseBoredom();
-		
-		assertTrue(ship1.getBoredom() == 5);
-		
-		//Tests if resetBoredom works
-		ship1.resetBoredom();
-		
-		assertTrue("boredom should be resetted (0)",ship1.getBoredom() == 0);
-	}
-	
+//	@Test
+//	public void shipResetAndIncreaseBoredomTest(){
+//		
+//		ship1 = new Ship(faction1, id1, tile1);
+//		
+//		//Tests if increaseBoredom works
+//		ship1.increaseBoredom();
+//		ship1.increaseBoredom();
+//		ship1.increaseBoredom();
+//		ship1.increaseBoredom();
+//		ship1.increaseBoredom();
+//		
+//		assertTrue(ship1.getBoredom() == 5);
+//		
+//		//Tests if resetBoredom works
+//		ship1.resetBoredom();
+//		
+//		assertTrue("boredom should be resetted (0)",ship1.getBoredom() == 0);
+//	}
+//	
 	
 	@Test
 	public void setMorale1Test(){
