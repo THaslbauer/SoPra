@@ -39,5 +39,8 @@ public abstract class ElseInstruction extends Instruction {
 		
 		// changes the pc of the ship
 		ship.setPC(elsePC);
+		
+		// increases the boredom
+		this.cycle(ship);
 	}
 }
