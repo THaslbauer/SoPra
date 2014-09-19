@@ -48,7 +48,8 @@ public static enum Key{
 	RESTING,
 	VALUE,
 	X_COORD,
-	Y_COORD;
+	Y_COORD,
+	CONDITION;
 	
 }
 
