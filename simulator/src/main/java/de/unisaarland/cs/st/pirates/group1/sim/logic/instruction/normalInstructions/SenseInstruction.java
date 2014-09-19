@@ -48,8 +48,10 @@ public class SenseInstruction extends Instruction {
 		Map<Faction, List<Buoy>>buoyMap = neighbourTile.getBuoyMap();
 		List<Buoy> buoys = buoyMap.get(ship.getFaction());
 		int hasOurBuoys = buoys == null ? 0 : 1;
-		for(Buoy b : buoys) {
-			setMarkerRegister(ship, b);
+		if(hasOurBuoys == 1) {
+			for(Buoy b : buoys) {
+				setMarkerRegister(ship, b);
+			}
 		}
 		if(buoyMap.keySet().size() > hasOurBuoys)
 			ship.setRegister(Register.SENSE_ENEMYMARKER, 1);

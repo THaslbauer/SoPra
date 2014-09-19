@@ -151,7 +151,7 @@ public class InstructionTest {
 		Instruction goToInstruction = new GotoInstruction(testGui,12);
 		
 		goToInstruction.execute(ship);
-		assertTrue(testGui.value == 1);
+		assertTrue(Integer.toString(testGui.value), testGui.value == -1);
 	}
 	
 	//DropInstruction Tests
@@ -166,7 +166,7 @@ public class InstructionTest {
 		ship.setLoad(4);
 		//checks if create and notify is called
 		dropInstruction.execute(ship);
-		assertTrue(testGui.value == 1);
+		assertTrue(testGui.value == -1);
 		assertTrue(testGui.val == 42);
 	}
 	
@@ -180,7 +180,7 @@ public class InstructionTest {
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
 		int val;
-		try{ 
+		try{
 			val = ship.getMyTile().getTreasure().getValue();
 		} catch (NullPointerException e) {
 			val = 0;
@@ -203,7 +203,7 @@ public class InstructionTest {
 		int pc = ship.getPC();
 		
 		dropInstruction.execute(ship);
-		assertTrue(pc == ship.getPC()+1);
+		assertTrue(pc+1 == ship.getPC());
 	}
 	
 	// Markinstruction Tests
@@ -329,7 +329,7 @@ public class InstructionTest {
 		senseInstruction.execute(ship);
 		
 		//checks if checkRegisters is called
-		assertTrue(testGui.value == -2);
+		assertTrue(testGui.value == -3);
 		
 	}
 	
