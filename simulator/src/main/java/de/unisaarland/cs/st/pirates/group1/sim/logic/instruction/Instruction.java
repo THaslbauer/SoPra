@@ -1,6 +1,8 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
 /**
@@ -21,12 +23,20 @@ public abstract class Instruction {
 	
 	/**
 	 * handles increasing boredom and lowering morale of the ship
-	 * morale gets lowered when there were too many cycles without a positive action,
+	 * morale gets lowered when there were too many (default: 40) cycles without a positive action,
 	 * this lowering of morale then resets the boredom counter.
 	 * @param ship
 	 */
 	protected void cycle(Ship ship){
-		//TODO implement
+		if(ship.getBoredom() == 40){
+			if(ship.getMorale() > 0) {
+				ship.setMorale(ship.getMorale()-1);
+				logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, ship.getMorale());
+			}
+			ship.resetBoredom();
+		}
+		else
+			ship.increaseBoredom();
 	}
 	
 	/**

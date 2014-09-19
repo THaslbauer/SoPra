@@ -1,6 +1,8 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
@@ -27,7 +29,9 @@ public class GotoInstruction extends Instruction {
 	}
 
 	public void execute(Ship ship){
-		//TODO implement
+		ship.setPC(address);
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, address);
+		super.cycle(ship);
 	}
 
 }
