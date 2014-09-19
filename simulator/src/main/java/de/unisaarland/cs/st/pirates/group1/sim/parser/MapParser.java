@@ -23,7 +23,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
  * This is the parser for the whole world (namely the map and its entities).
  * 
  * @author Kerstin
- * @version Version 1.0
+ * @version Version 2.0
  */
 public class MapParser {
 	
@@ -39,15 +39,16 @@ public class MapParser {
 	
 	/**
 	 * This method parses the input map and thereby creates the map with its tiles and entities. 
-	 * It uses the simulator whose methods are called:
+	 * It only indirectly uses the simulator whose methods are called:
 	 * - createShip(Faction, Tile)
 	 * - createKraken(Tile )
-	 * It also uses the map whose methods are called:
+	 * It also indirectly uses the map whose methods are called:
 	 * - createIslandTile(Position, boolean)
 	 * - createSeaTile(Position)
 	 * - createBaseTile(Position, Faction)
 	 * - createTreasure(int, Position)
 	 *
+	 *Indirectly means, that is invokes its own methods which use the methods above.
 	 * @param stream 
 	 * @param simulator
 	 */
