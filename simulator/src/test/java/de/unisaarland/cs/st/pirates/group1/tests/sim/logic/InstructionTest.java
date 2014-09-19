@@ -17,6 +17,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Sea;
@@ -56,13 +57,17 @@ public class InstructionTest {
 	private Tile islandTile1;
 	private Position position1;
 	private int x;
+	private ExpectLogger expectLogger;
+	private EntityFactory entityFactory;
 	
 	@Before
 	public void init(){
 		x = 0;
+		expectLogger = new ExpectLogger();
+		entityFactory = new EntityFactory();
 		
 		//A worldMap with exactly one seatile
-		worldMap = new Worldmap6T(2,2,null,null);
+		worldMap = new Worldmap6T(2,2,expectLogger,entityFactory);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);
@@ -94,7 +99,7 @@ public class InstructionTest {
 	 */
 	@Test
 	public void goToAdressGetterTest(){
-		GotoInstruction goToInstruction = new GotoInstruction(null,-11);
+		GotoInstruction goToInstruction = new GotoInstruction(expectLogger,-11);
 		
 		goToInstruction.execute(ship);
 		assertTrue(goToInstruction.getAddress() == -11);
@@ -106,7 +111,7 @@ public class InstructionTest {
 	 */
 	@Test
 	public void goToCorrectJumpTest(){
-		Instruction goToInstruction = new GotoInstruction(null,1);
+		Instruction goToInstruction = new GotoInstruction(expectLogger,1);
 		
 		int pc = ship.getPC();
 		try{
@@ -125,7 +130,7 @@ public class InstructionTest {
 	
 	@Test
 	public void goToCorrectZeroJumpTest(){
-		Instruction goToInstruction = new GotoInstruction(null,0);
+		Instruction goToInstruction = new GotoInstruction(expectLogger,0);
 		
 		//int pc = ship.getPC();
 		try{
@@ -141,12 +146,12 @@ public class InstructionTest {
 	 */
 	
 	@Test
-	public void goToLoggerReceives(){
+	public void goToLoggerReceivesTest(){
 		TestGui testGui = new TestGuiNotify();
 		Instruction goToInstruction = new GotoInstruction(testGui,12);
 		
 		goToInstruction.execute(ship);
-		assertTrue(testGui.value == -1);
+		assertTrue(testGui.value == 1);
 	}
 	
 	//DropInstruction Tests
@@ -161,7 +166,7 @@ public class InstructionTest {
 		ship.setLoad(4);
 		//checks if create and notify is called
 		dropInstruction.execute(ship);
-		assertTrue(testGui.value == -1);
+		assertTrue(testGui.value == 1);
 		assertTrue(testGui.val == 42);
 	}
 	

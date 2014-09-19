@@ -2,8 +2,14 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.driver;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.channels.UnsupportedAddressTypeException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Before;
@@ -16,6 +22,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
 public class ControllerTest
 {
@@ -51,8 +58,8 @@ public class ControllerTest
 	{
 		public int value = 0;
 		
-		public TestSimulator(InfoPoint infoPoint) {
-			super(infoPoint, null);
+		public TestSimulator(ExpectLogger infoPoint) {
+			super(infoPoint, new Random());
 		}
 		
 		@Override
@@ -80,13 +87,16 @@ public class ControllerTest
 	private TestTacticsParser tp;
 	private TestSimulator sim;
 	
+	private static final String mapStr = "2\n2\n..\n..";
+	private static final String tactics = "goto 0";
+	
 	
 	@BeforeClass
 	public static void init()
 	{
 		testMapParser     = new TestMapParser();
 		testTacticsParser = new TestTacticsParser();
-		testSimulator     = new TestSimulator(new InfoPoint());
+		testSimulator     = new TestSimulator(new ExpectLogger());
 		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null, 0, null);
 	}
 	
@@ -94,8 +104,21 @@ public class ControllerTest
 	public void setUp(){
 		mp = new TestMapParser();
 		tp = new TestTacticsParser();
-		sim = new TestSimulator(new InfoPoint());
-		contr = new Controller(sim, mp, tp, null, null, 0, null);
+		sim = new TestSimulator(new ExpectLogger());
+		InputStream mapInput;
+		InputStream tacticsInput;
+		try {
+			mapInput = new ByteArrayInputStream(mapStr.getBytes("UTF-8"));
+			tacticsInput = new ByteArrayInputStream(tactics.getBytes("UTF-8"));
+		}
+		catch(UnsupportedEncodingException e) {
+			mapInput = null;
+			tacticsInput = null;
+		}
+		List<InputStream> tactics = new LinkedList<>();
+		OutputStream out = new ByteArrayOutputStream();
+		tactics.add(tacticsInput);
+		contr = new Controller(sim, mp, tp, mapInput, tactics, 0, out);
 		contr.initializeSimulator();
 	}
 	
