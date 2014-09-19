@@ -180,7 +180,7 @@ public class InstructionTest {
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
 		int val;
-		try{ 
+		try{
 			val = ship.getMyTile().getTreasure().getValue();
 		} catch (NullPointerException e) {
 			val = 0;
@@ -329,7 +329,7 @@ public class InstructionTest {
 		senseInstruction.execute(ship);
 		
 		//checks if checkRegisters is called
-		assertTrue(testGui.value == -2);
+		assertTrue(testGui.value == -3);
 		
 	}
 	

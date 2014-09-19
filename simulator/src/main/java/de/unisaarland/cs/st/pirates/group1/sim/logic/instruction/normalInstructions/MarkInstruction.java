@@ -29,6 +29,8 @@ public class MarkInstruction extends Instruction {
 	 */
 	public MarkInstruction(ExtendedLogWriter logger, int type) {
 		super(logger);
+		if(type < 0 || type > 5)
+			throw new IllegalArgumentException("Buoy type can't be less than 0 or greater than 5, was "+type);
 		this.type = type;
 	}
 
