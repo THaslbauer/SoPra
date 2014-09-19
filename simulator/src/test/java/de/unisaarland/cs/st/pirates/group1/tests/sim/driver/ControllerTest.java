@@ -2,8 +2,13 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.driver;
 
 import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.channels.UnsupportedAddressTypeException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Before;
@@ -80,6 +85,9 @@ public class ControllerTest
 	private TestTacticsParser tp;
 	private TestSimulator sim;
 	
+	private static final String mapStr = "2\n2\n..\n..";
+	private static final String tactics = "goto 0";
+	
 	
 	@BeforeClass
 	public static void init()
@@ -95,7 +103,12 @@ public class ControllerTest
 		mp = new TestMapParser();
 		tp = new TestTacticsParser();
 		sim = new TestSimulator(new InfoPoint());
-		contr = new Controller(sim, mp, tp, null, null, 0, null);
+		InputStream mapInput = new ByteArrayInputStream(mapStr.getBytes());
+		InputStream tacticsInput = new ByteArrayInputStream(tactics.getBytes());
+		List<InputStream> tactics = new LinkedList<>();
+		OutputStream out = new ByteArrayOutputStream();
+		tactics.add(tacticsInput);
+		contr = new Controller(sim, mp, tp, mapInput, tactics, 0, out);
 		contr.initializeSimulator();
 	}
 	
