@@ -26,7 +26,6 @@ public class Buoy extends Placable {
 		super(id, tile);
 		this.type = type >= 0 && type < 6 ? type : (int) throwIAException("Buoy Value is trash");
 		this.faction = faction;
-		setMyTile(tile);
 	}
 
 	public int getType() {
@@ -39,6 +38,8 @@ public class Buoy extends Placable {
 
 	@Override
 	protected void detachFrom(Tile tile) throws IllegalCallException {
+		if(myTile.getBuoyMap().get(faction) == null)
+			throw new IllegalCallException("The list where i should be doesn't even exist :(");
 		if(!myTile.getBuoyMap().get(faction).contains(this))
 			throw new IllegalCallException("I am not in the list!! :( :(");
 		myTile.getBuoyMap().get(faction).remove(this);
