@@ -12,12 +12,12 @@ public class TestGuiNotify extends TestGui {
 	public LogWriter notify(Entity entity, int id, Key key, int value)
 			throws NullPointerException, IllegalArgumentException,
 			IllegalStateException {
-		value = -1;
+		this.value += -1;
 		return null;
 	}
 	
 	@Override
 	public void registerChange(Ship ship) {
-		value = -2;
+		value += -2;
 	}
 }

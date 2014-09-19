@@ -2,6 +2,10 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.gamestuff;
 
 import static org.junit.Assert.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -51,6 +55,9 @@ public class BuoyAndTreasureTest {
 		assertTrue(faction.equals(buoy.getFaction()));
 		assertTrue(id == buoy.getId());
 		assertTrue(tile.equals(buoy.getMyTile()));
+		HashMap<Faction, List<Buoy>> m = tile.getBuoyMap();
+		List<Buoy> l = m.get(faction);
+		l.contains(buoy);
 		assertTrue(tile.getBuoyMap().get(faction).contains(buoy));
 	}
 	

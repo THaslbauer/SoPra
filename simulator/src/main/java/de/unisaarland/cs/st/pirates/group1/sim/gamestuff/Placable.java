@@ -25,6 +25,8 @@ public abstract class Placable {
 		this.id = id;
 		setMyTile(tile);
 	}
+	
+
 
 	public Tile getMyTile() {
 		return myTile;
@@ -45,7 +47,7 @@ public abstract class Placable {
 			if(tile != null)
 				attachTo(tile);
 		} catch (IllegalCallException e) {
-			throw new IllegalArgumentException("Destination tile is occupied");
+			throw new IllegalArgumentException(e.toString());
 		}
 	}
 	

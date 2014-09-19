@@ -1,6 +1,8 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
@@ -30,7 +32,12 @@ public abstract class ElseInstruction extends Instruction {
 	 * Sets the PC of the given ship to the value of elsePC
 	 * @param ship
 	 */
-	protected void elseJump(Ship ship){
-		//TODO implement
+	protected void elseJump(Ship ship)
+	{
+		// notifies the pc change of the ship
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, elsePC);
+		
+		// changes the pc of the ship
+		ship.setPC(elsePC);
 	}
 }

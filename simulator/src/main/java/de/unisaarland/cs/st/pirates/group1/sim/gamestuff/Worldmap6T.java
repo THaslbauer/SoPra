@@ -1,7 +1,10 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.throwIAException;
@@ -134,12 +137,16 @@ public class Worldmap6T extends Worldmap {
 
 	@Override
 	public Buoy createBuoy(int type, Faction faction, Tile tile) {
-		return entityFactory.createBuoy(type, faction, tile);
+		Buoy buoy = entityFactory.createBuoy(type, faction, tile);
+		logger.create(Entity.BUOY, buoy.getId(), new LogWriter.Key[] {Key.FLEET, Key.VALUE, Key.X_COORD, Key.Y_COORD}, new int[]{buoy.getFaction().getFactionID(), buoy.getType(), buoy.getMyTile().getPosition().x, buoy.getMyTile().getPosition().y});
+		return buoy;
 	}
 
 	@Override
 	public Treasure createTreasure(int value, Tile tile) {
-		return entityFactory.createTreasure(value, tile);
+		Treasure treasure = entityFactory.createTreasure(value, tile);
+		logger.create(Entity.TREASURE, treasure.getId(), new LogWriter.Key[]{Key.VALUE, Key.X_COORD, Key.Y_COORD}, new int[]{treasure.getValue(), treasure.getMyTile().getPosition().x, treasure.getMyTile().getPosition().y});
+		return treasure;
 	}
 
 	public int getWidth() {

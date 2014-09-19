@@ -14,7 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
  * ends the game by showing the scores of each faction.
  * 
  * @author Nico
- * @version 1.1
+ * @version 1.2
  */
 public class Simulator
 {
@@ -86,7 +86,7 @@ public class Simulator
 			}
 			
 			// sets the krakenWaittime to maxKrakenWaittime again
-			krakenWaittime = maxKrakenWaittime;
+			krakenWaittime = maxKrakenWaittime - 1;
 		}
 		else
 		{
@@ -149,8 +149,16 @@ public class Simulator
 		// logs the creation before creating the ship
 		logger.create(Entity.SHIP, entityFactory.getShipNextId(), keys, values);
 		
-		// creates the ship and returns it
-		return entityFactory.createShip(faction, tile);
+		// creates the ship
+		Ship newShip = entityFactory.createShip(faction, tile);
+		
+		// adds the ship to the ship list
+		ships.add(newShip);
+		
+		//reports the new Ship to the belonging faction
+		faction.addShip();
+		
+		return newShip;
 	}
 	
 	/**
@@ -175,7 +183,13 @@ public class Simulator
 		// logs the creation before creating the ship
 		logger.create(Entity.KRAKEN, entityFactory.getShipNextId(), keys, values);
 		
-		return entityFactory.releaseTheKraken(tile);
+		// creates the kraken
+		Kraken newKraken = entityFactory.releaseTheKraken(tile);
+		
+		// adds the created kraken to the kraken list
+		krakens.add(newKraken);
+		
+		return newKraken;
 	}
 	
 	/**
@@ -190,6 +204,10 @@ public class Simulator
 			throw new IllegalArgumentException();
 		}
 		
+		// remove the ship from the faction
+		ship.getFaction().removeShip();
+		
+		// remove the ship from the ship list
 		ships.remove(ship);
 	}
 
