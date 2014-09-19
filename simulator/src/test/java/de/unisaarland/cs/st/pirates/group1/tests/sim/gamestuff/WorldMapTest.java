@@ -114,7 +114,7 @@ public class WorldMapTest extends TestCase {
 		assertTrue("Worldmap6T didn't fail to create for size(4,3)", notifiedError);
 		notifiedError = false;
 		try{
-		map6t = new Worldmap6T(0, 2, logger, factory);
+			map6t = new Worldmap6T(0, 2, logger, factory);
 		}
 		catch(IllegalArgumentException e){
 			notifiedError = true;
@@ -128,7 +128,13 @@ public class WorldMapTest extends TestCase {
 			notifiedError = true;
 		}
 		assertTrue("Worldmap6T didn't fail to create for size (0,2)", notifiedError);
-		//Only to remove the warning and make sure nothing gets deleted from this method
+		try{
+			map6t = new Worldmap6T(3, 4, logger, factory);
+		}
+		catch(IllegalArgumentException e){
+			fail("Worldmap6T failed to create for size (0,2)");
+		}
+		//Only to remove the warning and (hopefully) make sure nothing gets deleted from this method
 		map6t.getHeight();
 	}
 	
@@ -140,7 +146,7 @@ public class WorldMapTest extends TestCase {
 	public void testDirectionStuff(){
 		//testing direction switching
 		Position p = map.calcPosition(middle, Heading.H0, Direction.D0);
-		assertTrue("calcPosition returned no Position!", p == null);
+		assertFalse("calcPosition returned no Position!", p == null);
 		assertTrue("calcPosition calculated wrong Position for H0, D0. Was ("+p.x+", "+p.y+") instead of (2,1)",p.x == 2 && p.y == 1);
 		p = map.calcPosition(middle, Heading.H0, Direction.D1);
 		assertTrue("calcPosition calculated wrong Position for H0, D1. Was ("+p.x+", "+p.y+") instead of (2,2)",p.x == 2 && p.y == 2);
@@ -181,12 +187,61 @@ public class WorldMapTest extends TestCase {
 	}
 	
 	/**
+	 * more Direction testing
+	 */
+	@Test
+	public void testDirectionalStuff2(){
+		//testing direction switching
+		Position belowMiddle = new Position(1, 2);
+		Position p = map.calcPosition(belowMiddle, Heading.H0, Direction.D0);
+		assertFalse("calcPosition returned no Position!", p == null);
+		assertTrue("calcPosition calculated wrong Position for H0, D0. Was ("+p.x+", "+p.y+") instead of (2,2)",p.x == 2 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H0, Direction.D1);
+		assertTrue("calcPosition calculated wrong Position for H0, D1. Was ("+p.x+", "+p.y+") instead of (1,3)",p.x == 1 && p.y == 3);
+		p = map.calcPosition(belowMiddle, Heading.H0, Direction.D2);
+		assertTrue("calcPosition calculated wrong Position for H0, D2. Was ("+p.x+", "+p.y+") instead of (0,3)",p.x == 0 && p.y == 3);
+		p = map.calcPosition(belowMiddle, Heading.H0, Direction.D3);
+		assertTrue("calcPosition calculated wrong Position for H0, D3. Was ("+p.x+", "+p.y+") instead of (0,2)",p.x == 0 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H0, Direction.D4);
+		assertTrue("calcPosition calculated wrong Position for H0, D4. Was ("+p.x+", "+p.y+") instead of (0,1)",p.x == 0 && p.y == 1);
+		p = map.calcPosition(belowMiddle, Heading.H0, Direction.D5);
+		assertTrue("calcPosition calculated wrong Position for H0, D5. Was ("+p.x+", "+p.y+") instead of (1,1)",p.x == 1 && p.y == 1);
+		//testing if direction D6 is unaffected by heading
+		p = map.calcPosition(belowMiddle, Heading.H0, Direction.D6);
+		assertTrue("calcPosition calculated wrong Position for H0, D5. Was ("+p.x+", "+p.y+") instead of (1,2)",p.x == 1 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H1, Direction.D6);
+		assertTrue("calcPosition calculated wrong Position for H1, D5. Was ("+p.x+", "+p.y+") instead of (1,2)",p.x == 1 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H2, Direction.D6);
+		assertTrue("calcPosition calculated wrong Position for H2, D5. Was ("+p.x+", "+p.y+") instead of (1,2)",p.x == 1 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H3, Direction.D6);
+		assertTrue("calcPosition calculated wrong Position for H3, D5. Was ("+p.x+", "+p.y+") instead of (1,2)",p.x == 1 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H4, Direction.D6);
+		assertTrue("calcPosition calculated wrong Position for H4, D5. Was ("+p.x+", "+p.y+") instead of (1,2)",p.x == 1 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H5, Direction.D6);
+		assertTrue("calcPosition calculated wrong Position for H5, D5. Was ("+p.x+", "+p.y+") instead of (1,2)",p.x == 1 && p.y == 2);
+		//testing heading switching
+		p = map.calcPosition(belowMiddle, Heading.H0, Direction.D5);
+		assertTrue("calcPosition calculated wrong Position for H0, D5. Was ("+p.x+", "+p.y+") instead of (1,1)",p.x == 1 && p.y == 1);
+		p = map.calcPosition(belowMiddle, Heading.H1, Direction.D5);
+		assertTrue("calcPosition calculated wrong Position for H1, D5. Was ("+p.x+", "+p.y+") instead of (2,2)",p.x == 2 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H2, Direction.D5);
+		assertTrue("calcPosition calculated wrong Position for H2, D5. Was ("+p.x+", "+p.y+") instead of (1,3)",p.x == 1 && p.y == 3);
+		p = map.calcPosition(belowMiddle, Heading.H3, Direction.D5);
+		assertTrue("calcPosition calculated wrong Position for H3, D5. Was ("+p.x+", "+p.y+") instead of (0,3)",p.x == 0 && p.y == 3);
+		p = map.calcPosition(belowMiddle, Heading.H4, Direction.D5);
+		assertTrue("calcPosition calculated wrong Position for H4, D5. Was ("+p.x+", "+p.y+") instead of (0,2)",p.x == 0 && p.y == 2);
+		p = map.calcPosition(belowMiddle, Heading.H5, Direction.D5);
+		assertTrue("calcPosition calculated wrong Position for H5, D5. Was ("+p.x+", "+p.y+") instead of (0,1)",p.x == 0 && p.y == 1);
+	}
+	
+	/**
 	 * Tests creation abilities and notification
 	 */
+	@Test
 	public void testBaseCreation(){
 		Faction testF = new Faction("test", 0);
 		Tile test = map.createBaseTile(middle, testF);
-		assertTrue("Base wasn't built", test == null);
+		assertFalse("Base wasn't built", test == null);
 		assertTrue("Tile is not at specified position", test == map.getTile(middle));
 		assertTrue("Created Tile is not Base", test instanceof Base);
 		Base base = (Base)test;

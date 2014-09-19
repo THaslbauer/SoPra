@@ -18,7 +18,7 @@ public class Treasure extends Placable {
 	 * @param id the id of the treasure
 	 * @param tile the tile the treasure should be placed on
 	 */
-	public Treasure(int value, int id, Tile tile) {
+	public Treasure(int value, int id, Tile tile) throws IllegalArgumentException {
 		super(id, tile);
 		setValue(value);
 	}

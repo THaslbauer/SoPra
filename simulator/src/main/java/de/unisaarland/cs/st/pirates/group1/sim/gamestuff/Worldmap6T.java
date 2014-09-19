@@ -1,8 +1,10 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
+import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.throwIAException;
 
 import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegative;
 
@@ -31,8 +33,8 @@ public class Worldmap6T extends Worldmap {
 		notNegative(height, "Height <= 0");
 		if(height % 2 != 0)
 			throw new IllegalArgumentException("Height is odd!");
-		this.width = width;
-		this.height = height;
+		this.width = width >= 2 ? width : (int) throwIAException("Width too small!");
+		this.height = height >= 2 ? height : (int) throwIAException("Height too small!");
 		tiles = new Tile[height][width];
 	}
 	
@@ -55,6 +57,14 @@ public class Worldmap6T extends Worldmap {
 		int dir = heading.ordinal() + direction.ordinal();
 		dir %= 6;
 		int dx = 0, dy = 0;
+		boolean even = position.y % 2 == 0;
+		
+		/*
+		 *  0,0     1,0     2,0     3,0
+		 *      0,1     1,1     2,1
+		 *  0,2     1,2     2,2     3,2
+		 * 
+		 */
 		
 		switch(dir) {
 			case 0 : {
@@ -62,12 +72,13 @@ public class Worldmap6T extends Worldmap {
 				break;
 			}
 			case 1 : {
-				dx = 1;
+				// Wenn y gerade ist, dann x nicht ändern, bei ungerade +1
+				dx = even ? 0 : 1;
 				dy = 1;
 				break;
 			}
 			case 2 : {
-				dx = -1;
+				dx = even ? -1 : 0;
 				dy = 1;
 				break;
 			}
@@ -76,12 +87,12 @@ public class Worldmap6T extends Worldmap {
 				break;
 			}
 			case 4 : {
-				dx = -1;
+				dx = even ? -1 : 0;
 				dy = -1;
 				break;
 			}
 			case 5 : {
-				dx = 1;
+				dx = even ? 0 : 1;
 				dy = -1;
 			}
 			default : { }
@@ -98,6 +109,10 @@ public class Worldmap6T extends Worldmap {
 	public Island createIslandTile(Position position, boolean supply) {
 		Island island = new Island(supply, this, position);
 		tiles[position.y][position.x] = island;
+		if(supply)
+			logger.addCell(Cell.SUPPLY, null, position.x, position.y);
+		else
+			logger.addCell(Cell.ISLAND, null, position.x, position.y);
 		return island;
 	}
 
@@ -105,6 +120,7 @@ public class Worldmap6T extends Worldmap {
 	public Sea createSeaTile(Position position) {
 		Sea sea = new Sea(this, position);
 		tiles[position.y][position.x] = sea;
+		logger.addCell(Cell.WATER, null, position.x, position.y);
 		return sea;
 	}
 
@@ -112,6 +128,7 @@ public class Worldmap6T extends Worldmap {
 	public Base createBaseTile(Position position, Faction faction) {
 		Base base = new Base(faction, this, position);
 		tiles[position.y][position.x] = base;
+		logger.addCell(Cell.WATER, faction.getFactionID(), position.x, position.y);
 		return base;
 	}
 

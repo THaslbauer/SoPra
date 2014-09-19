@@ -3,7 +3,6 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.gamestuff;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Base;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
@@ -13,11 +12,10 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
-import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import junit.framework.TestCase;
 
 public class TileTest extends TestCase {
@@ -29,7 +27,7 @@ public class TileTest extends TestCase {
 	
 	@Before
 	public void setUp(){
-		this.worldmap = new Worldmap6T(4, 4, new InfoPoint(), new EntityFactory());
+		this.worldmap = new Worldmap6T(4, 4, new ExpectLogger(), new EntityFactory());
 		worldmap.createSeaTile(new Position(0, 0));
 		worldmap.createSeaTile(new Position(0, 1));
 		worldmap.createSeaTile(new Position(0, 2));
