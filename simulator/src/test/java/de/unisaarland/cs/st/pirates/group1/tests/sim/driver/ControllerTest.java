@@ -22,6 +22,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
 public class ControllerTest
 {
@@ -57,7 +58,7 @@ public class ControllerTest
 	{
 		public int value = 0;
 		
-		public TestSimulator(InfoPoint infoPoint) {
+		public TestSimulator(ExpectLogger infoPoint) {
 			super(infoPoint, null);
 		}
 		
@@ -95,7 +96,7 @@ public class ControllerTest
 	{
 		testMapParser     = new TestMapParser();
 		testTacticsParser = new TestTacticsParser();
-		testSimulator     = new TestSimulator(new InfoPoint());
+		testSimulator     = new TestSimulator(new ExpectLogger());
 		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null, 0, null);
 	}
 	
@@ -103,7 +104,7 @@ public class ControllerTest
 	public void setUp(){
 		mp = new TestMapParser();
 		tp = new TestTacticsParser();
-		sim = new TestSimulator(new InfoPoint());
+		sim = new TestSimulator(new ExpectLogger());
 		InputStream mapInput;
 		InputStream tacticsInput;
 		try {
