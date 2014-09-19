@@ -45,7 +45,7 @@ public abstract class Placable {
 			if(tile != null)
 				attachTo(tile);
 		} catch (IllegalCallException e) {
-			throw new IllegalArgumentException("Destination tile is occupied");
+			throw new IllegalArgumentException(e.toString());
 		}
 	}
 	
