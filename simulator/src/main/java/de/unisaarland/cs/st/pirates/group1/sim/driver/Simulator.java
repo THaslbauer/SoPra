@@ -63,15 +63,50 @@ public class Simulator
 	 */
 	public void step()
 	{
-		//TODO unsupportedOperationException
+		// throw an exception if the game has ended because maxCycle was reached
+		if(cycle > maxCycle)
+		{
+			throw new UnsupportedOperationException();
+		}
 		
+		// simulates one cycle
+		// first step through every kraken
+		// tests if the krakenWaittime allows the kraken to step()
 		if(krakenWaittime == 0)
 		{
+			// steps through every kraken
 			for(Kraken kraken : krakens)
 			{
 				kraken.step();
 			}
+			
+			// sets the krakenWaittime to 20 again
+			krakenWaittime = 20;
 		}
+		else
+		{
+			// if the kraken aren' t allowed to step() decrease the krakenWaittime
+			krakenWaittime += -1;
+		}
+		
+		// step through every ship
+		for(Ship ship : ships)
+		{
+			// tests if the ship is still alive
+			if(ship.getCondition() != 0)
+			{
+				// if the ship is alive, it calls step()
+				ship.step();
+			}
+			else
+			{
+				// if the ship isn't alive, remove it
+				this.removeShip(ship);
+			}
+		}
+		
+		// after the cycle it increases the cycle counter
+		cycle += 1;
 	}
 	
 	/**
