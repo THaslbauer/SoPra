@@ -159,7 +159,6 @@ public class Ship extends Placable {
 	}
 
 	public void setPC(int pc) {
-		notNegative(pc);
 		this.pc = pc;
 	}
 
