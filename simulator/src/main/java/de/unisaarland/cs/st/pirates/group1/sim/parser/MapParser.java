@@ -331,8 +331,8 @@ public class MapParser {
 	
 	/**
 	 * This method helps to create a ship. It thereby invokes the simulators method createShip.
-	 * @param faction
-	 * @param tile
+	 * @param faction the faction of the new ship
+	 * @param tile the tile where the ship should stand on
 	 */
 	public void createShip(Faction faction, Tile tile){
 		
@@ -341,8 +341,8 @@ public class MapParser {
 	
 	/**
 	 * This method helps to create an island with a treasure attached to it. It therefore invokes the map's method createTreasure.
-	 * @param position
-	 * @param value
+	 * @param position  the position of the treasure and tile which are created
+	 * @param value the value of the treasure 
 	 */
 	public void createIslandWithTreasure(Position position, int value){
 		
