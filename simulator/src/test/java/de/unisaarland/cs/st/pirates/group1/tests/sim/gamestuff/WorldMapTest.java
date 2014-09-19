@@ -241,7 +241,7 @@ public class WorldMapTest extends TestCase {
 	public void testBaseCreation(){
 		Faction testF = new Faction("test", 0);
 		Tile test = map.createBaseTile(middle, testF);
-		assertTrue("Base wasn't built", test == null);
+		assertFalse("Base wasn't built", test == null);
 		assertTrue("Tile is not at specified position", test == map.getTile(middle));
 		assertTrue("Created Tile is not Base", test instanceof Base);
 		Base base = (Base)test;

@@ -3,7 +3,9 @@ package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.LinkedList;
-import static org.junit.Assert.assertTrue;
+import java.util.NoSuchElementException;
+
+import static org.junit.Assert.*;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
@@ -16,8 +18,13 @@ public class ExpectLogger implements ExtendedLogWriter {
 	
 	/* Most epic method of da history */
 	public void expect(LogOperation op) {
-		LogOperation otherop = ops.removeFirst();
-		assertTrue(op.equals(otherop));
+		LogOperation otherop = null;
+		try {
+			otherop = ops.removeFirst();
+		} catch(NoSuchElementException e) {
+			fail("Expected a log operation, but there was none!");
+		}
+		assertTrue("EXPECTED \""+op+"\" but GOT \""+otherop+"\".",op.equals(otherop));
 	}
 
 	@Override
