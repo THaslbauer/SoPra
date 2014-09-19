@@ -329,7 +329,7 @@ public class InstructionTest {
 		senseInstruction.execute(ship);
 		
 		//checks if checkRegisters is called
-		assertTrue(testGui.value == -2);
+		assertTrue(testGui.value == -3);
 		
 	}
 	
