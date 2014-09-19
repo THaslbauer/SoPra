@@ -11,6 +11,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
+import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
 /**
  * A test class for kraken
@@ -26,14 +28,14 @@ public class KrakenTest {
 	public static void init(){
 		
 		//map with 3 island tiles and one sea tile with a kraken attached to it
-	    myMap1 = new Worldmap6T(2,2, null, null);
+	    myMap1 = new Worldmap6T(2,2, new ExpectLogger(), null);
 		myMap1.createIslandTile(new Position(0,0), false);
 		myMap1.createIslandTile(new Position(0,1), false);
 		myMap1.createIslandTile(new Position(1,1), false);
 		myMap1.createSeaTile(new Position(1,0));
 		
 		//map with 4 sea tiles and one kraken attached to one tile
-		myMap2 = new Worldmap6T(2,2, null, null);
+		myMap2 = new Worldmap6T(2,2, new ExpectLogger(), null);
 		myMap2.createSeaTile(new Position(1,0));
 		myMap2.createSeaTile(new Position(1,1));
 		myMap2.createSeaTile(new Position(0,1));
@@ -41,21 +43,21 @@ public class KrakenTest {
 		
 
 		//map with 4 sea tiles and four kraken attached to them
-		myMap3 = new Worldmap6T(2,2,null,null);
+		myMap3 = new Worldmap6T(2,2,new ExpectLogger(),null);
 		myMap3.createSeaTile(new Position(1,0));
 		myMap3.createSeaTile(new Position(1,1));
 		myMap3.createSeaTile(new Position(0,1));
 		myMap3.createSeaTile(new Position(0,0));
 		
 		//another map with 4 sea tiles and one kraken attached to one tile
-		myMap4 = new Worldmap6T(2,2, null, null);
+		myMap4 = new Worldmap6T(2,2, new ExpectLogger(), null);
 		myMap4.createSeaTile(new Position(1,0));
 		myMap4.createSeaTile(new Position(1,1));
 		myMap4.createSeaTile(new Position(0,1));
 		myMap4.createSeaTile(new Position(0,0));
 
 		//another map (for test with second kraken)
-	    myMap5 = new Worldmap6T(2,2, null, null);
+	    myMap5 = new Worldmap6T(2,2, new ExpectLogger(), null);
 		myMap5.createIslandTile(new Position(0,0), false);
 		myMap5.createIslandTile(new Position(0,1), false);
 		myMap5.createIslandTile(new Position(1,1), false);
@@ -72,7 +74,7 @@ public class KrakenTest {
 	}
 	
 	@Test
-	public void krakenConstructorTest(){
+	public void krakenConstructorTest() throws IllegalCallException{
 		
 		Kraken kraken = new Kraken(1, tile1);	
 		
@@ -80,11 +82,13 @@ public class KrakenTest {
 		assertTrue("the tile should be correct",kraken.getMyTile().equals(tile1));
 		assertTrue("the kraken should be correct",kraken.getMyTile().getKraken().equals(kraken));
 		
+		tile1.detach(kraken);
 	}
 	
 	@Test 
-	public void krakenfail1Test(){
+	public void krakenfail1Test() throws IllegalCallException{
 		
+		myMap1.setRandom(new Worldmap.sRandom(16L));
 		Kraken kraken = new Kraken(1, tile1);	
 		kraken.step();
 		
@@ -93,11 +97,14 @@ public class KrakenTest {
 		
 		//the tile's kraken should not change
 		assertTrue("the tile's kraken should not change",tile1.getKraken().equals(kraken));
+		
+		tile1.detach(kraken);
 	}
 	
 	@Test
-	public void krakensucceedTest(){
+	public void krakensucceedTest() throws IllegalCallException{
 		
+		myMap2.setRandom(new Worldmap.sRandom(1236L));
 		Kraken kraken = new Kraken(1, tile2);
 		kraken.step();
 		
@@ -106,6 +113,8 @@ public class KrakenTest {
 		
 		//the former tile of the kraken should not have a kraken anymore
 		assertFalse("the former tile of the kraken should not have a kraken anymore",tile2.getKraken() == null);
+		
+		kraken.setMyTile(null);
 	}
 	
 	@Test
@@ -116,6 +125,7 @@ public class KrakenTest {
 		Kraken kraken3 = new Kraken(3, tile33);
 		Kraken kraken4 = new Kraken(3, tile34);
 		
+		myMap3.setRandom(new Worldmap.sRandom(9872L));
 		kraken1.step();
 		
 		//the kraken's tile should remain the same
@@ -124,6 +134,10 @@ public class KrakenTest {
 		//the tile's kraken should not change
 		assertTrue("the tile's kraken should not change",tile31.getKraken().equals(kraken1));
 		
+		kraken1.setMyTile(null);
+		kraken2.setMyTile(null);
+		kraken3.setMyTile(null);
+		kraken4.setMyTile(null);
 		
 	}
 	
@@ -136,7 +150,8 @@ public class KrakenTest {
 		Faction faction = new Faction(faction_name,1);
 		
 		//world map with three base tiles and one sea tile
-		Worldmap6T myMap = new Worldmap6T(2,2, null, null);
+		Worldmap6T myMap = new Worldmap6T(2,2, new ExpectLogger(), null);
+		myMap.setRandom(new Worldmap.sRandom(123746L));
 		myMap.createBaseTile(new Position(0,0), faction);
 		myMap.createBaseTile(new Position(0,1), faction);
 		myMap.createBaseTile(new Position(1,1), faction);
@@ -150,10 +165,14 @@ public class KrakenTest {
 		
 		assertTrue("kraken should stay at its place", kraken.getMyTile().equals(tile));
 		assertTrue("", tile.getKraken().equals(kraken));
+		
+		kraken.setMyTile(null);
 	}
 	
 	@Test
 	public void krakenMoveRightTest(){
+		
+		myMap4.setRandom(new Worldmap.sRandom(123456L));
 		
 		Kraken kraken = new Kraken(1, tile4);
 		kraken.step();
@@ -184,6 +203,7 @@ public class KrakenTest {
 			assertTrue("tile must notice that a kraken is detached", tile4.getKraken() == null);
 		}
 		
+		kraken.setMyTile(null);
 	}
 	
 	
@@ -202,6 +222,7 @@ public class KrakenTest {
 		}
 		
 		fail("second kraken is now attached to tile");
+		kraken1.setMyTile(null);
 		
 	}
 }
