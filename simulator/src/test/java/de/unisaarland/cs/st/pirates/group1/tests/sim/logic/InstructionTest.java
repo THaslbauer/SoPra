@@ -180,7 +180,7 @@ public class InstructionTest {
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
 		int val;
-		try{ 
+		try{
 			val = ship.getMyTile().getTreasure().getValue();
 		} catch (NullPointerException e) {
 			val = 0;

@@ -149,8 +149,16 @@ public class Simulator
 		// logs the creation before creating the ship
 		logger.create(Entity.SHIP, entityFactory.getShipNextId(), keys, values);
 		
-		// creates the ship and returns it
-		return entityFactory.createShip(faction, tile);
+		// creates the ship
+		Ship newShip = entityFactory.createShip(faction, tile);
+		
+		// adds the ship to the ship list
+		ships.add(newShip);
+		
+		//reports the new Ship to the belonging faction
+		faction.addShip();
+		
+		return newShip;
 	}
 	
 	/**
@@ -175,7 +183,13 @@ public class Simulator
 		// logs the creation before creating the ship
 		logger.create(Entity.KRAKEN, entityFactory.getShipNextId(), keys, values);
 		
-		return entityFactory.releaseTheKraken(tile);
+		// creates the kraken
+		Kraken newKraken = entityFactory.releaseTheKraken(tile);
+		
+		// adds the created kraken to the kraken list
+		krakens.add(newKraken);
+		
+		return newKraken;
 	}
 	
 	/**
