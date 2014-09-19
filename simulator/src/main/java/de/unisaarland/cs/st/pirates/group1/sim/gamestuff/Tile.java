@@ -93,7 +93,7 @@ public abstract class Tile {
 	public void detach(Ship ship) throws IllegalCallException {
 		if(placables[0] == null)
 			throw new IllegalCallException("No ship here!");
-		if(placables[0] == ship)
+		if(placables[0] != ship)
 			throw new IllegalArgumentException("Wrong ship detached");
 		placables[0] = null;
 	}
@@ -105,11 +105,11 @@ public abstract class Tile {
 	 * @throws IllegalArgumentException if there is a kraken, but not this kraken on this tile
 	 */
 	public void detach(Kraken kraken) throws IllegalCallException {
-		if(placables[0] == null)
+		if(placables[1] == null)
 			throw new IllegalCallException("No kraken here!");
-		if(placables[0] == kraken)
+		if(placables[1] != kraken)
 			throw new IllegalArgumentException("Wrong kraken detached");
-		placables[0] = null;
+		placables[1] = null;
 	}
 	
 	/**
@@ -119,11 +119,11 @@ public abstract class Tile {
 	 * @throws IllegalArgumentException if there is a treasure, but not this treasure on this tile
 	 */
 	public void detach(Treasure treasure) throws IllegalCallException {
-		if(placables[0] == null)
+		if(placables[2] == null)
 			throw new IllegalCallException("No treasure here!");
-		if(placables[0] == treasure)
+		if(placables[2] != treasure)
 			throw new IllegalArgumentException("Wrong treasure detached");
-		placables[0] = null;
+		placables[2] = null;
 	}
 	
 	/**
@@ -188,6 +188,13 @@ public abstract class Tile {
 			throw new IllegalArgumentException("No treasure here :(");
 		Treasure treasure = (Treasure)placables[2];
 		treasure.setValue(treasure.getValue() >= value ? treasure.getValue() - value : (int) throwIAException("You can't take this much of a treasure!"));
+		if(treasure.getValue() == 0)
+			try {
+				detach(treasure);
+			} catch (IllegalCallException e) {
+				// this should not happen
+				throw new IllegalStateException("This should never happen, WTF?!");
+			}
 	}
 	
 	public HashMap<Faction, List<Buoy>> getBuoyMap() {
