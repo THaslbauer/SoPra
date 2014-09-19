@@ -25,6 +25,8 @@ public abstract class Placable {
 		this.id = id;
 		setMyTile(tile);
 	}
+	
+
 
 	public Tile getMyTile() {
 		return myTile;
