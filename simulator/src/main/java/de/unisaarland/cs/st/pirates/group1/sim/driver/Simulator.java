@@ -14,7 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
  * ends the game by showing the scores of each faction.
  * 
  * @author Nico
- * @version 1.1
+ * @version 1.2
  */
 public class Simulator
 {
@@ -86,7 +86,7 @@ public class Simulator
 			}
 			
 			// sets the krakenWaittime to maxKrakenWaittime again
-			krakenWaittime = maxKrakenWaittime;
+			krakenWaittime = maxKrakenWaittime - 1;
 		}
 		else
 		{
@@ -204,6 +204,10 @@ public class Simulator
 			throw new IllegalArgumentException();
 		}
 		
+		// remove the ship from the faction
+		ship.getFaction().removeShip();
+		
+		// remove the ship from the ship list
 		ships.remove(ship);
 	}
 
