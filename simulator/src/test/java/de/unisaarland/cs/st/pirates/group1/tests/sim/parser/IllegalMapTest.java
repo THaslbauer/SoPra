@@ -27,7 +27,7 @@ public class IllegalMapTest {
 			fail("Wrong exception thrown");
 		}
 	}
-	
+
 	@Test
 	public void supidStuffTest() {
 		String s = "Rolf XD \nasdf COOl\t420yoloswagpattern";

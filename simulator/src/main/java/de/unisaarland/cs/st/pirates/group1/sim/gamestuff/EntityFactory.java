@@ -22,7 +22,10 @@ public class EntityFactory {
 	}
 
 	public EntityFactory(){
-		// TODO implement this
+		shipNextId = 0;
+		treasureNextId = 0;
+		buoyNextId = 0;
+		krakenNextId = 0;
 	}
 	
 	/**
@@ -33,8 +36,7 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Ship createShip(Faction faction, Tile tile){
-		// TODO implement this
-		return null;
+		return new Ship(faction, shipNextId++, tile);
 	}
 	
 	/**
@@ -47,8 +49,7 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Buoy createBuoy(int type, Faction faction, Tile tile){
-		// TODO implement this
-		return null;
+		return new Buoy(type, faction, buoyNextId++, tile);
 	}
 	
 	/**
@@ -59,8 +60,7 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Treasure createTreasure(int value, Tile tile){
-		// TODO implement this
-		return null;
+		return new Treasure(value, treasureNextId++, tile);
 	}
 	
 	/**
@@ -69,8 +69,7 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Kraken releaseTheKraken(Tile tile){
-		// TODO implement this
-		return null;
+		return new Kraken(krakenNextId++, tile);
 	}
 
 	public int getShipNextId() {
