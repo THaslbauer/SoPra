@@ -28,6 +28,6 @@ public class IslandTest
 		Island nonSupplyIsland = new Island(false, null, null);
 		
 		assertTrue("The Island's method isSupply tells false and it's true", supplyIsland.isSupply() == true);
-		assertTrue("The Island's method isSupply tells true and it's false", nonSupplyIsland.isSupply() == true);
+		assertTrue("The Island's method isSupply tells true and it's false", nonSupplyIsland.isSupply() == false);
 	}
 }
