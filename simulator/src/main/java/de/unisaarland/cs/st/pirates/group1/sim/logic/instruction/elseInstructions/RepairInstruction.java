@@ -19,9 +19,15 @@ public class RepairInstruction extends ElseInstruction {
 	}
 
 	@Override
-	public void execute(Ship ship) {
-		// TODO Auto-generated method stub
-
+	public void execute(Ship ship)
+	{
+		if(ship == null)
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		
+		
 	}
 
 }
