@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.channels.UnsupportedAddressTypeException;
 import java.util.LinkedList;
 import java.util.List;
@@ -103,8 +104,16 @@ public class ControllerTest
 		mp = new TestMapParser();
 		tp = new TestTacticsParser();
 		sim = new TestSimulator(new InfoPoint());
-		InputStream mapInput = new ByteArrayInputStream(mapStr.getBytes());
-		InputStream tacticsInput = new ByteArrayInputStream(tactics.getBytes());
+		InputStream mapInput;
+		InputStream tacticsInput;
+		try {
+			mapInput = new ByteArrayInputStream(mapStr.getBytes("UTF-8"));
+			tacticsInput = new ByteArrayInputStream(tactics.getBytes("UTF-8"));
+		}
+		catch(UnsupportedEncodingException e) {
+			mapInput = null;
+			tacticsInput = null;
+		}
 		List<InputStream> tactics = new LinkedList<>();
 		OutputStream out = new ByteArrayOutputStream();
 		tactics.add(tacticsInput);
