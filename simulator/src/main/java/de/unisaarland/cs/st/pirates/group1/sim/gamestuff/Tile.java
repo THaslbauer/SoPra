@@ -169,15 +169,9 @@ public abstract class Tile {
 	 * @param value how much you'd like to increase the treasure count here
 	 */
 	public void increaseTreasure(int value) {
-		if(placables[2] == null) {
-			Treasure treasure = map.createTreasure(value, this);
-			try {
-				attach(treasure);
-			} catch (IllegalCallException e) {
-				//this should definetly (TODO) not happen!
-				throw new IllegalStateException("What the fuck?!");
-			}
-		} else {
+		if(placables[2] == null)
+			map.createTreasure(value, this);
+		else {
 			Treasure treasure = (Treasure)placables[2];
 			treasure.setValue(treasure.getValue()+value);
 		}
