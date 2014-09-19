@@ -2,7 +2,6 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.throwIAException;
 import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
-import de.unisaarland.cs.st.pirates.logger.implementation.bypass.ByPassLogger;
 
 /**
  * Represents a Buoy on the far sea
@@ -42,8 +41,18 @@ public class Buoy extends Placable {
 	}
 
 	@Override
-	protected void attachTo(Tile tile) {
-		ByPassLogger o = new de.unisaarland.cs.st.pirates.logger.implementation.bypass.ByPassLogger();
+	protected void attachTo(Tile tile) throws IllegalCallException {
+		if(myTile.getBuoyMap().get(faction).contains(this))
+			throw new IllegalCallException("I am already in the list?? o.O");
+		myTile.getBuoyMap().get(faction).add(this);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(!(o instanceof Buoy))
+			return false;
+		Buoy other = (Buoy)o;
+		return other.faction == faction && other.type == type;
 	}
 	
 }
