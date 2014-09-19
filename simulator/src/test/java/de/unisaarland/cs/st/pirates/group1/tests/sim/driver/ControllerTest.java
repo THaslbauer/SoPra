@@ -59,7 +59,7 @@ public class ControllerTest
 		public int value = 0;
 		
 		public TestSimulator(ExpectLogger infoPoint) {
-			super(infoPoint, null);
+			super(infoPoint, new Random());
 		}
 		
 		@Override
