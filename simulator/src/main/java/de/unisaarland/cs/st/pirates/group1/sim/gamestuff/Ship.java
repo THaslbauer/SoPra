@@ -31,9 +31,9 @@ public class Ship extends Placable {
 	 * @param id the ship id
 	 * @param tile the tile to place the ship on
 	 */
-	public Ship(Faction faction, int id, Tile tile) {
+	public Ship(Faction faction, int id, Tile tile) throws IllegalArgumentException {
 		super(id, tile);
-		registers[Register.SHIP_LOAD.ordinal()] = maxLoad;
+		registers[Register.SHIP_LOAD.ordinal()] = 0;
 		registers[Register.SHIP_MORAL.ordinal()] = maxMorale;
 		this.boredom = 0;
 		registers[Register.SHIP_CONDITION.ordinal()] = maxCondition;
@@ -169,7 +169,7 @@ public class Ship extends Placable {
 
 	public void setRestTime(int restTime) {
 		notNegative(restTime);
-		this.restTime = restTime;
+		this.restTime = restTime <= 8 ? restTime : (int) throwIAException("Resttime tooooooo hiiigh");
 	}
 
 	public Heading getHeading() {

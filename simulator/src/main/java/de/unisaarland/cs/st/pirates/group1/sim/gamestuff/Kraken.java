@@ -15,8 +15,10 @@ public class Kraken extends Placable {
 	 * Creates a gigantic Kraken
 	 * @param id the id
 	 * @param tile the tile the kraken should destroy everything on
+	 * @throws IllegalCallException 
+	 * @throws IllegalArgumentException 
 	 */
-	public Kraken(int id, Tile tile) {
+	public Kraken(int id, Tile tile) throws IllegalArgumentException {
 		super(id, tile);
 	}
 	

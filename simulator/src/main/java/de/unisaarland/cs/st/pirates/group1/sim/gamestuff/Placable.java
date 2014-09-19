@@ -17,9 +17,10 @@ public abstract class Placable {
 	 * Calls setMyTile()
 	 * @param id the unique id (for every kind) of this Placable 
 	 * @param tile the tile this thing should be on
+	 * @throws IllegalArgumentException If the placable can't be placed on the specified tile
 	 * @see setMyTile()
 	 */
-	public Placable(int id, Tile tile) {
+	public Placable(int id, Tile tile) throws IllegalArgumentException {
 		notNegative(id);
 		this.id = id;
 		setMyTile(tile);
@@ -33,19 +34,18 @@ public abstract class Placable {
 	 * Moves this Placable to the specified tile.
 	 * Detaches this Placable from the old tile and attaches it to the new one.
 	 * @param myTile
+	 * @throws IllegalArgumentException if the placable can't be moved to destination
 	 */
-	public void setMyTile(Tile tile) {
+	public void setMyTile(Tile tile) throws IllegalArgumentException {
 		Tile oldTile = myTile;
 		myTile = tile;
-		try {
+		try{
 			if(oldTile != null)
 				detachFrom(oldTile);
 			if(tile != null)
 				attachTo(tile);
 		} catch (IllegalCallException e) {
-			//shouldn't happen
-		} catch (IllegalArgumentException e) {
-			//also shouldn't happen
+			throw new IllegalArgumentException("Destination tile is occupied");
 		}
 	}
 	
