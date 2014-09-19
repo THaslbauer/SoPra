@@ -3,6 +3,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -27,10 +28,10 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
  */
 public class MapParser {
 	
-	EntityFactory myentityfactory;
 	private HashMap<String, Faction> factions;
-	Worldmap mymap;
-	int factioncount =1;
+	private ArrayList<Faction> list;
+	private Worldmap mymap;
+	private int factioncount =1;
 	private Simulator simulator;
 	
 	public MapParser(){
@@ -86,9 +87,6 @@ public class MapParser {
 					
 				//building of the map: beginning
 				String current;
-				
-				//take needed entity factory
-				myentityfactory = simulator.getEntityFactory();
 				
 				
 				//IllegalStateException will be thrown and converted to IllegalArgumentException if scan.next() cannot proceed
@@ -267,7 +265,8 @@ public class MapParser {
 					
 				}
 				
-				
+				//gives the simulator its faction list
+				this.simulator.setFactions(list);
 				
 			}
 			catch(NoSuchElementException | IllegalStateException c){
@@ -323,6 +322,7 @@ public class MapParser {
 		
 		Faction faction = new Faction(string, factioncount);
 		factions.put(string, faction);
+		list.add(faction);
 		factioncount+=1;
 		Tile tile = mymap.createBaseTile(position, faction);
 		this.createShip(faction, tile);
