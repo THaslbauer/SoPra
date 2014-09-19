@@ -31,6 +31,7 @@ public static enum Cell{
 public static enum Entity{
 	BUOY,
 	SHIP,
+	KRAKEN,
 	TREASURE;
 	
 }

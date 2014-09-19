@@ -42,7 +42,12 @@ public class Simulator
 	
 	public Simulator(ExtendedLogWriter logger, int maxCycle, Random random)
 	{
-		this.factions      = new LinkedList<Faction>();
+		if(logger == null || maxCycle < 1 || random == null)
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		this.factions      = null;
 		this.ships         = new LinkedList<Ship>();
 		this.krakens       = new LinkedList<Kraken>();
 		this.worldmap      = null;
@@ -64,7 +69,7 @@ public class Simulator
 	public void step()
 	{
 		// throw an exception if the game has ended because maxCycle was reached
-		if(cycle > maxCycle)
+		if(cycle > (maxCycle - 1))
 		{
 			throw new UnsupportedOperationException();
 		}
@@ -80,8 +85,8 @@ public class Simulator
 				kraken.step();
 			}
 			
-			// sets the krakenWaittime to 20 again
-			krakenWaittime = 20;
+			// sets the krakenWaittime to maxKrakenWaittime again
+			krakenWaittime = maxKrakenWaittime;
 		}
 		else
 		{
@@ -157,6 +162,19 @@ public class Simulator
 	 */
 	public Kraken createKraken(Tile tile)
 	{
+		// every key wich the kraken needs
+		Key[] keys  = new Key[2];
+		keys[0]     = Key.X_COORD;
+		keys[1]     = Key.Y_COORD;
+		
+		// every value wich are matching the keys
+		int[] values = new int[2];
+		values[0]    = tile.getPosition().x;
+		values[1]    = tile.getPosition().y;
+		
+		// logs the creation before creating the ship
+		logger.create(Entity.KRAKEN, entityFactory.getShipNextId(), keys, values);
+		
 		return entityFactory.releaseTheKraken(tile);
 	}
 	
@@ -238,6 +256,11 @@ public class Simulator
 	public void setRandom(Random random)
 	{
 		this.random = random;
+	}
+	
+	public Random getRandom()
+	{
+		return random;
 	}
 	
 }

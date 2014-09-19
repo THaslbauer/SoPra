@@ -1,6 +1,8 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.throwIAException;
+import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
+import de.unisaarland.cs.st.pirates.logger.implementation.bypass.ByPassLogger;
 
 /**
  * Represents a Buoy on the far sea
@@ -33,9 +35,15 @@ public class Buoy extends Placable {
 	}
 
 	@Override
-	protected void detachFrom(Tile tile) { }
+	protected void detachFrom(Tile tile) throws IllegalCallException {
+		if(!myTile.getBuoyMap().get(faction).contains(this))
+			throw new IllegalCallException("I am not in the list!! :( :(");
+		myTile.getBuoyMap().get(faction).remove(this);
+	}
 
 	@Override
-	protected void attachTo(Tile tile) { }
+	protected void attachTo(Tile tile) {
+		ByPassLogger o = new de.unisaarland.cs.st.pirates.logger.implementation.bypass.ByPassLogger();
+	}
 	
 }

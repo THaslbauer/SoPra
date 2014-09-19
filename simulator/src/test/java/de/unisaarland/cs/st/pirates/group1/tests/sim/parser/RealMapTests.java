@@ -25,11 +25,16 @@ public class RealMapTests {
 		String s = "2\n2\n.#\n$.";
 		sim = new Simulator(elogger, null);
 		mp.parseMap(asIS(s), sim);
+		Worldmap map = sim.getWorldmap();
 		elogger.expect(new AddCell(Cell.WATER, null, 0, 0));
 		elogger.expect(new AddCell(Cell.ISLAND, null, 1, 0));
 		elogger.expect(new AddCell(Cell.ISLAND, null, 0, 1));
 		elogger.expect(new AddCell(Cell.WATER, null, 1, 1));
-		Worldmap map = sim.getWorldmap();
+		if( !(map.getTile(new Position(0,0)) instanceof Sea &&  
+			map.getTile(new Position(1,0)) instanceof Island &&
+			map.getTile(new Position(0,1)) instanceof Island &&
+			map.getTile(new Position(1,1)) instanceof Sea) )
+			fail("Wrong tiles attached");
 		if(map.getTile(new Position(0,1)) instanceof Sea && map.getTile(new Position(1,0)) instanceof Island && map.getTile(new Position(1,1)) instanceof Sea)
 			assertTrue( map.getTile(new Position(0,1)).isSupply() );
 		else
