@@ -213,7 +213,7 @@ public class Ship extends Placable {
 		return boredom;
 	}
 	
-	public static int getMaxcondition() {
+	public static int getMaxCondition() {
 		return maxCondition;
 	}
 

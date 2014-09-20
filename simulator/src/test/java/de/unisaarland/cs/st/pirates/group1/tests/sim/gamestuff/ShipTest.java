@@ -360,7 +360,7 @@ public class ShipTest {
 		assertTrue(Ship.getMaxmorale() == 4);
 		assertTrue(Ship.getMaxload() == 4);
 		assertTrue(Ship.getMaxboredom() == 40);
-		assertTrue(Ship.getMaxcondition() == 3);
+		assertTrue(Ship.getMaxCondition() == 3);
 	}
 	
 	@Test
