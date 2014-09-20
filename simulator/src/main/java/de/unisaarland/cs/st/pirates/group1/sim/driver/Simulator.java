@@ -125,7 +125,7 @@ public class Simulator
 	public Ship createShip(Faction faction, Tile tile)
 	{
 		// every key which the ship needs
-		Key[] keys = new Key[8];
+		Key[] keys = new Key[9];
 		keys[0]    = Key.DIRECTION;
 		keys[1]    = Key.FLEET;
 		keys[2]    = Key.MORAL;
@@ -134,9 +134,10 @@ public class Simulator
 		keys[5]    = Key.VALUE;
 		keys[6]    = Key.X_COORD;
 		keys[7]    = Key.Y_COORD;
+		keys[8]    = Key.CONDITION;
 		
 		// every value wich are matching the keys
-		int[] values = new int[8];
+		int[] values = new int[9];
 		values[0]    = 0;
 		values[1]    = faction.getFactionID();
 		values[2]    = 4;
@@ -145,6 +146,7 @@ public class Simulator
 		values[5]    = 0;
 		values[6]    = tile.getPosition().x;
 		values[7]    = tile.getPosition().y;
+		values[8]    = 3;
 		
 		// logs the creation before creating the ship
 		logger.create(Entity.SHIP, entityFactory.getShipNextId(), keys, values);

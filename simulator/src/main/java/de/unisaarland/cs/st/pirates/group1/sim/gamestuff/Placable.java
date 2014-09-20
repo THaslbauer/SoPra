@@ -47,7 +47,7 @@ public abstract class Placable {
 			if(tile != null)
 				attachTo(tile);
 		} catch (IllegalCallException e) {
-			throw new IllegalArgumentException(e.toString());
+			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 	
