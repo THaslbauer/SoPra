@@ -23,6 +23,7 @@ public abstract class Placable {
 	public Placable(int id, Tile tile) throws IllegalArgumentException {
 		notNegative(id);
 		this.id = id;
+		myTile = null;
 		setMyTile(tile);
 	}
 	
@@ -41,14 +42,31 @@ public abstract class Placable {
 	public void setMyTile(Tile tile) throws IllegalArgumentException {
 		Tile oldTile = myTile;
 		myTile = tile;
+		boolean otn = oldTile == null;
 		try{
-			if(oldTile != null)
+			if(!otn)
 				detachFrom(oldTile);
-			if(tile != null)
-				attachTo(tile);
-		} catch (IllegalCallException e) {
+		} catch (IllegalArgumentException | IllegalCallException e) {
+			myTile = oldTile;
 			throw new IllegalArgumentException(e.getMessage());
 		}
+		try {
+			if(tile != null)
+				attachTo(tile);
+		} catch (IllegalCallException e) { // wir nicht auf die neue können
+			myTile = oldTile;
+			if(!otn) { // wenn wir uns aber erfolgreich von der alten tile detached haben	
+				try {
+					attachTo(oldTile); // attachen wir uns nochmals auf die alte
+				} catch(IllegalArgumentException | IllegalCallException f) { // und jetzt kommen wir nicht mehr drauf
+					// dann ist etwas ganz schön schlimmes passiert
+					throw new IllegalStateException("Something terrible happend. I detached myself from old tile but failed to attach to the new one but could not reattach myself to the old one!! :(");
+				}
+			}
+			// wir konnten uns nicht auf die neue attachen
+			throw new IllegalArgumentException(e.getMessage());
+		}
+		myTile = tile; // endlich konnten wir uns bewegen
 	}
 	
 	protected abstract void detachFrom(Tile tile) throws IllegalCallException, IllegalArgumentException;
