@@ -33,38 +33,50 @@ public class RefreshInstruction extends ElseInstruction
 	public Direction getDir() {
 		return dir;
 	}
-
+	
+	/**
+	 * This method maximizes the ship's morale and resets the boredom if it succeeds. It
+	 * fails if the ship tile's neighbour tile in direction dir is not an island, the
+	 * island is a non supply island or the ship's morale is already maximized.
+	 * 
+	 */
 	@Override
 	public void execute(Ship ship)
 	{
+		if(ship == null)
+		{
+			throw new IllegalArgumentException();
+		}
+		
 		Tile refreshTile = ship.getMyTile().getNeighbour(Heading.H0, dir);
+		int maxMorale    = Ship.getMaxmorale();
+		
 		
 		if(refreshTile.navigable(ship) != CellType.ISLAND)
 		{
 			this.elseJump(ship);
-			this.cycle(ship);
 			return;
 		}
 		
 		if(!refreshTile.isSupply())
 		{
 			this.elseJump(ship);
-			this.cycle(ship);
 			return;
 		}
 		
-		if(ship.getRegister(Register.SHIP_MORAL) == 4)
+		if(ship.getRegister(Register.SHIP_MORAL) == maxMorale)
 		{
 			this.elseJump(ship);
-			this.cycle(ship);
 			return;
 		}
 		
 		
-		ship.setRegister(Register.SHIP_MORAL, 4);
+		ship.setRegister(Register.SHIP_MORAL, maxMorale);
 		ship.increasePC();
+		ship.resetBoredom();
 		
-		this.logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, 4);
+		
+		this.logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, maxMorale);
 		this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
 		
 	}

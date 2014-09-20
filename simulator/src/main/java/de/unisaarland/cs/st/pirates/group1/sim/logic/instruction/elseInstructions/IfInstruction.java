@@ -30,22 +30,34 @@ public class IfInstruction extends ElseInstruction
 		return condition;
 	}
 
+	/**
+	 * This method checks if the condition is true related to the
+	 * given ship's registers. If the condition is true, the ship's
+	 * pc will be increased by 1. If the condition is false the
+	 * ship's pc will be set to the elsePc.
+	 * 
+	 */
 	@Override
 	public void execute(Ship ship)
 	{
-		if(condition.evaluate(ship.getRegisters()) == 1)
+		if(ship == null)
 		{
-			ship.increasePC();
-			
-			this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
-			
-			this.cycle(ship);
+			throw new IllegalArgumentException();
+		}
+		
+		if(condition.evaluate(ship.getRegisters()) != 1)
+		{
+			this.elseJump(ship);
 			return;
 		}
 		
-		this.elseJump(ship);
+		
+		ship.increasePC();
 		this.cycle(ship);
-		return;
+		
+	
+		this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
+
 	}
 
 }
