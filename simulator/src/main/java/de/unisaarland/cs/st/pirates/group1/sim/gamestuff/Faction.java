@@ -129,7 +129,9 @@ public class Faction {
 	 * @throws IndexOutOfBoundsException if pc wasn't inside of the Faction's Instruction line count
 	 */
 	public Instruction getInstruction(int pc) throws IndexOutOfBoundsException{
-			return this.tactics[pc];
+		if(tactics == null)
+			throw new UnsupportedOperationException("No tactis in here");
+		return this.tactics[pc];
 	}
 
 	@Override
