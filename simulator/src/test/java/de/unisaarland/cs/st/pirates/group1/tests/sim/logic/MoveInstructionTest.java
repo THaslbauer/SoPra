@@ -31,7 +31,11 @@ public class MoveInstructionTest {
 	
 	private static DummyEntityFactory def = new DummyEntityFactory();
 	private static ExpectLogger elo = new ExpectLogger();
-	private static Worldmap map1 = new Worldmap6T(3, 4, elo, def);
+	private static Worldmap map1 = new Worldmap6T(3,4,new ExpectLogger(), new EntityFactory()) {
+		public void setTile(Tile tile, int x, int y) {
+			tiles[y][x] = tile;
+		}
+	};
 	private static Faction faction1 = new Faction("a",1);
 	private static Faction faction2 = new Faction("b",2);
 	private static Ship m1ship2;

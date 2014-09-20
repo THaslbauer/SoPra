@@ -19,7 +19,7 @@ import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.notNegati
  */
 public class Worldmap6T extends Worldmap {
 
-	private Tile[][] tiles; // [y][x]
+	protected Tile[][] tiles; // [y][x]
 	private int width, height;
 	
 	/**
