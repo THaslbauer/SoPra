@@ -4,7 +4,17 @@ import java.io.InputStream;
 import java.util.Random;
 import java.util.Scanner;
 
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.MoveInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.TurnInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 
 /**
  * 
@@ -15,7 +25,10 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
  */
 public class TacticsParser {
 
-	public TacticsParser(){		
+	private ExtendedLogWriter logger;
+	
+	public TacticsParser(ExtendedLogWriter logger){		
+		this.logger = logger;
 	}
 	
 	/**
@@ -126,40 +139,106 @@ public class TacticsParser {
 	
 	public Instruction makeTurnInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if (size != 2){
+			throw new IllegalArgumentException("A turn instruction must consist of two parts");
+		}
+		
+		if(!(instruction[1].equals("left")) || !(instruction[1].equals("right"))){
+			
+			throw new IllegalArgumentException("A turn instruction cannot have another argument then left or right");
+		}
+		
+		else{
+			if(instruction[1].equals("left")){
+				 return new TurnInstruction(logger, true);
+			}
+			
+			else{
+				 return new TurnInstruction(logger, false);
+			}
+		}
 	}
 	
 	public Instruction makeMarkInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-				return null;
+		
+		if(size != 2){
+			throw new IllegalArgumentException("A mark instruction must consist of two parts");
+		}
+		
+		if(instruction[1]. equals("0") || instruction[1]. equals("1") ||
+				instruction[1].equals("2") || instruction[1].equals("3") || 
+				instruction[1].equals("4") || instruction[1].equals("5")){
+			
+			return new MarkInstruction(logger, Integer.parseInt(instruction[1]));
+			
+		}
+		
+		else{
+			throw new IllegalArgumentException("A mark instruction cannot have an int value less than zero or greater than 5");
+		}
 
 	}
 	
 	public Instruction makeUnmarkInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-				return null;
+		if(size != 2){
+			throw new IllegalArgumentException("A unmark instruction must consist of two parts");
+		}
+		
+		if(instruction[1]. equals("0") || instruction[1]. equals("1") ||
+				instruction[1].equals("2") || instruction[1].equals("3") || 
+				instruction[1].equals("4") || instruction[1].equals("5")){
+			
+			return new MarkInstruction(logger, Integer.parseInt(instruction[1]));
+			
+		}
+		
+		else{
+			throw new IllegalArgumentException("A unmark instruction cannot have an int value less than zero or greater than 5");
+		}
 
 	}
 	
 	public Instruction makeMoveInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size != 3){
+			throw new IllegalArgumentException("A move instruction consists of 3 parts");
+		}
+		
+		if(instruction[1].equals("else") && Integer.parseInt(instruction[2]) >= 0 && Integer.parseInt(instruction[2]) <= 1999){
+			return new MoveInstruction(logger, Integer.parseInt(instruction[2]));
+		}
+		
+		else{
+			throw new IllegalArgumentException("Move instruction wrong");
+		}
 	}
 	
 	public Instruction makePickupInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size != 4){
+			throw new IllegalArgumentException("Pickup instruction consists of 4 parts");
+		}
+		
+		if(!(this.isCorrectAddress(Integer.parseInt(instruction[3]))) || !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
+			throw new IllegalArgumentException("Pickup instruction is wrong (address or sensedirection) ");
+		}
+		
+		else{
+			return new PickupInstruction(logger, Integer.parseInt(instruction[3]), this.changeIntToDirection(Integer.parseInt(instruction[1])));
+		}
 	}
 	
 	public Instruction makeDropInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size != 1){
+			throw new IllegalArgumentException("A drop instruction consists only of one part");
+		}
+		
+		else{
+			return new DropInstruction(logger);
+		}
 	}
 	
 	public Instruction makeFlipzeroInstruction(String[] instruction, int size){
@@ -170,14 +249,33 @@ public class TacticsParser {
 	
 	public Instruction makeGotoInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if (size != 2){
+			throw new IllegalArgumentException("A goto instruction consists of two parts");
+		}
+		
+		if(!(this.isCorrectAddress(Integer.parseInt(instruction[1])))){
+			throw new IllegalArgumentException("Illegal PC given");
+		}
+		
+		else{
+			return new GotoInstruction(logger, Integer.parseInt(instruction[1]));
+		}
 	}
 	
 	public Instruction makeSenseInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if( size != 2){
+			throw new IllegalArgumentException("A sense instruction must consist of two parts");
+		}
+		
+		if(this.isCorrectSenseDir(Integer.parseInt(instruction[1]))){
+			
+			return new SenseInstruction(logger, this.changeIntToDirection(Integer.parseInt(instruction[1])));
+		}
+		
+		else{
+			throw new IllegalArgumentException("Direction must be between 0 and 6");
+		}
 	}
 	
 	public Instruction makeIfInstruction(String[] instruction, int size){
@@ -200,7 +298,61 @@ public class TacticsParser {
 	
 	public Instruction makeRefreshInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size != 4){
+			throw new IllegalArgumentException("Refresh instruction consists of 4 parts");
+		}
+		
+		if(!(this.isCorrectAddress(Integer.parseInt(instruction[3]))) || !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
+			throw new IllegalArgumentException("Refresh Instruction:Wrong integer value sense direction or address");
+		}
+		
+		else{
+			return new RefreshInstruction(logger, Integer.parseInt(instruction[3]), this.changeIntToDirection(Integer.parseInt(instruction[1])));
+		}
+	}
+	
+	private Direction changeIntToDirection(int i){
+		
+		switch(i){
+		case 0:
+			return Direction.D0;
+		case 1:
+			return Direction.D1;
+		case 2:
+			return Direction.D2;
+		case 3:
+			return Direction.D3;
+		case 4:
+			return Direction.D4;
+		case 5:
+			return Direction.D5;
+		case 6:
+			return Direction.D6;
+		default:
+			throw new IllegalArgumentException("A direction must be between 0 and 6");
+	
+		}
+	}
+	
+	private boolean isCorrectAddress(int i){
+		
+		if (i< 0 || i> 1999){
+			return false;
+		}
+		
+		else{
+			return true;
+		}
+	}
+	
+	private boolean isCorrectSenseDir(int i){
+		
+		if (i< 0 || i> 6){
+			return false;
+		}
+		
+		else{
+			return true;
+		}
 	}
 }
