@@ -27,6 +27,9 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.ElseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
@@ -40,6 +43,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.sim.util.ShipType;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Create;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
@@ -71,7 +76,7 @@ public class InstructionTest {
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);
-		Position position1 = new Position(0,0);
+		position1 = new Position(0,0);
 		Position position2 = new Position(1,0);
 		Position position3 = new Position(0,1);
 		Position position4 = new Position(1,1);
@@ -79,7 +84,11 @@ public class InstructionTest {
 		waterTile1 = worldMap.createSeaTile(position1);
 		waterTile2 = worldMap.createSeaTile(position2);
 		islandTile1 = worldMap.createIslandTile(position3, true);
-		islandTile2 = worldMap.createIslandTile(position3, false);
+		islandTile2 = worldMap.createIslandTile(position4, false);
+		expectLogger.expect(new AddCell(Cell.WATER, null, 0, 0));
+		expectLogger.expect(new AddCell(Cell.WATER, null, 1, 0));
+		expectLogger.expect(new AddCell(Cell.SUPPLY, null, 0, 1));
+		expectLogger.expect(new AddCell(Cell.ISLAND, null, 1, 1));
 		
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
@@ -167,7 +176,9 @@ public class InstructionTest {
 		//checks if create and notify is called
 		dropInstruction.execute(ship);
 		assertTrue(testGui.value == -1);
-		assertTrue(testGui.val == 42);
+		Key[] keys = {Key.VALUE, Key.X_COORD, Key.Y_COORD};
+		int[] values = {4, ship.getMyTile().getPosition().x, ship.getMyTile().getPosition().y};
+		expectLogger.expect(new Create(Entity.TREASURE, 0, keys, values));
 	}
 	
 	/**
@@ -498,12 +509,13 @@ public class InstructionTest {
 		
 		unmarkInstruction.execute(ship);
 		List<Buoy> buoyList = ship.getMyTile().getBuoyMap().get(ship.getFaction());
-		
-		for(Buoy b :buoyList){
-			if(b.getId() == 0){
-				fail("Buoy with id 1 is still in the list");
-			}else{
-				continue;
+		if(buoyList != null){
+			for(Buoy b :buoyList){
+				if(b.getId() == 0){
+					fail("Buoy with id 1 is still in the list");
+				}else{
+					continue;
+				}
 			}
 		}
 	}

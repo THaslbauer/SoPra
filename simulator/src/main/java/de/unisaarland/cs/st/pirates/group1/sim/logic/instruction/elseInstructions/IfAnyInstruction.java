@@ -29,10 +29,22 @@ public class IfAnyInstruction extends ElseInstruction
 	public Expression[] getConditions() {
 		return conditions;
 	}
-
+	
+	/**
+	 * This method checks if at least one of the conditions is true related
+	 * to the given ship's registers. If at least one of the conditions is true,
+	 * the ship's pc will be increased by 1. If all conditions are false, the
+	 * ship's pc will be set to the eslePc.
+	 * 
+	 */
 	@Override
 	public void execute(Ship ship)
 	{
+		if(ship == null)
+		{
+			throw new IllegalArgumentException();
+		}
+		
 		int value = 0;
 		
 		for(Expression condition : conditions)
@@ -40,19 +52,19 @@ public class IfAnyInstruction extends ElseInstruction
 			value = value | condition.evaluate(ship.getRegisters());
 		}
 		
-		if(value == 1)
+		if(value != 1)
 		{
-			ship.increasePC();
-			
-			this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
-			
-			this.cycle(ship);
+			this.elseJump(ship);
 			return;
 		}
 		
-		this.elseJump(ship);
+		
+		ship.increasePC();
 		this.cycle(ship);
-		return;
+		
+		
+		this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
+		
 	}
 
 }
