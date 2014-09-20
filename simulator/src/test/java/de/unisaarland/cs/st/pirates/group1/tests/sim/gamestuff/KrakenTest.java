@@ -112,7 +112,7 @@ public class KrakenTest {
 		assertFalse("the tile of the kraken should be a new one",kraken.getMyTile().equals(tile2));
 		
 		//the former tile of the kraken should not have a kraken anymore
-		assertFalse("the former tile of the kraken should not have a kraken anymore",tile2.getKraken() == null);
+		assertTrue("the former tile of the kraken should not have a kraken anymore",tile2.getKraken() == null);
 		
 		kraken.setMyTile(null);
 	}

@@ -14,6 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
 /**
  * A test class for ships
@@ -28,7 +29,7 @@ public class ShipTest {
 		private int value = 0;
 		
 		public TestInstruction(){
-			super(null);
+			super(new ExpectLogger());
 		}
 
 		@Override
@@ -276,26 +277,6 @@ public class ShipTest {
 		fail("Wrong value in field condition");
 	}
 	
-	@Test
-	public void setCondition2Test(){
-		
-		ship1 = new Ship(faction1, id1, tile1);
-		
-		
-		try{
-			ship1.setCondition(0);
-		}
-		
-		catch(IllegalArgumentException e){
-			return;
-		}
-		
-		catch(Exception e){
-			fail("Wrong exception thrown");
-		}
-		
-		fail("Wrong value in field condition");
-	}
 	
 	
 	@Test

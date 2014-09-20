@@ -250,6 +250,8 @@ public class FactionTest {
 		instructions[0] = ins;
 		instructions[1] = ins;
 		
+		faction.setTactics(instructions);
+		
 		try{
 			faction.getInstruction(2);
 		}
@@ -271,6 +273,8 @@ public class FactionTest {
 		Instruction ins = new ShipTest.TestInstruction();
 		Instruction [] instructions = new Instruction[2];
 		
+		faction.setTactics(instructions);
+		
 		try{
 			faction.getInstruction(-1);
 		}
@@ -288,6 +292,8 @@ public class FactionTest {
 		String faction_name = "test";
 		
 		Faction faction = new Faction(faction_name,1);
+		
+		
 		
 		try{
 			faction.getInstruction(1);

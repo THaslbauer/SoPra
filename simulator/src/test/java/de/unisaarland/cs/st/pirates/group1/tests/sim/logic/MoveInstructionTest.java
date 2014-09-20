@@ -62,13 +62,14 @@ public class MoveInstructionTest {
 	@Test
 	public void cleanUpTest() {
 		try {
-		Class c = Class.forName("MoveInstruction");
-		Method cleanup = c.getDeclaredMethod("cleanup", (Class <?>) null);
+		MoveInstruction mi = new MoveInstruction(new ExpectLogger(), 42);
+		Ship ship = new Ship(new Faction("a",0), 1, new Sea(null, new Position(0,0)));
+		Class<?> c = mi.getClass();
+		Method cleanup = c.getDeclaredMethod("cleanup", Ship.class);
 		cleanup.setAccessible(true);
-		Object inst = c.newInstance();
-		Object res = cleanup.invoke(inst, null);
+		cleanup.invoke(mi,ship);
 		} catch(Exception e) {
-			fail();
+			fail(e.getMessage());
 		}
 
 		

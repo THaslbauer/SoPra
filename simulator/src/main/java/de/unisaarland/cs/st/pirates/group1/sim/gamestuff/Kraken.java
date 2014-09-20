@@ -36,7 +36,7 @@ public class Kraken extends Placable {
 			if(aim instanceof Island || aim instanceof Base)
 				return;
 			setMyTile(aim); // move to aim
-		} catch (IllegalArgumentException e) { // Not in the world anymore
+		} catch (IllegalArgumentException e) { // cant move there, kraken there
 			//do nothing
 		} 
 	}
