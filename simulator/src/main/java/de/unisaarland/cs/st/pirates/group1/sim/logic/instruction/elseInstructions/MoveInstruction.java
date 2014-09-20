@@ -1,7 +1,5 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
-import java.util.Random;
-
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Base;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Island;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
@@ -10,6 +8,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
+import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 
 /**
@@ -32,6 +31,10 @@ public class MoveInstruction extends ElseInstruction {
 		super(logger, elsePC);
 	}
 
+	
+	/**
+	 * Main part of the Instruction, calls helper method according to Tile type
+	 */
 	@Override
 	public void execute(Ship ship) {
 		Tile ownTile = ship.getMyTile();
@@ -53,6 +56,10 @@ public class MoveInstruction extends ElseInstruction {
 		}
 	}
 	
+	/**
+	 * handles hitting an Island
+	 * @param ship
+	 */
 	private void beach(Ship ship) {
 		//lose health
 		ship.setCondition(ship.getCondition() -1);
@@ -74,6 +81,10 @@ public class MoveInstruction extends ElseInstruction {
 			super.elseJump(ship);
 	}
 
+	/**
+	 * Tries to move a ship onto a water tile and initiates a fight if there is an enemy on the other tile
+	 * @param ship
+	 */
 	private void tryMove(Ship ship) {
 		Tile ownTile = ship.getMyTile();
 		Tile neighbourTile = ownTile.getNeighbour(ship.getHeading(), Direction.D0);
@@ -152,22 +163,28 @@ public class MoveInstruction extends ElseInstruction {
 		}
 	}
 
-	private void resolveFight(Ship ship, Ship otherShip) {
+	/**
+	 * Resolves a fight: Hurts the losing ship, demoralizes it and makes it lose treasure. Doesn't clean up though.
+	 * (this method is a messie)
+	 * @param winner
+	 * @param loser
+	 */
+	private void resolveFight(Ship winner, Ship loser) {
 		//other ship gets hurt
-		int newCond = otherShip.getCondition();
+		int newCond = loser.getCondition();
 		assert(newCond > 0);
-		otherShip.setCondition(--newCond);
-		logger.notify(Entity.SHIP, otherShip.getId(), Key.CONDITION, newCond);
+		loser.setCondition(--newCond);
+		logger.notify(Entity.SHIP, loser.getId(), Key.CONDITION, newCond);
 		//other ship loses morale if possible
-		int morale = otherShip.getMorale();
+		int morale = loser.getMorale();
 		if(morale > 0) {
-			otherShip.setMorale(--morale);
-			logger.notify(Entity.SHIP, otherShip.getId(), Key.MORAL, morale);
+			loser.setMorale(--morale);
+			logger.notify(Entity.SHIP, loser.getId(), Key.MORAL, morale);
 		}
 		//now other ship loses treasure if possible
-		int treasure = otherShip.getLoad();
-		int capacity = Ship.getMaxload() - ship.getLoad();
-		int newLoad = ship.getLoad();
+		int treasure = loser.getLoad();
+		int capacity = Ship.getMaxload() - winner.getLoad();
+		int newLoad = winner.getLoad();
 		//no treasure, we are done
 		if(treasure == 0)
 			return;
@@ -179,17 +196,29 @@ public class MoveInstruction extends ElseInstruction {
 			newLoad = Ship.getMaxload();
 			treasure -= capacity;
 			//some treasure drops on the loser ship's tile
-			otherShip.getMyTile().increaseTreasure(treasure);
+			loser.getMyTile().increaseTreasure(treasure);
 		}
 		//winner takes some treasure
-		ship.setLoad(newLoad);
-		logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, newLoad);
+		winner.setLoad(newLoad);
+		logger.notify(Entity.SHIP, winner.getId(), Key.VALUE, newLoad);
 	}
 
+	/**
+	 * moves a ship onto a tile that can be moved onto (needs to be checked beforehand) and looks for krakens (also checks for base and increases morale accordingly)
+	 * @param ship
+	 */
 	private void move(Ship ship) {
 		Tile neighbourTile = ship.getMyTile().getNeighbour(ship.getHeading(), Direction.D0);
 		ship.setMyTile(neighbourTile);
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
+		
+		//we have arrived, now look to see if we're home
+		CellType tileType = neighbourTile.navigable(ship);
+		assert(tileType == CellType.EMPTY || tileType == CellType.HOME);
+		if(tileType == CellType.HOME) {
+			ship.setMorale(Ship.getMaxmorale());
+			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, Ship.getMaxmorale());
+		}
 
 		//calculate restTime
 		int restTime = 4;
@@ -214,6 +243,11 @@ public class MoveInstruction extends ElseInstruction {
 
 	}
 
+	/**
+	 * Checks condition and kills a ship if it has condition 0
+	 * @param ship
+	 * @return If the ship was destroyed
+	 */
 	private boolean cleanup(Ship ship){
 		if(ship.getCondition() == 0) {
 			ship.setMyTile(null);
