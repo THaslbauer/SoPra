@@ -1,13 +1,17 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
+/**
+ * This class represents the greater operator in a tactic programm
+ * 
+ * @author Nico
+ *
+ */
 public class GreaterOperator extends Operator
 {
 
-	
-	public GreaterOperator(RegisterCall leftval, Primary rightval){
-		
+	public GreaterOperator(RegisterCall leftval, Primary rightval)
+	{
 		super(leftval, rightval);
-		//TODO: implement this
 	}
 	
 	/**
@@ -16,8 +20,13 @@ public class GreaterOperator extends Operator
 	 * 
 	 */
 	@Override
-	public int evaluate (int[] registers){
-		//TODO: implement this
+	public int evaluate (int[] registers)
+	{
+		if(leftval.evaluate(registers) > rightval.evaluate(registers))
+		{
+			return 1;
+		}
+		
 		return 0;
 	}
 }

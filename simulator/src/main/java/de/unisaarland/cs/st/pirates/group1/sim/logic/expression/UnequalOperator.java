@@ -1,12 +1,17 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
+/**
+ * This class represents an unequal operator in the tactic programm
+ * 
+ * @author Nico und Schatz
+ *
+ */
 public class UnequalOperator extends Operator{
 	
 	
-	public UnequalOperator(RegisterCall leftval, Primary rightval){
-		
+	public UnequalOperator(RegisterCall leftval, Primary rightval)
+	{
 		super(leftval, rightval);
-		//TODO: implement this
 	}
 
 	/**
@@ -14,8 +19,13 @@ public class UnequalOperator extends Operator{
 	 * equal to the one in rightval.
 	 * 
 	 */
-	public int evaluate (int[] registers){
-		//TODO: implement this
+	public int evaluate (int[] registers)
+	{
+		if(leftval.evaluate(registers) != rightval.evaluate(registers))
+		{
+			return 1;
+		}
+		
 		return 0;
 	}
 }

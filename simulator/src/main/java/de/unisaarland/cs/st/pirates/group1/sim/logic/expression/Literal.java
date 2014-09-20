@@ -1,5 +1,12 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
+/**
+ * This class represents a number in a condition in an if
+ * statement in the tactic programm
+ * 
+ * @author Nico
+ *
+ */
 public class Literal extends Primary
 {
 	
@@ -8,19 +15,16 @@ public class Literal extends Primary
 	
 	public Literal(int val)
 	{
-		//TODO
+		this.val = val;
 	}
 	
 	/**
 	 * This method returns the value val.
 	 * 
-	 * @param registers
-	 * @return
 	 */
 	public int evaluate(int[] registers)
 	{
-		//TODO
-		return 0;
+		return val;
 	}
 	
 }

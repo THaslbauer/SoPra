@@ -1,14 +1,17 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
+/**
+ * This class represents a less operator in the tactic programm
+ * 
+ * @author Nico und Schatz
+ *
+ */
 public class LessOperator extends Operator
 {
 	
-	
-	public LessOperator(RegisterCall leftval, Primary rightval){
-		
+	public LessOperator(RegisterCall leftval, Primary rightval)
+	{
 		super(leftval, rightval);
-		//TODO: implement this
-		
 	}
 	
 	/**
@@ -17,8 +20,13 @@ public class LessOperator extends Operator
 	 * 
 	 */
 	@Override
-	public int evaluate(int[] registers){
-		//TODO: implement this
+	public int evaluate(int[] registers)
+	{
+		if(leftval.evaluate(registers) < rightval.evaluate(registers))
+		{
+			return 1;
+		}
+		
 		return 0;
 	}
 }
