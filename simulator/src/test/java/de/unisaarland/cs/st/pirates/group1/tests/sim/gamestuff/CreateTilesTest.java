@@ -13,7 +13,7 @@ public class CreateTilesTest {
 	
 	@BeforeClass
 	public static void init() {
-		map = new Worldmap6T(1, 2, null, null);
+		map = new Worldmap6T(2, 2, null, null);
 	}
 	
 	@Test

@@ -4,6 +4,8 @@ import static de.unisaarland.cs.st.pirates.group1.tests.testUtil.StreamHelper.as
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
@@ -18,12 +20,13 @@ public class RealMapTests {
 	private static MapParser mp = new MapParser();
 	private static ExpectLogger elogger = new ExpectLogger();
 	private static Simulator sim;
+	private static Random r = new Random();
 	
 	
 	@Test
 	public void minimalMapEasyTest() {
 		String s = "2\n2\n.#\n$.";
-		sim = new Simulator(elogger, null);
+		sim = new Simulator(elogger, r);
 		mp.parseMap(asIS(s), sim);
 		Worldmap map = sim.getWorldmap();
 		elogger.expect(new AddCell(Cell.WATER, null, 0, 0));

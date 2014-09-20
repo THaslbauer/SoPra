@@ -3,6 +3,8 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.parser;
 import static de.unisaarland.cs.st.pirates.group1.tests.testUtil.StreamHelper.asIS;
 import static org.junit.Assert.fail;
 
+import java.util.Random;
+
 import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
@@ -15,7 +17,7 @@ public class IllegalMapTest {
 	private static ExpectLogger elogger = new ExpectLogger();
 	
 	private static void checkNFail(String s, String exp) {
-		Simulator simulator = new Simulator(elogger, null);
+		Simulator simulator = new Simulator(elogger, new Random());
 		try{
 			mp.parseMap(asIS(s), simulator);
 			fail("Nothing thrown");

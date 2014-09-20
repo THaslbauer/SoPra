@@ -107,8 +107,10 @@ public class ElseInstructionTest {
 		
 		flipZeroInstr.execute(ship);
 		
-		Random randTest = new Random(0);
-		if (randTest.nextInt(2) == 1){
+		//TODO CHECK THIS!!
+		//Jump to else, if randomnumber is not 0
+		//see page 2
+		if (rand.nextInt(2) == 0){
 			assertTrue(ship.getPC() == 1);
 		}else{
 			assertTrue(ship.getPC() == 11);

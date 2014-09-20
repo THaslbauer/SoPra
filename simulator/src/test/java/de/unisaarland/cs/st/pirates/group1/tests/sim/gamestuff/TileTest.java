@@ -147,7 +147,7 @@ public class TileTest extends TestCase {
 	public void testGetNeighbour()
 	{
 
-			Tile neighbourTile = worldmap.getTile(new Position(0,1));
+			Tile neighbourTile = worldmap.getTile(new Position(1,0));
 			
 			assertTrue("The tile's method getNeighbour() calculates the wrong neighbour tile.",
 					basicTile.getNeighbour(Heading.H4, Direction.D0) == neighbourTile);
