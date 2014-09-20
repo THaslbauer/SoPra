@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
@@ -22,6 +23,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.EqualOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
@@ -39,6 +41,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
 
 public class ElseInstructionTest {
@@ -51,6 +55,8 @@ public class ElseInstructionTest {
 	private Tile islandTile2;
 	private Tile islandTile1;
 	private Position position1;
+	private ExpectLogger logger;
+	private EntityFactory factory;
 	private int x;
 	
 	@Before
@@ -58,7 +64,9 @@ public class ElseInstructionTest {
 		x = 0;
 		
 		//A worldMap with exactly one seatile
-		worldMap = new Worldmap6T(2,2,null,null);
+		logger = new ExpectLogger();
+		factory = new EntityFactory();
+		worldMap = new Worldmap6T(2,2, logger, factory);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);
@@ -70,7 +78,11 @@ public class ElseInstructionTest {
 		waterTile1 = worldMap.createSeaTile(position1);
 		waterTile2 = worldMap.createSeaTile(position2);
 		islandTile1 = worldMap.createIslandTile(position3, true);
-		islandTile2 = worldMap.createIslandTile(position3, false);
+		islandTile2 = worldMap.createIslandTile(position4, false);
+		logger.expect(new AddCell(Cell.WATER, null, 0, 0));
+		logger.expect(new AddCell(Cell.WATER, null, 1, 0));
+		logger.expect(new AddCell(Cell.SUPPLY, null, 0, 1));
+		logger.expect(new AddCell(Cell.ISLAND, null, 1, 1));
 		
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
