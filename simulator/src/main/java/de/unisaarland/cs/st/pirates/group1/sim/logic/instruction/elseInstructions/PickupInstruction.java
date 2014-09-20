@@ -2,8 +2,11 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructio
 
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 
 /**
  * Represents an instruction for a {@link Ship} to pick up a {@link Treasure}.
@@ -11,7 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
  *
  */
 public class PickupInstruction extends ElseInstruction {
-	Direction dir;
+	private Direction dir;
 
 	/**
 	 * Creates the instruction.
@@ -21,6 +24,8 @@ public class PickupInstruction extends ElseInstruction {
 	 */
 	public PickupInstruction(ExtendedLogWriter logger, int elsePC, Direction dir) {
 		super(logger, elsePC);
+		if(dir == null)
+			throw new IllegalArgumentException("Direction can't be null");
 		this.dir = dir;
 	}
 
@@ -30,8 +35,36 @@ public class PickupInstruction extends ElseInstruction {
 
 	@Override
 	public void execute(Ship ship) {
-		// TODO Auto-generated method stub
-
+		int maxLoad = Ship.getMaxload();
+		Tile tile = ship.getMyTile();
+		Tile neighbour = tile.getNeighbour(ship.getHeading(), dir);
+		int possibleLoad = maxLoad - ship.getLoad();
+		if(possibleLoad == 0 || neighbour.getTreasure() == null) {
+			super.elseJump(ship);
+			return;
+		}
+		int treasure = neighbour.getTreasure().getValue();
+		//should never happen:
+		if(treasure <= 0) {
+			super.elseJump(ship);
+			return;
+		}
+		else {
+			if(treasure - possibleLoad >= 0) {
+				ship.setLoad(maxLoad);
+				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, maxLoad);
+				tile.decreaseTreasure(possibleLoad);
+			}
+			else {
+				int newLoad = maxLoad - (possibleLoad - treasure);
+				ship.setLoad(newLoad);
+				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, newLoad);
+				tile.decreaseTreasure(treasure);
+			}
+			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
+			super.cycle(ship);
+		}
+		
 	}
 
 }

@@ -1,16 +1,23 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
+import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 
 /**
  * Represents an instruction to refresh the morale of a {@link Ship}.
- * @author thomas
+ * @author Nico
  
  */
-public class RefreshInstruction extends ElseInstruction {
-	Direction dir;
+public class RefreshInstruction extends ElseInstruction
+{
+	private Direction dir;
 
 	/**
 	 * Creates the instruction.
@@ -26,11 +33,52 @@ public class RefreshInstruction extends ElseInstruction {
 	public Direction getDir() {
 		return dir;
 	}
-
+	
+	/**
+	 * This method maximizes the ship's morale and resets the boredom if it succeeds. It
+	 * fails if the ship tile's neighbour tile in direction dir is not an island, the
+	 * island is a non supply island or the ship's morale is already maximized.
+	 * 
+	 */
 	@Override
-	public void execute(Ship ship) {
-		// TODO Auto-generated method stub
-
+	public void execute(Ship ship)
+	{
+		if(ship == null)
+		{
+			throw new IllegalArgumentException();
+		}
+		
+		Tile refreshTile = ship.getMyTile().getNeighbour(Heading.H0, dir);
+		int maxMorale    = Ship.getMaxmorale();
+		
+		
+		if(refreshTile.navigable(ship) != CellType.ISLAND)
+		{
+			this.elseJump(ship);
+			return;
+		}
+		
+		if(!refreshTile.isSupply())
+		{
+			this.elseJump(ship);
+			return;
+		}
+		
+		if(ship.getRegister(Register.SHIP_MORAL) == maxMorale)
+		{
+			this.elseJump(ship);
+			return;
+		}
+		
+		
+		ship.setRegister(Register.SHIP_MORAL, maxMorale);
+		ship.increasePC();
+		ship.resetBoredom();
+		
+		
+		this.logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, maxMorale);
+		this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
+		
 	}
 
 }

@@ -9,7 +9,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 /**
  * Represents an instruction to repair a {@link Ship}.
- * @author thomas
+ * @author Nico
  *
  */
 public class RepairInstruction extends ElseInstruction {
@@ -23,6 +23,12 @@ public class RepairInstruction extends ElseInstruction {
 		super(logger, elsePC);
 	}
 
+	/**
+	 * This method maximizes the ship's condition. It fails if the
+	 * ship's tile is not the ship's base or the faction has not
+	 * enought score to repair the ship.
+	 * 
+	 */
 	@Override
 	public void execute(Ship ship)
 	{
@@ -31,43 +37,32 @@ public class RepairInstruction extends ElseInstruction {
 			throw new IllegalArgumentException();
 		}
 		
-		// get the tile on which the ship is standing
-		Tile baseTile = ship.getMyTile();
-		
-		// get the ship's faction
-		Faction faction = ship.getFaction();
+		Tile baseTile    = ship.getMyTile();
+		Faction faction  = ship.getFaction();
+		int maxCondition = Ship.getMaxcondition(); 
 		
 		
-		// checks if the ship's current tile is a friendly base
 		if(baseTile.navigable(ship) != CellType.HOME)
 		{
-			// if not set the ship's pc to the elseAddress
+			this.elseJump(ship);
+			return;
+		}
+				
+		if(faction.getScore() < 2)
+		{
 			this.elseJump(ship);
 			return;
 		}
 		
 		
-		// checks if the faction has enought score
-		if(faction.getScore() >= 2)
-		{
-			// if it has, it decreases the score by 2
-			faction.decreaseScore();
-		}
-		else
-		{
-			// if not set the ship's pc to the elseAddress
-			this.elseJump(ship);
-			return;
-		}
-		
-		
-		// increases the ship's condition and pc
-		ship.setCondition(3);
+		faction.decreaseScore();
+		ship.setCondition(maxCondition);
 		ship.increasePC();
+		this.cycle(ship);
 		
-		// and notifies it
-		logger.notify(Entity.SHIP, ship.getPC(), Key.CONDITION, 3);
-		logger.notify(Entity.SHIP, ship.getPC(), Key.PC, ship.getPC());
+
+		this.logger.notify(Entity.SHIP, ship.getPC(), Key.CONDITION, maxCondition);
+		this.logger.notify(Entity.SHIP, ship.getPC(), Key.PC, ship.getPC());
 		
 	}
 
