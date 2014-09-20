@@ -30,6 +30,8 @@ public class SenseInstruction extends Instruction {
 	 */
 	public SenseInstruction(ExtendedLogWriter logger, Direction dir){
 		super(logger);
+		if(dir == null)
+			throw new IllegalArgumentException("Direction can't be null");
 		this.dir = dir;
 	}
 	
