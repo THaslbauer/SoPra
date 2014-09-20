@@ -7,9 +7,11 @@ import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap.sRandom;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 
 public class IllegalTacticsTest {
-	private static TacticsParser tp = new TacticsParser();
+	private static ExpectLogger expectLogger = new ExpectLogger();
+	private static TacticsParser tp = new TacticsParser(expectLogger);
 	private static sRandom srandom = new sRandom(0);
 	
 	private static void checkNFail(String s, String exp) {

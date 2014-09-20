@@ -374,26 +374,29 @@ public class ElseInstructionTest {
 	@Test
 	public void RepairNotValidOnBaseTest(){
 		//build a testmap with only bases
-		Worldmap6T worldTest = new Worldmap6T(2,2,null,null);
+		logger = new ExpectLogger();
+		factory = new EntityFactory();
+		Worldmap6T worldTest = new Worldmap6T(2,2,logger,factory);
 		
 		Position position1 = new Position(0,0);
 		Position position2 = new Position(1,0);
 		Position position3 = new Position(0,1);
 		Position position4 = new Position(1,1);
 		
-		Tile baseTile1 = worldMap.createBaseTile(position1,faction);
-		Tile baseTile2 = worldMap.createBaseTile(position2,faction);
-		Tile baseTile3 = worldMap.createBaseTile(position3,faction);
-		Tile baseTile4 = worldMap.createBaseTile(position3,faction);
+		Tile baseTile1 = worldTest.createBaseTile(position1,faction);
+		Tile baseTile2 = worldTest.createBaseTile(position2,faction);
+		Tile baseTile3 = worldTest.createBaseTile(position3,faction);
+		Tile baseTile4 = worldTest.createBaseTile(position3,faction);
 		
+		Ship testShip = new Ship(faction, 3, baseTile1);
 		
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		RepairInstruction repInstr = new RepairInstruction(testGui, 12);
 		
-		ship.setCondition(1);
-		repInstr.execute(ship);
+		testShip.setCondition(1);
+		repInstr.execute(testShip);
 		
-		assertTrue(ship.getCondition() == 1);
+		assertTrue(testShip.getCondition() == 1);
 	}
 	
 	/**
@@ -403,7 +406,9 @@ public class ElseInstructionTest {
 	@Test
 	public void RepairValidTest(){
 		//build a testmap with only bases
-		Worldmap6T worldTest = new Worldmap6T(2,2,null,null);
+		logger = new ExpectLogger();
+		factory = new EntityFactory();
+		Worldmap6T worldTest = new Worldmap6T(2,2,logger,factory);
 		
 		faction.setScore(2);
 		
@@ -412,19 +417,20 @@ public class ElseInstructionTest {
 		Position position3 = new Position(0,1);
 		Position position4 = new Position(1,1);
 		
-		Tile baseTile1 = worldMap.createBaseTile(position1,faction);
-		Tile baseTile2 = worldMap.createBaseTile(position2,faction);
-		Tile baseTile3 = worldMap.createBaseTile(position3,faction);
-		Tile baseTile4 = worldMap.createBaseTile(position3,faction);
+		Tile baseTile1 = worldTest.createBaseTile(position1,faction);
+		Tile baseTile2 = worldTest.createBaseTile(position2,faction);
+		Tile baseTile3 = worldTest.createBaseTile(position3,faction);
+		Tile baseTile4 = worldTest.createBaseTile(position3,faction);
+		Ship testShip = new Ship(faction,1,baseTile1);
 		
 		
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		RepairInstruction repInstr = new RepairInstruction(testGui, 12);
 		
-		ship.setCondition(1);
-		repInstr.execute(ship);
+		testShip.setCondition(1);
+		repInstr.execute(testShip);
 		
-		assertTrue(ship.getCondition() == 3);
+		assertTrue(testShip.getCondition() == 3);
 		assertTrue(faction.getScore() == 0);
 	}
 	//PickUpInstruction Tests

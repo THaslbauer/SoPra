@@ -83,10 +83,11 @@ public class TacticsParserTest {
 				+ "goto 14";
 		
 		random = new Random(0);
-		tacticsParser = new TacticsParser();
+		expectLogger = new ExpectLogger();
+		tacticsParser = new TacticsParser(expectLogger);
 		stream = StreamHelper.asIS(string);
 		
-		expectLogger = new ExpectLogger();
+		
 		entityFactory = new EntityFactory();
 		
 		//A worldMap with exactly one seatile

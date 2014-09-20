@@ -1,5 +1,12 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
+/**
+ * This class represents a register in a condition of an if in the
+ * tactic programm
+ * 
+ * @author Nico
+ *
+ */
 public class RegisterCall extends Primary
 {
 	
@@ -8,7 +15,7 @@ public class RegisterCall extends Primary
 	
 	public RegisterCall(int index)
 	{
-		//TODO
+		this.index = index;
 	}
 	
 	/**
@@ -17,7 +24,6 @@ public class RegisterCall extends Primary
 	 */
 	public int evaluate(int[] registers)
 	{
-		//TODO
-		return 0;
+		return registers[index];
 	}
 }
