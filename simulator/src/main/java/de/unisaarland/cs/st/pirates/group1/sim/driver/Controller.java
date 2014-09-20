@@ -156,11 +156,17 @@ public void initializeSimulator(){
 	for(InputStream in : tacticsFile){
 		stringList.add(convertStreamToString(in));
 	}
-	String[] strings = (String[])stringList.toArray();
+	
+	
+	String[] stringArray = new String[stringList.size()];
+	for (int i = 0; i < stringList.size(); i++) {
+	    stringArray[i] = stringList.get(i);
+	}
+	//String[] strings = (String[])stringList.toArray();
 	
 	//initializes the LogWriter
 	try {
-		simulator.getLogWriter().init(output, convertStreamToString(mapFile) , strings);
+		simulator.getLogWriter().init(output, convertStreamToString(mapFile) , stringArray);
 	} catch (ArrayIndexOutOfBoundsException e1) {
 		throw new IllegalStateException();
 	} catch (NullPointerException e1) {
