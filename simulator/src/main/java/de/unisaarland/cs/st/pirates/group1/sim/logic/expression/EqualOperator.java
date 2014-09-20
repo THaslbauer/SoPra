@@ -1,5 +1,11 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
+/**
+ * This class represents an equal operator in a tactic programm
+ * 
+ * @author Nico
+ * 
+ */
 public class EqualOperator extends Operator
 {
 	
@@ -12,13 +18,15 @@ public class EqualOperator extends Operator
 	 * This method returns true if the two registers in leftval and
 	 * rightval are equal.
 	 * 
-	 * @param registers
-	 * @return
 	 */
 	@Override
 	public int evaluate(int[] registers)
 	{
-		//TODO
+		if(leftval.evaluate(registers) == rightval.evaluate(registers))
+		{
+			return 1;
+		}
+		
 		return 0;
 	}
 	

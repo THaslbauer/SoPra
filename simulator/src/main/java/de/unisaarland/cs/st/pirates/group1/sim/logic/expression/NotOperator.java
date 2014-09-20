@@ -1,13 +1,17 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
+/**
+ * This class represents a not operator in the tactic programm
+ * 
+ * @author Nico
+ *
+ */
 public class NotOperator extends Operator
 {
-	
 	
 	public NotOperator(RegisterCall val)
 	{
 		super(val, null);
-		//TODO
 	}
 	
 	/**
@@ -16,7 +20,11 @@ public class NotOperator extends Operator
 	 */
 	public int evaluate(int[] registers)
 	{
-		//TODO
+		if(leftval.evaluate(registers) == 0)
+		{
+			return 1;
+		}
+		
 		return 0;
 	}
 	
