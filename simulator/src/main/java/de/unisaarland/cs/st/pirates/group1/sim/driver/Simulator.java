@@ -206,12 +206,10 @@ public class Simulator
 			throw new IllegalArgumentException();
 		}
 		
-		// remove the ship from the faction
-		ship.getFaction().removeShip();
-		
 		// remove the ship from the ship list
 		ships.remove(ship);
 	}
+	
 
 	public List<Kraken> getKrakens() {
 		return krakens;

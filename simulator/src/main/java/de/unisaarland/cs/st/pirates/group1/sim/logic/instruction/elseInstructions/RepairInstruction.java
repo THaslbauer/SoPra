@@ -9,7 +9,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 /**
  * Represents an instruction to repair a {@link Ship}.
- * @author thomas
+ * @author Nico
  *
  */
 public class RepairInstruction extends ElseInstruction {
