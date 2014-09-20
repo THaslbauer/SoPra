@@ -374,7 +374,9 @@ public class ElseInstructionTest {
 	@Test
 	public void RepairNotValidOnBaseTest(){
 		//build a testmap with only bases
-		Worldmap6T worldTest = new Worldmap6T(2,2,null,null);
+		logger = new ExpectLogger();
+		factory = new EntityFactory();
+		Worldmap6T worldTest = new Worldmap6T(2,2,logger,factory);
 		
 		Position position1 = new Position(0,0);
 		Position position2 = new Position(1,0);
@@ -404,7 +406,9 @@ public class ElseInstructionTest {
 	@Test
 	public void RepairValidTest(){
 		//build a testmap with only bases
-		Worldmap6T worldTest = new Worldmap6T(2,2,null,null);
+		logger = new ExpectLogger();
+		factory = new EntityFactory();
+		Worldmap6T worldTest = new Worldmap6T(2,2,logger,factory);
 		
 		faction.setScore(2);
 		
