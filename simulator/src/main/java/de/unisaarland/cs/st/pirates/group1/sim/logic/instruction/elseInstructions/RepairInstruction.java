@@ -39,7 +39,7 @@ public class RepairInstruction extends ElseInstruction {
 		
 		Tile baseTile    = ship.getMyTile();
 		Faction faction  = ship.getFaction();
-		int maxCondition = Ship.getMaxcondition(); 
+		int maxCondition = Ship.getMaxCondition(); 
 		
 		
 		if(baseTile.navigable(ship) != CellType.HOME)

@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Controller;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
@@ -43,6 +44,10 @@ public class ControllerTest
 	// a test class for testing the controller class
 	public static class TestTacticsParser extends TacticsParser
 	{
+		public TestTacticsParser(ExtendedLogWriter logger) {
+			super(logger);
+		}
+
 		public int value = 0;
 		
 		@Override
@@ -95,7 +100,7 @@ public class ControllerTest
 	public static void init()
 	{
 		testMapParser     = new TestMapParser();
-		testTacticsParser = new TestTacticsParser();
+		testTacticsParser = new TestTacticsParser(new ExpectLogger());
 		testSimulator     = new TestSimulator(new ExpectLogger());
 		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null, 0, null);
 	}
@@ -103,7 +108,7 @@ public class ControllerTest
 	@Before
 	public void setUp(){
 		mp = new TestMapParser();
-		tp = new TestTacticsParser();
+		tp = new TestTacticsParser(new ExpectLogger());
 		sim = new TestSimulator(new ExpectLogger());
 		InputStream mapInput;
 		InputStream tacticsInput;

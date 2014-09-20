@@ -320,13 +320,15 @@ public class MapParser {
 			this.createShip(factions.get(string), tile);
 		}
 		
-		Faction faction = new Faction(string, factioncount);
-		factions.put(string, faction);
-		list.add(faction);
-		factioncount+=1;
-		Tile tile = mymap.createBaseTile(position, faction);
-		this.createShip(faction, tile);
-		return;
+		else{
+			Faction faction = new Faction(string, factioncount);
+			factions.put(string, faction);
+			list.add(faction);
+			factioncount+=1;
+			Tile tile = mymap.createBaseTile(position, faction);
+			this.createShip(faction, tile);
+			return;
+		}
 	}
 	
 	/**

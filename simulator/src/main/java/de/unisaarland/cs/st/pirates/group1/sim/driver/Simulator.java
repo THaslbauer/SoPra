@@ -1,5 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -112,6 +113,16 @@ public class Simulator
 		
 		// after the cycle it increases the cycle counter
 		cycle += 1;
+		
+		
+		try
+		{
+			this.logger.logStep();
+		}
+		catch (IllegalStateException | IOException e)
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	/**
