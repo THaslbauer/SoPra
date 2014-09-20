@@ -375,4 +375,85 @@ public class TacticsParser {
 			return true;
 		}
 	}
+	
+	private boolean isBool(String s){
+		
+		
+		//TODO: delete this
+		return false;
+	}
+	
+	private boolean isBool_register(String s){
+		
+		switch(s){
+		case("sense_treasure"):
+			return true;
+		case("sense_marker0"):
+			return true;
+		case("sense_marker1"):
+			return true;
+		case("sensemarker2"):
+			return true;
+		case("sensemarker3"):
+			return true;
+		case("sensemarker4"):
+			return true;
+		case("sensemarker5"):
+			return true;
+		case("sense_enemymarker"):
+			return true;
+		case("sense_shiploaded"):
+			return true;
+		case("sense_supply"):
+			return true;
+		default:
+			return false;
+		}
+			
+	}
+	
+	private boolean isCell_type(String s){
+		
+		switch(s){
+		case("island"):
+			return true;
+		case("home"):
+			return true;
+		case("enemyhome"):
+			return true;
+		case("empty"):
+			return true;
+		default:
+			return false;
+		}
+	}
+	
+	private boolean isShip_type(String s){
+		
+		switch(s){
+		case("friend"):
+			return true;
+		case("enemy"):
+			return true;
+		default:
+			return false;
+		}
+	}
+	
+	private boolean isInt_register(String s){
+		
+		switch(s){
+		case("ship_direction"):
+			return true;
+		case("ship_load"):
+			return true;
+		case("ship_moral"):
+			return true;
+		case("sense_shipdirection"):
+			return true;
+		default:
+			return false;
+		
+		}
+	}
 }
