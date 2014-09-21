@@ -89,7 +89,7 @@ public class TacticsParserTest {
 				+ "turn right"+"\n"
 				+ "goto 14"+"\n"
 				+ "repair else 0" + "\n"
-				+ "ifany sense_treasure ship_load==4 else 4"+"\n"
+				+ "ifany sense_treasure ship_load<4 else 4"+"\n"
 				+ "refresh 5 else 0";
 		
 		random = new Random(0);
