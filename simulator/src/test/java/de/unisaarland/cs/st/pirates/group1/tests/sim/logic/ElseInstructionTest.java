@@ -101,7 +101,7 @@ public class ElseInstructionTest {
 		Random rand = new Random(0);
 		
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand);
+		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand,2);
 		
 		flipZeroInstr.execute(ship);
 		
@@ -115,7 +115,7 @@ public class ElseInstructionTest {
 	public void flipZeroInstructionPCTest(){
 		Random rand = new Random(0);
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand);
+		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand,2);
 		
 		flipZeroInstr.execute(ship);
 		
