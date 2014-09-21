@@ -89,7 +89,7 @@ public class TacticsParserTest {
 				+ "turn right"+"\n"
 				+ "goto 14"+"\n"
 				+ "repair else 0" + "\n"
-				+ "ifany sense_treasure ship_load==0 else 4"+"\n"
+				+ "ifany sense_treasure ship_load==0 else 29"+"\n"
 				+ "refresh 5 else 0";
 		
 		random = new Random(0);
@@ -229,10 +229,10 @@ public class TacticsParserTest {
 				instrArray[27] instanceof RepairInstruction);
 		
 		assertTrue("The 26th Instruction should be a IfAnyInstruction",
-				instrArray[26] instanceof IfAnyInstruction);
+				instrArray[28] instanceof IfAnyInstruction);
 		
 		assertTrue("The 26th Instruction should be a RefreshInstruction",
-				instrArray[26] instanceof RefreshInstruction);
+				instrArray[29] instanceof RefreshInstruction);
 		
 	}
 	
@@ -315,8 +315,8 @@ public class TacticsParserTest {
 				ret2 == 1);
 		
 		//checks if elseAddr is set correctly
-		assertTrue("The elseAddr should be 1",
-				ifAnyinstr.getElsePC() == 1);
+		assertTrue("The elseAddr should be 29",
+				ifAnyinstr.getElsePC() == 29);
 	}
 	
 	/**
