@@ -5,6 +5,13 @@ import java.util.Random;
 import java.util.Scanner;
 
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.EqualOperator;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.GreaterOperator;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.LessOperator;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.RegisterCall;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.UnequalOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.FlipZeroInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.MoveInstruction;
@@ -376,22 +383,116 @@ public class TacticsParser {
 		}
 	}
 	
-	private boolean isBool(String s){
+	private Expression produceExpression(String s){
 		
 		if (this.isBool_register(s)){
-			return true;
+			return new Literal(this.changeRegisterToInt(s));
 		}
 		
-		String[] comparison_operands = s.split("==");
+		String[] comparison = s.split("==");
 		
-		if(comparison_operands.length == 2){
+		if(comparison.length == 2){
+			if (comparison[0].equals("sense_celltype")&& this.isCell_type(comparison[1])){
+				
+				return new EqualOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeCell_typeToInt(comparison[1])));
+			}
 			
+			if(comparison[0].equals("sense_shiptype") && this.isShip_type(comparison[1])){
+				
+				return new EqualOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeShip_typeToInt(comparison[1])));
+			}
 			
+			if(this.isInt_register(comparison[0]) && this.isInt_register(comparison[1])){
+				
+				return new EqualOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new RegisterCall(this.changeRegisterToInt(comparison[1])));
+			}
+			
+			if(this.isInt_register(comparison[0]) && this.isInt(comparison[1])){
+				
+				return new EqualOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(Integer.parseInt(comparison[1])));
+			}
+			
+		}
+		
+		if(comparison.length == 1){
+			
+			comparison = comparison[0].split("!=");
+			
+			if(comparison.length == 2){
+				
+				if (comparison[0].equals("sense_celltype")&& this.isCell_type(comparison[1])){
+					
+					return new UnequalOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeCell_typeToInt(comparison[1])));
+				}
+				
+				if(comparison[0].equals("sense_shiptype") && this.isShip_type(comparison[1])){
+					
+					return new UnequalOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeShip_typeToInt(comparison[1])));
+				}
+				
+				if(this.isInt_register(comparison[0]) && this.isInt_register(comparison[1])){
+					
+					return new UnequalOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new RegisterCall(this.changeRegisterToInt(comparison[1])));
+				}
+				
+				if(this.isInt_register(comparison[0]) && this.isInt(comparison[1])){
+					
+					return new UnequalOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(Integer.parseInt(comparison[1])));
+				}
+			}
+		}
+		
+		if(comparison.length == 1){
+			
+			comparison = comparison[0].split("<");
+			
+			if(this.isInt_register(comparison[0]) && this.isInt_register(comparison[1])){
+				
+				return new LessOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new RegisterCall(this.changeRegisterToInt(comparison[1])));
+			}
+			
+			if(this.isInt_register(comparison[0]) && this.isInt(comparison[1])){
+				
+				return new LessOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(Integer.parseInt(comparison[1])));
+			}
+			
+		}
+		
+		if(comparison.length == 1){
+			
+			comparison = comparison[0].split(">");
+			
+			if(this.isInt_register(comparison[0]) && this.isInt_register(comparison[1])){
+				
+				return new GreaterOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new RegisterCall(this.changeRegisterToInt(comparison[1])));
+			}
+			
+			if(this.isInt_register(comparison[0]) && this.isInt(comparison[1])){
+				
+				return new GreaterOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(Integer.parseInt(comparison[1])));
+			}
+			
+		}
+		
+		
+		//This is returned when there is a type mismatch to produce an expression
+		return null;
+		
+		
+		
+	}
+	
+	
+	private boolean isInt(String s){
+		try{
+			Integer.parseInt(s);
+		}
+		
+		catch(Exception e){
+			return false;
 		}
 		
 		return true;
-		
-		
 	}
 	
 	private boolean isBool_register(String s){
@@ -480,11 +581,89 @@ public class TacticsParser {
 			return true;
 		case("ship_moral"):
 			return true;
+		case("ship_conition"):
+			return true;
 		case("sense_shipdirection"):
+			return true;
+		case("sense_shipcondition"): //TODO: find out how this looks like
 			return true;
 		default:
 			return false;
 		
+		}
+	}
+	
+	private int changeCell_typeToInt(String s){
+		
+		switch(s){
+		case("island"):
+			return 0;
+		case("home"):
+			return 1;
+		case("enemyhome"):
+			return 2;
+		case("empty"):
+			return 3;
+		default:
+			throw new IllegalStateException("Don't know how this could happen");
+		}
+	}
+	
+	private int changeShip_typeToInt(String s){
+		
+		switch(s){
+		case("friend"):
+			return 0;
+		case("enemy"):
+			return 1;
+		default:
+			throw new IllegalStateException("This should never happen");
+		}
+	}
+	
+	private int changeRegisterToInt(String s){
+		
+		switch(s){
+		case("sense_celltype"):
+			return 0;
+		case("sense_supply"):
+			return 1;
+		case("sense_treasure"):
+			return 2;
+		case("sense_marker0"):
+			return 3;
+		case("sense_marker1"):
+			return 4;
+		case("sense_marker2"):
+			return 5;
+		case("sense_marker3"):
+			return 6;
+		case("sense_marker4"):
+			return 7;
+		case("sense_marker5"):
+			return 8;
+		case("sense_enemymarker"):
+			return 9;
+		case("sense_shiptype"):
+			return 10;
+		case("sense_shipdirection"):
+			return 11;
+		case("sense_shiploaded"):
+			return 12;
+		case("sense_shipcondition"):
+			return 13;
+		case("ship_direction"):
+			return 14;
+		case("ship_load"):
+			return 15;
+		case("ship_moral"):
+			return 16;
+		case("ship_condition"):
+			return 17;
+		default:
+			throw new IllegalStateException("This should never happen");
+		
+				
 		}
 	}
 }
