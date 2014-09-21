@@ -109,14 +109,8 @@ public class ControllerTest
 		InputStream mapInput;
 		InputStream tacticsInput;
 		
-		try {
-			mapInput = new ByteArrayInputStream(Charset.forName("UTF-16").encode(mapStr).array());
-			tacticsInput = new ByteArrayInputStream(tactics.getBytes("UTF-8"));
-		}
-		catch(UnsupportedEncodingException e) {
-			mapInput = null;
-			tacticsInput = null;
-		}
+		mapInput     = new ByteArrayInputStream(Charset.forName("UTF-16").encode(mapStr).array());
+		tacticsInput = new ByteArrayInputStream(Charset.forName("UTF-16").encode(tactics).array());
 		
 		List<InputStream> tactics = new LinkedList<>();
 		OutputStream out          = new ByteArrayOutputStream();
