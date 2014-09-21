@@ -20,14 +20,18 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.EqualOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.LessOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.FlipZeroInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAllInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAnyInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.MoveInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
@@ -67,6 +71,9 @@ public class TacticsParserTest {
 				+ "goto 0"+"\n"
 				+ "flipzero 3 else 11"+"\n"
 				+ "turn left"+"\n"
+				+ "goto 0"+"\n"
+				+ "flipzero 2 else 13"+"\n"
+				+ "turn right"+"\n"
 				+ "goto 0"+"\n"
 				+ "sense 0"+"\n"
 				+ "if sense_celltype==home else 19"+"\n"
@@ -120,7 +127,7 @@ public class TacticsParserTest {
 	@Test
 	public void bigInstructionSizeParseTest(){
 		Instruction[] instrArray = tacticsParser.parseTactics(stream, random);
-		assertTrue(instrArray.length == 24);
+		assertTrue(instrArray.length == 30);
 	}
 	
 
@@ -218,6 +225,15 @@ public class TacticsParserTest {
 		assertTrue("The 26th Instruction should be a GotoInstruction",
 				instrArray[26] instanceof GotoInstruction);
 		
+		assertTrue("The 26th Instruction should be a RepairInstruction",
+				instrArray[27] instanceof RepairInstruction);
+		
+		assertTrue("The 26th Instruction should be a IfAnyInstruction",
+				instrArray[26] instanceof IfAnyInstruction);
+		
+		assertTrue("The 26th Instruction should be a RefreshInstruction",
+				instrArray[26] instanceof RefreshInstruction);
+		
 	}
 	
 	
@@ -262,6 +278,46 @@ public class TacticsParserTest {
 				ifAllinstr.getElsePC() == 4);
 	}
 	
+	/**
+	 * checks if the ifinstr is parsed correctly
+	 * also checks if the conditions are evaluated correctly
+	 * also checks if the elseaddr is set correctly
+	 */
+	@Test
+	public void checkIfAnyInstructionParseTest(){
+		Instruction[] instrArray = tacticsParser.parseTactics(stream, random);
+		//get the expressions
+		Instruction instr = instrArray[28];
+		
+		//check if it is the correct Instruction
+		assertTrue("the instruction 28 should be a IfAnyInstruction",
+				instr instanceof IfAnyInstruction);
+		
+		IfAnyInstruction ifAnyinstr = (IfAnyInstruction) instr;
+		Expression[] exp = ifAnyinstr.getConditions();
+		
+		//check if the IfAllInstruction got 2 Expression
+		assertTrue("length of the array should be 2",
+				exp.length == 2);
+		
+		//check if the expressions are correct
+		assertTrue("the secound expression should be a == exp"
+				,exp[1] instanceof EqualOperator);
+		
+		
+		//check if the expressions are evaluated correctly
+		int ret1 = exp[0].evaluate(ship.getRegisters());
+		int ret2 = exp[1].evaluate(ship.getRegisters());
+		
+		assertTrue("The first exp should evaluate to false",
+				ret1 == 0);
+		assertTrue("The secound exp should evaluate to true",
+				ret2 == 1);
+		
+		//checks if elseAddr is set correctly
+		assertTrue("The elseAddr should be 1",
+				ifAnyinstr.getElsePC() == 1);
+	}
 	
 	/**
 	 * checks if the gotoinstr is parsed correctly
