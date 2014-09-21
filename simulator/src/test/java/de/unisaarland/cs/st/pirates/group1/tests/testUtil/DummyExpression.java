@@ -15,4 +15,14 @@ public class DummyExpression implements Expression {
 		return result;
 	}
 
+	@Override
+	public Expression getLeft() {
+		return null;
+	}
+
+	@Override
+	public Expression getRight() {
+		return null;
+	}
+
 }

@@ -12,4 +12,8 @@ public interface Expression
 	 * @return             0 : false   |   1 : true
 	 */
 	public int evaluate(int[] registers);
+	
+	public Expression getLeft();
+	
+	public Expression getRight();
 }
