@@ -43,6 +43,7 @@ public class TacticsParser {
 	
 	public TacticsParser(ExtendedLogWriter logger){		
 		this.logger = logger;
+		ins = new LinkedList<Instruction>();
 	}
 	
 	/**
