@@ -14,7 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;

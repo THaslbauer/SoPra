@@ -3,7 +3,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.testUtil;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
+import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class TestLogger implements LogWriter
 {
