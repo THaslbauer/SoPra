@@ -53,13 +53,13 @@ public class PickupInstruction extends ElseInstruction {
 			if(treasure - possibleLoad >= 0) {
 				ship.setLoad(maxLoad);
 				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, maxLoad);
-				tile.decreaseTreasure(possibleLoad);
+				neighbour.decreaseTreasure(possibleLoad);
 			}
 			else {
 				int newLoad = maxLoad - (possibleLoad - treasure);
 				ship.setLoad(newLoad);
 				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, newLoad);
-				tile.decreaseTreasure(treasure);
+				neighbour.decreaseTreasure(treasure);
 			}
 			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 			super.cycle(ship);
