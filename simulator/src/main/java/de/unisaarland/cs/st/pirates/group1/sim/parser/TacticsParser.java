@@ -14,6 +14,9 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.RegisterCall;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.UnequalOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.FlipZeroInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAllInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAnyInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.MoveInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
@@ -306,21 +309,59 @@ public class TacticsParser {
 			throw new IllegalArgumentException("IfInstruction consists of 4 parts");
 		}
 		
-		//TODO: delete this
-		return null;
+		//Produce an expression 
+		Expression exp = this.produceExpression(instruction[1]);
+		
+		//when type mismatch occurs null is given back by the method produceExpression
+		if(exp == null){
+			throw new IllegalArgumentException("Type mismatch in if instruction occured");
+		}
+		
+		else{
+			return new IfInstruction(logger, Integer.parseInt(instruction[3]), exp);
+		}
+			
 		
 	}
 	
+	
 	public Instruction makeIfallInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size <4){
+			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
+		}
+	
+		
+		int diff = size - 3;
+		
+		Expression[] exps = new Expression[diff];
+		
+		for (int i = 0; i< diff; i++){
+			
+			exps[i] = this.produceExpression(instruction[i+1]);
+		}
+		
+		return new IfAllInstruction(logger, Integer.parseInt(instruction[size-1]) , exps);
 	}
 	
 	public Instruction makeIfanyInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size <4){
+			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
+		}
+	
+		
+		int diff = size - 3;
+		
+		Expression[] exps = new Expression[diff];
+		
+		for (int i = 0; i< diff; i++){
+			
+			exps[i] = this.produceExpression(instruction[i+1]);
+		}
+		
+		return new IfAnyInstruction(logger, Integer.parseInt(instruction[size-1]) , exps);
+
 	}
 	
 	public Instruction makeRefreshInstruction(String[] instruction, int size){
