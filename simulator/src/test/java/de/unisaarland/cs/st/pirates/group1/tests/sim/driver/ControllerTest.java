@@ -4,25 +4,21 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.channels.UnsupportedAddressTypeException;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Controller;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
@@ -117,7 +113,11 @@ public class ControllerTest
 		tactics.add(tacticsInput);
 		
 		contr = new Controller(sim, mp, tp, mapInput, tactics, 0, out);
-		contr.initializeSimulator();
+		try {
+			contr.initializeSimulator();
+		} catch (IOException e) {
+			fail();
+		}
 	}
 	
 	@Test

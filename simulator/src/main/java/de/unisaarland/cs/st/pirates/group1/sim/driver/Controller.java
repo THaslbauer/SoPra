@@ -165,7 +165,6 @@ public void initializeSimulator() throws IOException{
 	    stringArray[i] = stringList.get(i);
 	}
 	//String[] strings = (String[])stringList.toArray();
-
 	
 	//initializes the LogWriter
 	try {
