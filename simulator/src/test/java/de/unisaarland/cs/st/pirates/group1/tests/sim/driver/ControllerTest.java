@@ -8,9 +8,11 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.UnsupportedAddressTypeException;
+import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -18,6 +20,7 @@ import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Controller;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
@@ -88,41 +91,37 @@ public class ControllerTest
 	private static TestSimulator testSimulator;
 	
 	private Controller contr;
-	private TestMapParser mp;
-	private TestTacticsParser tp;
-	private TestSimulator sim;
+	private MapParser mp;
+	private TacticsParser tp;
+	private Simulator sim;
 	
-	private static final String mapStr = "2\n2\n..\n..";
+	private static final String mapStr = "2\n2\n..\n.b";
 	private static final String tactics = "goto 0";
 	
 	
-	@BeforeClass
-	public static void init()
-	{
-		testMapParser     = new TestMapParser();
-		testTacticsParser = new TestTacticsParser(new ExpectLogger());
-		testSimulator     = new TestSimulator(new ExpectLogger());
-		controller        = new Controller(testSimulator, testMapParser, testTacticsParser, null, null, 0, null);
-	}
-	
 	@Before
-	public void setUp(){
-		mp = new TestMapParser();
-		tp = new TestTacticsParser(new ExpectLogger());
-		sim = new TestSimulator(new ExpectLogger());
+	public void setUp()
+	{
+		mp = new MapParser();
+		tp = new TacticsParser(new ExpectLogger());
+		sim = new Simulator(new ExpectLogger(), 10000, new Random());
+		
 		InputStream mapInput;
 		InputStream tacticsInput;
+		
 		try {
-			mapInput = new ByteArrayInputStream(mapStr.getBytes("UTF-8"));
+			mapInput = new ByteArrayInputStream(Charset.forName("UTF-16").encode(mapStr).array());
 			tacticsInput = new ByteArrayInputStream(tactics.getBytes("UTF-8"));
 		}
 		catch(UnsupportedEncodingException e) {
 			mapInput = null;
 			tacticsInput = null;
 		}
+		
 		List<InputStream> tactics = new LinkedList<>();
-		OutputStream out = new ByteArrayOutputStream();
+		OutputStream out          = new ByteArrayOutputStream();
 		tactics.add(tacticsInput);
+		
 		contr = new Controller(sim, mp, tp, mapInput, tactics, 0, out);
 		contr.initializeSimulator();
 	}
@@ -130,17 +129,14 @@ public class ControllerTest
 	@Test
 	public void initTest()
 	{
-		int valueMapParser     = testMapParser.value;
-		int valueTacticsParser = testTacticsParser.value; 
+		assertTrue("The controller's method initializeSimulator() didn't set the simulator's map", sim.getWorldmap() != null);
+		assertTrue("The controller's method initializeSimulator() didn't set the simulator's factions", sim.getFactions() != null);
 		
-		controller.initializeSimulator();
-		
-		int expectedValueMapParser     = valueMapParser + 1;
-		int expectedValueTacticsParser = valueTacticsParser + 1;
-		
-		assertTrue("the MapParser's method parseMap() was not called", expectedValueMapParser == testMapParser.value);
-		assertTrue("the TacticsParser's method parseTactics() was not called", expectedValueTacticsParser == testTacticsParser.value);
-		
+		List<Faction> factions = sim.getFactions();
+		Faction faction        = factions.iterator().next();
+
+		assertTrue("The controller's method initializeSimulator() did set the wrong faction", faction.getName().equals("b"));
+		assertTrue("The controller's method initializeSimulator() didn't set the faction's tactic programm", faction.getTactics() == null);
 	}
 	
 	@Test
@@ -148,6 +144,7 @@ public class ControllerTest
 	{
 		int valueSimulator = testSimulator.value;
 		
+		controller.setSimulator(testSimulator);
 		controller.play();
 		
 		int expectedValueSimulator = valueSimulator + 1;
@@ -197,17 +194,18 @@ public class ControllerTest
 				contr.play();
 			}
 		};
+		contr.setSimulator(testSimulator);
 		Thread contrThread = new Thread(contrRun);
 		contrThread.run();
 		contr.pause();
-		int firstStepCount = sim.getValue();
+		int firstStepCount = testSimulator.getValue();
 		try{
 			Thread.sleep(200);
 		}
 		catch(InterruptedException e){
 			throw new UnsupportedOperationException("Who the fuck interrupts a test?");
 		}
-		int secondStepCount = sim.getValue();
+		int secondStepCount = testSimulator.getValue();
 		assertTrue("Controller didn't stop", firstStepCount == secondStepCount);
 	}
 	
