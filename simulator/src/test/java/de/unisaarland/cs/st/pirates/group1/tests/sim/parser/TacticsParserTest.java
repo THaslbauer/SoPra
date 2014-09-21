@@ -322,7 +322,6 @@ public class TacticsParserTest {
 	}
 	/**
 	 * checks if the FlipZero is parsed correctly
-	 * 
 	 * TODO HOW CAN WE CHECK IF THE SEED IS PARSED CORRECTLY INTO THE RANDOMOBJECT
 	 */
 	@Test
