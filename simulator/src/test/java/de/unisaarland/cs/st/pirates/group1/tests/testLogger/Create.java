@@ -2,8 +2,8 @@ package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
 
 import java.util.LinkedList;
 
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.*;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.*;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 
 public class Create extends LogOperation {
 	public Entity entity;

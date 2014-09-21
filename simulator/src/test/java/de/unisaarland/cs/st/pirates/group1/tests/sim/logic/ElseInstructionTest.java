@@ -23,7 +23,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.EqualOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
@@ -101,7 +101,7 @@ public class ElseInstructionTest {
 		Random rand = new Random(0);
 		
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand);
+		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand,2);
 		
 		flipZeroInstr.execute(ship);
 		
@@ -115,7 +115,7 @@ public class ElseInstructionTest {
 	public void flipZeroInstructionPCTest(){
 		Random rand = new Random(0);
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
-		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand);
+		FlipZeroInstruction flipZeroInstr = new FlipZeroInstruction(testGui,11,rand,2);
 		
 		flipZeroInstr.execute(ship);
 		

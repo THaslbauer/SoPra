@@ -7,8 +7,8 @@ import java.util.Random;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
 /**
  * This class can simulate game cycles. It knows all ships and krakens and

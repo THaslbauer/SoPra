@@ -5,8 +5,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
 /**
  * Represents an instruction for a {@link Ship} to pick up a {@link Treasure}.
@@ -53,13 +53,13 @@ public class PickupInstruction extends ElseInstruction {
 			if(treasure - possibleLoad >= 0) {
 				ship.setLoad(maxLoad);
 				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, maxLoad);
-				tile.decreaseTreasure(possibleLoad);
+				neighbour.decreaseTreasure(possibleLoad);
 			}
 			else {
 				int newLoad = maxLoad - (possibleLoad - treasure);
 				ship.setLoad(newLoad);
 				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, newLoad);
-				tile.decreaseTreasure(treasure);
+				neighbour.decreaseTreasure(treasure);
 			}
 			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 			super.cycle(ship);

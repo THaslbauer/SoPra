@@ -4,8 +4,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 /**
  * Represents an instruction to repair a {@link Ship}.

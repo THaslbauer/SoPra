@@ -1,6 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
 
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 
 public class Destroy extends LogOperation {
 	public Entity entity;

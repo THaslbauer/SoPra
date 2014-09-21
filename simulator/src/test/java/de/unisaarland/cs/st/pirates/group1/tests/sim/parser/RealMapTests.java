@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Cell;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;

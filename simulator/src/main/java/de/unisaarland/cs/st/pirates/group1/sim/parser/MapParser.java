@@ -60,6 +60,8 @@ public class MapParser {
 		try(Scanner scan = new Scanner(stream)){
 			
 			try{
+				this.simulator = simulator;
+				
 				width = scan.nextInt();
 				
 				
@@ -81,6 +83,10 @@ public class MapParser {
 				
 				if(!(scan.nextLine().equals(""))){
 					throw new IllegalArgumentException();
+				}
+				
+				if(!(scan.hasNext())){
+					throw new IllegalArgumentException("map is missing");
 				}
 				
 				mymap = new Worldmap6T(width, height, simulator.getLogWriter(), simulator.getEntityFactory());

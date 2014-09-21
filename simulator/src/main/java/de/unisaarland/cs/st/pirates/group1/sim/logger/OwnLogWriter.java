@@ -10,7 +10,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.logger;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public interface LogWriter {
+public interface OwnLogWriter {
 	
 /**
  * The inner class Cell, an enumerator representing the Cells for logging purposes.
@@ -62,7 +62,7 @@ public static interface Transaction{
 	
 /**
  * The method set, that adds a Key-Value-Pair to a Transaction
- * @param key The key, {@link LogWriter.Key}
+ * @param key The key, {@link OwnLogWriter.Key}
  * @param value The changed value
  * 
  * @return the Transaction
@@ -71,7 +71,7 @@ public static interface Transaction{
  * @throws IllegalArgumentException If key is not valid
  */
 	
-public void set(LogWriter.Key key, int value)
+public void set(OwnLogWriter.Key key, int value)
 		throws NullPointerException,IllegalArgumentException;
 }
 /**
@@ -91,7 +91,7 @@ public void set(LogWriter.Key key, int value)
  * @throws IllegalArgumentException if x or y are negativ
  * @throws IllegalStateException if the method is not called between init() and the first logStep()
  */
-public LogWriter addCell(LogWriter.Cell type, Integer faction, int x, int y)
+public OwnLogWriter addCell(OwnLogWriter.Cell type, Integer faction, int x, int y)
 		throws NullPointerException, ArrayIndexOutOfBoundsException,
 		IllegalArgumentException,IllegalStateException;
 
@@ -107,14 +107,14 @@ public LogWriter addCell(LogWriter.Cell type, Integer faction, int x, int y)
  * @throws IllegalStateException if the method is not called between init() and the first logStep()
  */
 
-public LogWriter addCustomHeaderData(String data)
+public OwnLogWriter addCustomHeaderData(String data)
 		throws NullPointerException, ArrayIndexOutOfBoundsException, IllegalStateException;
 
 
 /**
- * Begins a new transaction. {@link LogWriter.Transaction}
+ * Begins a new transaction. {@link OwnLogWriter.Transaction}
  * 
- * @param entity der Objekttyp {@link LogWriter.Entity}
+ * @param entity der Objekttyp {@link OwnLogWriter.Entity}
  * @param id the identity of the Objekt. This represents together with the Objecttype the key of the Objekct in the Log.
  * 
  * @return a new Transaction with the specified key (guaranteed not null)
@@ -123,11 +123,11 @@ public LogWriter addCustomHeaderData(String data)
  * @throws IllegalArgumentException If id is negativ.
  * @throws IllegalStateException if the method is not called between init() and the first logStep().
  */
-public LogWriter.Transaction beginTransaction(LogWriter.Entity entity, int id)
+public OwnLogWriter.Transaction beginTransaction(OwnLogWriter.Entity entity, int id)
 		throws NullPointerException, IllegalArgumentException, IllegalStateException;
 
 /**
- * This method closes the LogWriter.
+ * This method closes the OwnLogWriter.
  * 
  * @throws IllegalStateException the method should be called before the first logStep().
  * @throws IOException If the Writing on the first OutputStream fails.
@@ -144,9 +144,9 @@ public void close()
  * @throws NullPointerException If transaction is not set.
  * @throws IllegalArgumentException If the transaction dont have any datas.
  * @throws IllegalStateException if the method is called before the first logStep().
- * @see LogWriter.Transaction, beginTransaction(Entity, int)
+ * @see OwnLogWriter.Transaction, beginTransaction(Entity, int)
  */
-public LogWriter commitTransaction(LogWriter.Transaction transaction)
+public OwnLogWriter commitTransaction(OwnLogWriter.Transaction transaction)
 		throws NullPointerException,
 		IllegalArgumentException,
 		IllegalStateException;
@@ -154,9 +154,9 @@ public LogWriter commitTransaction(LogWriter.Transaction transaction)
 /**
  * creates a new Object
  * 
- * @param entity The objecttype of the Object to create {@link LogWriter.Entity}
+ * @param entity The objecttype of the Object to create {@link OwnLogWriter.Entity}
  * @param id The identity of the object. Identifies an object together with the type of the object clearly.
- * @param keys The key. See: {@link LogWriter.Key}
+ * @param keys The key. See: {@link OwnLogWriter.Key}
  * @param values The values to set, in the right order specified by the keys.
  * 
  * @return the Logger
@@ -167,7 +167,7 @@ public LogWriter commitTransaction(LogWriter.Transaction transaction)
  * @throws IllegalStateException if the method is called before {@link init(OutputStream, String, String...)}
  */
 
-public LogWriter create(LogWriter.Entity entity, int id, LogWriter.Key[] keys, int[] values)
+public OwnLogWriter create(OwnLogWriter.Entity entity, int id, OwnLogWriter.Key[] keys, int[] values)
 		throws NullPointerException,
 		IllegalArgumentException,
 		ArrayIndexOutOfBoundsException,
@@ -176,7 +176,7 @@ public LogWriter create(LogWriter.Entity entity, int id, LogWriter.Key[] keys, i
 /**
  * Destroys an object in the game.
  * 
- * @param entity The Objecttype of the Object to destroy. {@link LogWriter.Entity}
+ * @param entity The Objecttype of the Object to destroy. {@link OwnLogWriter.Entity}
  * @param id The Identity of the Object to destroy
  * 
  * @return
@@ -186,7 +186,7 @@ public LogWriter create(LogWriter.Entity entity, int id, LogWriter.Key[] keys, i
  * @throws IllegalStateException If the method is called before the first {@link logStep()}
  */
 
-public LogWriter destroy(LogWriter.Entity entity, int id)
+public OwnLogWriter destroy(OwnLogWriter.Entity entity, int id)
 		throws NullPointerException,
 		IllegalArgumentException,
 		IllegalStateException;
@@ -202,13 +202,13 @@ public LogWriter destroy(LogWriter.Entity entity, int id)
  * @throws IllegalArgumentException If the id or value are negative
  * @throws IllegalStateException 
  */
-public LogWriter fleetScore(int id, int value)
+public OwnLogWriter fleetScore(int id, int value)
 		throws IllegalArgumentException,
 		ArrayIndexOutOfBoundsException,
 		IllegalStateException;
 
 /**
- * Initializes the LogWriter.
+ * Initializes the OwnLogWriter.
  * 
  * @param logStream The OutputStream for the logWriter.
  * @param map A String-representation of the Worldmap.
@@ -242,9 +242,9 @@ public void logStep()
 /**
  * Notifies the Logger that an object has been changed. Only one change per call.
  * 
- * @param entity The type of the object, that has been changed. See: {@link LogWriter.Entity}
+ * @param entity The type of the object, that has been changed. See: {@link OwnLogWriter.Entity}
  * @param id The identity of the object.
- * @param key The key to the value, where the changes occur. See: {@link LogWriter.Key}
+ * @param key The key to the value, where the changes occur. See: {@link OwnLogWriter.Key}
  * @param value The value, that is mapped to the key. Describes the changes.
  * 
  * @return void
@@ -253,7 +253,7 @@ public void logStep()
  * @throws IllegalArgumentException If id is negative or key and object does not match
  * @throws IllegalStateException If the initialization is not finished. Means the initial call of {@link logStep()} was not executed.
  */
-public LogWriter notify(LogWriter.Entity entity, int id, LogWriter.Key key, int value)
+public OwnLogWriter notify(OwnLogWriter.Entity entity, int id, OwnLogWriter.Key key, int value)
 		throws NullPointerException,
 		IllegalArgumentException,
 		IllegalStateException;

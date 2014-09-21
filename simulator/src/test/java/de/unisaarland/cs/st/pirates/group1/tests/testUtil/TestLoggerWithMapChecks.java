@@ -1,7 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.tests.testUtil;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
+import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class TestLoggerWithMapChecks extends DumbExtendedLogWriter {
 	//saves a boolean that tells if a method has changed since last view
