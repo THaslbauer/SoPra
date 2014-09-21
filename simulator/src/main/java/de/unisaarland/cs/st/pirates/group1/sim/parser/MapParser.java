@@ -88,6 +88,10 @@ public class MapParser {
 					throw new IllegalArgumentException();
 				}
 				
+				if(!(scan.hasNext())){
+					throw new IllegalArgumentException("map is missing");
+				}
+				
 				mymap = new Worldmap6T(width, height, simulator.getLogWriter(), simulator.getEntityFactory());
 					
 				//building of the map: beginning
