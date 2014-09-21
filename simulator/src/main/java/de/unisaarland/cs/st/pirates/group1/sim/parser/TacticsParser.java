@@ -55,6 +55,7 @@ public class TacticsParser {
 		
 		//convert the input to string
 		String tactics_string = this.convertStreamToString(input);
+		this.random = random;
 	
 		//split the input string into an array of instructions
 		String[] tactics_string_array = tactics_string.split("\n");
@@ -112,7 +113,7 @@ public class TacticsParser {
 					break;
 					
 				case "if":
-					ins.add(this.makeIfallInstruction(instruction_array, size));
+					ins.add(this.makeIfInstruction(instruction_array, size));
 					break;
 				
 				case "ifall":
@@ -157,7 +158,8 @@ public class TacticsParser {
 			throw new IllegalArgumentException("A turn instruction must consist of two parts");
 		}
 		
-		if(!(instruction[1].equals("left")) || !(instruction[1].equals("right"))){
+		
+		if(!(instruction[1].equals("left")) && !(instruction[1].equals("right"))){
 			
 			throw new IllegalArgumentException("A turn instruction cannot have another argument then left or right");
 		}
@@ -428,7 +430,7 @@ public class TacticsParser {
 	private Expression produceExpression(String s){
 		
 		if (this.isBool_register(s)){
-			return new Literal(this.changeRegisterToInt(s));
+			return new RegisterCall(this.changeRegisterToInt(s));
 		}
 		
 		String[] comparison = s.split("==");
