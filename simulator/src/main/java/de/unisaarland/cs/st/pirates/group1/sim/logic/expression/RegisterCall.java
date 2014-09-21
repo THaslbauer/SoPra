@@ -12,14 +12,18 @@ public class RegisterCall extends Primary
 	
 	private int index;
 	
-	//TODO javadoc
+	/**
+	 * @param index   this is the int representation
+	 * 				  of the register related to the
+	 *                enum class Register.
+	 */
 	public RegisterCall(int index)
 	{
 		this.index = index;
 	}
 	
 	/**
-	 * This method returns the int value of the register index.
+	 * This method returns the int value of the register at position index.
 	 * 
 	 */
 	public int evaluate(int[] registers)
