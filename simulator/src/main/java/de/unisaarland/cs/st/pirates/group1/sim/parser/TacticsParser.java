@@ -322,8 +322,6 @@ public class TacticsParser {
 		else{
 			return new IfInstruction(logger, Integer.parseInt(instruction[3]), exp);
 		}
-			
-		
 	}
 	
 	
