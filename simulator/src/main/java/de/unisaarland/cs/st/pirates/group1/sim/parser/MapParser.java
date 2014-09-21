@@ -63,6 +63,8 @@ public class MapParser {
 		try(Scanner scan = new Scanner(stream)){
 			
 			try{
+				this.simulator = simulator;
+				
 				width = scan.nextInt();
 				
 				
