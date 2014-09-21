@@ -164,11 +164,9 @@ public void initializeSimulator(){
 	}
 	//String[] strings = (String[])stringList.toArray();
 	
-	InputStream mFile = mapFile;
-	
 	//initializes the LogWriter
 	try {
-		simulator.getLogWriter().init(output, convertStreamToString(mFile) , stringArray);
+		simulator.getLogWriter().init(output, convertStreamToString(mapFile) , stringArray);
 	} catch (ArrayIndexOutOfBoundsException e1) {
 		throw new IllegalStateException();
 	} catch (NullPointerException e1) {
