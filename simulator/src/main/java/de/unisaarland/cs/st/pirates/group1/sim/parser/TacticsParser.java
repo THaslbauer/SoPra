@@ -1,6 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
 import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -38,6 +39,7 @@ public class TacticsParser {
 
 	private ExtendedLogWriter logger;
 	private Random random;
+	private LinkedList<Instruction> ins;
 	
 	public TacticsParser(ExtendedLogWriter logger){		
 		this.logger = logger;
@@ -71,57 +73,57 @@ public class TacticsParser {
 				String name = instruction_array[0];
 				
 				switch(name){
-				
+
 				case "turn":
-					this.makeTurnInstruction(instruction_array, size);
+					ins.add(this.makeTurnInstruction(instruction_array, size));
 					break;
 					
 				case "mark":
-					this.makeMarkInstruction(instruction_array, size);
+					ins.add(this.makeMarkInstruction(instruction_array, size));
 					break;
 					
 				case "unmark":
-					this.makeUnmarkInstruction(instruction_array, size);
+					ins.add(this.makeUnmarkInstruction(instruction_array, size));
 					break;
 					
 				case "move":
-					this.makeMoveInstruction(instruction_array, size);
+					ins.add(this.makeMoveInstruction(instruction_array, size));
 					break;
 					
 				case "pickup":
-					this.makePickupInstruction(instruction_array, size);
+					ins.add(this.makePickupInstruction(instruction_array, size));
 					break;
 					
 				case "drop":
-					this.makeDropInstruction(instruction_array, size);
+					ins.add(this.makeDropInstruction(instruction_array, size));
 					break;
 					
 				case "flipzero":
-					this.makeFlipzeroInstruction(instruction_array, size);
+					ins.add(this.makeFlipzeroInstruction(instruction_array, size));
 					break;
 					
 				case "goto":
-					this.makeGotoInstruction(instruction_array, size);
+					ins.add(this.makeGotoInstruction(instruction_array, size));
 					break;
 					
 				case "sense":
-					this.makeSenseInstruction(instruction_array, size);
+					ins.add(this.makeSenseInstruction(instruction_array, size));
 					break;
 					
 				case "if":
-					this.makeIfallInstruction(instruction_array, size);
+					ins.add(this.makeIfallInstruction(instruction_array, size));
 					break;
 				
 				case "ifall":
-					this.makeIfallInstruction(instruction_array, size);
+					ins.add(this.makeIfallInstruction(instruction_array, size));
 					break;
 				
 				case "ifany":
-					this.makeIfanyInstruction(instruction_array, size);
+					ins.add(this.makeIfanyInstruction(instruction_array, size));
 					break;
 					
 				case "refresh":
-					this.makeRefreshInstruction(instruction_array, size);
+					ins.add(this.makeRefreshInstruction(instruction_array, size));
 					break;
 					
 				default:
@@ -138,8 +140,7 @@ public class TacticsParser {
 			
 		}
 		
-		//TODO: delete this
-		return null;
+		return ins.toArray(new Instruction[0]);
 		
 	}
 	
