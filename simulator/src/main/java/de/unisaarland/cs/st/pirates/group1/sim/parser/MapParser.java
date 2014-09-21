@@ -35,6 +35,9 @@ public class MapParser {
 	private Simulator simulator;
 	
 	public MapParser(){
+		
+		list = new ArrayList<Faction>();
+		factions = new HashMap<String, Faction>();
 	}
 
 	
