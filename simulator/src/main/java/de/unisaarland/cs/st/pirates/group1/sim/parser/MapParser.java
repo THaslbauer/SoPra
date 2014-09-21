@@ -64,7 +64,7 @@ public class MapParser {
 				
 				
 				//these cases are not allowed for a correct map (concerning width)
-				if(width < 200 || width < 2 ){
+				if(width > 200 || width < 2 ){
 					throw new IllegalArgumentException("map is not correctly sized (problem with width)");
 				}
 				

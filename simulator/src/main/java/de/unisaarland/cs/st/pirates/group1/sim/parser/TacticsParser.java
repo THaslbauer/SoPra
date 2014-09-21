@@ -1,6 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
 import java.io.InputStream;
+import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -14,6 +15,9 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.RegisterCall;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.UnequalOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.FlipZeroInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAllInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfAnyInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.IfInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.MoveInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
@@ -35,6 +39,7 @@ public class TacticsParser {
 
 	private ExtendedLogWriter logger;
 	private Random random;
+	private LinkedList<Instruction> ins;
 	
 	public TacticsParser(ExtendedLogWriter logger){		
 		this.logger = logger;
@@ -68,57 +73,57 @@ public class TacticsParser {
 				String name = instruction_array[0];
 				
 				switch(name){
-				
+
 				case "turn":
-					this.makeTurnInstruction(instruction_array, size);
+					ins.add(this.makeTurnInstruction(instruction_array, size));
 					break;
 					
 				case "mark":
-					this.makeMarkInstruction(instruction_array, size);
+					ins.add(this.makeMarkInstruction(instruction_array, size));
 					break;
 					
 				case "unmark":
-					this.makeUnmarkInstruction(instruction_array, size);
+					ins.add(this.makeUnmarkInstruction(instruction_array, size));
 					break;
 					
 				case "move":
-					this.makeMoveInstruction(instruction_array, size);
+					ins.add(this.makeMoveInstruction(instruction_array, size));
 					break;
 					
 				case "pickup":
-					this.makePickupInstruction(instruction_array, size);
+					ins.add(this.makePickupInstruction(instruction_array, size));
 					break;
 					
 				case "drop":
-					this.makeDropInstruction(instruction_array, size);
+					ins.add(this.makeDropInstruction(instruction_array, size));
 					break;
 					
 				case "flipzero":
-					this.makeFlipzeroInstruction(instruction_array, size);
+					ins.add(this.makeFlipzeroInstruction(instruction_array, size));
 					break;
 					
 				case "goto":
-					this.makeGotoInstruction(instruction_array, size);
+					ins.add(this.makeGotoInstruction(instruction_array, size));
 					break;
 					
 				case "sense":
-					this.makeSenseInstruction(instruction_array, size);
+					ins.add(this.makeSenseInstruction(instruction_array, size));
 					break;
 					
 				case "if":
-					this.makeIfallInstruction(instruction_array, size);
+					ins.add(this.makeIfallInstruction(instruction_array, size));
 					break;
 				
 				case "ifall":
-					this.makeIfallInstruction(instruction_array, size);
+					ins.add(this.makeIfallInstruction(instruction_array, size));
 					break;
 				
 				case "ifany":
-					this.makeIfanyInstruction(instruction_array, size);
+					ins.add(this.makeIfanyInstruction(instruction_array, size));
 					break;
 					
 				case "refresh":
-					this.makeRefreshInstruction(instruction_array, size);
+					ins.add(this.makeRefreshInstruction(instruction_array, size));
 					break;
 					
 				default:
@@ -135,8 +140,7 @@ public class TacticsParser {
 			
 		}
 		
-		//TODO: delete this
-		return null;
+		return ins.toArray(new Instruction[0]);
 		
 	}
 	
@@ -306,21 +310,59 @@ public class TacticsParser {
 			throw new IllegalArgumentException("IfInstruction consists of 4 parts");
 		}
 		
-		//TODO: delete this
-		return null;
+		//Produce an expression 
+		Expression exp = this.produceExpression(instruction[1]);
+		
+		//when type mismatch occurs null is given back by the method produceExpression
+		if(exp == null){
+			throw new IllegalArgumentException("Type mismatch in if instruction occured");
+		}
+		
+		else{
+			return new IfInstruction(logger, Integer.parseInt(instruction[3]), exp);
+		}
+			
 		
 	}
 	
+	
 	public Instruction makeIfallInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size <4){
+			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
+		}
+	
+		
+		int diff = size - 3;
+		
+		Expression[] exps = new Expression[diff];
+		
+		for (int i = 0; i< diff; i++){
+			
+			exps[i] = this.produceExpression(instruction[i+1]);
+		}
+		
+		return new IfAllInstruction(logger, Integer.parseInt(instruction[size-1]) , exps);
 	}
 	
 	public Instruction makeIfanyInstruction(String[] instruction, int size){
 		
-		//TODO: delete this
-		return null;
+		if(size <4){
+			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
+		}
+	
+		
+		int diff = size - 3;
+		
+		Expression[] exps = new Expression[diff];
+		
+		for (int i = 0; i< diff; i++){
+			
+			exps[i] = this.produceExpression(instruction[i+1]);
+		}
+		
+		return new IfAnyInstruction(logger, Integer.parseInt(instruction[size-1]) , exps);
+
 	}
 	
 	public Instruction makeRefreshInstruction(String[] instruction, int size){
