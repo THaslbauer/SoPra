@@ -7,6 +7,7 @@
 
 package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -149,8 +150,9 @@ public void setOutput(OutputStream output) {
 	 * 
 	 * @param
 	 * @return void
+	 * @throws IOException 
 	 */
-public void initializeSimulator(){
+public void initializeSimulator() throws IOException{
 	
 	List<String> stringList = new LinkedList<String>();
 	for(InputStream in : tacticsFile){
@@ -163,12 +165,11 @@ public void initializeSimulator(){
 	    stringArray[i] = stringList.get(i);
 	}
 	//String[] strings = (String[])stringList.toArray();
-	
-	InputStream mFile = mapFile;
+
 	
 	//initializes the LogWriter
 	try {
-		simulator.getLogWriter().init(output, convertStreamToString(mFile) , stringArray);
+		simulator.getLogWriter().init(output, convertStreamToString(mapFile) , stringArray);
 	} catch (ArrayIndexOutOfBoundsException e1) {
 		throw new IllegalStateException();
 	} catch (NullPointerException e1) {
@@ -176,6 +177,8 @@ public void initializeSimulator(){
 	} catch (IOException e1) {
 		throw new IllegalStateException();
 	}
+	
+	mapFile.reset();
 	
 	
 	//sets the randomobject to the simulator
