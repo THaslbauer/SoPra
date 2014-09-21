@@ -4,8 +4,8 @@ import java.util.Random;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Entity;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter.Key;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 /**
  * Represents a dice roll that jumps to a specific part of the program.
  * Simulates a dice roll by randomly generating an integer.

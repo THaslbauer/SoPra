@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
+import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class ExpectLogger implements ExtendedLogWriter {
 	public LinkedList<LogOperation> ops = new LinkedList<LogOperation>();

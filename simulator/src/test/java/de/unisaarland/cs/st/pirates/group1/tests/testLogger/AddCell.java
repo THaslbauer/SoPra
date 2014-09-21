@@ -1,6 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
 
-import de.unisaarland.cs.st.pirates.group1.sim.logger.LogWriter;
+import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class AddCell extends LogOperation {
 	public LogWriter.Cell type;

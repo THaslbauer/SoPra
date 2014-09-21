@@ -12,6 +12,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.logger;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public interface ExtendedLogWriter extends LogWriter{
 	
