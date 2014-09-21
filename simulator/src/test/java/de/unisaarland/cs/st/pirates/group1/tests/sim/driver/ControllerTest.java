@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
@@ -112,7 +113,11 @@ public class ControllerTest
 		tactics.add(tacticsInput);
 		
 		contr = new Controller(sim, mp, tp, mapInput, tactics, 0, out);
-		contr.initializeSimulator();
+		try {
+			contr.initializeSimulator();
+		} catch (IOException e) {
+			fail();
+		}
 	}
 	
 	@Test
