@@ -80,7 +80,10 @@ public class TacticsParserTest {
 				+ "goto 14"+"\n"
 				+ "flipzero 2 else 26"+"\n"
 				+ "turn right"+"\n"
-				+ "goto 14";
+				+ "goto 14"+"\n"
+				+ "repair else 0" + "\n"
+				+ "ifany sense_treasure ship_load==0 else 4"+"\n"
+				+ "refresh 5 else 0";
 		
 		random = new Random(0);
 		expectLogger = new ExpectLogger();
