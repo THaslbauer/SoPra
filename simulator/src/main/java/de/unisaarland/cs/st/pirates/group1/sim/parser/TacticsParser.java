@@ -21,6 +21,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.MoveInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
@@ -69,7 +70,7 @@ public class TacticsParser {
 			
 			size = instruction_array.length;
 			
-			try{
+			//try{
 				int expr_num = instruction_array.length;
 				
 				String name = instruction_array[0];
@@ -128,15 +129,20 @@ public class TacticsParser {
 					ins.add(this.makeRefreshInstruction(instruction_array, size));
 					break;
 					
+				case "repair":
+					ins.add(this.makeRepairInstruction(instruction_array, size));
+					break;
+					
 				default:
+					System.out.println(name);
 					throw new IllegalArgumentException("This instruction does not exist");
 				}
-			}
+			//}
 			
-			//TODO: find out which exceptions are necessary
-			catch(Exception e){
-				throw new IllegalArgumentException("Something with this instruction is wrong");
-			}
+//			//TODO: find out which exceptions are necessary
+//			catch(Exception e){
+//				throw new IllegalArgumentException("Something with this instruction is wrong");
+//			}
 			
 			
 			
@@ -215,6 +221,22 @@ public class TacticsParser {
 		}
 
 	}
+	
+	public Instruction makeRepairInstruction(String[] instruction, int size){
+		
+		if(size!= 3){
+			throw new IllegalArgumentException("A repair instruction consists of 3 parts");
+		}
+		
+		if(Integer.parseInt(instruction[2]) < 0 || Integer.parseInt(instruction[2]) > 1999){
+			throw new IllegalArgumentException("Wrong pc");
+		}
+		
+		else{
+			return new RepairInstruction(logger, Integer.parseInt(instruction[2]));
+		}
+	}
+	
 	
 	public Instruction makeMoveInstruction(String[] instruction, int size){
 		
