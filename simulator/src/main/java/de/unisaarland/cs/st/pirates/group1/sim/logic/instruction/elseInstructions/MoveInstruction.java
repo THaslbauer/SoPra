@@ -44,6 +44,7 @@ public class MoveInstruction extends ElseInstruction {
 			this.tryMove(ship);
 			break;
 		case ENEMYHOME:
+			this.elseJump(ship);
 			break;
 		case HOME:
 			this.tryMove(ship);

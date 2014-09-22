@@ -65,7 +65,8 @@ public class Simulator
 	 * This method simulates a single cycle of the game. At first, it iterates through
 	 * the krakens and calls step() if the krakenwaitime allowes it. Secondly, it iterates
 	 * through the ships and calls step() if the condition of the ship is greater than 0. If
-	 * the ship's condition is 0 the simulator will remove the ship from its ships.
+	 * the ship's condition is 0 the simulator will remove the ship from its ships. At Last
+	 * this method increases the cycle counter by 1.
 	 * 
 	 */
 	public void step()
