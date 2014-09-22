@@ -80,7 +80,7 @@ public class TacticsParser {
 			
 			size = instruction_array.length;
 			
-			try{
+//			try{
 				int expr_num = instruction_array.length;
 				
 				String name = instruction_array[0].toLowerCase();
@@ -187,12 +187,12 @@ public class TacticsParser {
 					System.out.println(name);
 					throw new IllegalArgumentException("This instruction does not exist");
 				}
-			}
+		//	}
 			
-			//TODO: find out which exceptions are necessary
-			catch(Exception e){
-				throw new IllegalArgumentException("Something with this instruction is wrong");
-			}
+//			//TODO: find out which exceptions are necessary
+//			catch(Exception e){
+//				throw new IllegalArgumentException("Something with this instruction is wrong");
+//			}
 			
 			
 			
@@ -493,8 +493,13 @@ public class TacticsParser {
 		
 		for (int i = 0; i< diff; i++){
 			
-			//TODO: test if null is given back
-			exps[i] = this.produceExpression(instruction[i+1]);
+			Expression exp = this.produceExpression(instruction[i+1]);
+			
+			if(exp == null){
+				throw new IllegalArgumentException("Ifall Instruction: something with the types or their spelling is wrong");
+			}
+			
+			exps[i] = exp;
 		}
 		
 		return new IfAllInstruction(logger, Integer.parseInt(instruction[size-1]) , exps);
@@ -513,7 +518,13 @@ public class TacticsParser {
 		
 		for (int i = 0; i< diff; i++){
 			
-			exps[i] = this.produceExpression(instruction[i+1]);
+			Expression exp = this.produceExpression(instruction[i+1]);
+			
+			if(exp == null){
+				throw new IllegalArgumentException("Ifany Instruction: something with the types or their spelling is wrong");
+			}
+			
+			exps[i] = exp;
 		}
 		
 		return new IfAnyInstruction(logger, Integer.parseInt(instruction[size-1]) , exps);
