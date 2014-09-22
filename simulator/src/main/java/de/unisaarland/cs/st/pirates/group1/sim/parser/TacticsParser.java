@@ -34,7 +34,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
  * This is the parser for the tactics of each faction.
  * 
  * @author Kerstin
- * @version Version 1.0
+ * @version Version 3.0
  */
 public class TacticsParser {
 
@@ -42,6 +42,10 @@ public class TacticsParser {
 	private Random random;
 	private LinkedList<Instruction> ins;
 	
+	/**
+	 * 
+	 * @param logger The logger to use
+	 */
 	public TacticsParser(ExtendedLogWriter logger){		
 		this.logger = logger;
 		ins = new LinkedList<Instruction>();
@@ -49,8 +53,11 @@ public class TacticsParser {
 	
 	/**
 	 * This method parses the tactics file for each faction and thereby tests if types are consistent.
-	 * @param input
-	 * @param random
+	 * It mainly converts the input stream to a string and uses split(regex) to finally 
+	 * divide the string into string arrays where each element represents a part of an instruction.
+	 * 
+	 * @param input The input stream to use
+	 * @param random The random object for flipzero instruction
 	 */
 	public Instruction[] parseTactics(InputStream input, Random random){
 		
@@ -195,13 +202,25 @@ public class TacticsParser {
 		
 	}
 	
+	/**
+	 * This methods converts an input stream into a string.
+	 * @param input The input stream which should be converted to a string
+	 * @return the converted input stream as a string
+	 */
 	private String convertStreamToString(InputStream input){
 		try(Scanner scan = new Scanner(input).useDelimiter("\\A")){
 			return scan.hasNext() ? scan.next() : "";
 		}
 	}
 	
-	public Instruction makeTurnInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a TurnInstruction.
+	 * @throws IllegalArgumentException if size!=2 or the word after turn does not equal "right" or "left"
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return A TurnInstruction
+	 */
+	public Instruction makeTurnInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if (size != 2){
 			throw new IllegalArgumentException("A turn instruction must consist of two parts");
@@ -224,7 +243,14 @@ public class TacticsParser {
 		}
 	}
 	
-	public Instruction makeMarkInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a MarkInstruction
+	 * @param instruction The string array which represents the whole instruction.
+	 * @param size The size of this string array
+	 * @return MarkInstruction
+	 * @throws IllegalArgumentException if size!=2 or a wrong int value is given.
+	 */
+	public Instruction makeMarkInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		
 		if(size != 2){
@@ -245,7 +271,14 @@ public class TacticsParser {
 
 	}
 	
-	public Instruction makeUnmarkInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a UnmarkInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return UnmarkInstruction
+	 * @throws IllegalArgumentException if size!=2 or wrong int value is given
+	 */
+	public Instruction makeUnmarkInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 2){
 			throw new IllegalArgumentException("A unmark instruction must consist of two parts");
@@ -265,7 +298,14 @@ public class TacticsParser {
 
 	}
 	
-	public Instruction makeRepairInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a RepairInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return RepairInstruction
+	 * @throws IllegalArgumentException if size!=3 or pc <0 or pc>1999
+	 */
+	public Instruction makeRepairInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size!= 3){
 			throw new IllegalArgumentException("A repair instruction consists of 3 parts");
@@ -281,29 +321,40 @@ public class TacticsParser {
 	}
 	
 	
-	public Instruction makeMoveInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a MoveInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return MoveInstruction
+	 * @throws IllegalArgumentException if size!=3 
+	 */
+	public Instruction makeMoveInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 3){
 			throw new IllegalArgumentException("A move instruction consists of 3 parts");
 		}
 		
-		if(instruction[1].toLowerCase().equals("else") && Integer.parseInt(instruction[2]) >= 0 && Integer.parseInt(instruction[2]) <= 1999){
-			return new MoveInstruction(logger, Integer.parseInt(instruction[2]));
-		}
+		return new MoveInstruction(logger, Integer.parseInt(instruction[2]));
 		
-		else{
-			throw new IllegalArgumentException("Move instruction wrong");
-		}
+		
+	
 	}
 	
-	public Instruction makePickupInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a PickupInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return PickupInstruction
+	 * @throws IllegalArgumentException if size !=4 or incorrect  sense direction given
+	 */
+	public Instruction makePickupInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 4){
 			throw new IllegalArgumentException("Pickup instruction consists of 4 parts");
 		}
 		
-		if(!(this.isCorrectAddress(Integer.parseInt(instruction[3]))) || !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
-			throw new IllegalArgumentException("Pickup instruction is wrong (address or sensedirection) ");
+		if( !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
+			throw new IllegalArgumentException("Pickup instruction is wrong (sensedirection) ");
 		}
 		
 		else{
@@ -311,7 +362,14 @@ public class TacticsParser {
 		}
 	}
 	
-	public Instruction makeDropInstruction(String[] instruction, int size){
+	/**
+	 * This method creates DropInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return DropInstruction
+	 * @throws IllegalArgumentException if size!=1
+	 */
+	public Instruction makeDropInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 1){
 			throw new IllegalArgumentException("A drop instruction consists only of one part");
@@ -322,14 +380,21 @@ public class TacticsParser {
 		}
 	}
 	
-	public Instruction makeFlipzeroInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a FlipzeroInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return FlipzeroInstruction
+	 * @throws IllegalArgumentException if size!=4 or seed is less than 1
+	 */
+	public Instruction makeFlipzeroInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if (size != 4){
 			throw new IllegalArgumentException("Flipzero instruction consists of 4 parts");
 		}
 		
 		//TODO: ask what to do with an integer that is too big
-		if(Integer.parseInt(instruction[1]) < 1 ||  !(this.isCorrectAddress(Integer.parseInt(instruction[3])))){
+		if(Integer.parseInt(instruction[1]) < 1 ){
 			
 			throw new IllegalArgumentException("Flipzero: wrong seed or too big address");
 		}
@@ -340,22 +405,32 @@ public class TacticsParser {
 		
 	}
 	
-	public Instruction makeGotoInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a GotoInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return GotoInstruction
+	 * @throws IllegalArgumentException if size!=2 
+	 */
+	public Instruction makeGotoInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if (size != 2){
 			throw new IllegalArgumentException("A goto instruction consists of two parts");
 		}
 		
-		if(!(this.isCorrectAddress(Integer.parseInt(instruction[1])))){
-			throw new IllegalArgumentException("Illegal PC given");
-		}
 		
-		else{
-			return new GotoInstruction(logger, Integer.parseInt(instruction[1]));
-		}
+		return new GotoInstruction(logger, Integer.parseInt(instruction[1]));
+
 	}
 	
-	public Instruction makeSenseInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a SenseInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return SenseInstruction
+	 * @throws IllegalArgumentException if size!=2 or sense direction is invalid
+	 */
+	public Instruction makeSenseInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if( size != 2){
 			throw new IllegalArgumentException("A sense instruction must consist of two parts");
@@ -371,7 +446,14 @@ public class TacticsParser {
 		}
 	}
 	
-	public Instruction makeIfInstruction(String[] instruction, int size){
+	/**
+	 * This method creates a IfInstruction
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size the size of this string array
+	 * @return IfInstruction
+	 * @throws IllegalArgumentException if size!=4 or expression could not be build (type mismatch)
+	 */
+	public Instruction makeIfInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 4){
 			
@@ -391,8 +473,14 @@ public class TacticsParser {
 		}
 	}
 	
-	
-	public Instruction makeIfallInstruction(String[] instruction, int size){
+	/**
+	 * 
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return IfallInstruction
+	 * @throws IllegalArgumentException if size<4 or if expression could not be build (type mismatch)
+	 */
+	public Instruction makeIfallInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size <4){
 			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
@@ -438,8 +526,8 @@ public class TacticsParser {
 			throw new IllegalArgumentException("Refresh instruction consists of 4 parts");
 		}
 		
-		if(!(this.isCorrectAddress(Integer.parseInt(instruction[3]))) || !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
-			throw new IllegalArgumentException("Refresh Instruction:Wrong integer value sense direction or address");
+		if( !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
+			throw new IllegalArgumentException("Refresh Instruction:Wrong integer value sense direction ");
 		}
 		
 		else{
@@ -470,16 +558,7 @@ public class TacticsParser {
 		}
 	}
 	
-	private boolean isCorrectAddress(int i){
-		
-		if (i< 0 || i> 1999){
-			return false;
-		}
-		
-		else{
-			return true;
-		}
-	}
+	
 	
 	private boolean isCorrectSenseDir(int i){
 		
