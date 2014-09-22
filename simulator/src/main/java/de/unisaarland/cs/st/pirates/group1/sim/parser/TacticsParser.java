@@ -21,6 +21,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.MoveInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.PickupInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
@@ -55,6 +56,9 @@ public class TacticsParser {
 		
 		//convert the input to string
 		String tactics_string = this.convertStreamToString(input);
+		this.random = random;
+	
+		//split the input string so that the comments vanish
 	
 		//split the input string into an array of instructions
 		String[] tactics_string_array = tactics_string.split("\n");
@@ -63,15 +67,16 @@ public class TacticsParser {
 			
 			//this int is needed to find out how many arguments there are
 			int size;
-			
-			String[] instruction_array = tactics_string_array[i].split(" ");
+			String[] in_between = tactics_string_array[i].split(";");
+			String deletedWhitespace = in_between[0].trim();
+			String[] instruction_array = deletedWhitespace.split(" ");
 			
 			size = instruction_array.length;
 			
 			try{
 				int expr_num = instruction_array.length;
 				
-				String name = instruction_array[0];
+				String name = instruction_array[0].toLowerCase();
 				
 				switch(name){
 
@@ -88,20 +93,35 @@ public class TacticsParser {
 					break;
 					
 				case "move":
-					ins.add(this.makeMoveInstruction(instruction_array, size));
-					break;
+					if(this.equalsElse(instruction_array[1])){
+						ins.add(this.makeMoveInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("Move instruction: else was misspelled");
+					}
 					
 				case "pickup":
-					ins.add(this.makePickupInstruction(instruction_array, size));
-					break;
+					if(this.equalsElse(instruction_array[2])){
+						ins.add(this.makePickupInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("Pickup instruction: else was misspelled or wrong expression there");
+					}
 					
 				case "drop":
 					ins.add(this.makeDropInstruction(instruction_array, size));
 					break;
 					
 				case "flipzero":
-					ins.add(this.makeFlipzeroInstruction(instruction_array, size));
-					break;
+					if(this.equalsElse(instruction_array[2])){
+						ins.add(this.makeFlipzeroInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("Flipzero instruction: else was misspelled or wrong expression there");
+					}
 					
 				case "goto":
 					ins.add(this.makeGotoInstruction(instruction_array, size));
@@ -112,22 +132,52 @@ public class TacticsParser {
 					break;
 					
 				case "if":
-					ins.add(this.makeIfallInstruction(instruction_array, size));
-					break;
+					if(this.equalsElse(instruction_array[2])){
+						ins.add(this.makeIfInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("If instruction: else was misspelled or wrong expression there");
+					}
 				
 				case "ifall":
-					ins.add(this.makeIfallInstruction(instruction_array, size));
-					break;
+					if(this.equalsElse(instruction_array[size-2])){
+						ins.add(this.makeIfallInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("Ifall instruction: else was misspelled or wrong expression there");
+					}
 				
 				case "ifany":
-					ins.add(this.makeIfanyInstruction(instruction_array, size));
-					break;
+					if(this.equalsElse(instruction_array[size-2])){
+						ins.add(this.makeIfanyInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("Ifany instruction: else was misspelled or wrong expression there");
+					}
 					
 				case "refresh":
-					ins.add(this.makeRefreshInstruction(instruction_array, size));
-					break;
+					if(this.equalsElse(instruction_array[2])){
+						ins.add(this.makeRefreshInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("Refresh instruction: else was misspelled or wrong expression there");
+					}
+					
+				case "repair":
+					if(this.equalsElse(instruction_array[1])){
+						ins.add(this.makeRepairInstruction(instruction_array, size));
+						break;
+					}
+					else{
+						throw new IllegalArgumentException("Repair instruction: else was misspelled or wrong expression there");
+					}
 					
 				default:
+					System.out.println(name);
 					throw new IllegalArgumentException("This instruction does not exist");
 				}
 			}
@@ -157,13 +207,14 @@ public class TacticsParser {
 			throw new IllegalArgumentException("A turn instruction must consist of two parts");
 		}
 		
-		if(!(instruction[1].equals("left")) || !(instruction[1].equals("right"))){
+		
+		if(!(instruction[1].toLowerCase().equals("left")) && !(instruction[1].toLowerCase().equals("right"))){
 			
-			throw new IllegalArgumentException("A turn instruction cannot have another argument then left or right");
+			throw new IllegalArgumentException("A turn instruction cannot have another argument than left or right");
 		}
 		
 		else{
-			if(instruction[1].equals("left")){
+			if(instruction[1].toLowerCase().equals("left")){
 				 return new TurnInstruction(logger, true);
 			}
 			
@@ -214,13 +265,29 @@ public class TacticsParser {
 
 	}
 	
+	public Instruction makeRepairInstruction(String[] instruction, int size){
+		
+		if(size!= 3){
+			throw new IllegalArgumentException("A repair instruction consists of 3 parts");
+		}
+		
+		if(Integer.parseInt(instruction[2]) < 0 || Integer.parseInt(instruction[2]) > 1999){
+			throw new IllegalArgumentException("Wrong pc");
+		}
+		
+		else{
+			return new RepairInstruction(logger, Integer.parseInt(instruction[2]));
+		}
+	}
+	
+	
 	public Instruction makeMoveInstruction(String[] instruction, int size){
 		
 		if(size != 3){
 			throw new IllegalArgumentException("A move instruction consists of 3 parts");
 		}
 		
-		if(instruction[1].equals("else") && Integer.parseInt(instruction[2]) >= 0 && Integer.parseInt(instruction[2]) <= 1999){
+		if(instruction[1].toLowerCase().equals("else") && Integer.parseInt(instruction[2]) >= 0 && Integer.parseInt(instruction[2]) <= 1999){
 			return new MoveInstruction(logger, Integer.parseInt(instruction[2]));
 		}
 		
@@ -338,6 +405,7 @@ public class TacticsParser {
 		
 		for (int i = 0; i< diff; i++){
 			
+			//TODO: test if null is given back
 			exps[i] = this.produceExpression(instruction[i+1]);
 		}
 		
@@ -347,7 +415,7 @@ public class TacticsParser {
 	public Instruction makeIfanyInstruction(String[] instruction, int size){
 		
 		if(size <4){
-			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
+			throw new IllegalArgumentException("An ifany instruction awaits at least 4 arguments");
 		}
 	
 		
@@ -427,18 +495,18 @@ public class TacticsParser {
 	private Expression produceExpression(String s){
 		
 		if (this.isBool_register(s)){
-			return new Literal(this.changeRegisterToInt(s));
+			return new RegisterCall(this.changeRegisterToInt(s));
 		}
 		
 		String[] comparison = s.split("==");
 		
 		if(comparison.length == 2){
-			if (comparison[0].equals("sense_celltype")&& this.isCell_type(comparison[1])){
+			if (comparison[0].toLowerCase().equals("sense_celltype")&& this.isCell_type(comparison[1])){
 				
 				return new EqualOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeCell_typeToInt(comparison[1])));
 			}
 			
-			if(comparison[0].equals("sense_shiptype") && this.isShip_type(comparison[1])){
+			if(comparison[0].toLowerCase().equals("sense_shiptype") && this.isShip_type(comparison[1])){
 				
 				return new EqualOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeShip_typeToInt(comparison[1])));
 			}
@@ -461,12 +529,12 @@ public class TacticsParser {
 			
 			if(comparison.length == 2){
 				
-				if (comparison[0].equals("sense_celltype")&& this.isCell_type(comparison[1])){
+				if (comparison[0].toLowerCase().equals("sense_celltype")&& this.isCell_type(comparison[1])){
 					
 					return new UnequalOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeCell_typeToInt(comparison[1])));
 				}
 				
-				if(comparison[0].equals("sense_shiptype") && this.isShip_type(comparison[1])){
+				if(comparison[0].toLowerCase().equals("sense_shiptype") && this.isShip_type(comparison[1])){
 					
 					return new UnequalOperator(new RegisterCall(this.changeRegisterToInt(comparison[0])), new Literal(this.changeShip_typeToInt(comparison[1])));
 				}
@@ -538,7 +606,7 @@ public class TacticsParser {
 	
 	private boolean isBool_register(String s){
 		
-		switch(s){
+		switch(s.toLowerCase()){
 		case("sense_treasure"):
 			return true;
 		case("sense_marker0"):
@@ -587,7 +655,7 @@ public class TacticsParser {
 	
 	private boolean isCell_type(String s){
 		
-		switch(s){
+		switch(s.toLowerCase()){
 		case("island"):
 			return true;
 		case("home"):
@@ -603,7 +671,7 @@ public class TacticsParser {
 	
 	private boolean isShip_type(String s){
 		
-		switch(s){
+		switch(s.toLowerCase()){
 		case("friend"):
 			return true;
 		case("enemy"):
@@ -615,7 +683,7 @@ public class TacticsParser {
 	
 	private boolean isInt_register(String s){
 		
-		switch(s){
+		switch(s.toLowerCase()){
 		case("ship_direction"):
 			return true;
 		case("ship_load"):
@@ -636,7 +704,7 @@ public class TacticsParser {
 	
 	private int changeCell_typeToInt(String s){
 		
-		switch(s){
+		switch(s.toLowerCase()){
 		case("island"):
 			return 0;
 		case("home"):
@@ -652,7 +720,7 @@ public class TacticsParser {
 	
 	private int changeShip_typeToInt(String s){
 		
-		switch(s){
+		switch(s.toLowerCase()){
 		case("friend"):
 			return 0;
 		case("enemy"):
@@ -664,7 +732,7 @@ public class TacticsParser {
 	
 	private int changeRegisterToInt(String s){
 		
-		switch(s){
+		switch(s.toLowerCase()){
 		case("sense_celltype"):
 			return 0;
 		case("sense_supply"):
@@ -706,5 +774,10 @@ public class TacticsParser {
 		
 				
 		}
+	}
+	
+	public boolean equalsElse(String s){
+		
+		return s.toLowerCase().equals("else");
 	}
 }

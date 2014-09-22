@@ -26,5 +26,17 @@ public class Literal extends Primary
 	{
 		return val;
 	}
+
+	@Override
+	public Expression getLeft()
+	{
+		return this;
+	}
+
+	@Override
+	public Expression getRight()
+	{
+		return null;
+	}
 	
 }

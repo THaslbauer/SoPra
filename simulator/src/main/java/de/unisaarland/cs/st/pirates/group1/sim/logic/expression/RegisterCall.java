@@ -30,4 +30,18 @@ public class RegisterCall extends Primary
 	{
 		return registers[index];
 	}
+
+	@Override
+	public Expression getLeft()
+	{
+		return this;
+	}
+
+	@Override
+	public Expression getRight()
+	{
+		return null;
+	}
+	
+	
 }

@@ -20,4 +20,15 @@ public abstract class Operator implements Expression
 		this.rightval = rightval;
 	}
 	
+	
+	public Expression getLeft()
+	{
+		return leftval;
+	}
+	
+	public Expression getRight()
+	{
+		return rightval;
+	}
+	
 }
