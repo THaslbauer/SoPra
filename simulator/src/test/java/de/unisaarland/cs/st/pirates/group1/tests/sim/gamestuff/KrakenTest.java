@@ -187,7 +187,7 @@ public class KrakenTest {
 			assertTrue ("tile must notice that kraken is detached",tile4.getKraken() == null);
 		}
 		
-		if(movedirection == 1 || movedirection == 4){
+		if(movedirection == 1 || movedirection == 5){
 			
 			Tile newtile = myMap4.getTile(new Position(1,1));
 			assertTrue("kraken must move to tile with position (1,1)",kraken.getMyTile().equals(newtile));
@@ -195,7 +195,7 @@ public class KrakenTest {
 			assertTrue("tile must notice that a kraken is detached",tile4.getKraken() == null);
 		}
 		
-		if(movedirection == 2 || movedirection == 5){
+		if(movedirection == 2 || movedirection == 4){
 			
 			Tile newtile = myMap4.getTile(new Position(0,1));
 			assertTrue("kraken must be on tile with position (0,1)", kraken.getMyTile().equals(newtile));
