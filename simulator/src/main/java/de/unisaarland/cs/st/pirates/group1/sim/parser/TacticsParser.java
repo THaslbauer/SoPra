@@ -80,7 +80,7 @@ public class TacticsParser {
 			
 			size = instruction_array.length;
 			
-//			try{
+			try{
 				int expr_num = instruction_array.length;
 				
 				String name = instruction_array[0].toLowerCase();
@@ -187,12 +187,12 @@ public class TacticsParser {
 					System.out.println(name);
 					throw new IllegalArgumentException("This instruction does not exist");
 				}
-		//	}
+			}
 			
-//			//TODO: find out which exceptions are necessary
-//			catch(Exception e){
-//				throw new IllegalArgumentException("Something with this instruction is wrong");
-//			}
+			//TODO: find out which exceptions are necessary
+			catch(Exception e){
+			throw new IllegalArgumentException("Something with this instruction is wrong");
+		}
 			
 			
 			
