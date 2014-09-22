@@ -505,7 +505,14 @@ public class TacticsParser {
 		return new IfAllInstruction(logger, Integer.parseInt(instruction[size-1]) , exps);
 	}
 	
-	public Instruction makeIfanyInstruction(String[] instruction, int size){
+	/**
+	 * 
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return IfanyInstruction
+	 * @throws IllegalArgumentException if size<4 or expression cannot be built
+	 */
+	public Instruction makeIfanyInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size <4){
 			throw new IllegalArgumentException("An ifany instruction awaits at least 4 arguments");
@@ -531,7 +538,14 @@ public class TacticsParser {
 
 	}
 	
-	public Instruction makeRefreshInstruction(String[] instruction, int size){
+	/**
+	 * 
+	 * @param instruction The string array which represents the whole instruction
+	 * @param size The size of this string array
+	 * @return RefreshInstruction
+	 * @throws IllegalArgumentException if size!=4 or sense direction is wrong
+	 */
+	public Instruction makeRefreshInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 4){
 			throw new IllegalArgumentException("Refresh instruction consists of 4 parts");
@@ -546,7 +560,13 @@ public class TacticsParser {
 		}
 	}
 	
-	private Direction changeIntToDirection(int i){
+	/**
+	 * 
+	 * @param i the int which should be cast
+	 * @return Direction according to the given int
+	 * @throws IllegalArgumentException if direction is less than 0 or greater than 6
+	 */
+	private Direction changeIntToDirection(int i) throws IllegalArgumentException{
 		
 		switch(i){
 		case 0:
@@ -570,7 +590,11 @@ public class TacticsParser {
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param i the int which should be tested
+	 * @return true if i is less than 0 or greater than 6
+	 */
 	private boolean isCorrectSenseDir(int i){
 		
 		if (i< 0 || i> 6){
@@ -582,6 +606,11 @@ public class TacticsParser {
 		}
 	}
 	
+	/**
+	 * This method produces an expression which will be part of the instruction (if, ifall, ifany)
+	 * @param s  The string which should be converted into an expression
+	 * @return Expression (null if the expression could not be built)
+	 */
 	private Expression produceExpression(String s){
 		
 		if (this.isBool_register(s)){
@@ -681,7 +710,11 @@ public class TacticsParser {
 		
 	}
 	
-	
+	/**
+	 * This methods only tells you if you can parse a string to int
+	 * @param s The string which should be tested.
+	 * @return true if it can be parsed
+	 */
 	private boolean isInt(String s){
 		try{
 			Integer.parseInt(s);
@@ -694,6 +727,11 @@ public class TacticsParser {
 		return true;
 	}
 	
+	/**
+	 * This method tells you if there is a bool register or its negation
+	 * @param s The string which should be tested
+	 * @return true if the string is a bool register or its negation
+	 */
 	private boolean isBool_register(String s){
 		
 		switch(s.toLowerCase()){
@@ -743,6 +781,11 @@ public class TacticsParser {
 			
 	}
 	
+	/**
+	 * This method tells you if the given string is a cell type
+	 * @param s The string which should be tested
+	 * @return true if the string is a cell type
+	 */
 	private boolean isCell_type(String s){
 		
 		switch(s.toLowerCase()){
@@ -759,6 +802,11 @@ public class TacticsParser {
 		}
 	}
 	
+	/**
+	 * This method tells you if the string represents a ship type
+	 * @param s The string to be tested.
+	 * @return true if the string represents a ship type
+	 */
 	private boolean isShip_type(String s){
 		
 		switch(s.toLowerCase()){
@@ -771,6 +819,11 @@ public class TacticsParser {
 		}
 	}
 	
+	/**
+	 * This method tells you if the string is an int register
+	 * @param s The string to be tested.
+	 * @return true if this string represents an int register
+	 */
 	private boolean isInt_register(String s){
 		
 		switch(s.toLowerCase()){
@@ -792,6 +845,11 @@ public class TacticsParser {
 		}
 	}
 	
+	/**
+	 * This method converts a string, which represents a cell type, into an int.
+	 * @param s The string which should be converted
+	 * @return The corresponding int
+	 */
 	private int changeCell_typeToInt(String s){
 		
 		switch(s.toLowerCase()){
@@ -808,6 +866,11 @@ public class TacticsParser {
 		}
 	}
 	
+	/**
+	 * This methods converts a string, which represents ship type, into an int
+	 * @param s The string which should be converted.
+	 * @return The corresponding int
+	 */
 	private int changeShip_typeToInt(String s){
 		
 		switch(s.toLowerCase()){
@@ -820,6 +883,11 @@ public class TacticsParser {
 		}
 	}
 	
+	/**
+	 * This methods converts a sense_register into an int
+	 * @param s The string which should be converted
+	 * @return The corresponding int
+	 */
 	private int changeRegisterToInt(String s){
 		
 		switch(s.toLowerCase()){
@@ -866,6 +934,11 @@ public class TacticsParser {
 		}
 	}
 	
+	/**
+	 * This method returns if the given string equals "else"
+	 * @param s The string to be tested
+	 * @return true if this string equals "else"
+	 */
 	public boolean equalsElse(String s){
 		
 		return s.toLowerCase().equals("else");
