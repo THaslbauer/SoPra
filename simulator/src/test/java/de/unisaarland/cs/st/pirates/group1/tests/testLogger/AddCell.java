@@ -15,7 +15,7 @@ public class AddCell extends LogOperation {
 	}
 	
 	public String toString() {
-		return "Add "+type+" from "+(affiliation == null ? "" : affiliation+" ")+"at ("+x+","+y+")";
+		return "Add "+type+(affiliation == null ? " " : " from "+affiliation+" ")+"at ("+x+","+y+")";
 	}
 	
 	public boolean equals (Object o) {
