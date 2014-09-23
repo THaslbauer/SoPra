@@ -15,6 +15,10 @@ public class LogStep extends LogOperation {
 		return 31;
 	}
 	
+	public String toString() {
+		return "STEP";
+	}
+	
 	/**
 	 * All LogSteps are equal.
 	 */

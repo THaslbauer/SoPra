@@ -11,6 +11,10 @@ public class Destroy extends LogOperation {
 		this.id = id;
 	}
 	
+	public String toString() {
+		return "Destroy "+entity+" with id "+id;
+	}
+	
 	public boolean equals(Object o) {
 		Destroy other;
 		try {

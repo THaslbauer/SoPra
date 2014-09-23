@@ -17,6 +17,10 @@ public class Notify extends LogOperation {
 		this.value = value;
 	}
 	
+	public String toString() {
+		return "Notify: "+entity+" with id "+id+" changed "+key+" to "+value;
+	}
+	
 	public boolean equals (Object o) {
 		Notify other;
 		try {
