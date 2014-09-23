@@ -34,14 +34,17 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.TurnInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.UnmarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.StreamHelper;
 
 public class TacticsParserTest {
 	private TacticsParser tacticsParser;
+	private InputStream brokenStream;
 	private InputStream stream;
 	private Random random;
 	
@@ -82,20 +85,29 @@ public class TacticsParserTest {
 				+ "goto 0"+"\n"
 				+ "move else 21"+"\n"
 				+ "goto 14"+"\n"
-				+ "flipzero 3 else 24"+"\n"
-				+ "turn left"+"\n"
+				+ "flipzero 3 else 24; == == <= test 123 bbq"+"\n"
+				+ "turn left;this is another comment"+"\n"
 				+ "goto 14"+"\n"
 				+ "flipzero 2 else 26"+"\n"
 				+ "turn right"+"\n"
 				+ "goto 14"+"\n"
 				+ "repair else 0" + "\n"
 				+ "ifany sense_treasure ship_load==0 else 29"+"\n"
-				+ "refresh 5 else 0";
+				+ "refresh 5 else 0"+"\n"
+				+ "mark 0"+"\n"
+				+ "mark 2"+"\n"
+				+ "unmark 3;this is a freaking comment";
+		
+		String brokenString = ""
+				+ "ifall 2;== is much cool, ; ; lawl < ; "+"\n"
+				+ ";lawlbbq"+"\n"
+				+ "==";
 		
 		random = new Random(0);
 		expectLogger = new ExpectLogger();
 		tacticsParser = new TacticsParser(expectLogger);
 		stream = StreamHelper.asIS(string);
+		brokenStream = StreamHelper.asIS(brokenString);
 		
 		
 		entityFactory = new EntityFactory();
@@ -118,6 +130,20 @@ public class TacticsParserTest {
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
+	}
+	
+	/**
+	 * checks if there are errors while trying to parse the brokenStream
+	 */
+	@Test
+	public void failInstruction(){
+		try{
+		Instruction[] instrArray = tacticsParser.parseTactics(brokenStream, random);
+				}catch(IllegalArgumentException e){
+					return;
+				}
+		fail("there should be a illegalargument exception raised (parsed the broken string)"
+				+ "see in the tacticsparsertestclass @before");
 	}
 	
 	
@@ -225,17 +251,62 @@ public class TacticsParserTest {
 		assertTrue("The 26th Instruction should be a GotoInstruction",
 				instrArray[26] instanceof GotoInstruction);
 		
-		assertTrue("The 26th Instruction should be a RepairInstruction",
+		assertTrue("The 27th Instruction should be a RepairInstruction",
 				instrArray[27] instanceof RepairInstruction);
 		
-		assertTrue("The 26th Instruction should be a IfAnyInstruction",
+		assertTrue("The 28th Instruction should be a IfAnyInstruction",
 				instrArray[28] instanceof IfAnyInstruction);
 		
-		assertTrue("The 26th Instruction should be a RefreshInstruction",
+		assertTrue("The 29th Instruction should be a RefreshInstruction",
 				instrArray[29] instanceof RefreshInstruction);
+		
+		assertTrue("The 30th Instruction should be a MarkInstruction",
+				instrArray[30] instanceof MarkInstruction);
+		
+		assertTrue("The 31st Instruction should be a MarkInstruction",
+				instrArray[31] instanceof MarkInstruction);
+		
+		assertTrue("The 32snd Instruction should be a UnmarkInstruction",
+				instrArray[32] instanceof UnmarkInstruction);
 		
 	}
 	
+	/**
+	 * checks if the the Markinstruction marks on the right tile
+	 */
+	@Test
+	public void checkMarkInstruction(){
+		Instruction[] instrArray = tacticsParser.parseTactics(stream, random);
+		
+		Instruction instr = instrArray[30];
+		
+		assertTrue("the instruction 30 should be a MarkInstruction",
+				instr instanceof MarkInstruction);
+		
+		MarkInstruction markInstr = (MarkInstruction) instr;
+		
+		assertTrue(markInstr.getType() == 0);
+	}
+	
+	/**
+	 * checks if the MarkInstruction marks on the right tile
+	 */
+	/**
+	 * checks if the the Markinstruction marks on the right tile
+	 */
+	@Test
+	public void checkMarkTwiceInstruction(){
+		Instruction[] instrArray = tacticsParser.parseTactics(stream, random);
+		
+		Instruction instr = instrArray[31];
+		
+		assertTrue("the instruction 30 should be a MarkInstruction",
+				instr instanceof MarkInstruction);
+		
+		MarkInstruction markInstr = (MarkInstruction) instr;
+		
+		assertTrue(markInstr.getType() == 2);
+	}
 	
 	/**
 	 * checks if the ifinstr is parsed correctly
