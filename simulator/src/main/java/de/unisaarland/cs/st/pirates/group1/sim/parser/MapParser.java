@@ -3,6 +3,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -31,10 +32,12 @@ public class MapParser {
 	private HashMap<String, Faction> factions;
 	private ArrayList<Faction> list;
 	private Worldmap mymap;
-	private int factioncount =1;
+	private int factioncount =0;
 	private Simulator simulator;
 	
 	public MapParser(){
+		factions = new HashMap<String,Faction>();
+		list = new ArrayList<Faction>();
 	}
 
 	
@@ -55,6 +58,7 @@ public class MapParser {
 	 */
 	public void parseMap(InputStream stream, Simulator simulator) throws IllegalArgumentException, NullPointerException{
 		
+		HashMap<String, Faction> fact = factions;
 		
 		int width, height;
 		try(Scanner scan = new Scanner(stream)){
@@ -62,217 +66,218 @@ public class MapParser {
 			try{
 				this.simulator = simulator;
 				
-				width = scan.nextInt();
+				String readline = scan.nextLine();
 				
+				width = Integer.parseInt(readline.trim());
 				
+			
 				//these cases are not allowed for a correct map (concerning width)
 				if(width > 200 || width < 2 ){
 					throw new IllegalArgumentException("map is not correctly sized (problem with width)");
 				}
 				
-				if(!(scan.nextLine().equals(""))){
-					throw new IllegalArgumentException();
-				}
+				readline = scan.nextLine();
 				
-				height = scan.nextInt();
+				height = Integer.parseInt(readline.trim());
 				
 				//these cases are not allowed for a correct map (concerning height)
 				if(height > 200 || height < 2 || height%2 == 1 ){
 					throw new IllegalArgumentException("map is not correctly sized (problem with height");
 				}
-				
-				if(!(scan.nextLine().equals(""))){
-					throw new IllegalArgumentException();
-				}
+
 				
 				if(!(scan.hasNext())){
 					throw new IllegalArgumentException("map is missing");
 				}
 				
 				mymap = new Worldmap6T(width, height, simulator.getLogWriter(), simulator.getEntityFactory());
-					
+				simulator.setWorldmap(mymap);
 				//building of the map: beginning
-				String current;
+				char[] current = this.streamToCharArr(scan);
 				
+				
+				int counter = -1;
 				
 				//IllegalStateException will be thrown and converted to IllegalArgumentException if scan.next() cannot proceed
-				for(int i = 0; i< height; i++){
+				for(int j = 0; j< height; j++){
 					
-					for(int j = 0; j< width; j++){
+					for(int i = 0; i< width; i++){
 						
-						while(scan.hasNext()){
+						counter = counter +1;
+						System.out.println(current[counter]);
+						switch(current[counter]){
+						
+						case '#':
+							this.createIsland(new Position(i,j), false);
+							break;
 							
-							current = scan.next();
+						case '$':
+							this.createIsland(new Position(i,j), true);
+							break;
+						
+						case '&':
+							this.createKraken(new Position(i,j));
+							break;
 							
-							switch(current){
+						case '.':
+							this.createWater(new Position(i,j));
+							break;
 							
-							case "#":
-								this.createIsland(new Position(i,j), false);
-								break;
-								
-							case "$":
-								this.createIsland(new Position(i,j), true);
-								break;
+						case 'a':
+							this.createPirateBase(new Position(i,j), "a");
+							break;
+						
+						case 'b':
+							this.createPirateBase(new Position(i,j), "b" );
+							break;
+						
+						case 'c':
+							this.createPirateBase(new Position(i,j), "c");
+							break;
 							
-							case "&":
-								this.createKraken(new Position(i,j));
-								break;
-								
-							case ".":
-								this.createWater(new Position(i,j));
-								break;
-								
-							case "a":
-								this.createPirateBase(new Position(i,j), "a");
-								break;
+						case 'd':
+							this.createPirateBase(new Position(i,j), "d");
+							break;
 							
-							case "b":
-								this.createPirateBase(new Position(i,j), "b" );
-								break;
+						case 'e':
+							this.createPirateBase(new Position(i,j), "e");
+							break;
 							
-							case "c":
-								this.createPirateBase(new Position(i,j), "c");
-								break;
-								
-							case "d":
-								this.createPirateBase(new Position(i,j), "d");
-								break;
-								
-							case "e":
-								this.createPirateBase(new Position(i,j), "e");
-								break;
-								
-							case "f":
-								this.createPirateBase(new Position(i,j), "f");
-								break;
-								
-							case "g":
-								this.createPirateBase(new Position(i,j), "g");
-								break;
-								
-							case "h":
-								this.createPirateBase(new Position(i,j), "h");
-								break;
-								
-							case "i":
-								this.createPirateBase(new Position(i,j), "i");
-								break;
-								
-							case "j":
-								this.createPirateBase(new Position(i,j), "j");
-								break;
-								
-							case "k":
-								this.createPirateBase(new Position(i,j), "k");
-								break;
-								
-							case "l":
-								this.createPirateBase(new Position(i,j), "l");
-								break;
-								
-							case "m":
-								this.createPirateBase(new Position(i,j), "m");
-								break;
-								
-							case "n":
-								this.createPirateBase(new Position(i,j), "n");
-								break;
-								
-							case "o":
-								this.createPirateBase(new Position(i,j), "o");
-								break;
-								
-							case "p":
-								this.createPirateBase(new Position(i,j), "p");
-								break;
+						case 'f':
+							this.createPirateBase(new Position(i,j), "f");
+							break;
 							
-							case "q":
-								this.createPirateBase(new Position(i,j), "q");
-								break;
-								
-							case "r":
-								this.createPirateBase(new Position(i,j), "r");
-								break;
-								
-							case "s":
-								this.createPirateBase(new Position(i,j), "s");
-								break;
-								
-							case "t":
-								this.createPirateBase(new Position(i,j), "t");
-								break;
-								
-							case "u":
-								this.createPirateBase(new Position(i,j), "u");
-								break;
-								
-							case "v":
-								this.createPirateBase(new Position(i,j), "v");
-								break;
-								
-							case "w":
-								this.createPirateBase(new Position(i,j), "w");
-								break;
-								
-							case "x":
-								this.createPirateBase(new Position(i,j), "x");
-								break;
-								
-							case "y":
-								this.createPirateBase(new Position(i,j), "y");
-								break;
-								
-							case "z":
-								this.createPirateBase(new Position(i,j), "z");
-								break;
-								
-							case "1":
-								this.createIslandWithTreasure(new Position(i,j), 1);
-								break;
+						case 'g':
+							this.createPirateBase(new Position(i,j), "g");
+							break;
 							
-							case "2":
-								this.createIslandWithTreasure(new Position(i,j), 2);
-								break;
-								
-							case "3":
-								this.createIslandWithTreasure(new Position(i,j), 3);
-								break;
-								
-							case "4":
-								this.createIslandWithTreasure(new Position(i,j), 4);
-								break;
-								
-							case "5":
-								this.createIslandWithTreasure(new Position(i,j), 5);
-								break;
-								
-							case "6":
-								this.createIslandWithTreasure(new Position(i,j), 6);
-								break;
-								
-							case "7":
-								this.createIslandWithTreasure(new Position(i,j), 7);
-								break;
-								
-							case "8":
-								this.createIslandWithTreasure(new Position(i,j), 8);
-								break;
-								
-							case "9":
-								this.createIslandWithTreasure(new Position(i,j), 9);
-								break;
-								
-							default:
-								throw new IllegalArgumentException("wrong symbol in map");
-							}
+						case 'h':
+							this.createPirateBase(new Position(i,j), "h");
+							break;
+							
+						case 'i':
+							this.createPirateBase(new Position(i,j), "i");
+							break;
+							
+						case 'j':
+							this.createPirateBase(new Position(i,j), "j");
+							break;
+							
+						case 'k':
+							this.createPirateBase(new Position(i,j), "k");
+							break;
+							
+						case 'l':
+							this.createPirateBase(new Position(i,j), "l");
+							break;
+							
+						case 'm':
+							this.createPirateBase(new Position(i,j), "m");
+							break;
+							
+						case 'n':
+							this.createPirateBase(new Position(i,j), "n");
+							break;
+							
+						case 'o':
+							this.createPirateBase(new Position(i,j), "o");
+							break;
+							
+						case 'p':
+							this.createPirateBase(new Position(i,j), "p");
+							break;
+						
+						case 'q':
+							this.createPirateBase(new Position(i,j), "q");
+							break;
+							
+						case 'r':
+							this.createPirateBase(new Position(i,j), "r");
+							break;
+							
+						case 's':
+							this.createPirateBase(new Position(i,j), "s");
+							break;
+							
+						case 't':
+							this.createPirateBase(new Position(i,j), "t");
+							break;
+							
+						case 'u':
+							this.createPirateBase(new Position(i,j), "u");
+							break;
+							
+						case 'v':
+							this.createPirateBase(new Position(i,j), "v");
+							break;
+							
+						case 'w':
+							this.createPirateBase(new Position(i,j), "w");
+							break;
+							
+						case 'x':
+							this.createPirateBase(new Position(i,j), "x");
+							break;
+							
+						case 'y':
+							this.createPirateBase(new Position(i,j), "y");
+							break;
+							
+						case 'z':
+							this.createPirateBase(new Position(i,j), "z");
+							break;
+							
+						case '1':
+							this.createIslandWithTreasure(new Position(i,j), 1);
+							break;
+						
+						case '2':
+							this.createIslandWithTreasure(new Position(i,j), 2);
+							break;
+							
+						case '3':
+							this.createIslandWithTreasure(new Position(i,j), 3);
+							break;
+							
+						case '4':
+							this.createIslandWithTreasure(new Position(i,j), 4);
+							break;
+							
+						case '5':
+							this.createIslandWithTreasure(new Position(i,j), 5);
+							break;
+							
+						case '6':
+							this.createIslandWithTreasure(new Position(i,j), 6);
+							break;
+							
+						case '7':
+							this.createIslandWithTreasure(new Position(i,j), 7);
+							break;
+							
+						case '8':
+							this.createIslandWithTreasure(new Position(i,j), 8);
+							break;
+							
+						case '9':
+							this.createIslandWithTreasure(new Position(i,j), 9);
+							break;
+						case ' ':
+							j += -1;
+							break;
+						default:
+							throw new IllegalArgumentException("wrong symbol in map" + current[counter] + "Boxsack");
 						}
-					
+				
 					}
 					
 				}
 				
 				//gives the simulator its faction list
 				this.simulator.setFactions(list);
+				factions = new HashMap<String, Faction>();
+				list = new ArrayList<Faction>();
+				factioncount =0;
 				
 			}
 			catch(NoSuchElementException | IllegalStateException c){
@@ -356,5 +361,30 @@ public class MapParser {
 		
 		mymap.createTreasure(value, this.createIsland(position, false));
 		return;
+	}
+	
+	/**
+	 * This methods converts the stream into a whitespace free representation as string.
+	 * @param scan
+	 * @return
+	 */
+	private char[] streamToCharArr(Scanner scan){
+		
+		String map = "";
+		
+		while(scan.hasNextLine()){
+			map += scan.nextLine();
+		}
+		
+		String[] c = map.split("\\s+");
+		
+		String result ="";
+		int length = c.length;
+		
+		for(int i = 0; i< length; i++){
+			 result +=   c[i];
+		}
+		
+		return result.toCharArray();
 	}
 }
