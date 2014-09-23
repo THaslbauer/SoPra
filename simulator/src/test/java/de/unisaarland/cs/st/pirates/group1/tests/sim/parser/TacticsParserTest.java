@@ -153,7 +153,8 @@ public class TacticsParserTest {
 	@Test
 	public void bigInstructionSizeParseTest(){
 		Instruction[] instrArray = tacticsParser.parseTactics(stream, random);
-		assertTrue(instrArray.length == 30);
+		
+		assertTrue("" + instrArray.length, instrArray.length == 33);
 	}
 	
 
