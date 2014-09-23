@@ -14,6 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.tests.sim.util.*;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Create;
+import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Destroy;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Notify;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.DummyEntityFactory;
@@ -36,28 +37,37 @@ public class MoveInstructionTest {
 	 */
 	
 	/*  map 2:
-	 *  . &!
-	 *  § ?
+	 *  . &! .
+	 *    § ? !
 	 */
+	
+	private static class ResetFactory extends EntityFactory {
+		public void reset() {
+			//this.krakenNextId = 0; TODO
+		}
+	}
 	
 	private static DummyEntityFactory def = new DummyEntityFactory();
 	private static ExpectLogger elo = new ExpectLogger();
-	private static Worldmap map1 = new Worldmap6T(3,4,new ExpectLogger(), new EntityFactory()) {
+	private static Worldmap map1 = new Worldmap6T(3,4,elo, new EntityFactory()) {
 		public void setTile(Tile tile, int x, int y) {
 			tiles[y][x] = tile;
 		}
 	};
+	private static Worldmap map2 = new Worldmap6T(3,2, elo, new EntityFactory());
 	private static Faction faction1 = new Faction("a",1);
 	private static Faction faction2 = new Faction("b",2);
-	private static Ship m1ship2;
 	private static Ship m1ship;
+	private static Ship m2ship;
+	private static Ship m2shipE;
+	private static Ship m2shipE2;
+	private static Ship m2shipF;
 	private static Kraken m1kraken;
 	
 	@BeforeClass
-	public static void setupMap1() {
+	public static void setupMaps() {
 		map1.createSeaTile(new Position(0,0));
 		map1.createSeaTile(new Position(1,0));
-		m1ship2 = new Ship(faction2,1,map1.getTile(new Position(1,0))); 
 		map1.createSeaTile(new Position(2,0));
 		map1.createIslandTile(new Position(0,1), false);
 		map1.createSeaTile(new Position(1,1));
@@ -70,7 +80,20 @@ public class MoveInstructionTest {
 		map1.createSeaTile(new Position(0,3));
 		map1.createSeaTile(new Position(1,3));
 		map1.createSeaTile(new Position(2,3));
+		
+		map2.createSeaTile(new Position(0,0));
+		map2.createSeaTile(new Position(1,0));
+		m2shipE = new Ship(faction2,1,map2.getTile(new Position(1,0))); 
+		map2.createSeaTile(new Position(2,0));
+		map2.createSeaTile(new Position(0,1));
+		m2shipF = new Ship(faction1, 3, map2.getTile(new Position(0,1)));
+		map2.createSeaTile(new Position(1,1));
+		m2ship = new Ship(faction1, 0, map2.getTile(new Position(1,1)));
+		map2.createSeaTile(new Position(2,1));
+		m2shipE2 = new Ship(faction2, 2, map2.getTile(new Position(2,1)));
 	}
+	
+	
 	
 	private void stuffCheck(Ship ship, int pc, int resttime, int boredom) {
 		assertTrue("pc: expected "+pc+" got "+ship.getPC(), ship.getPC() == pc);
@@ -161,7 +184,32 @@ public class MoveInstructionTest {
 	}
 	
 	@Test
-	public void driveOnTheKraken1() {
+	public void driveOnDaBeachAndSink() {
+		m1ship.setHeading(Heading.H3);
+		m1ship.setLoad(3);
+		m1ship.setCondition(1);
+		MoveInstruction mi = new MoveInstruction(elo, 0);
+		elo.clear();
+		mi.execute(m1ship);
+		posStay(m1ship, 1,1);
+		assertTrue(m1ship.getMorale() == 3);
+		elo.expect(new Notify(Entity.SHIP, m1ship.getId(), Key.MORAL, 3));
+		assertTrue(m1ship.getCondition() == 0);
+		elo.expect(new Notify(Entity.SHIP, m1ship.getId(), Key.CONDITION, 0)); // ja oder nein???
+		try {
+			assertTrue(map1.getTile(new Position(1,1)).getTreasure().getValue() == 3 && map1.getTile(new Position(1,1)).getTreasure().getId() == 0);
+		} catch(NullPointerException e) {
+			fail("There must be a treasure here");
+		}
+		elo.expect(new Create(Entity.TREASURE, 0, new Key[] {Key.VALUE, Key.X_COORD, Key.Y_COORD}, new int[] {3, 1, 1}));
+		assertTrue("The ship should be cleaned up",map1.getTile(new Position(1,1)).getShip() == null && m1ship.getMyTile() == null);
+		elo.expect(new Destroy(Entity.SHIP, m1ship.getId()));
+		elo.expectNothing();
+		resetM1ship();
+	}
+	
+	@Test
+	public void driveOnTheKraken() {
 		m1ship.setHeading(Heading.H0);
 		m1ship.setCondition(2);
 		MoveInstruction mi = new MoveInstruction(elo, 12);
@@ -175,6 +223,23 @@ public class MoveInstructionTest {
 		resetM1ship();
 	}
 
+	@Test
+	public void driveOnTheKrakenAndSink() {
+		m1ship.setHeading(Heading.H0);
+		m1ship.setCondition(0);
+		MoveInstruction mi = new MoveInstruction(elo, 12);
+		elo.clear();
+		mi.execute(m1ship);
+		posCheck(m1ship, 2, 1);
+		stuffCheck(m1ship, 1, 4, 1);
+		assertTrue(m1ship.getCondition() == 0);
+		elo.expect(new Notify(Entity.SHIP, m1ship.getId(), Key.CONDITION, 0)); /// ja oder nein???
+		assertTrue("The ship should be cleaned up",map1.getTile(new Position(2,1)).getShip() == null && m1ship.getMyTile() == null);
+		elo.expect(new Destroy(Entity.SHIP, m1ship.getId()));
+		elo.expectNothing();
+		resetM1ship();
+	}
+	
 	@Test
 	public void cleanUpTest() {
 		try {
