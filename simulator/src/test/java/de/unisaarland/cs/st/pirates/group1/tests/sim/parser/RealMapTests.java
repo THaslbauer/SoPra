@@ -237,6 +237,35 @@ public class RealMapTests {
 		}
 	}
 	
+	@Test
+	public void coverageTest() {
+		sim = new Simulator(elogger, new Random());
+		elogger.clear();
+		String s = "26\n2\nabcdefghijklmnopqrstuvmxyz123456789.................";
+		try {
+			mp.parseMap(asIS(s), sim);
+		} catch(Exception e) {
+			fail("This should not happen: "+e.getMessage());
+		}
+		Worldmap map = sim.getWorldmap();
+		int offset = 5;
+		for(int i = offset; i < offset + 26; i++) {
+			char c = s.charAt(i);
+			Faction ref = new Faction(c+"",i - offset);
+			try{
+			assertTrue(((Base)map.getTile(new Position(i - offset, 0))).getFaction().equals(ref));
+			} catch(ClassCastException e) {
+				fail("There should be bases");
+			}
+		}
+		offset += 26;
+		for(int i = offset; i < offset + 9; i++) {
+			assertTrue(map.getTile(new Position(i - offset, 1)).getTreasure().getValue() == i - offset);
+		}
+	}
+	
+	
+	
 	private void failIt(String s, Exception e) {
 		fail("Something went wrong with tile ("+s+"): "+e.getMessage());
 	}
