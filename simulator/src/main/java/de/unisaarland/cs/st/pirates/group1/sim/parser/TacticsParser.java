@@ -27,6 +27,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructi
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.MarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.TurnInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.UnmarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 
 /**
@@ -288,7 +289,7 @@ public class TacticsParser {
 				instruction[1].equals("2") || instruction[1].equals("3") || 
 				instruction[1].equals("4") || instruction[1].equals("5")){
 			
-			return new MarkInstruction(logger, Integer.parseInt(instruction[1]));
+			return new UnmarkInstruction(logger, Integer.parseInt(instruction[1]));
 			
 		}
 		
