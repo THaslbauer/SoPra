@@ -262,9 +262,6 @@ public class MapParser {
 						case '9':
 							this.createIslandWithTreasure(new Position(i,j), 9);
 							break;
-						case ' ':
-							j += -1;
-							break;
 						default:
 							throw new IllegalArgumentException("wrong symbol in map" + current[counter] + "Boxsack");
 						}
