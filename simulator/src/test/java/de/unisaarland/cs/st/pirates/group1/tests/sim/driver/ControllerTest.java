@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -105,8 +106,8 @@ public class ControllerTest
 		InputStream mapInput;
 		InputStream tacticsInput;
 		
-		mapInput     = new ByteArrayInputStream(Charset.forName("UTF-16").encode(mapStr).array());
-		tacticsInput = new ByteArrayInputStream(Charset.forName("UTF-16").encode(tactics).array());
+		mapInput     = new ByteArrayInputStream(mapStr.getBytes());
+		tacticsInput = new ByteArrayInputStream(tactics.getBytes());
 		
 		List<InputStream> tactics = new LinkedList<>();
 		OutputStream out          = new ByteArrayOutputStream();
