@@ -157,6 +157,7 @@ public void initializeSimulator() throws IOException{
 	List<String> stringList = new LinkedList<String>();
 	for(InputStream in : tacticsFile){
 		stringList.add(convertStreamToString(in));
+		in.reset();
 	}
 	
 	

@@ -92,7 +92,7 @@ public class ControllerTest
 	private Simulator sim;
 	
 	private static final String mapStr = "2\n2\n..\n.b";
-	private static final String tactics = "goto 0";
+	private static final String tactics = "goto 0\n";
 	
 	
 	@Before
@@ -105,8 +105,8 @@ public class ControllerTest
 		InputStream mapInput;
 		InputStream tacticsInput;
 		
-		mapInput     = new ByteArrayInputStream(Charset.forName("UTF-16").encode(mapStr).array());
-		tacticsInput = new ByteArrayInputStream(Charset.forName("UTF-16").encode(tactics).array());
+		mapInput     = new ByteArrayInputStream(mapStr.getBytes());
+		tacticsInput = new ByteArrayInputStream(tactics.getBytes());
 		
 		List<InputStream> tactics = new LinkedList<>();
 		OutputStream out          = new ByteArrayOutputStream();
