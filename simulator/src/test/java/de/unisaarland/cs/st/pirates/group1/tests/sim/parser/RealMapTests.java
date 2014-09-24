@@ -27,6 +27,7 @@ public class RealMapTests {
 	public void minimalMapEasyTest() {
 		String s = "2\n2\n.#\n$.";
 		sim = new Simulator(elogger, r);
+		elogger.clear();
 		try{
 			mp.parseMap(asIS(s), sim);
 		} catch(Exception e) {
@@ -42,7 +43,7 @@ public class RealMapTests {
 			map.getTile(new Position(0,1)) instanceof Island &&
 			map.getTile(new Position(1,1)) instanceof Sea) )
 			fail("Wrong tiles attached");
-		if(map.getTile(new Position(0,1)) instanceof Sea && map.getTile(new Position(1,0)) instanceof Island && map.getTile(new Position(1,1)) instanceof Sea)
+		if(map.getTile(new Position(0,1)) instanceof Island)
 			assertTrue( map.getTile(new Position(0,1)).isSupply() );
 		else
 			fail("Wrong tile types");
@@ -230,7 +231,7 @@ public class RealMapTests {
 		try {
 			assertTrue("There should be an island over here",map.getTile(new Position(0,0)) instanceof Island);
 			assertTrue("The treasure here should be 8",map.getTile(new Position(1,1)).getTreasure().getValue() == 8);
-			assertTrue("The ship here should be the second one",map.getTile(new Position(1,2)).getShip().getId() == 2);
+			assertTrue("The ship here should be the second one",map.getTile(new Position(1,2)).getShip().getId() == 1);
 			assertTrue("This should be a supply island",((Island)map.getTile(new Position(1,3))).isSupply());
 		} catch(Exception e) {
 			fail("O.o it failed: "+e.getMessage()+"... :/");
@@ -241,7 +242,7 @@ public class RealMapTests {
 	public void coverageTest() {
 		sim = new Simulator(elogger, new Random());
 		elogger.clear();
-		String s = "26\n2\nabcdefghijklmnopqrstuvmxyz123456789.................";
+		String s = "26\n2\nabcdefghijklmnopqrstuvwxyz123456789.................";
 		try {
 			mp.parseMap(asIS(s), sim);
 		} catch(Exception e) {
@@ -260,7 +261,9 @@ public class RealMapTests {
 		}
 		offset += 26;
 		for(int i = offset; i < offset + 9; i++) {
-			assertTrue(map.getTile(new Position(i - offset, 1)).getTreasure().getValue() == i - offset);
+			char c = s.charAt(i);
+			Treasure t = map.getTile(new Position(i - offset, 1)).getTreasure();
+			assertTrue(t.getValue() == i - offset + 1);
 		}
 	}
 	

@@ -81,6 +81,7 @@ public class MoveInstructionTest {
 		 map2 = new Worldmap6T(3,2, elo, new EntityFactory());
 		map2.createSeaTile(new Position(0,0));
 		map2.createSeaTile(new Position(1,0));
+		Kraken map2kraken = new Kraken(0, map2.getTile(new Position(1,0)));
 		map2.createSeaTile(new Position(2,0));
 		map2.createSeaTile(new Position(0,1));
 		map2.createSeaTile(new Position(1,1));
@@ -290,6 +291,22 @@ public class MoveInstructionTest {
 		elo.expect(new Destroy(Entity.SHIP, m1ship.getId()));
 		elo.expectNothing();
 	}
+	
+	
+	
+	
+	/*  map 2:
+	 *  . &! .
+	 *    § ? !
+	 */
+	
+	
+	
+	@Test
+	public void driveOnFriendlyShip() {
+		
+	}
+	
 	
 	@Test
 	public void cleanUpTest() {
