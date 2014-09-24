@@ -239,6 +239,10 @@ public class MoveInstruction extends ElseInstruction {
 		if(tileType != CellType.HOME) {
 			super.cycle(ship);
 		}
+		else {
+			//reset boredom
+			ship.resetBoredom();
+		}
 
 		//last thing: check for kraken and maybe get destroyed
 		if(neighbourTile.getKraken() != null) {
