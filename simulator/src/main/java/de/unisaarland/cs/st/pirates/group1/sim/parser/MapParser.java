@@ -280,7 +280,7 @@ public class MapParser {
 				factioncount =0;
 				
 			}
-			catch(NoSuchElementException | IllegalStateException c){
+			catch(NoSuchElementException | IllegalStateException | ArrayIndexOutOfBoundsException c){
 				throw new IllegalArgumentException();
 			}
 		}

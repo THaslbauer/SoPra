@@ -55,7 +55,7 @@ public class Simulator
 		this.cycle         = 0;
 		this.maxCycle      = maxCycle;
 		this.logger        = logger;
-		this.entityFactory = null;
+		this.entityFactory = new EntityFactory();
 		this.random        = null;
 		this.krakenWaittime = 0;
 		this.maxKrakenWaittime = 20;
