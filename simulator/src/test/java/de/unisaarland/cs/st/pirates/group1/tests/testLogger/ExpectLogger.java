@@ -27,13 +27,21 @@ public class ExpectLogger implements ExtendedLogWriter {
 		assertTrue("EXPECTED \""+op+"\" but GOT \""+otherop+"\".",op.equals(otherop));
 	}
 
+	public void expect() {
+		try {
+			ops.removeFirst();
+		} catch(NoSuchElementException e) {
+			fail("Expected an operation, but there was nothing!");
+		}
+	}
+	
 	public void clear() {
 		ops.clear();
 	}
 	
 	public void expectNothing() {
 		if(!ops.isEmpty())
-			fail("I expected no more logs, but there were some!");
+			fail("I expected no more logs, but there were some: "+ops);
 	}
 	
 	@Override
