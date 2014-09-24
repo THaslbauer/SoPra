@@ -120,4 +120,10 @@ public class IllegalMapTest {
 		checkNFail(s,"Map size does not match map structure");		
 	}
 	
+	@Test
+	public void illegalCharTest() {
+		String s = "2\n2\n...§";
+		checkNFail(s, "Illegal Symbol");
+	}
+	
 }
