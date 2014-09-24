@@ -119,6 +119,10 @@ public class ControllerTest
 		} catch (IOException e) {
 			fail();
 		}
+		
+		testSimulator     = new TestSimulator(new ExpectLogger());
+		testMapParser     = new TestMapParser();
+		testTacticsParser = new TestTacticsParser(new ExpectLogger());
 	}
 	
 	@Test
