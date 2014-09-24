@@ -235,8 +235,10 @@ public class MoveInstruction extends ElseInstruction {
 		
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		
-		//now cycle
-		super.cycle(ship);
+		//now cycle if we didn't arrive on home base
+		if(tileType != CellType.HOME) {
+			super.cycle(ship);
+		}
 
 		//last thing: check for kraken and maybe get destroyed
 		if(neighbourTile.getKraken() != null) {
@@ -258,7 +260,7 @@ public class MoveInstruction extends ElseInstruction {
 		if(ship.getCondition() == 0) {
 			ship.setMyTile(null);
 			logger.destroy(Entity.SHIP, ship.getId());
-			ship.getFaction().decreaseScore();
+			ship.getFaction().removeShip();
 		}
 		return false;
 		
