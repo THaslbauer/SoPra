@@ -93,7 +93,7 @@ public class ControllerTest
 	private Simulator sim;
 	
 	private static final String mapStr = "2\n2\n..\n.b";
-	private static final String tactics = "goto 0";
+	private static final String tactics = "goto 0\n";
 	
 	
 	@Before
