@@ -22,11 +22,28 @@ public class ExpectLogger implements ExtendedLogWriter {
 		try {
 			otherop = ops.removeFirst();
 		} catch(NoSuchElementException e) {
-			fail("Expected a log operation, but there was none!");
+			fail("Expected \""+op+"\", but there was nothing!");
 		}
 		assertTrue("EXPECTED \""+op+"\" but GOT \""+otherop+"\".",op.equals(otherop));
 	}
 
+	public void expect() {
+		try {
+			ops.removeFirst();
+		} catch(NoSuchElementException e) {
+			fail("Expected an operation, but there was nothing!");
+		}
+	}
+	
+	public void clear() {
+		ops.clear();
+	}
+	
+	public void expectNothing() {
+		if(!ops.isEmpty())
+			fail("I expected no more logs, but there were some: "+ops);
+	}
+	
 	@Override
 	public LogWriter addCell(Cell type, Integer faction, int x, int y)
 			throws NullPointerException, ArrayIndexOutOfBoundsException,

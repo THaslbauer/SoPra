@@ -35,7 +35,7 @@ public class RealMapTests {
 		Worldmap map = sim.getWorldmap();
 		elogger.expect(new AddCell(Cell.WATER, null, 0, 0));
 		elogger.expect(new AddCell(Cell.ISLAND, null, 1, 0));
-		elogger.expect(new AddCell(Cell.ISLAND, null, 0, 1));
+		elogger.expect(new AddCell(Cell.SUPPLY, null, 0, 1));
 		elogger.expect(new AddCell(Cell.WATER, null, 1, 1));
 		if( !(map.getTile(new Position(0,0)) instanceof Sea &&  
 			map.getTile(new Position(1,0)) instanceof Island &&
@@ -206,9 +206,9 @@ public class RealMapTests {
 		Faction f4 = ((Base)tile).getFaction();
 		
 		assertTrue("Failed at faction 1", f1.getFactionID() == 0 && f1.getName() == "c");
-		assertTrue("Failed at faction 2", f2.getFactionID() == 1 && f1.getName() == "d");
-		assertTrue("Failed at faction 3", f3.getFactionID() == 2 && f1.getName() == "a");
-		assertTrue("Failed at faction 4", f4.getFactionID() == 3 && f1.getName() == "b");
+		assertTrue("Failed at faction 2", f2.getFactionID() == 1 && f2.getName() == "d");
+		assertTrue("Failed at faction 3", f3.getFactionID() == 2 && f3.getName() == "a");
+		assertTrue("Failed at faction 4", f4.getFactionID() == 3 && f4.getName() == "b");
 	}
 	
 	@Test
@@ -236,6 +236,35 @@ public class RealMapTests {
 			fail("O.o it failed: "+e.getMessage()+"... :/");
 		}
 	}
+	
+	@Test
+	public void coverageTest() {
+		sim = new Simulator(elogger, new Random());
+		elogger.clear();
+		String s = "26\n2\nabcdefghijklmnopqrstuvmxyz123456789.................";
+		try {
+			mp.parseMap(asIS(s), sim);
+		} catch(Exception e) {
+			fail("This should not happen: "+e.getMessage());
+		}
+		Worldmap map = sim.getWorldmap();
+		int offset = 5;
+		for(int i = offset; i < offset + 26; i++) {
+			char c = s.charAt(i);
+			Faction ref = new Faction(c+"",i - offset);
+			try{
+			assertTrue(((Base)map.getTile(new Position(i - offset, 0))).getFaction().equals(ref));
+			} catch(ClassCastException e) {
+				fail("There should be bases");
+			}
+		}
+		offset += 26;
+		for(int i = offset; i < offset + 9; i++) {
+			assertTrue(map.getTile(new Position(i - offset, 1)).getTreasure().getValue() == i - offset);
+		}
+	}
+	
+	
 	
 	private void failIt(String s, Exception e) {
 		fail("Something went wrong with tile ("+s+"): "+e.getMessage());

@@ -8,10 +8,10 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
  */
 public class EntityFactory {
 
-	private int shipNextId;
-	private int treasureNextId;
-	private int buoyNextId;
-	private int krakenNextId;
+	protected int shipNextId;
+	protected int treasureNextId;
+	protected int buoyNextId;
+	protected int krakenNextId;
 	
 	public int getKrakenNextId() {
 		return krakenNextId;

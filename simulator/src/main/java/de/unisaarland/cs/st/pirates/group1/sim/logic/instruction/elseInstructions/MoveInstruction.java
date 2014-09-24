@@ -211,7 +211,6 @@ public class MoveInstruction extends ElseInstruction {
 	private void move(Ship ship) {
 		Tile neighbourTile = ship.getMyTile().getNeighbour(ship.getHeading(), Direction.D0);
 		ship.setMyTile(neighbourTile);
-		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		
 		//we have arrived, now look to see if we're home
 		CellType tileType = neighbourTile.navigable(ship);
@@ -228,10 +227,22 @@ public class MoveInstruction extends ElseInstruction {
 		//look for demoralized crew
 		restTime += ship.getMorale() == 0 ? 2 : 0;
 		ship.setRestTime(restTime);
-		logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, restTime);
+		logger.notify(Entity.SHIP, ship.getId(), Key.X_COORD, neighbourTile.getPosition().x);
+		
+		logger.notify(Entity.SHIP, ship.getId(), Key.Y_COORD, neighbourTile.getPosition().y);
 
-		//now cycle
-		super.cycle(ship);
+		logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, restTime);
+		
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
+		
+		//now cycle if we didn't arrive on home base
+		if(tileType != CellType.HOME) {
+			super.cycle(ship);
+		}
+		else {
+			//reset boredom
+			ship.resetBoredom();
+		}
 
 		//last thing: check for kraken and maybe get destroyed
 		if(neighbourTile.getKraken() != null) {
@@ -253,7 +264,7 @@ public class MoveInstruction extends ElseInstruction {
 		if(ship.getCondition() == 0) {
 			ship.setMyTile(null);
 			logger.destroy(Entity.SHIP, ship.getId());
-			ship.getFaction().decreaseScore();
+			ship.getFaction().removeShip();
 		}
 		return false;
 		
