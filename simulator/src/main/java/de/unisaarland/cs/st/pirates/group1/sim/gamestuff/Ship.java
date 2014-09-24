@@ -28,6 +28,7 @@ public class Ship extends Placable {
 	
 	/**
 	 * Ship constructor
+	 * increases faction ship count
 	 * @param id the ship id
 	 * @param tile the tile to place the ship on
 	 */
@@ -41,6 +42,7 @@ public class Ship extends Placable {
 		registers[Register.SHIP_DIRECTION.ordinal()] = heading.ordinal();
 		this.faction = faction;
 		clearSenseRegisters();
+		faction.addShip();
 	}
 	
 	/**
