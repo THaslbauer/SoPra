@@ -224,12 +224,14 @@ public void play(){
 	}
 	//let the simulator do one step
 	boolean ende = false;
-	while(!ende && waitForUnpaused() && Thread.interrupted()){
+	while(!ende && waitForUnpaused() && !Thread.interrupted()){
 		try{
 		simulator.step();
 		}catch(UnsupportedOperationException e){
 			ende = true;
 		}
+		
+		ende = true;
 	}
 	sema.release();
 }
