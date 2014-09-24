@@ -85,10 +85,13 @@ public class MoveInstructionTest {
 		map2.createSeaTile(new Position(0,1));
 		map2.createSeaTile(new Position(1,1));
 		map2.createSeaTile(new Position(2,1));
+		
+		resetM1ship();
+		setupShipForMap2();
 	}
 	
 	
-	@Before
+	
 	public void setupShipForMap2(){
 		try{
 			m2shipE.setMyTile(null); 
@@ -165,7 +168,7 @@ public class MoveInstructionTest {
 		elo.expect(new Notify(Entity.SHIP, ship.getId(), Key.Y_COORD, y));
 	}
 	
-	@Before
+	
 	public void resetM1ship() {
 		try{
 			m1ship.setMyTile(null);
