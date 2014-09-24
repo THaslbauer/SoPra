@@ -161,9 +161,6 @@ public class Simulator
 		// adds the ship to the ship list
 		ships.add(newShip);
 		
-		//reports the new Ship to the belonging faction
-		faction.addShip();
-		
 		return newShip;
 	}
 	

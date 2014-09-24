@@ -104,7 +104,6 @@ public class MapParser {
 					for(int i = 0; i< width; i++){
 						
 						counter = counter +1;
-						System.out.println(current[counter]);
 						switch(current[counter]){
 						
 						case '#':
