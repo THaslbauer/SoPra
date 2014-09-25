@@ -12,6 +12,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.logger;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
@@ -20,7 +21,7 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter;
 public class InfoPoint implements ExtendedLogWriter{
 
 	private LogWriter refLogger;
-	private ExtendedLogWriter GUI;
+	private List<ExtendedLogWriter> GUIs;
 	
 	/**
 	 * Default constructor
@@ -39,12 +40,12 @@ public class InfoPoint implements ExtendedLogWriter{
 		this.refLogger = refLogger;
 	}
 
-	public ExtendedLogWriter getGUI() {
-		return GUI;
+	public List<ExtendedLogWriter> getGUI() {
+		return GUIs;
 	}
 
-	public void setGUI(ExtendedLogWriter gUI) {
-		GUI = gUI;
+	public void setGUI(List<ExtendedLogWriter> gUI) {
+		GUIs = gUI;
 	}
 
 
@@ -54,7 +55,8 @@ public LogWriter addCell(Cell type, Integer faction, int x, int y)
 		throws NullPointerException, ArrayIndexOutOfBoundsException,
 		IllegalArgumentException, IllegalStateException {
 	refLogger.addCell(type, faction, x, y);
-	GUI.addCell(type, faction, x, y);
+	for(ExtendedLogWriter g :  GUIs)
+	g.addCell(type, faction, x, y);
 	return null;
 }
 
@@ -62,7 +64,8 @@ public LogWriter addCell(Cell type, Integer faction, int x, int y)
 public LogWriter addCustomHeaderData(String data) throws NullPointerException,
 		ArrayIndexOutOfBoundsException, IllegalStateException {
 	refLogger.addCustomHeaderData(data);
-	GUI.addCustomHeaderData(data);
+	for(ExtendedLogWriter g :  GUIs)
+	g.addCustomHeaderData(data);
 	return null;
 }
 
@@ -71,14 +74,16 @@ public Transaction beginTransaction(Entity entity, int id)
 		throws NullPointerException, IllegalArgumentException,
 		IllegalStateException {
 	refLogger.beginTransaction(entity, id);
-	GUI.beginTransaction(entity, id);
+	for(ExtendedLogWriter g :  GUIs)
+	g.beginTransaction(entity, id);
 	return null;
 }
 
 @Override
 public void close() throws IllegalStateException, IOException {
 	refLogger.close();
-	GUI.close();
+	for(ExtendedLogWriter g :  GUIs)
+	g.close();
 }
 
 @Override
@@ -86,7 +91,8 @@ public LogWriter commitTransaction(Transaction transaction)
 		throws NullPointerException, IllegalArgumentException,
 		IllegalStateException {
 	refLogger.commitTransaction(transaction);
-	GUI.commitTransaction(transaction);
+	for(ExtendedLogWriter g :  GUIs)
+	g.commitTransaction(transaction);
 	return null;
 }
 
@@ -95,7 +101,8 @@ public LogWriter create(Entity entity, int id, Key[] keys, int[] values)
 		throws NullPointerException, IllegalArgumentException,
 		ArrayIndexOutOfBoundsException, IllegalStateException {
 	refLogger.create(entity, id, keys, values);
-	GUI.create(entity, id, keys, values);
+	for(ExtendedLogWriter g :  GUIs)
+	g.create(entity, id, keys, values);
 	return null;
 }
 
@@ -103,7 +110,8 @@ public LogWriter create(Entity entity, int id, Key[] keys, int[] values)
 public LogWriter destroy(Entity entity, int id) throws NullPointerException,
 		IllegalArgumentException, IllegalStateException {
 	refLogger.destroy(entity, id);
-	GUI.destroy(entity, id);
+	for(ExtendedLogWriter g :  GUIs)
+	g.destroy(entity, id);
 	return null;
 }
 
@@ -111,7 +119,8 @@ public LogWriter destroy(Entity entity, int id) throws NullPointerException,
 public LogWriter fleetScore(int id, int value) throws IllegalArgumentException,
 		ArrayIndexOutOfBoundsException, IllegalStateException {
 	refLogger.fleetScore(id, value);
-	GUI.fleetScore(id, value);
+	for(ExtendedLogWriter g :  GUIs)
+	g.fleetScore(id, value);
 	return null;
 }
 
@@ -120,14 +129,16 @@ public void init(OutputStream logStream, String map, String... programs)
 		throws NullPointerException, IOException,
 		ArrayIndexOutOfBoundsException {
 	refLogger.init(logStream, map, programs);
-	GUI.init(logStream, map, programs);
+	for(ExtendedLogWriter g :  GUIs)
+	g.init(logStream, map, programs);
 	
 }
 
 @Override
 public void logStep() throws IllegalStateException, IOException {
 	refLogger.logStep();
-	GUI.logStep();
+	for(ExtendedLogWriter g :  GUIs)
+	g.logStep();
 }
 
 @Override
@@ -135,24 +146,28 @@ public LogWriter notify(Entity entity, int id, Key key, int value)
 		throws NullPointerException, IllegalArgumentException,
 		IllegalStateException {
 	refLogger.notify(entity, id, key, value);
-	GUI.notify(entity, id, key, value);
+	for(ExtendedLogWriter g :  GUIs)
+	g.notify(entity, id, key, value);
 	return null;
 }
 
 @Override
 public void fight(Ship ship, Ship otherShip) {
-	GUI.fight(ship, otherShip);
+	for(ExtendedLogWriter g :  GUIs)
+	g.fight(ship, otherShip);
 }
 
 @Override
 public void fight(Ship ship, Kraken kraken) {
-	GUI.fight(ship, kraken);
+	for(ExtendedLogWriter g :  GUIs)
+	g.fight(ship, kraken);
 }
 
 
 @Override
 public void registerChange(Ship ship) {
-	GUI.registerChange(ship);
+	for(ExtendedLogWriter g :  GUIs)
+	g.registerChange(ship);
 }
 
 }

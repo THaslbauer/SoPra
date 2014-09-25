@@ -2,12 +2,15 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.logger;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedList;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestLogger;
@@ -18,6 +21,8 @@ public class InfoPointTest
 	
 	private static TestLogger testLogger;
 	
+	private static LinkedList<ExtendedLogWriter> testGuis;
+	
 	private static TestGui testGui;
 	
 	
@@ -26,10 +31,12 @@ public class InfoPointTest
 	{
 		infoPoint  = new InfoPoint();
 		testLogger = new TestLogger();
+		testGuis   = new LinkedList<ExtendedLogWriter>();
 		testGui    = new TestGui();
+		testGuis.add(testGui);
 		
 		infoPoint.setRefLogger(testLogger);
-		infoPoint.setGUI(testGui);
+		infoPoint.setGUI(testGuis);
 	}
 	
 	@Test
@@ -250,9 +257,9 @@ public class InfoPointTest
 				testLogger.equals(infoPoint.getRefLogger()));
 		
 		
-		infoPoint.setGUI(testGui);
+		infoPoint.setGUI(testGuis);
 		assertTrue("The infoPoint's setter or getter for the GUI was incorrect",
-				testGui.equals(infoPoint.getGUI()));
+				testGuis.equals(infoPoint.getGUI()));
 	}
 	
 }
