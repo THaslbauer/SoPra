@@ -184,6 +184,10 @@ public class MoveInstruction extends ElseInstruction {
 		}
 		//now other ship loses treasure if possible
 		int treasure = loser.getLoad();
+		if(treasure > 0) {
+			loser.setLoad(0);
+			logger.notify(Entity.SHIP, loser.getId(), Key.VALUE, 0);
+		}
 		int capacity = Ship.getMaxload() - winner.getLoad();
 		int newLoad = winner.getLoad();
 		//no treasure, we are done
@@ -265,6 +269,7 @@ public class MoveInstruction extends ElseInstruction {
 			ship.setMyTile(null);
 			logger.destroy(Entity.SHIP, ship.getId());
 			ship.getFaction().removeShip();
+			return true;
 		}
 		return false;
 		
