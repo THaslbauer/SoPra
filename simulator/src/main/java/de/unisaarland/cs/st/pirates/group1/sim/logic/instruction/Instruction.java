@@ -14,7 +14,7 @@ public abstract class Instruction {
 	protected ExtendedLogWriter logger;
 	
 	/**
-	 * creates a new Instruction with the ExtendedLogWriter for logging
+	 * Creates a new Instruction with the ExtendedLogWriter for logging.
 	 * @param logger
 	 */
 	public Instruction(ExtendedLogWriter logger){
@@ -24,7 +24,7 @@ public abstract class Instruction {
 	}
 	
 	/**
-	 * handles increasing boredom and lowering morale of the ship
+	 * Handles increasing boredom and lowering morale of the ship.
 	 * morale gets lowered when there were too many (default: 40) cycles without a positive action,
 	 * this lowering of morale then resets the boredom counter.
 	 * @param ship

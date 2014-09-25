@@ -233,4 +233,16 @@ public class Ship extends Placable {
 		return registers;
 	}
 	
+	public String toString() {
+		int x, y = 0, f;
+		if(myTile != null) {
+			x = myTile.getPosition().x;
+			y = myTile.getPosition().y;
+		} else {
+			x = -1;
+		}
+		f = faction == null ? -1 : faction.getFactionID();
+		return "Ship" + (x==-1? "" : " ("+x+","+y+")")+(f == -1 ? "" : ": "+faction.getName()+" ("+f+")");
+	}
+	
 }

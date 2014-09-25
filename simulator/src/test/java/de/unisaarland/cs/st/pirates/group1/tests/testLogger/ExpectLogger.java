@@ -2,6 +2,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
@@ -14,6 +15,7 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class ExpectLogger implements ExtendedLogWriter {
 	public LinkedList<LogOperation> ops = new LinkedList<LogOperation>();
+	public LinkedList<OptionalLogOperation> oops = new LinkedList<OptionalLogOperation>();
 
 	
 	/* Most epic method of da history */
@@ -26,6 +28,16 @@ public class ExpectLogger implements ExtendedLogWriter {
 		}
 		assertTrue("EXPECTED \""+op+"\" but GOT \""+otherop+"\".",op.equals(otherop));
 	}
+	
+	public void expect(OptionalLogOperation op) {
+		OptionalLogOperation otheroop = null;
+		try {
+			otheroop = oops.removeFirst();
+		} catch(NoSuchElementException e) {
+			fail("Expected \""+op+"\", but there was nothing!");
+		}
+		assertTrue("EXPECTED \""+op+"\" but GOT \""+otheroop+"\".",op.equals(otheroop));
+	}
 
 	public void expect() {
 		try {
@@ -35,8 +47,11 @@ public class ExpectLogger implements ExtendedLogWriter {
 		}
 	}
 	
+	
+	
 	public void clear() {
 		ops.clear();
+		oops.clear();
 	}
 	
 	public void expectNothing() {
@@ -131,13 +146,12 @@ public class ExpectLogger implements ExtendedLogWriter {
 
 	@Override
 	public void fight(Ship ship, Ship otherShip) {
-		// TODO Auto-generated method stub
-		
+		oops.add(new Fight(ship, otherShip));
 	}
 
 	@Override
 	public void fight(Ship ship, Kraken kraken) {
-		// TODO Auto-generated method stub
+		oops.add(new Fight(ship, kraken));
 		
 	}
 
