@@ -1,0 +1,12 @@
+turn left
+move else 0
+pickup 4 else 0
+turn right
+turn right
+turn right
+move else 0
+drop
+turn right
+turn right
+turn right
+goto 0
