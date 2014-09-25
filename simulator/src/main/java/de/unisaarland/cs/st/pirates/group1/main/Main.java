@@ -104,7 +104,8 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
-		infoPoint.setRefLogger(LogProvider.createInstance("RefLogger"));
+		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
+		infoPoint.setRefLogger(LogProvider.createInstance("DEFAULT"));
 		Simulator sim = new Simulator(infoPoint,turns,rand);
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
