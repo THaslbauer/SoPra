@@ -269,6 +269,7 @@ public class MoveInstruction extends ElseInstruction {
 			ship.setMyTile(null);
 			logger.destroy(Entity.SHIP, ship.getId());
 			ship.getFaction().removeShip();
+			return true;
 		}
 		return false;
 		
