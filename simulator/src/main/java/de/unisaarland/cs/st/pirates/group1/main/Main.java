@@ -107,6 +107,12 @@ public class Main {
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
 		Controller controller = new Controller(sim, mapParser, tacticsParser, 
 				mapFile, tacticsFiles, seed, logFile);
+		try {
+		controller.initializeSimulator();
+		}
+		catch(IOException e) {
+			throw new IllegalStateException("Couldn't open file streams");
+		}
 		
 		if(start)
 			controller.play();
