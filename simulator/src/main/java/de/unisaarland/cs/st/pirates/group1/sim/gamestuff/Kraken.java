@@ -50,4 +50,8 @@ public class Kraken extends Placable {
 	protected void attachTo(Tile tile) throws IllegalCallException {
 		tile.attach(this);
 	}
+	
+	public String toString() {
+		return "Kraken ("+myTile.getPosition().x+","+myTile.getPosition().y+")";
+	}
 }
