@@ -11,9 +11,9 @@ public interface Expression
 	 * @param registers    the ship's current registers
 	 * @return             0 : false   |   1 : true
 	 */
-	public int evaluate(int[] registers);
+	int evaluate(int[] registers);
 	
-	public Expression getLeft();
+	Expression getLeft();
 	
-	public Expression getRight();
+	Expression getRight();
 }
