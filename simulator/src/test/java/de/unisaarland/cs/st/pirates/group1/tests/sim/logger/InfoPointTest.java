@@ -35,30 +35,22 @@ public class InfoPointTest
 	@Test
 	public void fight1Test()
 	{
-		int valTestLogger     = testLogger.value;
-		int expectedValLogger = valTestLogger += 1;
-		
 		int valTestGui        = testGui.value;
 		int expectedValGui    = valTestGui += 1;
 		
 		infoPoint.fight(new Ship(new Faction("a", 0), 0, null), new Ship(new Faction("b", 1), 0, null));
 		
-		assertTrue("The logger's method fight(ship, ship) was not called.", expectedValLogger == testLogger.value);
 		assertTrue("The gui's method fight(ship, ship) was not called.", expectedValGui == testGui.value);
 	}
 	
 	@Test
 	public void fight2Test()
 	{
-		int valTestLogger     = testLogger.value;
-		int expectedValLogger = valTestLogger += 1;
-		
 		int valTestGui        = testGui.value;
 		int expectedValGui    = valTestGui += 1;
 		
 		infoPoint.fight(new Ship(new Faction("a", 0), 0, null), new Kraken(0, null));
 		
-		assertTrue("The logger's method fight(ship, kraken) was not called.", expectedValLogger == testLogger.value);
 		assertTrue("The gui's method fight(ship, kraken) was not called.", expectedValGui == testGui.value);
 	}
 	
