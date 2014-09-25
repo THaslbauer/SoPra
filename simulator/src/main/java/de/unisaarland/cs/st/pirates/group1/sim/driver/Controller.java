@@ -34,7 +34,8 @@ public class Controller {
 	private List<InputStream> tacticsFile;
 	//TODO CHECK IF THIS IS RIGHT
 	//the seed given from the main/command line
-	private int seed;
+	private long seed;
+	private int intSeed;
 	//the random object
 	private Random random;
 	private OutputStream output;
@@ -53,7 +54,7 @@ public class Controller {
 	 * @param output the Output Steam, which is needed so the Controller can initialize the InfoPoint
 	 */
 public Controller(Simulator simulator, MapParser mapParser,
-		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, int seed, OutputStream output){
+		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, long seed, OutputStream output){
 	this.simulator = simulator;
 	this.mapParser = mapParser;
 	this.tacticsParser = tacticsParser;
@@ -64,17 +65,31 @@ public Controller(Simulator simulator, MapParser mapParser,
 	this.output = output;
 	sema = new Semaphore(1);
 }
+
+public Controller(Simulator simulator, MapParser mapParser,
+		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, int seed, OutputStream output){
+	this.simulator = simulator;
+	this.mapParser = mapParser;
+	this.tacticsParser = tacticsParser;
+	this.mapFile = mapFile;
+	this.tacticsFile = tacticsFile;
+	this.intSeed = seed;
+	this.random = new Random(seed);
+	this.output = output;
+	sema = new Semaphore(1);
+}
 	
 	/*
 	 * 
 	 * 
 	 * Setter and Getter
 	 */
-public int getSeed() {
+public long getSeed() {
 	return seed;
 }
 
-public void setSeed(int seed) {
+
+public void setSeed(long seed) {
 	this.seed = seed;
 }
 
