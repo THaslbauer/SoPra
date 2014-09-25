@@ -304,6 +304,10 @@ public class MoveInstructionTest {
 	
 	@Test
 	public void driveOnFriendlyShip() {
+		m2ship.setHeading(Heading.H3);
+		MoveInstruction mi = new MoveInstruction(elo, 7895);
+		elo.clear();
+		mi.execute(m2ship);
 		
 	}
 	

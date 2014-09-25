@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.GotoInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
 import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
@@ -92,7 +94,7 @@ public class ControllerTest
 	private Simulator sim;
 	
 	private static final String mapStr = "2\n2\n..\n.b";
-	private static final String tactics = "goto 0";
+	private static final String tactics = "goto 0\n";
 	
 	
 	@Before
@@ -105,8 +107,8 @@ public class ControllerTest
 		InputStream mapInput;
 		InputStream tacticsInput;
 		
-		mapInput     = new ByteArrayInputStream(Charset.forName("UTF-16").encode(mapStr).array());
-		tacticsInput = new ByteArrayInputStream(Charset.forName("UTF-16").encode(tactics).array());
+		mapInput     = new ByteArrayInputStream(mapStr.getBytes());
+		tacticsInput = new ByteArrayInputStream(tactics.getBytes());
 		
 		List<InputStream> tactics = new LinkedList<>();
 		OutputStream out          = new ByteArrayOutputStream();
@@ -118,6 +120,10 @@ public class ControllerTest
 		} catch (IOException e) {
 			fail();
 		}
+		
+		testSimulator     = new TestSimulator(new ExpectLogger());
+		testMapParser     = new TestMapParser();
+		testTacticsParser = new TestTacticsParser(new ExpectLogger());
 	}
 	
 	@Test
@@ -130,13 +136,16 @@ public class ControllerTest
 		Faction faction        = factions.iterator().next();
 
 		assertTrue("The controller's method initializeSimulator() did set the wrong faction", faction.getName().equals("b"));
-		assertTrue("The controller's method initializeSimulator() didn't set the faction's tactic programm", faction.getTactics() == null);
+		assertTrue("The controller's method initializeSimulator() didn't set the faction's tactic programm",
+				faction.getTactics()[0] instanceof GotoInstruction);
 	}
 	
 	@Test
 	public void playTest()
 	{
 		int valueSimulator = testSimulator.value;
+		
+		controller = new Controller(null, null, null, null, null, 0, null);
 		
 		controller.setSimulator(testSimulator);
 		controller.play();

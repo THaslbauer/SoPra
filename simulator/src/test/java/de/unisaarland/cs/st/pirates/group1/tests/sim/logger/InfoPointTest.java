@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
@@ -40,7 +41,7 @@ public class InfoPointTest
 		int valTestGui        = testGui.value;
 		int expectedValGui    = valTestGui += 1;
 		
-		infoPoint.fight(new Ship(null, 0, null), new Ship(null, 0, null));
+		infoPoint.fight(new Ship(new Faction("a", 0), 0, null), new Ship(new Faction("b", 1), 0, null));
 		
 		assertTrue("The logger's method fight(ship, ship) was not called.", expectedValLogger == testLogger.value);
 		assertTrue("The gui's method fight(ship, ship) was not called.", expectedValGui == testGui.value);
@@ -55,7 +56,7 @@ public class InfoPointTest
 		int valTestGui        = testGui.value;
 		int expectedValGui    = valTestGui += 1;
 		
-		infoPoint.fight(new Ship(null, 0, null), new Kraken(0, null));
+		infoPoint.fight(new Ship(new Faction("a", 0), 0, null), new Kraken(0, null));
 		
 		assertTrue("The logger's method fight(ship, kraken) was not called.", expectedValLogger == testLogger.value);
 		assertTrue("The gui's method fight(ship, kraken) was not called.", expectedValGui == testGui.value);
