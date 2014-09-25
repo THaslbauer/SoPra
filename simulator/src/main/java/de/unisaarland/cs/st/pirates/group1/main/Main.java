@@ -23,6 +23,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
+import de.unisaarland.cs.st.pirates.logger.LogProvider;
+import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 
 public class Main {
@@ -102,6 +104,7 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
+		infoPoint.setRefLogger(LogProvider.createInstance("RefLogger"));
 		Simulator sim = new Simulator(infoPoint,turns,rand);
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
