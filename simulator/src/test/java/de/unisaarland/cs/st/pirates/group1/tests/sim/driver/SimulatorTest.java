@@ -220,6 +220,9 @@ public class SimulatorTest extends TestCase {
 	@Test
 	public void testShipStep(){
 		Ship ship = sim.createShip(testFaction, testTile);
+		Key[] keys = {Key.DIRECTION, Key.FLEET, Key.MORAL, Key.PC, Key.RESTING, Key.VALUE, Key.X_COORD, Key.Y_COORD};
+		int[] values = {0, 0, 4, 0, 0, 0, 0, 0, 3};
+		logger.expect(new Create(Entity.SHIP, 0, keys, values));
 		TestShip testShip = (TestShip)ship;
 		for(int stepCount = 1; stepCount <= 25; stepCount++){
 			sim.step();

@@ -6,7 +6,7 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 
 /**
- * represents an Instruction from the instruction file that belongs to a faction
+ * Represents an Instruction from the instruction file that belongs to a faction.
  * @author thomas
  *
  */

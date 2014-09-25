@@ -1,6 +1,5 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
