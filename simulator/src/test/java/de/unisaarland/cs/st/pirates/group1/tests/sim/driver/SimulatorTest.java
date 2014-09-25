@@ -111,7 +111,6 @@ public class SimulatorTest extends TestCase {
 		assertTrue("Ship and Kraken pool had objects in them", sim.getShips().isEmpty() && sim.getKrakens().isEmpty());
 		assertTrue("Factions has been set without consulting others", sim.getFactions() == null);
 		assertTrue("Worldmap has been set without consulting others", sim.getWorldmap() == null);
-		assertTrue("EntityFactory has been set without consulting others", sim.getEntityFactory() == null);
 	}
 	
 	/**
