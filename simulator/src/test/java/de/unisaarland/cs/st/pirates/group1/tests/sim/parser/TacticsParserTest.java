@@ -61,6 +61,31 @@ public class TacticsParserTest {
 	private ExpectLogger expectLogger;
 	private EntityFactory entityFactory;
 	
+	private String brokenMoveStringOne;
+	private String brokenMoveStringTwo;
+	private InputStream brokenMoveStreamOne;
+	private InputStream brokenMoveStreamTwo;
+	
+	private String failString;
+	private String brokenSenseString;
+	private InputStream failStream;
+	private InputStream brokenSenseStream;
+	
+	private String brokenPickupStringOne;
+	private String brokenPickupStringTwo;
+	private InputStream brokenPickupStreamOne;
+	private InputStream brokenPickupStreamTwo;
+	
+	private String brokenGotoStringOne;
+	private InputStream brokenGotoStreamOne;
+	
+	private String brokenFlipzeroStringOne;
+	private String brokenFlipzeroStringTwo;
+	private String brokenFlipzeroStringThree;
+	private InputStream brokenFlipzeroStreamOne;
+	private InputStream brokenFlipzeroStreamTwo;
+	private InputStream brokenFlipzeroStreamThree;
+	
 	@Before
 	public void init(){
 		String string =""
@@ -103,11 +128,46 @@ public class TacticsParserTest {
 				+ ";lawlbbq"+"\n"
 				+ "==";
 		
+		failString =""
+				+ "sensed 0";
+		brokenMoveStringOne = ""
+				+ "move else else 5";
+		brokenMoveStringTwo = ""
+				+ "move vanelsedeluxusmaximus 4";
+		brokenSenseString = ""
+				+ "sense deinemudda 0";
+		
+		brokenPickupStringOne = ""
+				+ "pickup 0 6 else";
+		brokenPickupStringTwo = ""
+				+ "pickup e else 8";
+		
+		brokenGotoStringOne = ""
+				+ "goto else";
+		
+		brokenFlipzeroStringOne = ""
+				+ "flipzero else else 11";
+		brokenFlipzeroStringTwo = ""
+				+ "flipzero 2 test 0";
+		brokenFlipzeroStringThree = ""
+				+ "flipzero 2 else else";
+		
 		random = new Random(0);
 		expectLogger = new ExpectLogger();
 		tacticsParser = new TacticsParser(expectLogger);
+		
 		stream = StreamHelper.asIS(string);
 		brokenStream = StreamHelper.asIS(brokenString);
+		brokenMoveStreamOne = StreamHelper.asIS(brokenMoveStringOne);
+		brokenMoveStreamTwo = StreamHelper.asIS(brokenMoveStringTwo);
+		brokenSenseStream = StreamHelper.asIS(brokenSenseString);
+		failStream = StreamHelper.asIS(failString);
+		brokenPickupStreamOne = StreamHelper.asIS(brokenPickupStringOne);
+		brokenPickupStreamTwo = StreamHelper.asIS(brokenPickupStringTwo);
+		brokenGotoStreamOne = StreamHelper.asIS(brokenGotoStringOne);
+		brokenFlipzeroStreamOne = StreamHelper.asIS(brokenFlipzeroStringOne);
+		brokenFlipzeroStreamTwo = StreamHelper.asIS(brokenFlipzeroStringTwo);
+		brokenFlipzeroStreamThree = StreamHelper.asIS(brokenFlipzeroStringThree);
 		
 		
 		entityFactory = new EntityFactory();
@@ -120,7 +180,7 @@ public class TacticsParserTest {
 		Position position1 = new Position(0,0);
 		Position position2 = new Position(1,0);
 		Position position3 = new Position(0,1);
-		Position position4 = new Position(1,1);
+		//Position position4 = new Position(1,1);
 		
 		waterTile1 = worldMap.createSeaTile(position1);
 		waterTile2 = worldMap.createSeaTile(position2);
@@ -133,12 +193,160 @@ public class TacticsParserTest {
 	}
 	
 	/**
+	 * checks if there is an error raised while parsing a wrong flipzero instruction
+	 */
+	@Test
+	public void failFlipzeroInstructionThree(){
+		try{
+			tacticsParser.parseTactics(brokenFlipzeroStreamThree, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenFlipzeroStringThree + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong flipzero instruction
+	 */
+	@Test
+	public void failFlipzeroInstructionTwo(){
+		try{
+			tacticsParser.parseTactics(brokenFlipzeroStreamTwo, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenFlipzeroStringTwo + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong flipzero instruction
+	 * Test One
+	 */
+	@Test
+	public void failFlipzeroInstructionOne(){
+		try{
+			tacticsParser.parseTactics(brokenFlipzeroStreamOne, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenFlipzeroStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong goto instruction
+	 */
+	@Test
+	public void failGotoInstructionOne(){
+		try{
+			tacticsParser.parseTactics(brokenGotoStreamOne, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenGotoStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong pickup instruction
+	 * Test Two
+	 */
+	@Test
+	public void failPickupInstructionTwo(){
+		try{
+			tacticsParser.parseTactics(brokenPickupStreamTwo, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenPickupStringTwo + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong pickup instruction
+	 * Test One
+	 */
+	@Test
+	public void failPickupInstructionOne(){
+		try{
+			tacticsParser.parseTactics(brokenPickupStreamOne, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenPickupStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong sense instruction
+	 */
+	@Test
+	public void failSenseInstructionOne(){
+		try{
+			tacticsParser.parseTactics(failStream, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + failString + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong sense instruction
+	 */
+	@Test
+	public void failSenseInstructionTwo(){
+		try{
+			tacticsParser.parseTactics(brokenSenseStream, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenSenseString + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong move instruction
+	 * Test one
+	 */
+	@Test
+	public void failMoveInstructionOne(){
+		try{
+			tacticsParser.parseTactics(brokenMoveStreamOne, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenMoveStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong move instruction
+	 * Test two.
+	 */
+	@Test
+	public void failMoveInstructionTwo(){
+		try{
+			tacticsParser.parseTactics(brokenMoveStreamTwo, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+			fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenMoveStringTwo + "\" ." 
+					+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
 	 * checks if there are errors while trying to parse the brokenStream
 	 */
 	@Test
 	public void failInstruction(){
 		try{
-		Instruction[] instrArray = tacticsParser.parseTactics(brokenStream, random);
+		tacticsParser.parseTactics(brokenStream, random);
 				}catch(IllegalArgumentException e){
 					return;
 				}
