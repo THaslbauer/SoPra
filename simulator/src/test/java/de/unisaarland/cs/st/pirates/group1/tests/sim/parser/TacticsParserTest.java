@@ -63,13 +63,22 @@ public class TacticsParserTest {
 	
 	private String failString;
 	private String brokenSenseString;
+	private String brokenSenseStringTwo;
+	private String brokenSenseStringThree;
+	
 	private InputStream failStream;
 	private InputStream brokenSenseStream;
+	private InputStream brokenSenseStreamTwo;
+	private InputStream brokenSenseStreamThree;
 	
 	private String brokenPickupStringOne;
 	private String brokenPickupStringTwo;
+	private String brokenPickupStringThree;
+	private String brokenPickupStringFour;
 	private InputStream brokenPickupStreamOne;
 	private InputStream brokenPickupStreamTwo;
+	private InputStream brokenPickupStreamThree;
+	private InputStream brokenPickupStreamFour;
 	
 	private String brokenGotoStringOne;
 	private String brokenGotoStringTwo;
@@ -80,10 +89,12 @@ public class TacticsParserTest {
 	private String brokenFlipzeroStringTwo;
 	private String brokenFlipzeroStringThree;
 	private String brokenFlipzeroStringFour;
+	private String brokenFlipzeroStringFive;
 	private InputStream brokenFlipzeroStreamOne;
 	private InputStream brokenFlipzeroStreamTwo;
 	private InputStream brokenFlipzeroStreamThree;
 	private InputStream brokenFlipzeroStreamFour;
+	private InputStream brokenFlipzeroStreamFive;
 	
 	private String brokenTurnStringOne;
 	private String brokenTurnStringTwo;
@@ -110,22 +121,34 @@ public class TacticsParserTest {
 	private String brokenIfAllStringThree;
 	private String brokenIfAllStringFour;
 	private String brokenIfAllStringFive;
+	private String brokenIfAllStringSix;
+	private String brokenIfAllStringSeven;
+	private String brokenIfAllStringEight;
 	private InputStream brokenIfAllStreamOne;
 	private InputStream brokenIfAllStreamTwo;
 	private InputStream brokenIfAllStreamThree;
 	private InputStream brokenIfAllStreamFour;
 	private InputStream brokenIfAllStreamFive;
+	private InputStream brokenIfAllStreamSix;
+	private InputStream brokenIfAllStreamSeven;
+	private InputStream brokenIfAllStreamEight;
 	
 	private String brokenIfAnyStringOne;
 	private String brokenIfAnyStringTwo;
 	private String brokenIfAnyStringThree;
 	private String brokenIfAnyStringFour;
 	private String brokenIfAnyStringFive;
+	private String brokenIfAnyStringSix;
+	private String brokenIfAnyStringSeven;
+	private String brokenIfAnyStringEight;
 	private InputStream brokenIfAnyStreamOne;
 	private InputStream brokenIfAnyStreamTwo;
 	private InputStream brokenIfAnyStreamThree;
 	private InputStream brokenIfAnyStreamFour;
 	private InputStream brokenIfAnyStreamFive;
+	private InputStream brokenIfAnyStreamSix;
+	private InputStream brokenIfAnyStreamSeven;
+	private InputStream brokenIfAnyStreamEight;
 	
 	private String brokenMoveStringOne;
 	private String brokenMoveStringTwo;
@@ -253,11 +276,19 @@ public class TacticsParserTest {
 		
 		brokenSenseString = ""
 				+ "sense deinemudda 0";
+		brokenSenseStringTwo = ""
+				+ "refresh 7 else 0";
+		brokenSenseStringThree = ""
+				+ "sense 7";
 		
 		brokenPickupStringOne = ""
 				+ "pickup 0 6 else";
 		brokenPickupStringTwo = ""
 				+ "pickup 8 9 else 8";
+		brokenPickupStringThree = ""
+				+ "pickup 0 else 9 12";
+		brokenPickupStringFour = ""
+				+ "pickup 7 else 12";
 		
 		brokenGotoStringOne = ""
 				+ "goto else";
@@ -272,6 +303,8 @@ public class TacticsParserTest {
 				+ "flipzero 2 else else";
 		brokenFlipzeroStringFour = ""
 				+ "flipzero 1 else 1 1 ;blabla";
+		brokenFlipzeroStringFive = ""
+				+ "flipzero -1 else 11";
 		
 		brokenTurnStringOne = ""
 				+ "turn lefty";
@@ -305,6 +338,12 @@ public class TacticsParserTest {
 				+ "ifall sense_celltype==home else 10 10";
 		brokenIfAllStringFive = ""
 				+ "ifall 0 else 1";
+		brokenIfAllStringSix = ""
+				+ "ifall sense_treasure else";
+		brokenIfAllStringSeven = ""
+				+ "ifall sense_treasure ship_load<4 else";
+		brokenIfAllStringEight = ""
+				+ "ifall ship_load else 4";
 		
 		
 		brokenIfAnyStringOne = ""
@@ -317,6 +356,12 @@ public class TacticsParserTest {
 				+ "ifany sense_celltype==home else 10 10";
 		brokenIfAnyStringFive = ""
 				+ "ifany 0 else 1";
+		brokenIfAnyStringSix = ""
+				+ "ifany sense_treasure else";
+		brokenIfAnyStringSeven = ""
+				+ "ifany sense_treasure ship_load<4 else";
+		brokenIfAnyStringEight = ""
+				+ "ifany ship_load else 4";
 		
 		brokenRepairStringOne = ""
 				+ "repair elset 0";
@@ -367,7 +412,7 @@ public class TacticsParserTest {
 		brokenUnmarkSingle = "unmark";
 		brokenMoveSingle = "move";
 		brokenPickupSingle = "pickup";
-		brokenDropSingle = "drop";
+		brokenDropSingle = "drop 2";
 		brokenFlipzeroSingle = "flipzero";
 		brokenGotoSingle = "goto";
 		brokenSenseSingle = "sense";
@@ -385,15 +430,23 @@ public class TacticsParserTest {
 		stream = StreamHelper.asIS(string);
 		brokenStream = StreamHelper.asIS(brokenString);
 		brokenSenseStream = StreamHelper.asIS(brokenSenseString);
+		brokenSenseStreamTwo = StreamHelper.asIS(brokenSenseStringTwo);
+		brokenSenseStreamThree = StreamHelper.asIS(brokenSenseStringThree);
+		
 		failStream = StreamHelper.asIS(failString);
 		brokenPickupStreamOne = StreamHelper.asIS(brokenPickupStringOne);
 		brokenPickupStreamTwo = StreamHelper.asIS(brokenPickupStringTwo);
+		brokenPickupStreamThree = StreamHelper.asIS(brokenPickupStringThree);
+		brokenPickupStreamFour = StreamHelper.asIS(brokenPickupStringFour);
+		
 		brokenGotoStreamOne = StreamHelper.asIS(brokenGotoStringOne);
 		brokenGotoStreamTwo = StreamHelper.asIS(brokenGotoStringTwo);
 		brokenFlipzeroStreamOne = StreamHelper.asIS(brokenFlipzeroStringOne);
 		brokenFlipzeroStreamTwo = StreamHelper.asIS(brokenFlipzeroStringTwo);
 		brokenFlipzeroStreamThree = StreamHelper.asIS(brokenFlipzeroStringThree);
 		brokenFlipzeroStreamFour = StreamHelper.asIS(brokenFlipzeroStringFour);
+		brokenFlipzeroStreamFive = StreamHelper.asIS(brokenFlipzeroStringFive);
+		
 		brokenTurnStreamOne = StreamHelper.asIS(brokenTurnStringOne);
 		brokenTurnStreamTwo = StreamHelper.asIS(brokenTurnStringTwo);
 		brokenTurnStreamThree = StreamHelper.asIS(brokenTurnStringThree);
@@ -410,13 +463,18 @@ public class TacticsParserTest {
 		brokenIfAllStreamThree = StreamHelper.asIS(brokenIfAllStringThree);
 		brokenIfAllStreamFour = StreamHelper.asIS(brokenIfAllStringFour);
 		brokenIfAllStreamFive = StreamHelper.asIS(brokenIfAllStringFive);
-		
+		brokenIfAllStreamSix = StreamHelper.asIS(brokenIfAllStringSix);
+		brokenIfAllStreamSeven = StreamHelper.asIS(brokenIfAllStringSeven);
+		brokenIfAllStreamEight = StreamHelper.asIS(brokenIfAllStringEight);
 		
 		brokenIfAnyStreamOne = StreamHelper.asIS(brokenIfAnyStringOne);
 		brokenIfAnyStreamTwo = StreamHelper.asIS(brokenIfAnyStringTwo);
 		brokenIfAnyStreamThree = StreamHelper.asIS(brokenIfAnyStringThree);
 		brokenIfAnyStreamFour = StreamHelper.asIS(brokenIfAnyStringFour);
 		brokenIfAnyStreamFive = StreamHelper.asIS(brokenIfAnyStringFive);
+		brokenIfAnyStreamSix = StreamHelper.asIS(brokenIfAnyStringSix);
+		brokenIfAnyStreamSeven = StreamHelper.asIS(brokenIfAnyStringSeven);
+		brokenIfAnyStreamEight = StreamHelper.asIS(brokenIfAnyStringEight);
 		
 		brokenMoveStreamOne = StreamHelper.asIS(brokenMoveStringOne);
 		brokenMoveStreamTwo = StreamHelper.asIS(brokenMoveStringTwo);
@@ -482,6 +540,133 @@ public class TacticsParserTest {
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failSenseInstructionFour(){
+		try{
+			tacticsParser.parseTactics(brokenSenseStreamThree, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenSenseStringThree + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failIfAnyInstructionEight(){
+		try{
+			tacticsParser.parseTactics(brokenIfAnyStreamEight, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfAnyStringEight + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failIfAnyInstructionSeven(){
+		try{
+			tacticsParser.parseTactics(brokenIfAnyStreamSeven, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfAnyStringSeven + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failIfAnyInstructionSix(){
+		try{
+			tacticsParser.parseTactics(brokenIfAnyStreamSix, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfAnyStringSix + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failIfAllInstructionEight(){
+		try{
+			tacticsParser.parseTactics(brokenIfAllStreamEight, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfAllStringEight + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failIfAllInstructionSeven(){
+		try{
+			tacticsParser.parseTactics(brokenIfAllStreamSeven, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfAllStringSeven + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failIfAllInstructionSix(){
+		try{
+			tacticsParser.parseTactics(brokenIfAllStreamSix, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfAllStringSix + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a sense instruction
+	 */
+	@Test
+	public void failSenseInstructionThree(){
+		try{
+			tacticsParser.parseTactics(brokenSenseStreamTwo, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenSenseStringTwo + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failDropDouble(){
+		try{
+			tacticsParser.parseTactics(brokenStreamDropSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenDropSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
 	}
 	
 	/**
@@ -596,19 +781,6 @@ public class TacticsParserTest {
 				+ "see in the tacticsparsertestclass @before");
 	}
 	
-	/**
-	 * checks if there is an error raised while parsing a single instruction
-	 */
-	@Test
-	public void failDropSingle(){
-		try{
-			tacticsParser.parseTactics(brokenStreamDropSingle, random);
-					}catch(IllegalArgumentException e){
-						return;
-					}
-		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenDropSingle + "\" ." 
-				+ "see in the tacticsparsertestclass @before");
-	}
 	
 	/**
 	 * checks if there is an error raised while parsing a single instruction
@@ -1191,6 +1363,20 @@ public class TacticsParserTest {
 	 * checks if there is an error raised while parsing a wrong flipzero instruction
 	 */
 	@Test
+	public void failFlipzeroInstructionFive(){
+		try{
+			tacticsParser.parseTactics(brokenFlipzeroStreamFive, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenFlipzeroStringFive + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong flipzero instruction
+	 */
+	@Test
 	public void failFlipzeroInstructionFour(){
 		try{
 			tacticsParser.parseTactics(brokenFlipzeroStreamFour, random);
@@ -1270,6 +1456,36 @@ public class TacticsParserTest {
 						return;
 					}
 		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenGotoStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong pickup instruction
+	 * Test Four
+	 */
+	@Test
+	public void failPickupInstructionFour(){
+		try{
+			tacticsParser.parseTactics(brokenPickupStreamFour, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenPickupStringFour + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong pickup instruction
+	 * Test Three
+	 */
+	@Test
+	public void failPickupInstructionThree(){
+		try{
+			tacticsParser.parseTactics(brokenPickupStreamThree, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenPickupStringThree + "\" ." 
 				+ "see in the tacticsparsertestclass @before");
 	}
 	
