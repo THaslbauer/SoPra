@@ -145,6 +145,30 @@ public class TacticsParserTest {
 	private InputStream brokenRepairStreamThree;
 	private InputStream brokenRepairStreamFour;
 	
+	private String brokenRefreshStringOne;
+	private String brokenRefreshStringTwo;
+	private String brokenRefreshStringThree;
+	private String brokenRefreshStringFour;
+	private String brokenRefreshStringFive;
+	private InputStream brokenRefreshStreamOne;
+	private InputStream brokenRefreshStreamTwo;
+	private InputStream brokenRefreshStreamThree;
+	private InputStream brokenRefreshStreamFour;
+	private InputStream brokenRefreshStreamFive;
+	
+	private String brokenMarkStringOne;
+	private String brokenMarkStringTwo;
+	private String brokenMarkStringThree;
+	private InputStream brokenMarkStreamOne;
+	private InputStream brokenMarkStreamTwo;
+	private InputStream brokenMarkStreamThree;
+	
+	private String brokenUnmarkStringOne;
+	private String brokenUnmarkStringTwo;
+	private String brokenUnmarkStringThree;
+	private InputStream brokenUnmarkStreamOne;
+	private InputStream brokenUnmarkStreamTwo;
+	private InputStream brokenUnmarkStreamThree;
 	
 	
 	
@@ -186,7 +210,7 @@ public class TacticsParserTest {
 				+ "mark 2"+"\n"
 				+ "unmark 3;this is a freaking comment"+"\n"
 				+ "repair else 2001"+"\n"
-				+ "move 2000";
+				+ "move else 2000";
 		
 		String brokenString = ""
 				+ "ifall 2;== is much cool, ; ; lawl < ; "+"\n"
@@ -281,6 +305,32 @@ public class TacticsParserTest {
 		brokenMoveStringFour = ""
 				+ "move else";
 		
+		brokenRefreshStringOne = ""
+				+ "refresh sense_celltype==home sensecelltype==home else 19";
+		brokenRefreshStringTwo = ""
+				+ "refresh sense_celltype==home sense_celltype==home elst 10";
+		brokenRefreshStringThree = ""
+				+ "refresh sense_celltype==home sense_treasure else else";
+		brokenRefreshStringFour = ""
+				+ "refresh sense_celltype==home else 10 10";
+		brokenRefreshStringFive = ""
+				+ "refresh 0 else 1";
+		
+		brokenMarkStringOne = ""
+				+ "mark 6";
+		brokenMarkStringTwo = ""
+				+ "mark 5 else 2";
+		brokenMarkStringThree = ""
+				+ "mark else";
+		
+		brokenUnmarkStringOne = ""
+				+ "unmark 7";
+		brokenUnmarkStringTwo = ""
+				+ "unmark 5 else 2";
+		brokenUnmarkStringThree = ""
+				+ "unmark else";
+		
+		
 		
 		
 		
@@ -334,8 +384,19 @@ public class TacticsParserTest {
 		brokenRepairStreamThree = StreamHelper.asIS(brokenRepairStringThree);
 		brokenRepairStreamFour = StreamHelper.asIS(brokenRepairStringFour);
 		
+		brokenRefreshStreamOne = StreamHelper.asIS(brokenRefreshStringOne);
+		brokenRefreshStreamTwo = StreamHelper.asIS(brokenRefreshStringTwo);
+		brokenRefreshStreamThree = StreamHelper.asIS(brokenRefreshStringThree);
+		brokenRefreshStreamFour = StreamHelper.asIS(brokenRefreshStringFour);
+		brokenRefreshStreamFive = StreamHelper.asIS(brokenRefreshStringFive);
 		
+		brokenMarkStreamOne = StreamHelper.asIS(brokenMarkStringOne);
+		brokenMarkStreamTwo = StreamHelper.asIS(brokenMarkStringTwo);
+		brokenMarkStreamThree = StreamHelper.asIS(brokenMarkStringThree);
 		
+		brokenUnmarkStreamOne = StreamHelper.asIS(brokenUnmarkStringOne);
+		brokenUnmarkStreamTwo = StreamHelper.asIS(brokenUnmarkStringTwo);
+		brokenUnmarkStreamThree = StreamHelper.asIS(brokenUnmarkStringThree);
 		
 		
 		
@@ -360,6 +421,160 @@ public class TacticsParserTest {
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong unmark instruction
+	 */
+	@Test
+	public void failUnmarkInstructionThree(){
+		try{
+			tacticsParser.parseTactics(brokenUnmarkStreamThree, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenUnmarkStringThree + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong unmark instruction
+	 */
+	@Test
+	public void failUnmarkInstructionTwo(){
+		try{
+			tacticsParser.parseTactics(brokenUnmarkStreamTwo, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenUnmarkStringTwo + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong unmark instruction
+	 */
+	@Test
+	public void failUnmarkInstructionOne(){
+		try{
+			tacticsParser.parseTactics(brokenUnmarkStreamOne, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenUnmarkStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong mark instruction
+	 */
+	@Test
+	public void failMarkInstructionThree(){
+		try{
+			tacticsParser.parseTactics(brokenMarkStreamThree, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenMarkStringThree + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong mark instruction
+	 */
+	@Test
+	public void failMarkInstructionTwo(){
+		try{
+			tacticsParser.parseTactics(brokenMarkStreamTwo, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenMarkStringTwo + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong mark instruction
+	 */
+	@Test
+	public void failMarkInstructionOne(){
+		try{
+			tacticsParser.parseTactics(brokenMarkStreamOne, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenMarkStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong refresh instruction
+	 */
+	@Test
+	public void failRefreshInstructionFive(){
+		try{
+			tacticsParser.parseTactics(brokenRefreshStreamFive, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenRefreshStringFive + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong refresh instruction
+	 */
+	@Test
+	public void failRefreshInstructionFour(){
+		try{
+			tacticsParser.parseTactics(brokenRefreshStreamFour, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenRefreshStringFour + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong refresh instruction
+	 */
+	@Test
+	public void failRefreshInstructionThree(){
+		try{
+			tacticsParser.parseTactics(brokenRefreshStreamThree, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenRefreshStringThree + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong refresh instruction
+	 */
+	@Test
+	public void failRefreshInstructionTwo(){
+		try{
+			tacticsParser.parseTactics(brokenRefreshStreamTwo, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenRefreshStringTwo + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a wrong refresh instruction
+	 */
+	@Test
+	public void failRefreshInstructionOne(){
+		try{
+			tacticsParser.parseTactics(brokenRefreshStreamOne, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenRefreshStringOne + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
 	}
 	
 	/**
@@ -912,7 +1127,7 @@ public class TacticsParserTest {
 	public void bigInstructionSizeParseTest(){
 		Instruction[] instrArray = tacticsParser.parseTactics(stream, random);
 		
-		assertTrue("" + instrArray.length, instrArray.length == 33);
+		assertTrue("" + instrArray.length, instrArray.length == 35);
 	}
 	
 
