@@ -312,9 +312,6 @@ public class TacticsParser {
 			throw new IllegalArgumentException("A repair instruction consists of 3 parts");
 		}
 		
-		if(Integer.parseInt(instruction[2]) < 0 || Integer.parseInt(instruction[2]) > 1999){
-			throw new IllegalArgumentException("Wrong pc");
-		}
 		
 		else{
 			return new RepairInstruction(logger, Integer.parseInt(instruction[2]));

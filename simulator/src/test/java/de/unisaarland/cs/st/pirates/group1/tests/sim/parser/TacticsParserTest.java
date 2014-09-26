@@ -170,6 +170,37 @@ public class TacticsParserTest {
 	private InputStream brokenUnmarkStreamTwo;
 	private InputStream brokenUnmarkStreamThree;
 	
+	private String brokenTurnSingle;
+	private String brokenMarkSingle;
+	private String brokenUnmarkSingle;
+	private String brokenMoveSingle;
+	private String brokenPickupSingle;
+	private String brokenDropSingle;
+	private String brokenFlipzeroSingle;
+	private String brokenGotoSingle;
+	private String brokenSenseSingle;
+	private String brokenIfSingle;
+	private String brokenIfallSingle;
+	private String brokenIfanySingle;
+	private String brokenRefreshSingle;
+	private String brokenRepairSingle;
+	
+	private InputStream brokenStreamTurnSingle;
+	private InputStream brokenStreamMarkSingle;
+	private InputStream brokenStreamUnmarkSingle;
+	private InputStream brokenStreamMoveSingle;
+	private InputStream brokenStreamPickupSingle;
+	private InputStream brokenStreamDropSingle;
+	private InputStream brokenStreamFlipzeroSingle;
+	private InputStream brokenStreamGotoSingle;
+	private InputStream brokenStreamSenseSingle;
+	private InputStream brokenStreamIfSingle;
+	private InputStream brokenStreamIfallSingle;
+	private InputStream brokenStreamIfanySingle;
+	private InputStream brokenStreamRefreshSingle;
+	private InputStream brokenStreamRepairSingle;
+	
+	
 	
 	
 	
@@ -314,7 +345,7 @@ public class TacticsParserTest {
 		brokenRefreshStringFour = ""
 				+ "refresh sense_celltype==home else 10 10";
 		brokenRefreshStringFive = ""
-				+ "refresh 0 else 1";
+				+ "refresh 0 1 else 1";
 		
 		brokenMarkStringOne = ""
 				+ "mark 6";
@@ -322,6 +353,7 @@ public class TacticsParserTest {
 				+ "mark 5 else 2";
 		brokenMarkStringThree = ""
 				+ "mark else";
+
 		
 		brokenUnmarkStringOne = ""
 				+ "unmark 7";
@@ -330,8 +362,20 @@ public class TacticsParserTest {
 		brokenUnmarkStringThree = ""
 				+ "unmark else";
 		
-		
-		
+		brokenTurnSingle = "turn";
+		brokenMarkSingle = "mark";
+		brokenUnmarkSingle = "unmark";
+		brokenMoveSingle = "move";
+		brokenPickupSingle = "pickup";
+		brokenDropSingle = "drop";
+		brokenFlipzeroSingle = "flipzero";
+		brokenGotoSingle = "goto";
+		brokenSenseSingle = "sense";
+		brokenIfSingle = "if";
+		brokenIfallSingle = "ifall";
+		brokenIfanySingle = "ifany";
+		brokenRefreshSingle = "refresh";
+		brokenRepairSingle = "repair";
 		
 		
 		random = new Random(0);
@@ -398,6 +442,23 @@ public class TacticsParserTest {
 		brokenUnmarkStreamTwo = StreamHelper.asIS(brokenUnmarkStringTwo);
 		brokenUnmarkStreamThree = StreamHelper.asIS(brokenUnmarkStringThree);
 		
+		brokenStreamTurnSingle = StreamHelper.asIS(brokenTurnSingle);
+		brokenStreamMarkSingle = StreamHelper.asIS(brokenMarkSingle);
+		brokenStreamUnmarkSingle = StreamHelper.asIS(brokenUnmarkSingle);
+		brokenStreamMoveSingle = StreamHelper.asIS(brokenMoveSingle);
+		brokenStreamPickupSingle = StreamHelper.asIS(brokenPickupSingle);
+		brokenStreamDropSingle = StreamHelper.asIS(brokenDropSingle);
+		brokenStreamFlipzeroSingle = StreamHelper.asIS(brokenFlipzeroSingle);
+		brokenStreamGotoSingle = StreamHelper.asIS(brokenGotoSingle);
+		brokenStreamSenseSingle = StreamHelper.asIS(brokenSenseSingle);
+		brokenStreamIfSingle = StreamHelper.asIS(brokenIfSingle);
+		brokenStreamIfallSingle = StreamHelper.asIS(brokenIfallSingle);
+		brokenStreamIfanySingle = StreamHelper.asIS(brokenIfanySingle);
+		brokenStreamRefreshSingle = StreamHelper.asIS(brokenRefreshSingle);
+		brokenStreamRepairSingle = StreamHelper.asIS(brokenRepairSingle);
+		
+		
+		
 		
 		
 		
@@ -422,6 +483,203 @@ public class TacticsParserTest {
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
 	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failRepairSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamRepairSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenRepairSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failRefreshSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamRefreshSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenRefreshSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failIfanySingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamIfanySingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfanySingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failIfallSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamIfallSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfallSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failIfSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamIfSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failSenseSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamSenseSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenSenseSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failGotoSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamGotoSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenGotoSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failFlipzeroSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamFlipzeroSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenFlipzeroSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failDropSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamDropSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenDropSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failPickupSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamPickupSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenPickupSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failMoveSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamMoveSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenMoveSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failUnmarkSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamUnmarkSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenUnmarkSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failMarkSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamMarkSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenMarkSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
+	/**
+	 * checks if there is an error raised while parsing a single instruction
+	 */
+	@Test
+	public void failTurnSingle(){
+		try{
+			tacticsParser.parseTactics(brokenStreamTurnSingle, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenTurnSingle + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
 	
 	/**
 	 * checks if there is an error raised while parsing a wrong unmark instruction
