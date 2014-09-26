@@ -93,7 +93,8 @@ public class Simulator
 		
 		
 		// ship cycle
-		for(Ship ship : ships)
+		LinkedList<Ship> dummy = new LinkedList<Ship>(ships);
+		for(Ship ship : dummy)
 		{
 			if(ship.getCondition() != 0)
 			{
@@ -117,6 +118,8 @@ public class Simulator
 			e.printStackTrace();
 		}
 		
+		
+		System.out.println("cycle");
 	}
 	
 	/**

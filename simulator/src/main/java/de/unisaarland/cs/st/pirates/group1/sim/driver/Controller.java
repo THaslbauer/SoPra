@@ -271,7 +271,6 @@ public void play(){
 			ende = true;
 		}
 		
-		ende = true;
 	}
 	sema.release();
 }

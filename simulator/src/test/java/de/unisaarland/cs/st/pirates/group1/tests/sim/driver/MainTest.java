@@ -41,7 +41,7 @@ public class MainTest
 	@Before
 	public void setUp()
 	{
-		System.setProperty("turns", "18");
+		System.setProperty("turns", "1000");
 		System.setProperty("seed", "100003");
 	}
 	
