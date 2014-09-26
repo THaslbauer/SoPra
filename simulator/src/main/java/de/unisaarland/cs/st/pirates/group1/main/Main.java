@@ -17,6 +17,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import de.unisaarland.cs.st.pirates.group1.logger.OutLogger;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Controller;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
@@ -116,7 +117,7 @@ public class Main {
 		System.out.println(System.getProperty("debug"));
 		if(System.getProperty("debug").equals("y")) {
 			System.out.println("debug mode enabled");
-//			loggers.add(new OutLogger());
+			loggers.add(new OutLogger());
 		}
 		infoPoint.setGUI(loggers);
 		//set extended loggers

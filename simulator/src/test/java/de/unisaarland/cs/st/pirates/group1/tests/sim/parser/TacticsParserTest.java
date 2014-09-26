@@ -39,7 +39,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructi
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.TurnInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.UnmarkInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.StreamHelper;
 
 public class TacticsParserTest {

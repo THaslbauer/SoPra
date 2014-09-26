@@ -15,6 +15,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.logger.AddCell;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
@@ -41,8 +42,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGuiDropInstr;
 
 public class ElseInstructionTest {
