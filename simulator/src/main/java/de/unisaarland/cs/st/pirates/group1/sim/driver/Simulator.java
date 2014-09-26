@@ -118,8 +118,6 @@ public class Simulator
 			e.printStackTrace();
 		}
 		
-		
-		System.out.println("cycle");
 	}
 	
 	/**
