@@ -14,11 +14,14 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestGui;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.TestLogger;
+import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class InfoPointTest
 {
 	private static InfoPoint infoPoint;
 	
+	private static LinkedList<LogWriter> testLoggers;
+
 	private static TestLogger testLogger;
 	
 	private static LinkedList<ExtendedLogWriter> testGuis;
@@ -35,7 +38,7 @@ public class InfoPointTest
 		testGui    = new TestGui();
 		testGuis.add(testGui);
 		
-		infoPoint.setRefLogger(testLogger);
+		infoPoint.setRefLoggers(testLoggers);
 		infoPoint.setGUI(testGuis);
 	}
 	
@@ -252,9 +255,9 @@ public class InfoPointTest
 	{
 		infoPoint = new InfoPoint();
 		
-		infoPoint.setRefLogger(testLogger);
+		infoPoint.setRefLoggers(testLoggers);
 		assertTrue("The infoPoint's setter or getter for the RefLogger was incorrect",
-				testLogger.equals(infoPoint.getRefLogger()));
+				testLogger.equals(infoPoint.getRefLoggers()));
 		
 		
 		infoPoint.setGUI(testGuis);

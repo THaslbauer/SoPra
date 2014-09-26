@@ -7,6 +7,8 @@
 
 package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,8 +32,8 @@ public class Controller {
 	private Simulator simulator;
 	private MapParser mapParser;
 	private TacticsParser tacticsParser;
-	private InputStream mapFile;
-	private List<InputStream> tacticsFile;
+	private ByteArrayOutputStream mapFile;
+	private List<ByteArrayOutputStream> tacticsFile;
 	//TODO CHECK IF THIS IS RIGHT
 	//the seed given from the main/command line
 	private long seed;
@@ -58,8 +60,11 @@ public Controller(Simulator simulator, MapParser mapParser,
 	this.simulator = simulator;
 	this.mapParser = mapParser;
 	this.tacticsParser = tacticsParser;
-	this.mapFile = mapFile;
-	this.tacticsFile = tacticsFile;
+	this.mapFile = createByteArrayOutputStreamFromFile(mapFile);
+	this.tacticsFile = new LinkedList<>();
+	for(InputStream in : tacticsFile) {
+		this.tacticsFile.add(createByteArrayOutputStreamFromFile(in));
+	}
 	this.seed = seed;
 	this.random = new Random(seed);
 	this.output = output;
@@ -68,7 +73,7 @@ public Controller(Simulator simulator, MapParser mapParser,
 
 public Controller(Simulator simulator, MapParser mapParser,
 		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, int seed, OutputStream output){
-	this.simulator = simulator;
+/*	this.simulator = simulator;
 	this.mapParser = mapParser;
 	this.tacticsParser = tacticsParser;
 	this.mapFile = mapFile;
@@ -77,6 +82,29 @@ public Controller(Simulator simulator, MapParser mapParser,
 	this.random = new Random(seed);
 	this.output = output;
 	sema = new Semaphore(1);
+	*/
+	this(simulator, mapParser, tacticsParser, mapFile, tacticsFile, (long)seed, output);
+	this.intSeed = seed;
+}
+
+private ByteArrayOutputStream createByteArrayOutputStreamFromFile(InputStream in) {
+	byte[] buffer = new byte[1024];
+	int len;
+	ByteArrayOutputStream out = new ByteArrayOutputStream();
+	try {
+		while ((len = in.read(buffer)) > -1 ) {
+			out.write(buffer, 0, len);
+		}
+	}
+	catch(IOException e) {
+		throw new IllegalStateException("Map file couldn't be read!\n"+e.getMessage()+"\n"+e.getCause());
+	}
+	try {
+		out.flush();
+	} catch (IOException e) {
+		throw new IllegalStateException("couldn't write to ByteArrayOutputStream");
+	}
+	return out;
 }
 	
 	/*
@@ -133,19 +161,19 @@ public void setOutput(OutputStream output) {
 		this.tacticsParser = tacticsParser;
 	}
 
-	public InputStream getMapFile() {
+	public ByteArrayOutputStream getMapFile() {
 		return mapFile;
 	}
 
-	public void setMapFile(InputStream mapFile) {
+	public void setMapFile(ByteArrayOutputStream mapFile) {
 		this.mapFile = mapFile;
 	}
 
-	public List<InputStream> getTacticsFile() {
+	public List<ByteArrayOutputStream> getTacticsFile() {
 		return tacticsFile;
 	}
 
-	public void setTacticsFile(List<InputStream> tacticsFile) {
+	public void setTacticsFile(List<ByteArrayOutputStream> tacticsFile) {
 		this.tacticsFile = tacticsFile;
 	}
 
@@ -170,9 +198,8 @@ public void setOutput(OutputStream output) {
 public void initializeSimulator() throws IOException{
 	
 	List<String> stringList = new LinkedList<String>();
-	for(InputStream in : tacticsFile){
-		stringList.add(convertStreamToString(in));
-		in.reset();
+	for(ByteArrayOutputStream tactic : tacticsFile){
+		stringList.add(tactic.toString());
 	}
 	
 	
@@ -184,7 +211,7 @@ public void initializeSimulator() throws IOException{
 	
 	//initializes the LogWriter
 	try {
-		simulator.getLogWriter().init(output, convertStreamToString(mapFile) , stringArray);
+		simulator.getLogWriter().init(output, mapFile.toString(), stringArray);
 	} catch (ArrayIndexOutOfBoundsException e1) {
 		throw new IllegalStateException();
 	} catch (NullPointerException e1) {
@@ -193,14 +220,12 @@ public void initializeSimulator() throws IOException{
 		throw new IllegalStateException();
 	}
 	
-	mapFile.reset();
-	
 	
 	//sets the randomobject to the simulator
 	simulator.setRandom(random);
 	
 	//parses the map and give it to the simulator
-	mapParser.parseMap(mapFile, simulator);
+	mapParser.parseMap(new ByteArrayInputStream(mapFile.toByteArray()), simulator);
 	
 	//get the factionarray
 	List<Faction> factions = simulator.getFactions();
@@ -209,8 +234,8 @@ public void initializeSimulator() throws IOException{
 	//check if there are enough tacticsfiles for the factions
 	if(factions.size() <= tacticsFile.size()){
 	//iterate through the tacticsfile
-	for(InputStream tactic : tacticsFile){
-		Instruction[] instrArray = tacticsParser.parseTactics(tactic, random);
+	for(ByteArrayOutputStream tactic : tacticsFile){
+		Instruction[] instrArray = tacticsParser.parseTactics(new ByteArrayInputStream(tactic.toByteArray()), random);
 		try{
 		factions.get(0).setTactics(instrArray);
 		//breaks out from the loop, if there are no factions left to add tactics to

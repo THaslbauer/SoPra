@@ -105,7 +105,10 @@ public class Main {
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
 		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
-		infoPoint.setRefLogger(LogProvider.createInstance("DEFAULT"));
+		for(String name : LogProvider.supported()) {
+			refLoggers.add(LogProvider.createInstance(name));
+		}
+		infoPoint.setRefLoggers(refLoggers);
 		Simulator sim = new Simulator(infoPoint,turns,rand);
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
@@ -115,7 +118,8 @@ public class Main {
 		controller.initializeSimulator();
 		}
 		catch(IOException e) {
-			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getStackTrace()+"\n"+e.getCause());
+			e.printStackTrace();
+			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
 		}
 		
 		if(start)
