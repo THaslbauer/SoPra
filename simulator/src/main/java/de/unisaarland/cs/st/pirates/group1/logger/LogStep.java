@@ -1,4 +1,4 @@
-package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
+package de.unisaarland.cs.st.pirates.group1.logger;
 
 /**
  * An Object which represents the logStep() method call in the ExtendedLogWriter interface

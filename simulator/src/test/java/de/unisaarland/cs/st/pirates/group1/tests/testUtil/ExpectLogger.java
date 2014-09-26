@@ -1,4 +1,4 @@
-package de.unisaarland.cs.st.pirates.group1.tests.testLogger;
+package de.unisaarland.cs.st.pirates.group1.tests.testUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -8,6 +8,14 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
+import de.unisaarland.cs.st.pirates.group1.logger.AddCell;
+import de.unisaarland.cs.st.pirates.group1.logger.Create;
+import de.unisaarland.cs.st.pirates.group1.logger.Destroy;
+import de.unisaarland.cs.st.pirates.group1.logger.Fight;
+import de.unisaarland.cs.st.pirates.group1.logger.LogOperation;
+import de.unisaarland.cs.st.pirates.group1.logger.LogStep;
+import de.unisaarland.cs.st.pirates.group1.logger.Notify;
+import de.unisaarland.cs.st.pirates.group1.logger.OptionalLogOperation;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;

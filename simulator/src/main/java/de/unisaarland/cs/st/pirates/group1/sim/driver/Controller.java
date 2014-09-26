@@ -237,7 +237,7 @@ public void initializeSimulator() throws IOException{
 	for(ByteArrayOutputStream tactic : tacticsFile){
 		Instruction[] instrArray = tacticsParser.parseTactics(new ByteArrayInputStream(tactic.toByteArray()), random);
 		try{
-		factions.get(0).setTactics(instrArray);
+		factions.get(factionCounter).setTactics(instrArray);
 		//breaks out from the loop, if there are no factions left to add tactics to
 		}catch(IndexOutOfBoundsException e){
 			break;
@@ -271,7 +271,6 @@ public void play(){
 			ende = true;
 		}
 		
-		ende = true;
 	}
 	sema.release();
 }

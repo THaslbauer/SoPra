@@ -12,7 +12,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 
 /**
  * A test class for kraken

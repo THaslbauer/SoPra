@@ -8,12 +8,12 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.logger.AddCell;
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 
 
 public class RealMapTests {
