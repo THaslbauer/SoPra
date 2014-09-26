@@ -110,7 +110,7 @@ public class Main {
 		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
 		//right now just one logger
 		for(String name : LogProvider.supported()) {
-			if(name == "DEFAULT")
+			if(name.equals("DEFAULT"))
 				refLoggers.add(LogProvider.createInstance(name));
 		}
 		infoPoint.setRefLoggers(refLoggers);
