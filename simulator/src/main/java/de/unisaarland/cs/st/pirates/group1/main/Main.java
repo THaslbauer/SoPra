@@ -104,26 +104,42 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
+		//initializing reference loggers
+		System.out.println("building refloggers");
 		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
+		//right now just one logger
 		for(String name : LogProvider.supported()) {
-			refLoggers.add(LogProvider.createInstance(name));
+			if(name == "DEFAULT")
+				refLoggers.add(LogProvider.createInstance(name));
 		}
 		infoPoint.setRefLoggers(refLoggers);
+		System.out.println(System.getProperty("debug"));
+		if(System.getProperty("debug").equals("y")) {
+			System.out.println("debug mode enabled");
+//			loggers.add(new OutLogger());
+		}
+		infoPoint.setGUI(loggers);
+		//set extended loggers
+		System.out.println("set extended loggers");
 		Simulator sim = new Simulator(infoPoint,turns,rand);
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
 		Controller controller = new Controller(sim, mapParser, tacticsParser, 
 				mapFile, tacticsFiles, seed, logFile);
 		try {
-		controller.initializeSimulator();
+			System.out.println("initializing");
+			controller.initializeSimulator();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
 		}
 		
-		if(start)
+		if(start) {
+			//starting controller
+			System.out.println("starting controller");
 			controller.play();
+		}
 	}
 }
 

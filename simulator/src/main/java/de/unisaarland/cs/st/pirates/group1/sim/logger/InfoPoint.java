@@ -138,8 +138,9 @@ public LogWriter fleetScore(int id, int value) throws IllegalArgumentException,
 public void init(OutputStream logStream, String map, String... programs)
 		throws NullPointerException, IOException,
 		ArrayIndexOutOfBoundsException {
-	for(LogWriter refLogger : refLoggers)
+	for(LogWriter refLogger : refLoggers) {
 		refLogger.init(logStream, map, programs);
+	}
 	for(ExtendedLogWriter g :  GUIs)
 		g.init(logStream, map, programs);
 	
