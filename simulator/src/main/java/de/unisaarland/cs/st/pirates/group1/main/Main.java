@@ -115,7 +115,7 @@ public class Main {
 		controller.initializeSimulator();
 		}
 		catch(IOException e) {
-			throw new IllegalStateException("Couldn't open file streams");
+			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getStackTrace()+"\n"+e.getCause());
 		}
 		
 		if(start)
