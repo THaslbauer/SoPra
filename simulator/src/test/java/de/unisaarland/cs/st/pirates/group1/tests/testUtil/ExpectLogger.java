@@ -1,33 +1,78 @@
-package de.unisaarland.cs.st.pirates.group1.main;
-
+package de.unisaarland.cs.st.pirates.group1.tests.testUtil;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
+
+import static org.junit.Assert.*;
+
+import de.unisaarland.cs.st.pirates.group1.logger.AddCell;
+import de.unisaarland.cs.st.pirates.group1.logger.Create;
+import de.unisaarland.cs.st.pirates.group1.logger.Destroy;
+import de.unisaarland.cs.st.pirates.group1.logger.Fight;
+import de.unisaarland.cs.st.pirates.group1.logger.LogOperation;
+import de.unisaarland.cs.st.pirates.group1.logger.LogStep;
+import de.unisaarland.cs.st.pirates.group1.logger.Notify;
+import de.unisaarland.cs.st.pirates.group1.logger.OptionalLogOperation;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Create;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Destroy;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Fight;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.LogOperation;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.LogStep;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.Notify;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.OptionalLogOperation;
 import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
-public class OutLogger implements ExtendedLogWriter {
+public class ExpectLogger implements ExtendedLogWriter {
 	public LinkedList<LogOperation> ops = new LinkedList<LogOperation>();
 	public LinkedList<OptionalLogOperation> oops = new LinkedList<OptionalLogOperation>();
 
+	
+	/* Most epic method of da history */
+	public void expect(LogOperation op) {
+		LogOperation otherop = null;
+		try {
+			otherop = ops.removeFirst();
+		} catch(NoSuchElementException e) {
+			fail("Expected \""+op+"\", but there was nothing!");
+		}
+		assertTrue("EXPECTED \""+op+"\" but GOT \""+otherop+"\".",op.equals(otherop));
+	}
+	
+	public void expect(OptionalLogOperation op) {
+		OptionalLogOperation otheroop = null;
+		try {
+			otheroop = oops.removeFirst();
+		} catch(NoSuchElementException e) {
+			fail("Expected \""+op+"\", but there was nothing!");
+		}
+		assertTrue("EXPECTED \""+op+"\" but GOT \""+otheroop+"\".",op.equals(otheroop));
+	}
+
+	public void expect() {
+		try {
+			ops.removeFirst();
+		} catch(NoSuchElementException e) {
+			fail("Expected an operation, but there was nothing!");
+		}
+	}
+	
+	
+	
+	public void clear() {
+		ops.clear();
+		oops.clear();
+	}
+	
+	public void expectNothing() {
+		if(!ops.isEmpty())
+			fail("I expected no more logs, but there were some: "+ops);
+	}
 	
 	@Override
 	public LogWriter addCell(Cell type, Integer faction, int x, int y)
 			throws NullPointerException, ArrayIndexOutOfBoundsException,
 			IllegalArgumentException, IllegalStateException {
 		
-		System.out.println(new AddCell(type, faction, x, y));
+		ops.add(new AddCell(type, faction, x, y));
 		return this;
 	}
 
@@ -66,7 +111,7 @@ public class OutLogger implements ExtendedLogWriter {
 			throws NullPointerException, IllegalArgumentException,
 			ArrayIndexOutOfBoundsException, IllegalStateException {
 		
-		System.out.println(new Create(entity, id, keys, values));
+		ops.add(new Create(entity, id, keys, values));
 		return this;
 	}
 
@@ -74,7 +119,7 @@ public class OutLogger implements ExtendedLogWriter {
 	public LogWriter destroy(Entity entity, int id)
 			throws NullPointerException, IllegalArgumentException,
 			IllegalStateException {
-		System.out.println(new Destroy(entity, id));
+		ops.add(new Destroy(entity, id));
 		return this;
 	}
 
@@ -96,25 +141,25 @@ public class OutLogger implements ExtendedLogWriter {
 
 	@Override
 	public void logStep() throws IllegalStateException, IOException {
-		System.out.println(new LogStep());
+		ops.add(new LogStep());
 	}
 
 	@Override
 	public LogWriter notify(Entity entity, int id, Key key, int value)
 			throws NullPointerException, IllegalArgumentException,
 			IllegalStateException {
-		System.out.println(new Notify(entity, id, key, value));
+		ops.add(new Notify(entity, id, key, value));
 		return this;
 	}
 
 	@Override
 	public void fight(Ship ship, Ship otherShip) {
-		System.out.println(new Fight(ship, otherShip));
+		oops.add(new Fight(ship, otherShip));
 	}
 
 	@Override
 	public void fight(Ship ship, Kraken kraken) {
-		System.out.println(new Fight(ship, kraken));
+		oops.add(new Fight(ship, kraken));
 		
 	}
 

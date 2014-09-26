@@ -14,7 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 
 /**
  * A test class for ships

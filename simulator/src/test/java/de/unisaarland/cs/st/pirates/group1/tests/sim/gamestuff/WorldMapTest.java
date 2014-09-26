@@ -3,6 +3,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.gamestuff;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.unisaarland.cs.st.pirates.group1.logger.AddCell;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Base;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
@@ -17,8 +18,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.AddCell;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 import junit.framework.TestCase;
 
 public class WorldMapTest extends TestCase {

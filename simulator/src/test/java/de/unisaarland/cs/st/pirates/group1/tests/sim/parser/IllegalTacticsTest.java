@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap.sRandom;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
-import de.unisaarland.cs.st.pirates.group1.tests.testLogger.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 
 public class IllegalTacticsTest {
 	private static ExpectLogger expectLogger = new ExpectLogger();
