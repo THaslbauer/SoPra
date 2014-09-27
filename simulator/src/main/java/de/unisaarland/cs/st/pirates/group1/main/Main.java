@@ -110,12 +110,12 @@ public class Main {
 		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
 		//right now just one logger
 		for(String name : LogProvider.supported()) {
-			if(name.equals("DEFAULT"))
+			if("DEFAULT".equals(name))
 				refLoggers.add(LogProvider.createInstance(name));
 		}
 		infoPoint.setRefLoggers(refLoggers);
 		System.out.println(System.getProperty("debug"));
-		if(System.getProperty("debug").equals("y")) {
+		if(System.getProperty("dbg") != null) {
 			System.out.println("debug mode enabled");
 			loggers.add(new OutLogger());
 		}
