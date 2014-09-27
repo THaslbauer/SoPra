@@ -33,8 +33,9 @@ public class DropInstruction extends Instruction {
 		ship.setLoad(0);
 		logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, 0);
 		//add it to the Tile
-		pos.increaseTreasure(treasure);
 		if(!(pos instanceof Base)){
+			//drop treasure on Tile if not on base
+			pos.increaseTreasure(treasure);
 			//lower morale if you drop treasure on something other than a base
 			//(you should only be on your base so no differentiating between factions)
 			int morale = ship.getMorale();
@@ -45,6 +46,11 @@ public class DropInstruction extends Instruction {
 				ship.setMorale(morale);
 				logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, morale);
 			}
+		}
+		else {
+			//increase Faction score if on base
+			int newScore = ship.getFaction().increaseScore(treasure);
+			logger.fleetScore(ship.getFaction().getFactionID(), newScore);
 		}
 		ship.increasePC();
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
