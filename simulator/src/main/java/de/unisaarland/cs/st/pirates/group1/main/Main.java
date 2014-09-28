@@ -106,7 +106,8 @@ public class Main {
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
 		//initializing reference loggers
-		System.out.println("building refloggers");
+		//TODO second debug switch for this
+//		System.out.println("building refloggers");
 		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
 		//right now just one logger
 		for(String name : LogProvider.supported()) {
@@ -114,21 +115,24 @@ public class Main {
 				refLoggers.add(LogProvider.createInstance(name));
 		}
 		infoPoint.setRefLoggers(refLoggers);
-		System.out.println(System.getProperty("debug"));
+		//TODO: second debug switch
+//		System.out.println(System.getProperty("debug"));
 		if(System.getProperty("dbg") != null) {
-			System.out.println("debug mode enabled");
+//			System.out.println("debug mode enabled");
 			loggers.add(new OutLogger());
 		}
 		infoPoint.setGUI(loggers);
 		//set extended loggers
-		System.out.println("set extended loggers");
+		//TODO second debug switch
+//		System.out.println("set extended loggers");
 		Simulator sim = new Simulator(infoPoint,turns,rand);
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
 		Controller controller = new Controller(sim, mapParser, tacticsParser, 
 				mapFile, tacticsFiles, seed, logFile);
 		try {
-			System.out.println("initializing");
+			//TODO second debug switch
+//			System.out.println("initializing");
 			controller.initializeSimulator();
 		}
 		catch(IOException e) {
@@ -138,7 +142,8 @@ public class Main {
 		
 		if(start) {
 			//starting controller
-			System.out.println("starting controller");
+			//TODO second debug switch
+//			System.out.println("starting controller");
 			controller.play();
 		}
 	}
