@@ -139,6 +139,11 @@ public class Main {
 			//starting controller
 			System.out.println("starting controller");
 			controller.play();
+			try {
+				infoPoint.close();
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
+			}
 		}
 	}
 }
