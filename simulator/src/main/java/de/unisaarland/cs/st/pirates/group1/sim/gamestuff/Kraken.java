@@ -1,8 +1,11 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import de.unisaarland.cs.st.pirates.group1.main.Main;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
 /**
  * Representation of a Kraken on the sea
@@ -36,6 +39,8 @@ public class Kraken extends Placable {
 			if(aim instanceof Island || aim instanceof Base)
 				return;
 			setMyTile(aim); // move to aim
+			Main.ip.notify(Entity.KRAKEN, id, Key.X_COORD, myTile.getPosition().x);
+			Main.ip.notify(Entity.KRAKEN, id, Key.Y_COORD, myTile.getPosition().y);
 		} catch (IllegalArgumentException e) { // cant move there, kraken there
 			//do nothing
 		} 

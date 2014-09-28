@@ -28,7 +28,11 @@ import de.unisaarland.cs.st.pirates.logger.LogProvider;
 import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 
+
 public class Main {
+	
+	public static InfoPoint ip; // TODO!!
+
 	
 	private static String log;
 	private static int turns;
@@ -105,8 +109,8 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
+		ip = infoPoint; //TODO!
 		//initializing reference loggers
-		System.out.println("building refloggers");
 		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
 		//right now just one logger
 		for(String name : LogProvider.supported()) {
@@ -120,19 +124,27 @@ public class Main {
 		}
 		infoPoint.setGUI(loggers);
 		//set extended loggers
-		System.out.println("set extended loggers");
 		Simulator sim = new Simulator(infoPoint,turns,rand);
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
 		Controller controller = new Controller(sim, mapParser, tacticsParser, 
 				mapFile, tacticsFiles, seed, logFile);
 		try {
-			System.out.println("initializing");
 			controller.initializeSimulator();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
+		} catch(IllegalArgumentException e) {
+			// Illegal Input files !!! TODO
+			try {
+				infoPoint.close(); // Maybe this is enough
+				System.out.println("Illegal Input. Exiting.");
+				System.exit(1);
+			} catch (Exception f) {
+				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
+			} 
+			
 		}
 		
 		if(start) {
