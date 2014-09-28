@@ -49,6 +49,7 @@ public class Ship extends Placable {
 	 * Executes a cycle for this ship
 	 */
 	public void step() {
+		this.increasePC();
 		try {
 			Instruction i = faction.getTactics()[pc];
 			i.execute(this);
