@@ -114,7 +114,6 @@ public class Main {
 				refLoggers.add(LogProvider.createInstance(name));
 		}
 		infoPoint.setRefLoggers(refLoggers);
-		System.out.println(System.getProperty("debug"));
 		if(System.getProperty("dbg") != null) {
 			System.out.println("debug mode enabled");
 			loggers.add(new OutLogger());

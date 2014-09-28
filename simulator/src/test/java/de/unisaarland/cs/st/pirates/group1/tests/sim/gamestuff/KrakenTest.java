@@ -13,6 +13,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.SRandom;
 
 /**
  * A test class for kraken
@@ -88,7 +89,7 @@ public class KrakenTest {
 	@Test 
 	public void krakenfail1Test() throws IllegalCallException{
 		
-		myMap1.setRandom(new Worldmap.sRandom(16L));
+		myMap1.setRandom(new SRandom(16L));
 		Kraken kraken = new Kraken(1, tile1);	
 		kraken.step();
 		
@@ -104,7 +105,7 @@ public class KrakenTest {
 	@Test
 	public void krakensucceedTest() throws IllegalCallException{
 		
-		myMap2.setRandom(new Worldmap.sRandom(1236L));
+		myMap2.setRandom(new SRandom(1236L));
 		Kraken kraken = new Kraken(1, tile2);
 		kraken.step();
 		
@@ -125,7 +126,7 @@ public class KrakenTest {
 		Kraken kraken3 = new Kraken(3, tile33);
 		Kraken kraken4 = new Kraken(3, tile34);
 		
-		myMap3.setRandom(new Worldmap.sRandom(9872L));
+		myMap3.setRandom(new SRandom(9872L));
 		kraken1.step();
 		
 		//the kraken's tile should remain the same
@@ -151,7 +152,7 @@ public class KrakenTest {
 		
 		//world map with three base tiles and one sea tile
 		Worldmap6T myMap = new Worldmap6T(2,2, new ExpectLogger(), null);
-		myMap.setRandom(new Worldmap.sRandom(123746L));
+		myMap.setRandom(new SRandom(123746L));
 		myMap.createBaseTile(new Position(0,0), faction);
 		myMap.createBaseTile(new Position(0,1), faction);
 		myMap.createBaseTile(new Position(1,1), faction);
@@ -172,12 +173,12 @@ public class KrakenTest {
 	@Test
 	public void krakenMoveRightTest(){
 		
-		myMap4.setRandom(new Worldmap.sRandom(123456L));
+		myMap4.setRandom(new SRandom(123456L));
 		
 		Kraken kraken = new Kraken(1, tile4);
 		kraken.step();
 		
-		int movedirection = myMap4.random.getLastInt();
+		int movedirection = ((SRandom)myMap4.getRandom()).getLastInt();
 		
 		if (movedirection == 0 || movedirection == 3){
 			
