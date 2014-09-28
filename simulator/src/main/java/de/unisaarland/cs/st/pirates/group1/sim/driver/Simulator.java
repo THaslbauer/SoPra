@@ -186,7 +186,7 @@ public class Simulator
 		values[1]    = tile.getPosition().y;
 		
 		// logs the creation before creating the ship
-		logger.create(Entity.KRAKEN, entityFactory.getShipNextId(), keys, values);
+		logger.create(Entity.KRAKEN, entityFactory.getKrakenNextId(), keys, values);
 		
 		// creates the kraken
 		Kraken newKraken = entityFactory.releaseTheKraken(tile);
