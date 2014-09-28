@@ -148,7 +148,8 @@ public class Main {
 			try {
 				infoPoint.close(); // Maybe this is enough
 				System.out.println("Illegal Input. Exiting.");
-				System.exit(1);
+//				System.exit(1);
+				throw e;
 			} catch (Exception f) {
 				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
 			} 
