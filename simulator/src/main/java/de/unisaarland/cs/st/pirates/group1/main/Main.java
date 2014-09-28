@@ -147,10 +147,10 @@ public class Main {
 			// Illegal Input files !!! TODO
 			try {
 				infoPoint.close(); // Maybe this is enough
-				System.out.println("Illegal Input. Exiting.");
-//				System.exit(1);
+//				System.out.println("Illegal Input. Exiting.");
 				throw e;
-			} catch (Exception f) {
+			}
+			catch (IOException f) {
 				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
 			} 
 			
