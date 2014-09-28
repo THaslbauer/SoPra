@@ -21,22 +21,32 @@ public class DropInstruction extends Instruction {
 	 * @param logger
 	 */
 	public DropInstruction(ExtendedLogWriter logger) {
-		// TODO Auto-generated constructor stub
 		super(logger);
 	}
 	
 	@Override
 	public void execute(Ship ship){
 		Tile pos = ship.getMyTile();
-		//get treasure and remove it all from the ship
+		//get treasure from ship
 		int treasure = ship.getLoad();
+		//instead of an assertion check here if treasure is less than 0
+		if(treasure < 0)
+			throw new IllegalStateException("A ship's treasure should never be less than 0, was "+treasure);
+		//if no treasure can be dropped, drop no treasure
+		if(treasure == 0) {
+			ship.increasePC();
+			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
+			super.cycle(ship);
+			return;
+		}
+		//remove all treasure from ship
 		ship.setLoad(0);
 		logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, 0);
 		//add it to the Tile
 		if(!(pos instanceof Base)){
 			//drop treasure on Tile if not on base
 			pos.increaseTreasure(treasure);
-			//lower morale if you drop treasure on something other than a base
+			//lower morale
 			//(you should only be on your base so no differentiating between factions)
 			int morale = ship.getMorale();
 			if(morale > 0) {
@@ -48,7 +58,7 @@ public class DropInstruction extends Instruction {
 			}
 		}
 		else {
-			//increase Faction score if on base
+			//increase Faction score if on base, don't lose morale
 			int newScore = ship.getFaction().increaseScore(treasure);
 			logger.fleetScore(ship.getFaction().getFactionID(), newScore);
 		}

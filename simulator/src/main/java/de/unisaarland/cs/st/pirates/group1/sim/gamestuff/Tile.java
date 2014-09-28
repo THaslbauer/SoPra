@@ -2,10 +2,13 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
 import java.util.HashMap;
 import java.util.List;
+
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
+import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 import static de.unisaarland.cs.st.pirates.group1.sim.util.ThrowHelper.*;
 
 /**
@@ -174,6 +177,7 @@ public abstract class Tile {
 		else {
 			Treasure treasure = (Treasure)placables[2];
 			treasure.setValue(treasure.getValue()+value);
+			map.getExtendedLogWriter().notify(Entity.TREASURE, treasure.getId(), Key.VALUE, treasure.getValue());
 		}
 	}
 	
@@ -188,13 +192,16 @@ public abstract class Tile {
 			throw new IllegalArgumentException("No treasure here :(");
 		Treasure treasure = (Treasure)placables[2];
 		treasure.setValue(treasure.getValue() >= value ? treasure.getValue() - value : (int) throwIAException("You can't take this much of a treasure!"));
-		if(treasure.getValue() == 0)
+		map.getExtendedLogWriter().notify(Entity.TREASURE, treasure.getId(), Key.VALUE, treasure.getValue());
+		if(treasure.getValue() == 0) {
 			try {
 				detach(treasure);
+				map.getExtendedLogWriter().destroy(Entity.TREASURE, treasure.getId());
 			} catch (IllegalCallException e) {
 				// this should not happen
 				throw new IllegalStateException("This should never happen, WTF?!");
 			}
+		}
 	}
 	
 	public HashMap<Faction, List<Buoy>> getBuoyMap() {
