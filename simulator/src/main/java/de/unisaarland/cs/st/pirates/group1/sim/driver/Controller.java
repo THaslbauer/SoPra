@@ -247,7 +247,11 @@ public void initializeSimulator() throws IOException{
 	}else{
 		throw new IllegalArgumentException("There are not enough tactics for the factions");
 	}
-	
+	//now notify initial Faction score: 0
+	for(Faction f : factions) {
+		assert(f.getScore() == 0);
+		simulator.getLogWriter().fleetScore(f.getFactionID(), f.getScore());
+	}
 }
 
 	/**

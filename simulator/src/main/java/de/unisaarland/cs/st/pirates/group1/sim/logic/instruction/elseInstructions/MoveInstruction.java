@@ -129,7 +129,7 @@ public class MoveInstruction extends ElseInstruction {
 					}
 					else {
 						//now coin flip (get it from the Worldmap)
-						if(ship.getMyTile().getWorldmap().random.nextInt(2) == 1) {
+						if(ship.getMyTile().getWorldmap().getRandom().nextInt(2) == 1) {
 							//our ship wins!
 							resolveFight(ship, otherShip);
 							aggressorWins = true;
