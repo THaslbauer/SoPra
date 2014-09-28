@@ -199,7 +199,7 @@ public class ControllerTest
 		};
 		contr.setSimulator(testSimulator);
 		Thread contrThread = new Thread(contrRun);
-		contrThread.run();
+		contrThread.start();
 		contr.pause();
 		int firstStepCount = testSimulator.getValue();
 		try{
