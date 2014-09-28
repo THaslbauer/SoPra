@@ -59,7 +59,6 @@ public class IfAllInstruction extends ElseInstruction
 		}
 		
 		
-		ship.increasePC();
 		this.cycle(ship);
 		
 		

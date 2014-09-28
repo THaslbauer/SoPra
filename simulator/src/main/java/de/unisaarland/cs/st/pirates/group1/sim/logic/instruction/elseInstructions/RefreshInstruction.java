@@ -72,7 +72,6 @@ public class RefreshInstruction extends ElseInstruction
 		
 		
 		ship.setRegister(Register.SHIP_MORAL, maxMorale);
-		ship.increasePC();
 		ship.resetBoredom();
 		
 		

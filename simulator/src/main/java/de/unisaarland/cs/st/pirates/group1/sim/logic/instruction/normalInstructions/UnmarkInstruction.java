@@ -50,7 +50,6 @@ public class UnmarkInstruction extends Instruction {
 		}
 		if(buoys.isEmpty())
 			buoyMap.remove(shipFact);
-		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
 
