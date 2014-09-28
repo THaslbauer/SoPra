@@ -12,37 +12,11 @@ import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
  *
  */
 public abstract class Worldmap {
-	public static class sRandom extends Random {
-		
-		/**
-		 * I have no idea what this does.
-		 */
-		private static final long serialVersionUID = 618966912020603967L;
-		
-		private long seed;
-		private int lastInt;
-		
-		public sRandom(long seed) {
-			super(seed);
-			this.seed = seed;
-		}
-		public int nextInt(int bits) {
-			lastInt = super.nextInt(bits);
-			return lastInt;
-		}
-		
-		public long getSeed() {
-			return seed;
-		}
-		
-		public int getLastInt() {
-			return lastInt;
-		}
-	}
+	
 	
 	protected ExtendedLogWriter logger;
 	protected EntityFactory entityFactory;
-	public sRandom random;
+	protected Random random;
 	
 	/**
 	 * Map constructor
@@ -135,12 +109,12 @@ public abstract class Worldmap {
 	}
 
 
-	public sRandom getRandom() {
+	public Random getRandom() {
 		return random;
 	}
 
 
-	public void setRandom(sRandom random) {
+	public void setRandom(Random random) {
 		this.random = random;
 	}
 	

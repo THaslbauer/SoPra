@@ -7,11 +7,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 
 import org.junit.Before;
 import org.junit.Test;

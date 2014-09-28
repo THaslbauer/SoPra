@@ -32,7 +32,7 @@ public class MapParser {
 	private HashMap<String, Faction> factions;
 	private ArrayList<Faction> list;
 	private Worldmap mymap;
-	private int factioncount =0;
+	private int factioncount =1;
 	private Simulator simulator;
 	
 	public MapParser(){
@@ -271,6 +271,7 @@ public class MapParser {
 				
 				//gives the simulator its faction list
 				this.simulator.setFactions(list);
+				mymap.setRandom(simulator.getRandom());
 				factions = new HashMap<String, Faction>();
 				list = new ArrayList<Faction>();
 				factioncount =0;

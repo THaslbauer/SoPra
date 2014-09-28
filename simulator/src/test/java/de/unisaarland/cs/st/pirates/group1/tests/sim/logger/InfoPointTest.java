@@ -33,7 +33,11 @@ public class InfoPointTest
 	public static void setUp()
 	{
 		infoPoint  = new InfoPoint();
+		
+		testLoggers = new LinkedList<LogWriter>();
 		testLogger = new TestLogger();
+		testLoggers.add(testLogger);
+		
 		testGuis   = new LinkedList<ExtendedLogWriter>();
 		testGui    = new TestGui();
 		testGuis.add(testGui);
@@ -88,7 +92,7 @@ public class InfoPointTest
 		int valTestGui        = testGui.value;
 		int expectedValGui    = valTestGui += 1;
 		
-		infoPoint.addCustomHeaderData(null);
+		infoPoint.addCustomHeaderData("");
 		
 		assertTrue("The logger's method addCustomHeaderData() was not called.", expectedValLogger == testLogger.value);
 		assertTrue("The gui's method addCustomHeaderData() was not called.", expectedValGui == testGui.value);
@@ -257,7 +261,7 @@ public class InfoPointTest
 		
 		infoPoint.setRefLoggers(testLoggers);
 		assertTrue("The infoPoint's setter or getter for the RefLogger was incorrect",
-				testLogger.equals(infoPoint.getRefLoggers()));
+				testLoggers.equals(infoPoint.getRefLoggers()));
 		
 		
 		infoPoint.setGUI(testGuis);

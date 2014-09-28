@@ -21,6 +21,7 @@ import de.unisaarland.cs.st.pirates.group1.tests.sim.util.*;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.DummyEntityFactory;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ReflectionHelper;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.SRandom;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
@@ -49,7 +50,7 @@ public class MoveInstructionTest {
 		}
 	}
 	
-	private static class NoRandom extends Worldmap.sRandom {
+	private static class NoRandom extends SRandom {
 		public int nextInt;
 		public int lastInt = 0;
 		public int a;
@@ -405,8 +406,8 @@ public class MoveInstructionTest {
 		m2shipE2.setLoad(0);
 		m2shipE2.setCondition(1);
 		map2.setRandom(new NoRandom());
-		((NoRandom)map2.random).setNextInt(0);
-		assertTrue(((NoRandom)map2.random).getLastA() < 2);
+		((NoRandom)map2.getRandom()).setNextInt(0);
+		assertTrue(((NoRandom)map2.getRandom()).getLastA() < 2);
 		MoveInstruction mi = new MoveInstruction(elo, 123);
 		elo.clear();
 		mi.execute(m2ship);
@@ -488,8 +489,8 @@ public class MoveInstructionTest {
 		m2shipE2.setMorale(0);
 		m2shipE2.setCondition(1);
 		map2.setRandom(new NoRandom());
-		((NoRandom)map2.random).setNextInt(1);
-		assertTrue(((NoRandom)map2.random).getLastA() < 2);
+		((NoRandom)map2.getRandom()).setNextInt(1);
+		assertTrue(((NoRandom)map2.getRandom()).getLastA() < 2);
 		MoveInstruction mi = new MoveInstruction(elo, 789);
 		elo.clear();
 		mi.execute(m2ship);

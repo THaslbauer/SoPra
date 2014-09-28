@@ -28,7 +28,11 @@ import de.unisaarland.cs.st.pirates.logger.LogProvider;
 import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 
+
 public class Main {
+	
+	public static InfoPoint ip; // TODO!!
+
 	
 	private static String log;
 	private static int turns;
@@ -105,6 +109,7 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
+		ip = infoPoint; //TODO!
 		//initializing reference loggers
 		//TODO second debug switch for this
 //		System.out.println("building refloggers");
@@ -115,7 +120,7 @@ public class Main {
 				refLoggers.add(LogProvider.createInstance(name));
 		}
 		infoPoint.setRefLoggers(refLoggers);
-		//TODO: second debug switch
+		//TODO second debug flag
 //		System.out.println(System.getProperty("debug"));
 		if(System.getProperty("dbg") != null) {
 //			System.out.println("debug mode enabled");
@@ -138,6 +143,16 @@ public class Main {
 		catch(IOException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
+		} catch(IllegalArgumentException e) {
+			// Illegal Input files !!! TODO
+			try {
+				infoPoint.close(); // Maybe this is enough
+				System.out.println("Illegal Input. Exiting.");
+				System.exit(1);
+			} catch (Exception f) {
+				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
+			} 
+			
 		}
 		
 		if(start) {
@@ -145,6 +160,11 @@ public class Main {
 			//TODO second debug switch
 //			System.out.println("starting controller");
 			controller.play();
+			try {
+				infoPoint.close();
+			} catch (IllegalStateException | IOException e) {
+				System.out.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
+			}
 		}
 	}
 }
