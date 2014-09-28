@@ -61,6 +61,7 @@ public class PickupInstruction extends ElseInstruction {
 				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, newLoad);
 				neighbour.decreaseTreasure(treasure);
 			}
+			ship.increasePC();
 			super.cycle(ship);
 		}
 		

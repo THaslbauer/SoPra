@@ -34,8 +34,6 @@ public abstract class ElseInstruction extends Instruction {
 	 */
 	protected void elseJump(Ship ship)
 	{
-		// notifies the pc change of the ship
-		logger.notify(Entity.SHIP, ship.getId(), Key.PC, elsePC);
 		
 		// changes the pc of the ship
 		ship.setPC(elsePC);

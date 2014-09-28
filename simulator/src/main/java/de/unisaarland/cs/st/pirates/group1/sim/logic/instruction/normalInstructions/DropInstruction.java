@@ -34,7 +34,7 @@ public class DropInstruction extends Instruction {
 			throw new IllegalStateException("A ship's treasure should never be less than 0, was "+treasure);
 		//if no treasure can be dropped, drop no treasure
 		if(treasure == 0) {
-			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
+			ship.increasePC();
 			super.cycle(ship);
 			return;
 		}
@@ -61,7 +61,7 @@ public class DropInstruction extends Instruction {
 			int newScore = ship.getFaction().increaseScore(treasure);
 			logger.fleetScore(ship.getFaction().getFactionID(), newScore);
 		}
-		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
+		ship.increasePC();
 		super.cycle(ship);
 	}
 

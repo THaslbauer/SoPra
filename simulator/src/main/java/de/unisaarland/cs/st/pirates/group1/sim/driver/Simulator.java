@@ -98,6 +98,7 @@ public class Simulator
 		{
 			if(ship.getCondition() != 0)
 			{
+				this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
 				ship.step();
 			}
 			else

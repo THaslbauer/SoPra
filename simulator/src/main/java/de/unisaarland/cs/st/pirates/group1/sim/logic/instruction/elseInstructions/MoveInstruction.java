@@ -237,6 +237,7 @@ public class MoveInstruction extends ElseInstruction {
 
 		logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, restTime);
 		
+		ship.increasePC();
 		
 		//now cycle if we didn't arrive on home base
 		if(tileType != CellType.HOME) {

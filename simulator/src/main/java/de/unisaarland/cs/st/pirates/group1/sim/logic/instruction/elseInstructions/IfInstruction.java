@@ -51,12 +51,8 @@ public class IfInstruction extends ElseInstruction
 			return;
 		}
 		
-		
+		ship.increasePC();
 		this.cycle(ship);
-		
-	
-		this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
-
 	}
 
 }

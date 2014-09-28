@@ -72,11 +72,11 @@ public class RefreshInstruction extends ElseInstruction
 		
 		
 		ship.setRegister(Register.SHIP_MORAL, maxMorale);
+		ship.increasePC();
 		ship.resetBoredom();
 		
 		
 		this.logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, maxMorale);
-		this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
 		
 	}
 

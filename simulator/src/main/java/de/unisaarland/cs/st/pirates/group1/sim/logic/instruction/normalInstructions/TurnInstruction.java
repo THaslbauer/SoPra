@@ -81,6 +81,8 @@ public class TurnInstruction extends Instruction {
 		}
 		ship.setHeading(head);
 		logger.notify(Entity.SHIP, ship.getId(), Key.DIRECTION, head.ordinal());
+		
+		ship.increasePC();
 		super.cycle(ship);
 	}
 	

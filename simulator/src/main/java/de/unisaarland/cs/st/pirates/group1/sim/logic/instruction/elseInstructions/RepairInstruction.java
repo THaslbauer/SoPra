@@ -59,11 +59,11 @@ public class RepairInstruction extends ElseInstruction {
 		faction.decreaseScore();
 		logger.fleetScore(faction.getFactionID(), faction.getScore());
 		ship.setCondition(maxCondition);
+		ship.increasePC();
 		this.cycle(ship);
 		
 
 		this.logger.notify(Entity.SHIP, ship.getPC(), Key.CONDITION, maxCondition);
-		this.logger.notify(Entity.SHIP, ship.getPC(), Key.PC, ship.getPC());
 		
 	}
 

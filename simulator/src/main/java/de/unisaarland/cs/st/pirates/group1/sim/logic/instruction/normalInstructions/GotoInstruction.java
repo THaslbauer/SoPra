@@ -30,7 +30,6 @@ public class GotoInstruction extends Instruction {
 
 	public void execute(Ship ship){
 		ship.setPC(address);
-		logger.notify(Entity.SHIP, ship.getId(), Key.PC, address);
 		super.cycle(ship);
 	}
 
