@@ -223,12 +223,76 @@ public class TacticsParserTest {
 	private InputStream brokenStreamRefreshSingle;
 	private InputStream brokenStreamRepairSingle;
 	
+	private String monsterString;
+	private InputStream brokenStreamMonster;
+	
 	
 	
 	
 	
 	@Before
 	public void init(){
+		monsterString = ""+
+	"flipzero 6 else 7; lässt im mittel genau 1/6 der mschiffe in richtung 0 losziehen"+"\n"+
+"sense 0; Hier starten 0er Schiffe -- senst die Kachel genau vor sich"+"\n"+
+"if sense_celltype==empty else 5;schaut ob kachel 0 befahrbar"+"\n"+
+"move else 0;falls move fehlschlägt, spring zu 0, wenn komischerweise schiff drauf steht"+"\n"+
+"goto 41;wandert in den 41fall"+"\n"+
+"flipzero 2 else 8;springt zu 1/2 der fälle zu 8"+"\n"+
+"goto 35; springt zu 1/2 der fälle zu 5"+"\n"+
+"flipzero 5 else 14; lässt im mittel genau 1/5 der übrigen schiffe in richtung 1 losziehen"+"\n"+
+"sense 1; Hier starten 1er Schiffe -- senst die Kachel in Richtung 1"+"\n"+
+"if sense_celltype==empty else 12;"+"\n"+
+"move else 0; wenn komischerweise schiff drauf steht"+"\n"+
+"goto 41; wandert in den 41fall"+"\n"+
+"flipzero 2 else 1; springt in der Hälfte der Fälle zu 1, sonst zu 2"+"\n"+
+"goto 15; springt zu 1/2 der Fälle zu 15"+"\n"+
+"flipzero 4 else 21; lässt im mittel genau 1/4 der übrigen schiffe in richtung 2 losziehen"+"\n"+
+"sense 2; Hier starten 2er Schiffe -- senst die Kachel in Richtung 2"+"\n"+
+"if sense_celltype==empty else 19; schaut ob Kachel in Richtung 2 befahrbar ist"+"\n"+
+"move else 0; wenn schiff drauf steht"+"\n"+
+"goto 41; mache mit dem Standard-Fall weiter"+"\n"+
+"flipzero 2 else 8;geht in der Hälfte der Fälle zu 1 sonst zu 22"+"\n"+
+"goto 22; geht zu 22"+"\n"+
+"flipzero 3 else 28; lässt im mittel genau 1/3 der übrigen schiffe in richtung 3 losziehen"+"\n"+
+"sense 3; Hier starten 3er Schiffe -- senst die Kachel in Richtung 3"+"\n"+
+"if sense_celltype==empty else 26; schaut ob Kachel in Richtung 3 befahrbar"+"\n"+
+"move else 0; wenn schiff drauf steht"+"\n"+
+"goto 41; mache mit dem Standard-Fall weiter"+"\n"+
+"flipzero 2 else 15;geht in der Hälfte der Fälle zu 15, sonst zu 29"+"\n"+
+"goto 29; "+"\n"+
+"flipzero 2 else 35; lässt im mittel genau 1/2 der übirgen schiffe in richtung 4 losziehen"+"\n"+
+"sense 4; Hier starten 4er Schiffe -- senst die Kachel in Richtung 4"+"\n"+
+"if sense_celltype==empty else 33; schaut ob Kachel in Richtung 4 befahrbar"+"\n"+
+"move else 0; wenn schiff drauf steht"+"\n"+
+"goto 41; mache mit dem Standard-Fall weiter"+"\n"+
+"flipzero 2 else 35;geht in der Hälfte der Fälle zu  5 sonst zu 3"+"\n"+
+"goto 22;geh zu 22"+"\n"+
+"sense 5; Hier starten 5er Schiffe -- senst die Kachel in Rictung 5"+"\n"+
+"if sense_celltype==empty else 39;schaut ob Kachel in Richtung 5 befahrbar"+"\n"+
+"move else 0; wenn schiff drauf steht"+"\n"+
+"goto 41; mache mit dem Standard-Fall weiter"+"\n"+
+"flipzero 2 else 29; geht in der Hälfte der Fälle zu 29, sonst zu 1"+"\n"+
+"goto 1;"+"\n"+
+"sense 0;senst die Kachel vor sich"+"\n"+
+"if sense_celltype==island else 45; schauen ob vor uns insel ist"+"\n"+
+"refresh 0 else 44; wenn refresh möglich es tun sonst 44up"+"\n"+
+"pickup 0 else 55; 44up versuchen, wenn nicht möglich dann"+"\n"+
+"if sense_celltype==enemyhome else 47;"+"\n"+
+"goto 55; wenn enemybase dann fahr 58 oder rechts weiter"+"\n"+
+"if sense_celltype==home else 51;"+"\n"+
+"drop;"+"\n"+
+"if ship_condition<3 else 51;"+"\n"+
+"repair else 55;"+"\n"+
+"ifall sense_shiptype==enemy ship_moral<4 ship_condition<3 else 53;"+"\n"+
+"goto 55;"+"\n"+
+"move else 55;"+"\n"+
+"goto 41;"+"\n"+
+"flipzero 2 else 58;"+"\n"+
+"turn right;"+"\n"+
+"goto 41;"+"\n"+
+"turn left;"+"\n"+
+"goto 41;";
 		String string =""
 				+ "sense 0"+"\n"
 				+ "ifall sense_treasure ship_load<4 else 4"+"\n"
@@ -266,8 +330,8 @@ public class TacticsParserTest {
 				+ "mark 0"+"\n"
 				+ "mark 2"+"\n"
 				+ "unmark 3;this is a freaking comment"+"\n"
-				+ "repair else 2001"+"\n"
-				+ "move else 2000";
+				+ "repair else 1999"+"\n"
+				+ "move else 0";
 		
 		String brokenString = ""
 				+ "ifall 2;== is much cool, ; ; lawl < ; "+"\n"
@@ -518,7 +582,7 @@ public class TacticsParserTest {
 		brokenStreamRefreshSingle = StreamHelper.asIS(brokenRefreshSingle);
 		brokenStreamRepairSingle = StreamHelper.asIS(brokenRepairSingle);
 		
-		
+		brokenStreamMonster = StreamHelper.asIS(monsterString);
 		
 		
 		
@@ -544,6 +608,21 @@ public class TacticsParserTest {
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
 	}
+	
+	/**
+	 * checks if there is an error raised while parsing a monster instruction
+	 */
+	@Test
+	public void failMonsterInstructionTest(){
+		try{
+			tacticsParser.parseTactics(brokenStreamMonster, random);
+					}catch(IllegalArgumentException e){
+						return;
+					}
+		fail("there should be a illegalargument exception raised because tried to parse: \" " + monsterString + "\" ." 
+				+ "see in the tacticsparsertestclass @before");
+	}
+	
 	
 	/**
 	 * checks if there is an error raised while parsing a sense instruction
