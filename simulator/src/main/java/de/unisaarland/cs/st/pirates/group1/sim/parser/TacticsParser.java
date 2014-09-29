@@ -862,7 +862,7 @@ public class TacticsParser {
 			return true;
 		case("ship_moral"):
 			return true;
-		case("ship_conition"):
+		case("ship_condition"):
 			return true;
 		case("sense_shipdirection"):
 			return true;
