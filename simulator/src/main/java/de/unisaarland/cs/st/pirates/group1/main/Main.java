@@ -154,9 +154,9 @@ public class Main {
 			}
 			catch (IOException f) {
 				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
-			} */
+			} 
 			
-		}
+		}*/
 		
 		if(start) {
 			//starting controller
