@@ -60,6 +60,9 @@ public class RepairInstruction extends ElseInstruction {
 		ship.setCondition(maxCondition);
 		this.logger.notify(Entity.SHIP, ship.getId(), Key.CONDITION, maxCondition);
 		
+		ship.setRestTime(4);
+		this.logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, 4);
+		
 		this.cycle(ship);
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		
