@@ -70,6 +70,7 @@ public Controller(Simulator simulator, MapParser mapParser,
 	this.seed = seed;
 	this.random = new Random(seed);
 	this.output = output;
+	this.dryRunSet = false;
 	sema = new Semaphore(1);
 }
 
