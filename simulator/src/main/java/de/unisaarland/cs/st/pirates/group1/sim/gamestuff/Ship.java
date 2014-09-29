@@ -49,6 +49,10 @@ public class Ship extends Placable {
 	 * Executes a cycle for this ship
 	 */
 	public void step() {
+		if(this.restTime > 0) {
+			this.restTime--;
+			return;
+		}
 		try {
 			Instruction i = faction.getTactics()[pc];
 			i.execute(this);
