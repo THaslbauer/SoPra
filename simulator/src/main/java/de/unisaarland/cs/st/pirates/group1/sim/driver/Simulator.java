@@ -96,11 +96,22 @@ public class Simulator
 		LinkedList<Ship> dummy = new LinkedList<Ship>(ships);
 		for(Ship ship : dummy)
 		{
+			//check if ship is ok
 			if(ship.getCondition() != 0)
 			{
-				this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
-				ship.step();
+				//check if ship is resting
+				if(ship.getRestTime() > 0) {
+					//if resting, decrement restTime and notify new restTime
+					ship.setRestTime(ship.getRestTime() - 1);
+					this.logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, ship.getRestTime());
+				}
+				//if not resting, execute instruction
+				else {
+					this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
+					ship.step();
+				}
 			}
+			//ship is dead, kill ship
 			else
 			{
 				this.removeShip(ship);
