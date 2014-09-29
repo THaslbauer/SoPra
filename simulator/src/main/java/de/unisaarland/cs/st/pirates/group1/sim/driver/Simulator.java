@@ -107,7 +107,6 @@ public class Simulator
 				}
 				//if not resting, execute instruction
 				else {
-					this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
 					ship.step();
 				}
 			}
