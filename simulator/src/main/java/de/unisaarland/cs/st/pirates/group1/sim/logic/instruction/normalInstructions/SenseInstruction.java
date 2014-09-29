@@ -6,6 +6,7 @@ import java.util.Map;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
@@ -50,7 +51,7 @@ public class SenseInstruction extends Instruction {
 		int supply = neighbourTile.isSupply() ? 1 : 0;
 		ship.setRegister(Register.SENSE_SUPPLY, supply);
 		if(!(treasure == null || treasure.getValue() == 0)) {
-			ship.setRegister(Register.SENSE_TREASURE, treasure.getValue());
+			ship.setRegister(Register.SENSE_TREASURE, Expression.TRUE);
 		}
 		Map<Faction, List<Buoy>>buoyMap = neighbourTile.getBuoyMap();
 		List<Buoy> buoys = buoyMap.get(ship.getFaction());
