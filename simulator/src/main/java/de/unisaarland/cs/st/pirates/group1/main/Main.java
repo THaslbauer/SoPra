@@ -143,7 +143,9 @@ public class Main {
 		catch(IOException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
-		} catch(IllegalArgumentException e) {
+		}
+		//TODO see if we need to use this or not
+/*		catch(IllegalArgumentException e) {
 			// Illegal Input files !!! TODO
 			try {
 				infoPoint.close(); // Maybe this is enough
@@ -152,7 +154,7 @@ public class Main {
 			}
 			catch (IOException f) {
 				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
-			} 
+			} */
 			
 		}
 		
