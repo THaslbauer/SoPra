@@ -429,6 +429,10 @@ public class TacticsParser {
 			throw new IllegalArgumentException("A goto instruction consists of two parts");
 		}
 		
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[1])))){
+			throw new IllegalArgumentException("GotoInstruction: wrong PC");
+		}
+		
 		
 		return new GotoInstruction(logger, Integer.parseInt(instruction[1]));
 

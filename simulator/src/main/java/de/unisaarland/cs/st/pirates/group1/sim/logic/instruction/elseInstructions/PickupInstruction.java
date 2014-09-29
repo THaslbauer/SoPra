@@ -35,10 +35,12 @@ public class PickupInstruction extends ElseInstruction {
 
 	@Override
 	public void execute(Ship ship) {
+		//get prerequisites
 		int maxLoad = Ship.getMaxload();
 		Tile tile = ship.getMyTile();
 		Tile neighbour = tile.getNeighbour(ship.getHeading(), dir);
 		int possibleLoad = maxLoad - ship.getLoad();
+		//if ship is full or no Treasure, stop doing things and elseJump
 		if(possibleLoad == 0 || neighbour.getTreasure() == null) {
 			super.elseJump(ship);
 			return;
@@ -50,17 +52,26 @@ public class PickupInstruction extends ElseInstruction {
 			return;
 		}
 		else {
+			//case 1: more treasure than we are able to take
 			if(treasure - possibleLoad >= 0) {
+				//fill ship to the brim and remove the treasure we took from Tile
 				ship.setLoad(maxLoad);
 				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, maxLoad);
 				neighbour.decreaseTreasure(possibleLoad);
 			}
 			else {
+				//calculate new Load of Tile
 				int newLoad = maxLoad - (possibleLoad - treasure);
 				ship.setLoad(newLoad);
 				logger.notify(Entity.SHIP, ship.getId(), Key.VALUE, newLoad);
 				neighbour.decreaseTreasure(treasure);
 			}
+			int morale = ship.getMorale();
+			morale += 2;
+			if(morale > Ship.getMaxmorale())
+				morale = Ship.getMaxmorale();
+			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, morale);
+			ship.resetBoredom();
 			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 			super.cycle(ship);
 		}
