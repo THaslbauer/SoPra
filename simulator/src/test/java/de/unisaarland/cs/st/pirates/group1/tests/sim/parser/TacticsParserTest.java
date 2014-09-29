@@ -245,7 +245,7 @@ public class TacticsParserTest {
 				+ "turn right"+"\n"
 				+ "goto 0"+"\n"
 				+ "sense 0"+"\n"
-				+ "if sense_celltype==home else 19"+"\n"
+				+ "if sense_celltype==empty else 19"+"\n"
 				+ "move else 21"+"\n"
 				+ "drop"+"\n"
 				+ "goto 0"+"\n"
