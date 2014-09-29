@@ -69,7 +69,7 @@ goto liOre; wenn enemybase dann fahr links oder rechts weiter
 
 
 keine_insel_kein_enemyhome:if sense_celltype==home else fight_or_move;
-move 0 else standard;
+move else standard;
 drop;
 turn left;
 turn left;
