@@ -10,6 +10,9 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class OutLogger implements ExtendedLogWriter {
+	
+	public boolean printTactics = false;
+	
 	@Override
 	public LogWriter addCell(Cell type, Integer faction, int x, int y)
 			throws NullPointerException, ArrayIndexOutOfBoundsException,
@@ -79,7 +82,13 @@ public class OutLogger implements ExtendedLogWriter {
 			throws NullPointerException, IOException,
 			ArrayIndexOutOfBoundsException {
 		System.out.println("MAP:\n"+map+"\n\n");
-		System.out.println("TACTICS:\n"+programs);
+		if(!printTactics)
+			return;
+		System.out.println("TACTICS:\n");
+		for(String s : programs) {
+			System.out.println(s+"\n");
+		}
+		System.out.println("\n");
 		
 	}
 
