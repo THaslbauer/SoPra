@@ -192,7 +192,7 @@ public class TacticsParser {
 			
 			//TODO: find out which exceptions are necessary
 			catch(Exception e){
-			throw new IllegalArgumentException("Something with this instruction is wrong");
+			throw new IllegalArgumentException(e.toString());
 		}
 			
 			
