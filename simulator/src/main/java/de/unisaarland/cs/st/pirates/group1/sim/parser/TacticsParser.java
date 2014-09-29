@@ -733,7 +733,7 @@ public class TacticsParser {
 		
 		
 		//This is returned when there is a type mismatch to produce an expression
-		throw new IllegalArgumentException("Bullshit Expression ");
+		throw new IllegalArgumentException("Bullshit Expression "+ s);
 		
 		
 		
