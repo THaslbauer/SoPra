@@ -26,8 +26,6 @@ public class Simulator
 	private Worldmap worldmap;									// the map
 	private int cycle;											// the current cycle of the game
 	private final int maxCycle;									// the maximal cycles the game is running
-	private int krakenWaittime;									// all kraken's current waittime
-	private final int maxKrakenWaittime;						// the maximal waittime of every kraken until it can step() again
 	private ExtendedLogWriter logger;							// the logger wich logs the creation of placables
 	private EntityFactory entityFactory;						// the factory which creates the placables
 	private Random random;										// an instance of the random class
@@ -58,7 +56,6 @@ public class Simulator
 		this.logger        = logger;
 		this.entityFactory = new EntityFactory();
 		this.random        = null;
-		this.maxKrakenWaittime = 20;
 	}
 	
 	/**
@@ -104,16 +101,20 @@ public class Simulator
 			if(ship.getCondition() != 0)
 			{
 				//check if ship is resting
-				if(ship.getRestTime() > 0) {
+				if(ship.getRestTime() > 0) 
+				{
 					//if resting, decrement restTime and notify new restTime
 					ship.setRestTime(ship.getRestTime() - 1);
 					this.logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, ship.getRestTime());
 				}
 				//if not resting, execute instruction
-				else {
-					try{
+				else 
+				{
+					try
+					{
 						ship.step();
-					} catch(ArrayIndexOutOfBoundsException e) { // sink the ship
+					} catch(ArrayIndexOutOfBoundsException e) 
+					{   // sink the ship
 						ship.setCondition(0);
 						ship.setMyTile(null);
 						this.removeShip(ship);
