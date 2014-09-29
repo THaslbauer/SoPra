@@ -37,7 +37,7 @@ public class Main {
 	private static int turns;
 	private static long seed;
 	private static InputStream mapFile;
-	private static OutputStream logFile;
+	private static String logFileLocation;
 	private static List<InputStream> tacticsFiles;
 	
 	public static void main(String[] args) {
@@ -45,15 +45,6 @@ public class Main {
 		
 		//create the outputfile
 		log =  System.getProperty("log");
-				if(log == null){
-					logFile = null;
-				}else{
-				try {
-					logFile = new FileOutputStream(log);
-				} catch (FileNotFoundException e1) {
-					throw new IllegalArgumentException();
-					}
-				}
 		
 		//create the number of turns
 		String turn = System.getProperty("turns");
@@ -132,7 +123,7 @@ public class Main {
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
 		Controller controller = new Controller(sim, mapParser, tacticsParser, 
-				mapFile, tacticsFiles, seed, logFile);
+				mapFile, tacticsFiles, seed, log);
 		try {
 			//TODO second debug switch
 //			System.out.println("initializing");
