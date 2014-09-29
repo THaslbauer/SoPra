@@ -13,6 +13,7 @@ public class OutLogger implements ExtendedLogWriter {
 	
 	public boolean printTactics = false;
 	private int [] points = new int[] {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+	private int turn = 0;
 	
 	@Override
 	public LogWriter addCell(Cell type, Integer faction, int x, int y)
@@ -102,7 +103,7 @@ public class OutLogger implements ExtendedLogWriter {
 
 	@Override
 	public void logStep() throws IllegalStateException, IOException {
-		System.out.println(new LogStep());
+		System.out.println("ENDING TURN "+turn++);
 	}
 
 	@Override
