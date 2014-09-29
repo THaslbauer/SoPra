@@ -7,6 +7,7 @@ import java.util.Random;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
@@ -73,6 +74,22 @@ public class Simulator
 	{
 		if(cycle > (maxCycle - 1))
 		{
+			for(Faction faction : factions)
+			{
+				int flotte_ladungen = calculateLoad(faction);
+				int flotte_schiffe  = calculateShipAmount(faction);
+				int flotte_tactic   = calculateTactic(faction);
+				
+				System.out.println("" + faction.getScore() + "(" + flotte_ladungen + "," + flotte_schiffe + "," + flotte_tactic + ")");
+				for(Instruction i : faction.getTactics())
+				{
+					if(i != null)
+					{
+						System.out.println(i);
+					}
+				}
+			}
+			
 			throw new UnsupportedOperationException();
 		}
 		
@@ -121,6 +138,63 @@ public class Simulator
 		
 	}
 	
+	/**
+	 * This method calculates the length of the tactic program
+	 * of the given faction.
+	 * 
+	 * @param faction
+	 * @return
+	 */
+	private int calculateTactic(Faction faction)
+	{
+		return faction.getTactics().length;
+	}
+	
+	/**
+	 * This method  calculates the amount of living ships
+	 * in the faction.
+	 * 
+	 * @param faction
+	 * @return
+	 */
+	private int calculateShipAmount(Faction faction)
+	{
+		int ship_amount = 0;
+		
+		for(Ship ship : ships)
+		{
+			if(ship.getCondition() != 0)
+			{
+				ship_amount += 1;
+			}
+		}
+		
+		return ship_amount;
+	}
+	
+	/**
+	 * This method calculates the amount of treasures
+	 * which are on the ships and not already droped
+	 * at the base.
+	 * 
+	 * @param faction
+	 * @return
+	 */
+	private int calculateLoad(Faction faction)
+	{
+		int load = 0;
+		
+		for(Ship ship : ships)
+		{
+			if(ship.getCondition() != 0)
+			{
+				load += ship.getLoad();
+			}
+		}
+		
+		return load;
+	}
+
 	/**
 	 * This method creates a ship via the entitiyFactory. It calls the infoPoint and
 	 * adds the created ship to the list of ships.
