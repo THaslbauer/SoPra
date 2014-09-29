@@ -185,14 +185,13 @@ public class TacticsParser {
 					}
 					
 				default:
-					System.out.println(name);
 					throw new IllegalArgumentException("This instruction does not exist");
 				}
 			}
 			
 			//TODO: find out which exceptions are necessary
 			catch(Exception e){
-			throw new IllegalArgumentException("Something with this instruction is wrong");
+			throw new IllegalArgumentException(e.toString());
 		}
 			
 			

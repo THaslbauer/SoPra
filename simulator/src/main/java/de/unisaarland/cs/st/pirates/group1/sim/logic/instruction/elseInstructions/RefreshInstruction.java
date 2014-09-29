@@ -43,6 +43,7 @@ public class RefreshInstruction extends ElseInstruction
 	@Override
 	public void execute(Ship ship)
 	{
+		
 		if(ship == null)
 		{
 			throw new IllegalArgumentException();
@@ -72,7 +73,7 @@ public class RefreshInstruction extends ElseInstruction
 		
 		
 		ship.setRegister(Register.SHIP_MORAL, maxMorale);
-		ship.increasePC();
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		ship.resetBoredom();
 		
 		

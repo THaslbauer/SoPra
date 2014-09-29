@@ -53,7 +53,7 @@ public class MarkInstruction extends Instruction {
 		}
 		if(!exists)
 			tile.getWorldmap().createBuoy(type, shipFact, tile);
-		ship.increasePC();
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
 }

@@ -113,11 +113,28 @@ public class Simulator
 		LinkedList<Ship> dummy = new LinkedList<Ship>(ships);
 		for(Ship ship : dummy)
 		{
+			//check if ship is ok
 			if(ship.getCondition() != 0)
 			{
-				this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
-				ship.step();
+				//check if ship is resting
+				if(ship.getRestTime() > 0) {
+					//if resting, decrement restTime and notify new restTime
+					ship.setRestTime(ship.getRestTime() - 1);
+					this.logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, ship.getRestTime());
+				}
+				//if not resting, execute instruction
+				else {
+					try{
+						ship.step();
+					} catch(ArrayIndexOutOfBoundsException e) { // sink the ship
+						ship.setCondition(0);
+						ship.setMyTile(null);
+						this.removeShip(ship);
+						logger.destroy(Entity.SHIP, ship.getId());
+					}
+				}
 			}
+			//ship is dead, kill ship
 			else
 			{
 				this.removeShip(ship);
