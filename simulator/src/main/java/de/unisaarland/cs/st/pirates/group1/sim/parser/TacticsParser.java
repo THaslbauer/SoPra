@@ -501,7 +501,7 @@ public class TacticsParser {
 			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
 		}
 	
-		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-2])))){
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-1])))){
 			throw new IllegalArgumentException("IfallInstruction: wrong PC");
 		}
 		
@@ -536,7 +536,7 @@ public class TacticsParser {
 			throw new IllegalArgumentException("An ifany instruction awaits at least 4 arguments");
 		}
 	
-		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-2])))){
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-1])))){
 			throw new IllegalArgumentException("IfanyInstruction: wrong PC");
 		}
 		
