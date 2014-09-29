@@ -81,13 +81,6 @@ public class Simulator
 				int flotte_tactic   = calculateTactic(faction);
 				
 				System.out.println("" + faction.getScore() + "(" + flotte_ladungen + "," + flotte_schiffe + "," + flotte_tactic + ")");
-				for(Instruction i : faction.getTactics())
-				{
-					if(i != null)
-					{
-						System.out.println(i);
-					}
-				}
 			}
 			
 			throw new UnsupportedOperationException();
