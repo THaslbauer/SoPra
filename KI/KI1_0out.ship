@@ -46,7 +46,7 @@ pickup 0 else 60; 44up versuchen, wenn nicht möglich dann
 if sense_celltype==enemyhome else 47;
 goto 60; wenn enemybase dann fahr 63 oder rechts weiter
 if sense_celltype==home else 56;
-move 0 else 41;
+move else 41;
 drop;
 if ship_condition<3 else 56;
 repair else 60;

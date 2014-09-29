@@ -46,7 +46,7 @@ pickup 0 else 58; 44up versuchen, wenn nicht möglich dann
 if sense_celltype==enemyhome else 47;
 goto 58; wenn enemybase dann fahr 61 oder rechts weiter
 if sense_celltype==home else 54;
-move 0 else 41;
+move else 41;
 drop;
 turn left;
 turn left;
