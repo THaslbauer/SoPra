@@ -42,7 +42,7 @@ goto 1;
 sense 0;senst die Kachel vor sich
 if sense_celltype==island else 45; schauen ob vor uns insel ist
 refresh 0 else 44; wenn refresh möglich es tun sonst 44up
-44up 0 else 58; 44up versuchen, wenn nicht möglich dann
+pickup 0 else 58; 44up versuchen, wenn nicht möglich dann
 if sense_celltype==enemyhome else 47;
 goto 58; wenn enemybase dann fahr 61 oder rechts weiter
 if sense_celltype==home else 54;
