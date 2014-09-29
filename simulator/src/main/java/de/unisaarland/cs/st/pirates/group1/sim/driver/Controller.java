@@ -23,6 +23,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
@@ -43,6 +44,7 @@ public class Controller {
 	private OutputStream output;
 	private boolean paused;
 	private Semaphore sema;
+	private boolean dryRunSet;
 	
 	/**
 	 * the Constructor for the Controller
@@ -197,6 +199,9 @@ public void setOutput(OutputStream output) {
 	 */
 public void initializeSimulator() throws IOException{
 	
+	//dry run
+	this.dryRun();
+	
 	List<String> stringList = new LinkedList<String>();
 	for(ByteArrayOutputStream tactic : tacticsFile){
 		stringList.add(tactic.toString());
@@ -255,6 +260,25 @@ public void initializeSimulator() throws IOException{
 	//log initial state
 	simulator.getLogWriter().logStep();
 }
+
+	private void dryRun() {
+		if(dryRunSet)
+			return;
+		List<InputStream> tacticStreams = new LinkedList<>();
+		for(ByteArrayOutputStream out : tacticsFile) {
+			tacticStreams.add(new ByteArrayInputStream(out.toByteArray()));
+		}
+		Controller dryRun = new Controller(new Simulator(new InfoPoint(), new Random(seed)), new MapParser(), new TacticsParser(new InfoPoint()), new ByteArrayInputStream(mapFile.toByteArray()), tacticStreams, seed, output);
+		//set the dryRun bool flag -> voodoo
+		dryRun.dryRunSet = true;
+		try {
+			dryRun.initializeSimulator();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+			throw new IllegalStateException("IOException from somewhere, how did this happen?\n"+e.getCause()+"\n"+e.getMessage());
+		}
+	}
 
 	/**
 	 * The order for the Simulator to do all steps.
