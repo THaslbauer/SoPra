@@ -47,8 +47,6 @@ if sense_celltype==enemyhome else 47;
 goto 55; wenn enemybase dann fahr 58 oder rechts weiter
 if sense_celltype==home else 51;
 drop;
-if ship_condition<3 else 51;
-repair else 55;
 ifall sense_shiptype==enemy ship_moral<4 ship_condition<3 else 53;
 goto 55;
 move else 55;
