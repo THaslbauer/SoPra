@@ -31,8 +31,7 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class Main {
 	
-	public static InfoPoint ip; // TODO!!
-
+	
 	
 	private static String log;
 	private static int turns;
@@ -109,7 +108,6 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
-		ip = infoPoint; //TODO!
 		//initializing reference loggers
 		//TODO second debug switch for this
 //		System.out.println("building refloggers");
