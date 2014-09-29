@@ -11,6 +11,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Buoy;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 
@@ -45,8 +46,12 @@ public class SenseInstruction extends Instruction {
 		Tile tile = ship.getMyTile();
 		Tile neighbourTile = tile.getNeighbour(ship.getHeading(), dir);
 		ship.setRegister(Register.SENSE_CELLTYPE, neighbourTile.navigable(ship).ordinal());
+		Treasure treasure = neighbourTile.getTreasure();
 		int supply = neighbourTile.isSupply() ? 1 : 0;
 		ship.setRegister(Register.SENSE_SUPPLY, supply);
+		if(!(treasure == null || treasure.getValue() == 0)) {
+			ship.setRegister(Register.SENSE_TREASURE, treasure.getValue());
+		}
 		Map<Faction, List<Buoy>>buoyMap = neighbourTile.getBuoyMap();
 		List<Buoy> buoys = buoyMap.get(ship.getFaction());
 		int hasOurBuoys = buoys == null ? 0 : 1;
