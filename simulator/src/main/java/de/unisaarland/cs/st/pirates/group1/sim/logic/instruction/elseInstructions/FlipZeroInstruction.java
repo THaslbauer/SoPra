@@ -43,6 +43,7 @@ public class FlipZeroInstruction extends ElseInstruction {
 	@Override
 	public void execute(Ship ship) {
 		if(rand.nextInt(p) == 0) {
+			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		}
 		else {
 			super.elseJump(ship);

@@ -38,6 +38,9 @@ public abstract class ElseInstruction extends Instruction {
 		// changes the pc of the ship
 		ship.setPC(elsePC);
 		
+		//notifies PC increase
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, elsePC);
+		
 		// increases the boredom
 		this.cycle(ship);
 	}
