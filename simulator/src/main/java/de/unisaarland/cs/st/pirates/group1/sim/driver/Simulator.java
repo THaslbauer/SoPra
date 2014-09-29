@@ -201,7 +201,10 @@ public class Simulator
 		{
 			if(ship.getCondition() != 0)
 			{
-				load += ship.getLoad();
+				if(ship.getFaction().equals(faction))
+				{
+					load += ship.getLoad();
+				}
 			}
 		}
 		
