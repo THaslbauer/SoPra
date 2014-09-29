@@ -107,7 +107,7 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("Move instruction: else was misspelled");
+						throw new IllegalArgumentException("Move instruction: else was misspelled or in wrong place " + instruction_array[1]);
 					}
 					
 				case "pickup":
@@ -116,7 +116,7 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("Pickup instruction: else was misspelled or wrong expression there");
+						throw new IllegalArgumentException("Pickup instruction: else was misspelled or wrong expression there " + instruction_array[2]);
 					}
 					
 				case "drop":
@@ -129,7 +129,7 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("Flipzero instruction: else was misspelled or wrong expression there");
+						throw new IllegalArgumentException("Flipzero instruction: else was misspelled or wrong expression there " + instruction_array[2]);
 					}
 					
 				case "goto":
@@ -146,7 +146,7 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("If instruction: else was misspelled or wrong expression there");
+						throw new IllegalArgumentException("If instruction: else was misspelled or wrong expression there " + instruction_array[2]);
 					}
 				
 				case "ifall":
@@ -155,7 +155,7 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("Ifall instruction: else was misspelled or wrong expression there");
+						throw new IllegalArgumentException("Ifall instruction: else was misspelled or wrong expression there " + instruction_array[size-2]);
 					}
 				
 				case "ifany":
@@ -164,7 +164,7 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("Ifany instruction: else was misspelled or wrong expression there");
+						throw new IllegalArgumentException("Ifany instruction: else was misspelled or wrong expression there " + instruction_array[size-2]);
 					}
 					
 				case "refresh":
@@ -173,7 +173,7 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("Refresh instruction: else was misspelled or wrong expression there");
+						throw new IllegalArgumentException("Refresh instruction: else was misspelled or wrong expression there " + instruction_array[2]);
 					}
 					
 				case "repair":
@@ -182,11 +182,11 @@ public class TacticsParser {
 						break;
 					}
 					else{
-						throw new IllegalArgumentException("Repair instruction: else was misspelled or wrong expression there");
+						throw new IllegalArgumentException("Repair instruction: else was misspelled or wrong expression there " + instruction_array[1]);
 					}
 					
 				default:
-					throw new IllegalArgumentException("This instruction does not exist");
+					throw new IllegalArgumentException("This instruction does not exist " + name);
 				}
 			}
 			
@@ -224,13 +224,13 @@ public class TacticsParser {
 	public Instruction makeTurnInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if (size != 2){
-			throw new IllegalArgumentException("A turn instruction must consist of two parts");
+			throw new IllegalArgumentException("A turn instruction must consist of two parts but was " + size);
 		}
 		
 		
 		if(!(instruction[1].toLowerCase().equals("left")) && !(instruction[1].toLowerCase().equals("right"))){
 			
-			throw new IllegalArgumentException("A turn instruction cannot have another argument than left or right");
+			throw new IllegalArgumentException("A turn instruction cannot have another argument than left or right but it was " + instruction[1]);
 		}
 		
 		else{
@@ -267,7 +267,7 @@ public class TacticsParser {
 		}
 		
 		else{
-			throw new IllegalArgumentException("A mark instruction cannot have an int value less than zero or greater than 5");
+			throw new IllegalArgumentException("A mark instruction cannot have an int value less than zero or greater than 5 " + instruction[1]);
 		}
 
 	}
@@ -294,7 +294,7 @@ public class TacticsParser {
 		}
 		
 		else{
-			throw new IllegalArgumentException("A unmark instruction cannot have an int value less than zero or greater than 5");
+			throw new IllegalArgumentException("A unmark instruction cannot have an int value less than zero or greater than 5: " + instruction[1]);
 		}
 
 	}
@@ -309,11 +309,11 @@ public class TacticsParser {
 	public Instruction makeRepairInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size!= 3){
-			throw new IllegalArgumentException("A repair instruction consists of 3 parts");
+			throw new IllegalArgumentException("A repair instruction consists of 3 parts but was: " + size);
 		}
 		
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[2])))){
-			throw new IllegalArgumentException("RepairInstruction: wrong PC");
+			throw new IllegalArgumentException("RepairInstruction: wrong PC: " + instruction[2]);
 		}
 		
 		
@@ -333,7 +333,7 @@ public class TacticsParser {
 	public Instruction makeMoveInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 3 || !(this.isCorrectPC(Integer.parseInt(instruction[2])))){
-			throw new IllegalArgumentException("A move instruction consists of 3 parts or Illegal PC");
+			throw new IllegalArgumentException("A move instruction consists of 3 parts or Illegal PC " + "parts: " +  size + " PC: " + instruction[2]);
 		}
 	
 		
@@ -353,15 +353,15 @@ public class TacticsParser {
 	public Instruction makePickupInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 4){
-			throw new IllegalArgumentException("Pickup instruction consists of 4 parts");
+			throw new IllegalArgumentException("Pickup instruction consists of 4 parts but was " + size);
 		}
 		
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
-			throw new IllegalArgumentException("Pickup instruction wrong PC");
+			throw new IllegalArgumentException("Pickup instruction wrong PC: " + instruction[3]);
 		}
 		
 		if( !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
-			throw new IllegalArgumentException("Pickup instruction is wrong (sensedirection) ");
+			throw new IllegalArgumentException("Pickup instruction is wrong (sensedirection) " + instruction[1]);
 		}
 		
 		else{
@@ -379,7 +379,7 @@ public class TacticsParser {
 	public Instruction makeDropInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 1){
-			throw new IllegalArgumentException("A drop instruction consists only of one part");
+			throw new IllegalArgumentException("A drop instruction consists only of one part but was " + size);
 		}
 		
 		else{
@@ -397,17 +397,17 @@ public class TacticsParser {
 	public Instruction makeFlipzeroInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if (size != 4){
-			throw new IllegalArgumentException("Flipzero instruction consists of 4 parts");
+			throw new IllegalArgumentException("Flipzero instruction consists of 4 parts but was " + size);
 		}
 		
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
-			throw new IllegalArgumentException("Flipzero instruction: wrong PC");
+			throw new IllegalArgumentException("Flipzero instruction: wrong PC: " + instruction[3]);
 		}
 		
 		//TODO: ask what to do with an integer that is too big
 		if(Integer.parseInt(instruction[1]) < 1 ){
 			
-			throw new IllegalArgumentException("Flipzero: wrong seed or too big address");
+			throw new IllegalArgumentException("Flipzero: wrong seed: " + instruction[1]);
 		}
 		
 		else{
@@ -426,11 +426,11 @@ public class TacticsParser {
 	public Instruction makeGotoInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if (size != 2){
-			throw new IllegalArgumentException("A goto instruction consists of two parts");
+			throw new IllegalArgumentException("A goto instruction consists of two parts but was " + size);
 		}
 		
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[1])))){
-			throw new IllegalArgumentException("GotoInstruction: wrong PC");
+			throw new IllegalArgumentException("GotoInstruction: wrong PC: " + instruction[1]);
 		}
 		
 		
@@ -448,7 +448,7 @@ public class TacticsParser {
 	public Instruction makeSenseInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if( size != 2){
-			throw new IllegalArgumentException("A sense instruction must consist of two parts");
+			throw new IllegalArgumentException("A sense instruction must consist of two parts but was " + size);
 		}
 		
 		if(this.isCorrectSenseDir(Integer.parseInt(instruction[1]))){
@@ -457,7 +457,7 @@ public class TacticsParser {
 		}
 		
 		else{
-			throw new IllegalArgumentException("Direction must be between 0 and 6");
+			throw new IllegalArgumentException("Direction must be between 0 and 6 but was: " + instruction[1]);
 		}
 	}
 	
@@ -472,11 +472,11 @@ public class TacticsParser {
 		
 		if(size != 4){
 			
-			throw new IllegalArgumentException("IfInstruction consists of 4 parts");
+			throw new IllegalArgumentException("IfInstruction consists of 4 parts but was " + size);
 		}
 		
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
-			throw new IllegalArgumentException("IfInstruction: wrong PC");
+			throw new IllegalArgumentException("IfInstruction: wrong PC " +instruction[3]);
 		}
 		
 		//Produce an expression 
@@ -484,7 +484,7 @@ public class TacticsParser {
 		
 		//when type mismatch occurs null is given back by the method produceExpression
 		if(exp == null){
-			throw new IllegalArgumentException("Type mismatch in if instruction occured");
+			throw new IllegalArgumentException("Type mismatch in if instruction occured: " + instruction[1]);
 		}
 		
 		else{
@@ -502,11 +502,11 @@ public class TacticsParser {
 	public Instruction makeIfallInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size <4){
-			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
+			throw new IllegalArgumentException("An IfallInstruction consists of four parts but was: " + size);
 		}
 	
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-1])))){
-			throw new IllegalArgumentException("IfallInstruction: wrong PC");
+			throw new IllegalArgumentException("IfallInstruction: wrong PC : " + instruction[size-1]);
 		}
 		
 		int diff = size - 3;
@@ -518,7 +518,7 @@ public class TacticsParser {
 			Expression exp = this.produceExpression(instruction[i+1]);
 			
 			if(exp == null){
-				throw new IllegalArgumentException("Ifall Instruction: something with the types or their spelling is wrong");
+				throw new IllegalArgumentException("Ifall Instruction: something with the types or their spelling is wrong: " + instruction[i+1]);
 			}
 			
 			exps[i] = exp;
@@ -537,11 +537,11 @@ public class TacticsParser {
 	public Instruction makeIfanyInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size <4){
-			throw new IllegalArgumentException("An ifany instruction awaits at least 4 arguments");
+			throw new IllegalArgumentException("An ifany instruction consists of four parts but was " + size);
 		}
 	
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-1])))){
-			throw new IllegalArgumentException("IfanyInstruction: wrong PC");
+			throw new IllegalArgumentException("IfanyInstruction: wrong PC: " + instruction[size-1]);
 		}
 		
 		int diff = size - 3;
@@ -553,7 +553,7 @@ public class TacticsParser {
 			Expression exp = this.produceExpression(instruction[i+1]);
 			
 			if(exp == null){
-				throw new IllegalArgumentException("Ifany Instruction: something with the types or their spelling is wrong");
+				throw new IllegalArgumentException("Ifany Instruction: something with the types or their spelling is wrong : " + instruction[i+1]);
 			}
 			
 			exps[i] = exp;
@@ -573,15 +573,15 @@ public class TacticsParser {
 	public Instruction makeRefreshInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
 		if(size != 4){
-			throw new IllegalArgumentException("Refresh instruction consists of 4 parts");
+			throw new IllegalArgumentException("Refresh instruction consists of 4 parts but there were only " + size);
 		}
 		
 		if( !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
-			throw new IllegalArgumentException("Refresh Instruction:Wrong integer value sense direction ");
+			throw new IllegalArgumentException("Refresh Instruction:Wrong integer value sense direction: " + instruction[1]);
 		}
 		
 		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
-			throw new IllegalArgumentException("RefreshInstruction: wrong PC");
+			throw new IllegalArgumentException("RefreshInstruction: wrong PC " + instruction[3]);
 		}
 		
 		else{
@@ -613,7 +613,7 @@ public class TacticsParser {
 		case 6:
 			return Direction.D6;
 		default:
-			throw new IllegalArgumentException("A direction must be between 0 and 6");
+			throw new IllegalArgumentException("A direction must be between 0 and 6 but direction was: " + i);
 	
 		}
 	}
@@ -891,7 +891,7 @@ public class TacticsParser {
 		case("empty"):
 			return 3;
 		default:
-			throw new IllegalStateException("Don't know how this could happen");
+			throw new IllegalStateException("Don't know how this could happen (method: changeCell_typeToInt: " + s);
 		}
 	}
 	
@@ -908,7 +908,7 @@ public class TacticsParser {
 		case("enemy"):
 			return 1;
 		default:
-			throw new IllegalStateException("This should never happen");
+			throw new IllegalStateException("This should never happen (method changeShip_typeToInt): " + s);
 		}
 	}
 	
@@ -957,7 +957,7 @@ public class TacticsParser {
 		case("ship_condition"):
 			return 17;
 		default:
-			throw new IllegalStateException("This should never happen");
+			throw new IllegalStateException("This should never happen (method changeRegisterToInt): " + s);
 		
 				
 		}
