@@ -10,6 +10,7 @@ import java.util.HashMap;
 
 
 import java.util.InputMismatchException;
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -32,12 +33,14 @@ public class MapParser {
 	private HashMap<String, Faction> factions;
 	private ArrayList<Faction> list;
 	private Worldmap mymap;
-	private int factioncount =0;
 	private Simulator simulator;
+	private int[] factionnumbers = new int[26];
+	private int factioncount = 0;
 	
 	public MapParser(){
 		factions = new HashMap<String,Faction>();
 		list = new ArrayList<Faction>();
+		this.fillArrayWithZero(factionnumbers);
 	}
 
 	
@@ -268,6 +271,12 @@ public class MapParser {
 					}
 					
 				}
+				//if there are wrong faction names (e.g. "z" when there are only 2 factions) this exception will be thrown
+				for(int i = 0; i< factioncount; i++){
+					if(factionnumbers[i] == 0){
+						throw new IllegalArgumentException("Wrong faction given (e.g. there are only two factions but z is used as name)");
+					}
+				}
 				
 				//gives the simulator its faction list
 				this.simulator.setFactions(list);
@@ -275,6 +284,7 @@ public class MapParser {
 				factions = new HashMap<String, Faction>();
 				list = new ArrayList<Faction>();
 				factioncount =0;
+				this.fillArrayWithZero(factionnumbers);
 				
 			}
 			catch(NoSuchElementException | IllegalStateException | ArrayIndexOutOfBoundsException c){
@@ -329,10 +339,12 @@ public class MapParser {
 		}
 		
 		else{
-			Faction faction = new Faction(string, factioncount);
+			int factionnumber = string.charAt(0) -97;
+			factionnumbers[factionnumber] = 1;
+			factioncount = factioncount +1;
+			Faction faction = new Faction(string, factionnumber);
 			factions.put(string, faction);
 			list.add(faction);
-			factioncount+=1;
 			Tile tile = mymap.createBaseTile(position, faction);
 			this.createShip(faction, tile);
 			return;
@@ -383,5 +395,15 @@ public class MapParser {
 		}
 		
 		return result.toCharArray();
+	}
+	
+	/**
+	 * This methods fills the array with zero only.
+	 * @param array The array which should be filled with zero
+	 */
+	private void fillArrayWithZero(int[] array){
+		for(int i = 0; i < array.length; i++){
+			array[i] = 0;
+		}
 	}
 }
