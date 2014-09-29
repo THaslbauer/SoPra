@@ -142,11 +142,23 @@ public class ControllerTest
 	public void playTest()
 	{
 		int valueSimulator = testSimulator.value;
+		LinkedList<InputStream> list = new LinkedList<InputStream>();
+		list.add(new ByteArrayInputStream("./src/test/java/de/unisaarland/cs/st/pirates/group1/tests/testUtil/tacticA.txt".getBytes()));
 		
-		controller = new Controller(null, null, null, null, null, 0, null);
+		controller = new Controller(testSimulator, new TestMapParser(), new TestTacticsParser(new ExpectLogger()),
+				new ByteArrayInputStream("./src/test/java/de/unisaarland/cs/st/pirates/group1/tests/testUtil/map.txt".getBytes()),
+				list, 0, null);
 		
 		controller.setSimulator(testSimulator);
 		controller.play();
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			fail("I get interrupted");
+		}
+		
+		controller.pause();
 		
 		int expectedValueSimulator = valueSimulator + 1;
 		
@@ -156,7 +168,7 @@ public class ControllerTest
 	@Test
 	public void getsetTest()
 	{
-		controller = new Controller(null, null, null, null, null, 0, null);
+		controller = new Controller(testSimulator, new TestMapParser(), new TestTacticsParser(new ExpectLogger()), null, null, 0, null);
 		
 		controller.setSimulator(testSimulator);
 		assertTrue("The controllers's setter or getter for the simulator was incorrect",
