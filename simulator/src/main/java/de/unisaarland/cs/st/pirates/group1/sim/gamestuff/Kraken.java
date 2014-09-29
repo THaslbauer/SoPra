@@ -1,6 +1,5 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import de.unisaarland.cs.st.pirates.group1.main.Main;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
@@ -15,7 +14,6 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
  */
 public class Kraken extends Placable {
 
-	private boolean firstTurn;
 	
 	/** 
 	 * Creates a gigantic Kraken
@@ -26,7 +24,6 @@ public class Kraken extends Placable {
 	 */
 	public Kraken(int id, Tile tile) throws IllegalArgumentException {
 		super(id, tile);
-		firstTurn = true;
 	}
 	
 	/**
@@ -36,10 +33,6 @@ public class Kraken extends Placable {
 	 * That's alle it does.
 	 */
 	public void step() {
-		if(firstTurn) {
-			firstTurn = false;
-			return;
-		}
 		int dir = myTile.getWorldmap().getRandom().nextInt(6);
 		Heading heading = Heading.values()[dir];
 		try {

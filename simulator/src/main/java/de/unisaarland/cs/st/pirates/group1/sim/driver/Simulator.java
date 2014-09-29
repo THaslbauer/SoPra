@@ -58,7 +58,6 @@ public class Simulator
 		this.logger        = logger;
 		this.entityFactory = new EntityFactory();
 		this.random        = null;
-		this.krakenWaittime = 0;
 		this.maxKrakenWaittime = 20;
 	}
 	
@@ -87,18 +86,13 @@ public class Simulator
 		}
 		
 		// kraken cycle
-		if(krakenWaittime == 0)
+		if(((cycle +1) % 20) == 0)
 		{
 			for(Kraken kraken : krakens)
 			{
 				kraken.step();
 			}
 			
-			krakenWaittime = maxKrakenWaittime - 1;
-		}
-		else
-		{
-			krakenWaittime += -1;
 		}
 		
 		
