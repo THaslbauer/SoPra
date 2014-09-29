@@ -31,14 +31,13 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class Main {
 	
-	public static InfoPoint ip; // TODO!!
-
+	
 	
 	private static String log;
 	private static int turns;
 	private static long seed;
 	private static InputStream mapFile;
-	private static OutputStream logFile;
+	private static String logFileLocation;
 	private static List<InputStream> tacticsFiles;
 	
 	public static void main(String[] args) {
@@ -46,15 +45,6 @@ public class Main {
 		
 		//create the outputfile
 		log =  System.getProperty("log");
-				if(log == null){
-					logFile = null;
-				}else{
-				try {
-					logFile = new FileOutputStream(log);
-				} catch (FileNotFoundException e1) {
-					throw new IllegalArgumentException();
-					}
-				}
 		
 		//create the number of turns
 		String turn = System.getProperty("turns");
@@ -109,7 +99,6 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
-		ip = infoPoint; //TODO!
 		//initializing reference loggers
 		//TODO second debug switch for this
 //		System.out.println("building refloggers");
@@ -134,7 +123,7 @@ public class Main {
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
 		Controller controller = new Controller(sim, mapParser, tacticsParser, 
-				mapFile, tacticsFiles, seed, logFile);
+				mapFile, tacticsFiles, seed, log);
 		try {
 			//TODO second debug switch
 //			System.out.println("initializing");
@@ -143,7 +132,9 @@ public class Main {
 		catch(IOException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
-		} catch(IllegalArgumentException e) {
+		}
+		//TODO see if we need to use this or not
+/*		catch(IllegalArgumentException e) {
 			// Illegal Input files !!! TODO
 			try {
 				infoPoint.close(); // Maybe this is enough
@@ -154,7 +145,7 @@ public class Main {
 				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
 			} 
 			
-		}
+		}*/
 		
 		if(start) {
 			//starting controller
@@ -164,7 +155,7 @@ public class Main {
 			try {
 				infoPoint.close();
 			} catch (IllegalStateException | IOException e) {
-				System.out.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
+				System.err.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
 			}
 		}
 	}

@@ -65,6 +65,7 @@ public class TacticsParser {
 		//convert the input to string
 		String tactics_string = this.convertStreamToString(input);
 		this.random = random;
+		ins = new LinkedList<Instruction>();
 	
 		//split the input string so that the comments vanish
 	
@@ -185,14 +186,13 @@ public class TacticsParser {
 					}
 					
 				default:
-					System.out.println(name);
 					throw new IllegalArgumentException("This instruction does not exist");
 				}
 			}
 			
 			//TODO: find out which exceptions are necessary
 			catch(Exception e){
-			throw new IllegalArgumentException("Something with this instruction is wrong");
+			throw new IllegalArgumentException(e.toString());
 		}
 			
 			
@@ -312,6 +312,10 @@ public class TacticsParser {
 			throw new IllegalArgumentException("A repair instruction consists of 3 parts");
 		}
 		
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[2])))){
+			throw new IllegalArgumentException("RepairInstruction: wrong PC");
+		}
+		
 		
 		else{
 			return new RepairInstruction(logger, Integer.parseInt(instruction[2]));
@@ -328,9 +332,10 @@ public class TacticsParser {
 	 */
 	public Instruction makeMoveInstruction(String[] instruction, int size) throws IllegalArgumentException{
 		
-		if(size != 3){
-			throw new IllegalArgumentException("A move instruction consists of 3 parts");
+		if(size != 3 || !(this.isCorrectPC(Integer.parseInt(instruction[2])))){
+			throw new IllegalArgumentException("A move instruction consists of 3 parts or Illegal PC");
 		}
+	
 		
 		return new MoveInstruction(logger, Integer.parseInt(instruction[2]));
 		
@@ -349,6 +354,10 @@ public class TacticsParser {
 		
 		if(size != 4){
 			throw new IllegalArgumentException("Pickup instruction consists of 4 parts");
+		}
+		
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
+			throw new IllegalArgumentException("Pickup instruction wrong PC");
 		}
 		
 		if( !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
@@ -391,6 +400,10 @@ public class TacticsParser {
 			throw new IllegalArgumentException("Flipzero instruction consists of 4 parts");
 		}
 		
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
+			throw new IllegalArgumentException("Flipzero instruction: wrong PC");
+		}
+		
 		//TODO: ask what to do with an integer that is too big
 		if(Integer.parseInt(instruction[1]) < 1 ){
 			
@@ -414,6 +427,10 @@ public class TacticsParser {
 		
 		if (size != 2){
 			throw new IllegalArgumentException("A goto instruction consists of two parts");
+		}
+		
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[1])))){
+			throw new IllegalArgumentException("GotoInstruction: wrong PC");
 		}
 		
 		
@@ -458,6 +475,10 @@ public class TacticsParser {
 			throw new IllegalArgumentException("IfInstruction consists of 4 parts");
 		}
 		
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
+			throw new IllegalArgumentException("IfInstruction: wrong PC");
+		}
+		
 		//Produce an expression 
 		Expression exp = this.produceExpression(instruction[1]);
 		
@@ -484,6 +505,9 @@ public class TacticsParser {
 			throw new IllegalArgumentException("An ifall instruction awaits at least 4 arguments");
 		}
 	
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-1])))){
+			throw new IllegalArgumentException("IfallInstruction: wrong PC");
+		}
 		
 		int diff = size - 3;
 		
@@ -516,6 +540,9 @@ public class TacticsParser {
 			throw new IllegalArgumentException("An ifany instruction awaits at least 4 arguments");
 		}
 	
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[size-1])))){
+			throw new IllegalArgumentException("IfanyInstruction: wrong PC");
+		}
 		
 		int diff = size - 3;
 		
@@ -551,6 +578,10 @@ public class TacticsParser {
 		
 		if( !(this.isCorrectSenseDir(Integer.parseInt(instruction[1])))){
 			throw new IllegalArgumentException("Refresh Instruction:Wrong integer value sense direction ");
+		}
+		
+		if(!(this.isCorrectPC(Integer.parseInt(instruction[3])))){
+			throw new IllegalArgumentException("RefreshInstruction: wrong PC");
 		}
 		
 		else{
@@ -940,5 +971,20 @@ public class TacticsParser {
 	public boolean equalsElse(String s){
 		
 		return s.toLowerCase().equals("else");
+	}
+	
+	/**
+	 * The method returns true if the integer is between 0 and 1999.
+	 * @param i The integer which should be tested
+	 * @return if the integer is an invalid PC
+	 */
+	public boolean isCorrectPC(int i){
+		if(i<0 || i> 1999){
+			return false;
+		}
+		
+		else{
+			return true;
+		}
 	}
 }

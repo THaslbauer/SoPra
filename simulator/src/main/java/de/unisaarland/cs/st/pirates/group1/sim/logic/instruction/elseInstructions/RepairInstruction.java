@@ -41,8 +41,6 @@ public class RepairInstruction extends ElseInstruction {
 		Faction faction  = ship.getFaction();
 		int maxCondition = Ship.getMaxCondition(); 
 		
-		System.out.println(baseTile.navigable(ship));
-		
 		if(baseTile.navigable(ship) != CellType.HOME)
 		{
 			this.elseJump(ship);
@@ -59,11 +57,11 @@ public class RepairInstruction extends ElseInstruction {
 		faction.decreaseScore();
 		logger.fleetScore(faction.getFactionID(), faction.getScore());
 		ship.setCondition(maxCondition);
-		ship.increasePC();
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		this.cycle(ship);
 		
 
-		this.logger.notify(Entity.SHIP, ship.getPC(), Key.CONDITION, maxCondition);
+		this.logger.notify(Entity.SHIP, ship.getId(), Key.CONDITION, maxCondition);
 		
 	}
 

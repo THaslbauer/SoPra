@@ -10,6 +10,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.driver;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -42,6 +43,7 @@ public class Controller {
 	//the random object
 	private Random random;
 	private OutputStream output;
+	private String outputString;
 	private boolean paused;
 	private Semaphore sema;
 	private boolean dryRunSet;
@@ -58,7 +60,8 @@ public class Controller {
 	 * @param output the Output Steam, which is needed so the Controller can initialize the InfoPoint
 	 */
 public Controller(Simulator simulator, MapParser mapParser,
-		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, long seed, OutputStream output){
+		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, long seed, String logFileString){
+	this.outputString = logFileString;
 	this.simulator = simulator;
 	this.mapParser = mapParser;
 	this.tacticsParser = tacticsParser;
@@ -69,13 +72,12 @@ public Controller(Simulator simulator, MapParser mapParser,
 	}
 	this.seed = seed;
 	this.random = new Random(seed);
-	this.output = output;
 	this.dryRunSet = false;
 	sema = new Semaphore(1);
 }
 
 public Controller(Simulator simulator, MapParser mapParser,
-		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, int seed, OutputStream output){
+		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, int seed, String logFileString){
 /*	this.simulator = simulator;
 	this.mapParser = mapParser;
 	this.tacticsParser = tacticsParser;
@@ -86,7 +88,7 @@ public Controller(Simulator simulator, MapParser mapParser,
 	this.output = output;
 	sema = new Semaphore(1);
 	*/
-	this(simulator, mapParser, tacticsParser, mapFile, tacticsFile, (long)seed, output);
+	this(simulator, mapParser, tacticsParser, mapFile, tacticsFile, (long)seed, logFileString);
 	this.intSeed = seed;
 }
 
@@ -203,6 +205,13 @@ public void initializeSimulator() throws IOException{
 	//dry run
 	this.dryRun();
 	
+	if(!dryRunSet) {
+		if(outputString != null)
+			output = new FileOutputStream(outputString);
+		else
+			output = new ByteArrayOutputStream();
+	}
+	
 	List<String> stringList = new LinkedList<String>();
 	for(ByteArrayOutputStream tactic : tacticsFile){
 		stringList.add(tactic.toString());
@@ -269,7 +278,7 @@ public void initializeSimulator() throws IOException{
 		for(ByteArrayOutputStream out : tacticsFile) {
 			tacticStreams.add(new ByteArrayInputStream(out.toByteArray()));
 		}
-		Controller dryRun = new Controller(new Simulator(new InfoPoint(), new Random(seed)), new MapParser(), new TacticsParser(new InfoPoint()), new ByteArrayInputStream(mapFile.toByteArray()), tacticStreams, seed, output);
+		Controller dryRun = new Controller(new Simulator(new InfoPoint(), new Random(seed)), new MapParser(), new TacticsParser(new InfoPoint()), new ByteArrayInputStream(mapFile.toByteArray()), tacticStreams, seed, outputString);
 		//set the dryRun bool flag -> voodoo
 		dryRun.dryRunSet = true;
 		try {
