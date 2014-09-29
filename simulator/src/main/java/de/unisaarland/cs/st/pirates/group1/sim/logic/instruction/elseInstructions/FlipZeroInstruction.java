@@ -44,11 +44,11 @@ public class FlipZeroInstruction extends ElseInstruction {
 	public void execute(Ship ship) {
 		if(rand.nextInt(p) == 0) {
 			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
+			super.cycle(ship);
 		}
 		else {
 			super.elseJump(ship);
 		}
-		super.cycle(ship);
 	}
 
 }

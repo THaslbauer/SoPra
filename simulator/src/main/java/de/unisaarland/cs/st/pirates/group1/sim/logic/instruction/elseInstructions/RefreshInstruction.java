@@ -76,7 +76,6 @@ public class RefreshInstruction extends ElseInstruction
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		ship.resetBoredom();
 		
-		
 		this.logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, maxMorale);
 		
 	}

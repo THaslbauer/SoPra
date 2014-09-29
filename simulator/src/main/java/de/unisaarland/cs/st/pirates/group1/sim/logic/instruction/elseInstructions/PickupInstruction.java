@@ -73,7 +73,6 @@ public class PickupInstruction extends ElseInstruction {
 			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, morale);
 			ship.resetBoredom();
 			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
-			super.cycle(ship);
 		}
 		
 	}
