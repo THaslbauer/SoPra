@@ -32,7 +32,7 @@ public class MapParser {
 	private HashMap<String, Faction> factions;
 	private ArrayList<Faction> list;
 	private Worldmap mymap;
-	private int factioncount =1;
+	private int factioncount =0;
 	private Simulator simulator;
 	
 	public MapParser(){

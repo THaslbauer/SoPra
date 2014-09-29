@@ -252,6 +252,8 @@ public void initializeSimulator() throws IOException{
 		assert(f.getScore() == 0);
 		simulator.getLogWriter().fleetScore(f.getFactionID(), f.getScore());
 	}
+	//log initial state
+	simulator.getLogWriter().logStep();
 }
 
 	/**
