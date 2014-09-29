@@ -107,8 +107,14 @@ public class Simulator
 				}
 				//if not resting, execute instruction
 				else {
-					this.logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.getPC());
-					ship.step();
+					try{
+						ship.step();
+					} catch(ArrayIndexOutOfBoundsException e) { // sink the ship
+						ship.setCondition(0);
+						ship.setMyTile(null);
+						this.removeShip(ship);
+						logger.destroy(Entity.SHIP, ship.getId());
+					}
 				}
 			}
 			//ship is dead, kill ship

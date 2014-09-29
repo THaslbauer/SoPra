@@ -192,7 +192,6 @@ public abstract class Tile {
 			throw new IllegalArgumentException("No treasure here :(");
 		Treasure treasure = (Treasure)placables[2];
 		treasure.setValue(treasure.getValue() >= value ? treasure.getValue() - value : (int) throwIAException("You can't take this much of a treasure!"));
-		map.getExtendedLogWriter().notify(Entity.TREASURE, treasure.getId(), Key.VALUE, treasure.getValue());
 		if(treasure.getValue() == 0) {
 			try {
 				detach(treasure);
@@ -201,6 +200,9 @@ public abstract class Tile {
 				// this should not happen
 				throw new IllegalStateException("This should never happen, WTF?!");
 			}
+		}
+		else {
+			map.getExtendedLogWriter().notify(Entity.TREASURE, treasure.getId(), Key.VALUE, treasure.getValue());
 		}
 	}
 	

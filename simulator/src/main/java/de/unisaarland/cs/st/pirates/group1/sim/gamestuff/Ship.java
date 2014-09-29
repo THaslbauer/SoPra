@@ -1,5 +1,6 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
+import de.unisaarland.cs.st.pirates.group1.main.Main;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
@@ -47,16 +48,11 @@ public class Ship extends Placable {
 	
 	/**
 	 * Executes a cycle for this ship
+	 * @throws ArrayIndexOutOfBoundsException if the pc is illegal
 	 */
-	public void step() {
-		try {
-			Instruction i = faction.getTactics()[pc];
-			i.execute(this);
-		} catch(ArrayIndexOutOfBoundsException e) {
-			// Sink ship
-			setCondition(0);
-			setMyTile(null);
-		}
+	public void step() throws ArrayIndexOutOfBoundsException {
+		Instruction i = faction.getTactics()[pc]; /* THIS THROWS AN EXCEPTION */
+		i.execute(this);
 	}
 	
 	/**

@@ -67,7 +67,7 @@ public class SenseInstruction extends Instruction {
 			ship.setRegister(Register.SENSE_SHIPCONDITION, otherShip.getCondition());
 		}
 		logger.registerChange(ship);
-		ship.increasePC();
+		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
 	

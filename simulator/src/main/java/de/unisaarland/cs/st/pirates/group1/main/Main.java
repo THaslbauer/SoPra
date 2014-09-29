@@ -31,8 +31,7 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
 public class Main {
 	
-	public static InfoPoint ip; // TODO!!
-
+	
 	
 	private static String log;
 	private static int turns;
@@ -109,7 +108,6 @@ public class Main {
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
 		Random rand = new Random(seed);
 		InfoPoint infoPoint = new InfoPoint();
-		ip = infoPoint; //TODO!
 		//initializing reference loggers
 		//TODO second debug switch for this
 //		System.out.println("building refloggers");
@@ -143,7 +141,9 @@ public class Main {
 		catch(IOException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
-		} catch(IllegalArgumentException e) {
+		}
+		//TODO see if we need to use this or not
+/*		catch(IllegalArgumentException e) {
 			// Illegal Input files !!! TODO
 			try {
 				infoPoint.close(); // Maybe this is enough
@@ -154,7 +154,7 @@ public class Main {
 				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
 			} 
 			
-		}
+		}*/
 		
 		if(start) {
 			//starting controller
@@ -164,7 +164,7 @@ public class Main {
 			try {
 				infoPoint.close();
 			} catch (IllegalStateException | IOException e) {
-				System.out.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
+				System.err.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
 			}
 		}
 	}
