@@ -12,7 +12,7 @@ import de.unisaarland.cs.st.pirates.logger.LogWriter;
 public class OutLogger implements ExtendedLogWriter {
 	
 	public boolean printTactics = false;
-	private int [] points = new int[26];
+	private int [] points = new int[] {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
 	
 	@Override
 	public LogWriter addCell(Cell type, Integer faction, int x, int y)
@@ -43,11 +43,10 @@ public class OutLogger implements ExtendedLogWriter {
 	public void close() throws IllegalStateException, IOException {
 		System.out.println("Log closed!\n\nScore:\n");
 		int a = 0;
-		int max = points[0];
-		int maxpos = 0;
-		for(int i : points) {
-			System.out.println("Faction "+a+++": "+i+" Points");
-		}
+		for(int i : points) 
+			if(points[a] != -1)
+				System.out.println("Faction "+a+++": "+i+" Points");
+		
 		
 		
 	}
@@ -82,7 +81,7 @@ public class OutLogger implements ExtendedLogWriter {
 			throws IllegalArgumentException, ArrayIndexOutOfBoundsException,
 			IllegalStateException {
 		System.out.println("Faction "+id+" scored "+value+" Points!");
-		points[id] += value;
+		points[id] = value;
 		return this;
 	}
 

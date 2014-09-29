@@ -185,7 +185,6 @@ public class TacticsParser {
 					}
 					
 				default:
-					System.out.println(name);
 					throw new IllegalArgumentException("This instruction does not exist");
 				}
 			}

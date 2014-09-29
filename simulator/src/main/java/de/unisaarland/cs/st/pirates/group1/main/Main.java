@@ -164,7 +164,7 @@ public class Main {
 			try {
 				infoPoint.close();
 			} catch (IllegalStateException | IOException e) {
-				System.out.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
+				System.err.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
 			}
 		}
 	}
