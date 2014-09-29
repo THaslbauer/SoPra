@@ -53,7 +53,7 @@ repair else 60;
 turn left;
 turn left;
 turn left;
-goto 41;
+goto 50;
 ifall sense_shiptype==enemy ship_moral<4 ship_condition<3 else 58;
 goto 60;
 move else 60;

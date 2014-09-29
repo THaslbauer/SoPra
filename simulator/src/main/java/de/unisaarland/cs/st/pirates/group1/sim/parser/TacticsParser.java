@@ -770,13 +770,13 @@ public class TacticsParser {
 			return true;
 		case("sense_marker1"):
 			return true;
-		case("sensemarker2"):
+		case("sense_marker2"):
 			return true;
-		case("sensemarker3"):
+		case("sense_marker3"):
 			return true;
-		case("sensemarker4"):
+		case("sense_marker4"):
 			return true;
-		case("sensemarker5"):
+		case("sense_marker5"):
 			return true;
 		case("sense_enemymarker"):
 			return true;
@@ -790,13 +790,13 @@ public class TacticsParser {
 			return true;
 		case("!sense_marker1"):
 			return true;
-		case("!sensemarker2"):
+		case("!sense_marker2"):
 			return true;
-		case("!sensemarker3"):
+		case("!sense_marker3"):
 			return true;
-		case("!sensemarker4"):
+		case("!sense_marker4"):
 			return true;
-		case("!sensemarker5"):
+		case("!sense_marker5"):
 			return true;
 		case("!sense_enemymarker"):
 			return true;
