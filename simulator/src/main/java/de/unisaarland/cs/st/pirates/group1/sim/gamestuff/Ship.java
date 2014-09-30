@@ -1,6 +1,5 @@
 package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 
-import de.unisaarland.cs.st.pirates.group1.main.Main;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.IllegalCallException;
@@ -59,20 +58,19 @@ public class Ship extends Placable {
 	 * Clears all registers (to unset / false)
 	 */
 	public void clearSenseRegisters() {
-		
 		registers[0] = -1;	//SENSE_CELLTYPE,
-		registers[1] = 0;	//SENSE_SUPPLY,
-		registers[2] = 0;	//SENSE_TREASURE,
-		registers[3] = 0;	//SENSE_MARKER0,
-		registers[4] = 0;	//SENSE_MARKER1,
-		registers[5] = 0;	//SENSE_MARKER2,
-		registers[6] = 0;	//SENSE_MARKER3,
-		registers[7] = 0;	//SENSE_MARKER4,
-		registers[8] = 0;	//SENSE_MARKER5,
-		registers[9] = 0;	//SENSE_ENEMYMARKER,
+		registers[1] = -1;	//SENSE_SUPPLY,
+		registers[2] = -1;	//SENSE_TREASURE,
+		registers[3] = -1;	//SENSE_MARKER0,
+		registers[4] = -1;	//SENSE_MARKER1,
+		registers[5] = -1;	//SENSE_MARKER2,
+		registers[6] = -1;	//SENSE_MARKER3,
+		registers[7] = -1;	//SENSE_MARKER4,
+		registers[8] = -1;	//SENSE_MARKER5,
+		registers[9] = -1;	//SENSE_ENEMYMARKER,
 		registers[10] = -1;	//SENSE_SHIPTYPE,
 		registers[11] = -1;	//SENSE_SHIPDIRECTION,
-		registers[12] = 0;	//SENSE_SHIPLOADED,
+		registers[12] = -1;	//SENSE_SHIPLOADED,
 		registers[13] = -1;	//SENSE_SHIPCONDITION,
 	}
 	
