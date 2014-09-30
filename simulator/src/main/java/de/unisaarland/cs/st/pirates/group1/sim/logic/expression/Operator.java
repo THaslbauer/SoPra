@@ -42,7 +42,7 @@ public abstract class Operator implements Expression
 	 */
 	public boolean checkLeftRight(int[] registers)
 	{
-		if(leftval.evaluate(registers) == -1 || rightval.evaluate(registers) == -1)
+		if(leftval.evaluate(registers) == -1 || (rightval.evaluate(registers) == -1 && rightval instanceof RegisterCall))
 		{
 			return true;
 		}
