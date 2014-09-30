@@ -48,8 +48,7 @@ public class PickupInstruction extends ElseInstruction {
 		int treasure = neighbour.getTreasure().getValue();
 		//should never happen:
 		if(treasure <= 0) {
-			super.elseJump(ship);
-			return;
+			throw new IllegalStateException("Some Treasure was less than 0!");
 		}
 		else {
 			//case 1: more treasure than we are able to take

@@ -5,12 +5,15 @@ import org.junit.Test;
 import de.unisaarland.cs.st.pirates.group1.logger.Notify;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
+import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.tests.sim.logic.BasicInstructionTest;
+import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
@@ -29,6 +32,51 @@ public class SenseInstructionTest extends BasicInstructionTest {
 		int[] compRegs = {CellType.EMPTY.ordinal(), 0, 1, 0, 0, 0, 0, 0, 0, 0, -1, -1, 0, -1, 0, 0, 4, 3};
 		compareRegisters(regs, compRegs);
 	}
+	
+	@Test
+	public void testSenseBuoys2()
+	{
+		Tile testTile = testMap.createIslandTile(new Position(2,1), true);
+		
+		Tile seaTile = testMap.createSeaTile(new Position(1, 1));
+		
+		Ship testship = new Ship(new Faction("a", 1), 0, seaTile);
+		
+		SenseInstruction i = new SenseInstruction(new ExpectLogger(), Direction.D0);
+		
+		testship.setRegister(Register.SENSE_CELLTYPE, -2);
+		testship.setRegister(Register.SENSE_SUPPLY, -2);
+		testship.setRegister(Register.SENSE_TREASURE, -2);
+		testship.setRegister(Register.SENSE_MARKER0, -2);
+		testship.setRegister(Register.SENSE_MARKER1, -2);
+		testship.setRegister(Register.SENSE_MARKER2, -2);
+		testship.setRegister(Register.SENSE_MARKER3, -2);
+		testship.setRegister(Register.SENSE_MARKER4, -2);
+		testship.setRegister(Register.SENSE_MARKER5, -2);
+		testship.setRegister(Register.SENSE_ENEMYMARKER, -2);
+		testship.setRegister(Register.SENSE_SHIPTYPE, -2);
+		testship.setRegister(Register.SENSE_SHIPDIRECTION, -2);
+		testship.setRegister(Register.SENSE_SHIPLOADED, -2);
+		testship.setRegister(Register.SENSE_SHIPCONDITION, -2);
+		
+		i.execute(testship);
+		
+		assertTrue(testship.getRegister(Register.SENSE_CELLTYPE) == CellType.ISLAND.ordinal());
+		assertTrue(testship.getRegister(Register.SENSE_SUPPLY) == 1);
+		assertTrue(testship.getRegister(Register.SENSE_TREASURE) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_MARKER0) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_MARKER1) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_MARKER2) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_MARKER3) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_MARKER4) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_MARKER5) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_ENEMYMARKER) == 0);
+		assertTrue(testship.getRegister(Register.SENSE_SHIPTYPE) == -1);
+		assertTrue(testship.getRegister(Register.SENSE_SHIPDIRECTION) == -1);
+		assertTrue(testship.getRegister(Register.SENSE_SHIPLOADED) == -1);
+		assertTrue(testship.getRegister(Register.SENSE_SHIPCONDITION) == -1);
+	}
+	
 	
 	@Test
 	public void testSenseBuoys() {
