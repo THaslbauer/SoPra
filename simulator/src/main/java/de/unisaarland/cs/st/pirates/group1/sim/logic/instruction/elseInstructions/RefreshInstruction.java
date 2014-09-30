@@ -65,12 +65,6 @@ public class RefreshInstruction extends ElseInstruction
 			return;
 		}
 		
-		if(ship.getRegister(Register.SHIP_MORAL) == maxMorale)
-		{
-			this.elseJump(ship);
-			return;
-		}
-		
 		
 		ship.setRegister(Register.SHIP_MORAL, maxMorale);
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
