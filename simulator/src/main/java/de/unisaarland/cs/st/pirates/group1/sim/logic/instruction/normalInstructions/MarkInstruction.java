@@ -40,9 +40,11 @@ public class MarkInstruction extends Instruction {
 	@Override
 	public void execute(Ship ship) {
 		Tile tile = ship.getMyTile();
+		//get Buoys
 		Map<Faction, List<Buoy>> buoyMap = tile.getBuoyMap();
 		Faction shipFact = ship.getFaction();
 		List<Buoy> buoys = buoyMap.get(shipFact);
+		//look if buoy exists (equals() wouldn't work here)
 		boolean exists = false;
 		if(buoys != null){
 			for(int i = 0; i < buoys.size(); i++) {
@@ -51,8 +53,10 @@ public class MarkInstruction extends Instruction {
 				}
 			}
 		}
+		//add if not exists
 		if(!exists)
 			tile.getWorldmap().createBuoy(type, shipFact, tile);
+		//PC increase / cycle. Never forget!
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}

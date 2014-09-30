@@ -45,7 +45,7 @@ public class SenseInstruction extends Instruction {
 	@Override
 	public void execute(Ship ship){
 		//reset Registers to false / unset state
-		resetRegisters(ship);
+		ship.clearSenseRegisters();
 		Tile tile = ship.getMyTile();
 		Tile neighbourTile = tile.getNeighbour(ship.getHeading(), dir);
 		//work through registers in the order of the enum
@@ -94,27 +94,6 @@ public class SenseInstruction extends Instruction {
 		//PC increase / cycle! never forget!
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
-	}
-	
-	/**
-	 * Just a method to make resetting registers a bit easier to comprehend
-	 * @param ship
-	 */
-	private void resetRegisters(Ship ship) {
-		ship.setRegister(Register.SENSE_CELLTYPE, 0);
-		ship.setRegister(Register.SENSE_SUPPLY, 0);
-		ship.setRegister(Register.SENSE_TREASURE, 0);
-		ship.setRegister(Register.SENSE_MARKER0, 0);
-		ship.setRegister(Register.SENSE_MARKER1, 0);
-		ship.setRegister(Register.SENSE_MARKER2, 0);
-		ship.setRegister(Register.SENSE_MARKER3, 0);
-		ship.setRegister(Register.SENSE_MARKER4, 0);
-		ship.setRegister(Register.SENSE_MARKER5, 0);
-		ship.setRegister(Register.SENSE_ENEMYMARKER, 0);
-		ship.setRegister(Register.SENSE_SHIPTYPE, -1);
-		ship.setRegister(Register.SENSE_SHIPDIRECTION, -1);
-		ship.setRegister(Register.SENSE_SHIPLOADED, -1);
-		ship.setRegister(Register.SENSE_SHIPCONDITION, -1);
 	}
 	
 	/**
