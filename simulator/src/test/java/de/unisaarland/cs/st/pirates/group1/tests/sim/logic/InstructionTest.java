@@ -421,6 +421,32 @@ public class InstructionTest {
 		assertTrue(ship.getRegister(Register.SENSE_MARKER4) == 0);
 		
 	}
+	
+	/**
+	 * Sense Test own Buoy
+	 */
+	@Test
+	public void OwnBuoySenseTestvier(){
+		Direction d = Direction.D0;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui, d);
+		Buoy b = worldMap.createBuoy(4, faction, waterTile2);
+		Buoy c = worldMap.createBuoy(3, faction, waterTile2);
+		Buoy e = worldMap.createBuoy(2, faction, waterTile2);
+		Buoy f = worldMap.createBuoy(1, faction, waterTile2);
+		
+		
+		senseInstruction.execute(ship);
+		
+		assertTrue(ship.getRegister(Register.SENSE_ENEMYMARKER) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER5) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER0) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER1) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER2) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER3) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER4) == 1);
+		
+	}
 	/**
 	 * Sense Test enemy Buoy
 	 */
