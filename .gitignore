@@ -5,3 +5,6 @@
 .fuse*
 *~
 .*
+*vpp.*
+*vpp~*
+simulator/sim.jar

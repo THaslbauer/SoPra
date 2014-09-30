@@ -1,7 +1,5 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 
-import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
-
 /**
  * This class represents an operator in a tactic programm
  * 
