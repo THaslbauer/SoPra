@@ -11,6 +11,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.GreaterOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.LessOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.NotOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.RegisterCall;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.UnequalOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
@@ -28,6 +29,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructi
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.TurnInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.UnmarkInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 
 /**
@@ -642,10 +644,16 @@ public class TacticsParser {
 	 */
 	private Expression produceExpression(String s){
 		
+		//Tests if this is a bool register and returns a RegisterCall
 		if (this.isBool_register(s)){
 			return new RegisterCall(this.changeRegisterToInt(s));
 		}
 		
+		//Tests if this is a negated bool register and returns a NotOperator
+		if(this.isNegBoolRegister(s)){
+			String[] splitted = s.split("!");
+			return new NotOperator(new RegisterCall(this.changeRegisterToInt(splitted[1])));
+		}
 		String[] comparison = s.split("==");
 		
 		if(comparison.length == 2){
@@ -784,6 +792,20 @@ public class TacticsParser {
 			return true;
 		case("sense_supply"):
 			return true;
+		default:
+			return false;
+		}
+			
+	}
+	
+	/**
+	 * 
+	 * @param s the string which should be a bool register
+	 * @return returns true if there is a negated bool register
+	 */
+	private boolean isNegBoolRegister(String s){
+		
+		switch(s.toLowerCase()){
 		case("!sense_treasure"):
 			return true;
 		case("!sense_marker0"):
@@ -807,7 +829,6 @@ public class TacticsParser {
 		default:
 			return false;
 		}
-			
 	}
 	
 	/**
