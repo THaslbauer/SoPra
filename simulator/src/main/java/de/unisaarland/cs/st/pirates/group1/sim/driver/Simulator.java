@@ -150,7 +150,7 @@ public class Simulator
 	{
 		// get the first factions score
 		int factionScore = factions.iterator().next().getScore();
-		
+
 		boolean completeOutput = false;
 		
 		// tests if the other factions score is equal to the first one
