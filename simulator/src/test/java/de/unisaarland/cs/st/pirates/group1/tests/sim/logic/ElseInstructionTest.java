@@ -60,7 +60,6 @@ public class ElseInstructionTest {
 	private Tile waterTile2;
 	private Tile islandTile2;
 	private Tile islandTile1;
-	private Position position1;
 	private ExpectLogger logger;
 	private EntityFactory factory;
 	private int x;
@@ -98,6 +97,27 @@ public class ElseInstructionTest {
 		
 		//waterTile1.attach(ship);
 		
+	}
+	
+	/**
+	 * tests ifany
+	 * @throws UnsupportedEncodingException 
+	 */
+	@Test
+	public void pickupMaxTreasure() throws UnsupportedEncodingException{
+		worldMap.createTreasure(9,islandTile1);
+		ship.setRegister(Register.SHIP_DIRECTION,5);
+		ship.setCondition(3);
+		ship.setMorale(4);
+		ship.setLoad(4);
+		String myString = ""
+				+ "pickup 1 else 13";
+		
+		
+		InputStream is = new ByteArrayInputStream( myString.getBytes("utf-8") );
+		Instruction[] arr = tacticsParser.parseTactics(is, new Random(2));
+		arr[0].execute(ship);
+		assertTrue(ship.getPC()==13);
 	}
 	
 	/**
