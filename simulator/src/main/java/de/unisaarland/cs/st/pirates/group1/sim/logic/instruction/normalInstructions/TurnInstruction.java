@@ -31,6 +31,7 @@ public class TurnInstruction extends Instruction {
 
 	public void execute(Ship ship){
 		Heading head = null;
+		//not much to see here, case matching for turning, was too lazy for a proper turn via values Array and modulo
 		if(left){
 			switch(ship.getHeading()){
 			case H0:
@@ -79,9 +80,11 @@ public class TurnInstruction extends Instruction {
 				throw new UnsupportedOperationException("Heading should be H0 to H5");
 			}
 		}
+		//heading change
 		ship.setHeading(head);
 		logger.notify(Entity.SHIP, ship.getId(), Key.DIRECTION, head.ordinal());
 		
+		//PC increase and cycle!
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
