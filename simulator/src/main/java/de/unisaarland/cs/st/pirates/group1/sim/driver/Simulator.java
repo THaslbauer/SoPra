@@ -173,6 +173,7 @@ public class Simulator
 				if(ship.getFaction().equals(faction))
 				{
 					ship_amount += 1;
+					
 				}
 			}
 		}
