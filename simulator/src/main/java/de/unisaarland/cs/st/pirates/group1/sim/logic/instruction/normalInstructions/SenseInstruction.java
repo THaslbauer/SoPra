@@ -15,6 +15,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
+import de.unisaarland.cs.st.pirates.group1.sim.util.ShipType;
 
 /**
  * An Instruction that senses a {@link Tile} in a specific direction
@@ -43,57 +44,63 @@ public class SenseInstruction extends Instruction {
 
 	@Override
 	public void execute(Ship ship){
-		resetRegisters(ship);
+		//reset Registers to false / unset state
+		ship.clearSenseRegisters();
 		Tile tile = ship.getMyTile();
 		Tile neighbourTile = tile.getNeighbour(ship.getHeading(), dir);
+		//work through registers in the order of the enum
+		//get other CellType
 		ship.setRegister(Register.SENSE_CELLTYPE, neighbourTile.navigable(ship).ordinal());
+		//get if supply
 		int supply = neighbourTile.isSupply() ? Expression.TRUE : Expression.FALSE;
 		ship.setRegister(Register.SENSE_SUPPLY, supply);
+		//get if treasure
 		Treasure treasure = neighbourTile.getTreasure();
 		if(!(treasure == null || treasure.getValue() == 0)) {
 			ship.setRegister(Register.SENSE_TREASURE, Expression.TRUE);
 		}
+		//get all buoys
 		Map<Faction, List<Buoy>>buoyMap = neighbourTile.getBuoyMap();
+		//look for our faction's buoys
 		List<Buoy> buoys = buoyMap.get(ship.getFaction());
+		//count if our Bouy list is there
 		int hasOurBuoys = buoys == null ? Expression.FALSE : Expression.TRUE;
+		//now iterate over the buoys, setting the appropriate register to true
 		if(hasOurBuoys == 1) {
 			for(Buoy b : buoys) {
 				setMarkerRegister(ship, b);
 			}
 		}
+		//if more elements in buoy Map : set enemy marker boolean
 		if(buoyMap.keySet().size() > hasOurBuoys)
 			ship.setRegister(Register.SENSE_ENEMYMARKER, Expression.TRUE);
+		//look for other ship
 		Ship otherShip = neighbourTile.getShip();
 		if(otherShip != null){
-			int enemy = (otherShip.getFaction() == ship.getFaction()) ? Expression.FALSE : Expression.FALSE;
-			ship.setRegister(Register.SENSE_SHIPTYPE, enemy);
+			//ship is there, now change registers
+			//friend or foe?
+			int shipType = (otherShip.getFaction() == ship.getFaction()) ? ShipType.FRIEND.ordinal() : ShipType.ENEMY.ordinal();
+			ship.setRegister(Register.SENSE_SHIPTYPE, shipType);
+			//direction?
 			ship.setRegister(Register.SENSE_SHIPDIRECTION, otherShip.getHeading().ordinal());
+			//loaded?
 			int loaded = otherShip.getLoad() > 0 ? Expression.TRUE : Expression.FALSE;
 			ship.setRegister(Register.SENSE_SHIPLOADED, loaded);
+			//condition?
 			ship.setRegister(Register.SENSE_SHIPCONDITION, otherShip.getCondition());
 		}
+		//notify register changes
 		logger.registerChange(ship);
+		//PC increase / cycle! never forget!
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
 	
-	private void resetRegisters(Ship ship) {
-		ship.setRegister(Register.SENSE_CELLTYPE, 0);
-		ship.setRegister(Register.SENSE_SUPPLY, 0);
-		ship.setRegister(Register.SENSE_TREASURE, 0);
-		ship.setRegister(Register.SENSE_MARKER0, 0);
-		ship.setRegister(Register.SENSE_MARKER1, 0);
-		ship.setRegister(Register.SENSE_MARKER2, 0);
-		ship.setRegister(Register.SENSE_MARKER3, 0);
-		ship.setRegister(Register.SENSE_MARKER4, 0);
-		ship.setRegister(Register.SENSE_MARKER5, 0);
-		ship.setRegister(Register.SENSE_ENEMYMARKER, 0);
-		ship.setRegister(Register.SENSE_SHIPTYPE, -1);
-		ship.setRegister(Register.SENSE_SHIPDIRECTION, -1);
-		ship.setRegister(Register.SENSE_SHIPLOADED, -1);
-		ship.setRegister(Register.SENSE_SHIPCONDITION, -1);
-	}
-	
+	/**
+	 * A method to encapsulate the setting of the marker registers.
+	 * @param ship
+	 * @param buoy
+	 */
 	private void setMarkerRegister(Ship ship, Buoy buoy) {
 		switch(buoy.getType()) {
 		case 0:
@@ -114,6 +121,8 @@ public class SenseInstruction extends Instruction {
 		case 5:
 			ship.setRegister(Register.SENSE_MARKER5, Expression.TRUE);
 			break;
+		default:
+			throw new IllegalArgumentException("We shouldn't ever get another Buoy type!");
 		}
 	}
 	

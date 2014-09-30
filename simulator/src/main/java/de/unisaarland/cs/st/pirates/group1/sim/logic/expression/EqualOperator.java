@@ -22,6 +22,11 @@ public class EqualOperator extends Operator
 	@Override
 	public int evaluate(int[] registers)
 	{
+		if(checkLeftRight(registers))
+		{
+			return 0;
+		}
+		
 		if(leftval.evaluate(registers) == rightval.evaluate(registers))
 		{
 			return 1;

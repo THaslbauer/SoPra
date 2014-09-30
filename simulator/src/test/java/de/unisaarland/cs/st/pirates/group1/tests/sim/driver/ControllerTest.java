@@ -60,16 +60,26 @@ public class ControllerTest
 	// a test class for testing the controller class
 	public static class TestSimulator extends Simulator
 	{
-		public int value = 0;
+		public int value        = 0;
+		public int testMaxCycle = 0;
+		public int testCycle    = 0;
 		
-		public TestSimulator(ExpectLogger infoPoint) {
-			super(infoPoint, new Random());
+		public TestSimulator(ExpectLogger infoPoint, int n, Random r) {
+			super(infoPoint, n, r);
+			testMaxCycle = n;
 		}
 		
 		@Override
 		synchronized public void step()
 		{
 			value += 1;
+			
+			if(testCycle == testMaxCycle - 1)
+			{
+				throw new UnsupportedOperationException();
+			}
+			
+			testCycle += 1;
 		}
 		
 		synchronized public int getValue(){
@@ -91,7 +101,7 @@ public class ControllerTest
 	private TacticsParser tp;
 	private Simulator sim;
 	
-	private static final String mapStr = "2\n2\n..\n.b";
+	private static final String mapStr = "2\n2\n..\n.a";
 	private static final String tactics = "goto 0\n";
 	
 	
@@ -100,7 +110,7 @@ public class ControllerTest
 	{
 		mp = new MapParser();
 		tp = new TacticsParser(new ExpectLogger());
-		sim = new Simulator(new ExpectLogger(), 10000, new Random());
+		sim = new Simulator(new ExpectLogger(), 1, new Random());
 		
 		InputStream mapInput;
 		InputStream tacticsInput;
@@ -119,7 +129,7 @@ public class ControllerTest
 			fail();
 		}
 		
-		testSimulator     = new TestSimulator(new ExpectLogger());
+		testSimulator     = new TestSimulator(new ExpectLogger(), 40, new Random());
 		testMapParser     = new TestMapParser();
 		testTacticsParser = new TestTacticsParser(new ExpectLogger());
 	}
@@ -133,7 +143,7 @@ public class ControllerTest
 		List<Faction> factions = sim.getFactions();
 		Faction faction        = factions.iterator().next();
 
-		assertTrue("The controller's method initializeSimulator() did set the wrong faction", faction.getName().equals("b"));
+		assertTrue("The controller's method initializeSimulator() did set the wrong faction", faction.getName().equals("a"));
 		assertTrue("The controller's method initializeSimulator() didn't set the faction's tactic programm",
 				faction.getTactics()[0] instanceof GotoInstruction);
 	}
@@ -150,18 +160,17 @@ public class ControllerTest
 				list, 0, null);
 		
 		controller.setSimulator(testSimulator);
-		//TODO fix
-//		controller.play();
+		controller.play();
 		
 		try {
-			Thread.sleep(100);
+			Thread.sleep(400);
 		} catch (InterruptedException e) {
 			fail("I get interrupted");
 		}
 		
 		controller.pause();
 		
-		int expectedValueSimulator = valueSimulator + 1;
+		int expectedValueSimulator = valueSimulator + 40;
 		
 		assertTrue("the simulator's method step() was not called", expectedValueSimulator == testSimulator.value);
 	}

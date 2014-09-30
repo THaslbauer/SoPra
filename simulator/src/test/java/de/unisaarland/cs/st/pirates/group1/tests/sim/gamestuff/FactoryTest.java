@@ -266,30 +266,48 @@ public class FactoryTest extends TestCase {
 		kraken = factory.releaseTheKraken(tile);
 		assertTrue("Expected Buoy ID 0, instead had ID "+kraken.getId(), kraken.getId() == 0);
 	}
+	
+	/**
+	 * Tests the shared ID pool
+	 */
+	@Test
+	public void testCombinedIDs() {
+		Buoy b = factory.createBuoy(0, faction, tile);
+		Ship s = factory.createShip(faction, tile);
+		Kraken k = factory.releaseTheKraken(tile);
+		Treasure t = factory.createTreasure(1, tile);
+		assertTrue("Buoy had wrong ID, was "+b.getId(), b.getId() == 0);
+		assertTrue("Kraken had wrong ID, was "+k.getId(), k.getId() == 1);
+		assertTrue("Treasure had wrong ID, was "+t.getId(), t.getId() == 2);
+		assertTrue("Ship had wrong ID, was "+s.getId(), s.getId() == 0);
+		assertTrue("Factory had wrong object NextID, was "+factory.getBuoyNextId(), factory.getBuoyNextId() == 3);
+	}
 
 	/**
 	 * Tests Setters / Getters
 	 */
+	@Test
 	public void testSetterGetter(){
-		factory.setBuoyNextId(5);
-		factory.setKrakenNextId(6);
 		factory.setShipNextId(7);
-		factory.setTreasureNextId(8);
-		assertTrue("BuoyNextID has problems after setting", factory.getBuoyNextId() == 5);
-		assertTrue("KrakenNextID has problems after setting", factory.getKrakenNextId() == 6);
+		factory.setObjectsNextId(8);
 		assertTrue("ShipNextID has problems after setting", factory.getShipNextId() == 7);
+		assertTrue("TreasureNextID has problems after setting", factory.getObjectsNextId() == 8);
+		assertTrue("TreasureNextID has problems after setting", factory.getBuoyNextId() == 8);
 		assertTrue("TreasureNextID has problems after setting", factory.getTreasureNextId() == 8);
+		assertTrue("TreasureNextID has problems after setting", factory.getKrakenNextId() == 8);
 	}
 	
 	/**
 	 * Tests Constructor
 	 */
+	@Test
 	public void testConstructor(){
 		factory = new EntityFactory();
 		assertTrue("Problem with BuoyNextID", factory.getBuoyNextId() == 0);
 		assertTrue("Problem with ShipNextID", factory.getShipNextId() == 0);
 		assertTrue("Problem with TreasureNextID", factory.getTreasureNextId() == 0);
 		assertTrue("Problem with KrakenNextID", factory.getKrakenNextId() == 0);
+		assertTrue("Problem with ObjectNextID", factory.getObjectsNextId() == 0);
 	}
 	
 }

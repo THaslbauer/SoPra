@@ -40,25 +40,26 @@ goto 41; mache mit dem Standard-Fall weiter
 flipzero 2 else 29; geht in der Hälfte der Fälle zu 29, sonst zu 1
 goto 1;
 sense 0;senst die Kachel vor sich
-if sense_celltype==island else 45; schauen ob vor uns insel ist
-refresh 0 else 44; wenn refresh möglich es tun sonst 44up
-pickup 0 else 60; 44up versuchen, wenn nicht möglich dann
-if sense_celltype==enemyhome else 47;
-goto 60; wenn enemybase dann fahr 63 oder rechts weiter
-if sense_celltype==home else 56;
+if sense_celltype==island else 46; schauen ob vor uns insel ist
+refresh 0 else 44; wenn refresh möglich es tun sonst pickup
+pickup 0 else 61; pickup versuchen, wenn nicht möglich dann
+goto 53; macht nach erfolgreichem pickup eine rumdrehaction
+if sense_celltype==enemyhome else 48;
+goto 61; wenn enemybase dann fahr 64 oder rechts weiter
+if sense_celltype==home else 57;
 move else 41;
 drop;
-if ship_condition<3 else 56;
-repair else 60;
+if ship_condition<3 else 57;
+repair else 61;
 turn left;
 turn left;
 turn left;
-goto 50;
-ifall sense_shiptype==enemy ship_moral<4 ship_condition<3 else 58;
-goto 60;
-move else 60;
 goto 41;
-flipzero 2 else 63;
+ifall sense_shiptype==enemy ship_moral<4 ship_condition<3 else 59;
+goto 61;
+move else 61;
+goto 41;
+flipzero 2 else 64;
 turn right;
 goto 41;
 turn left;

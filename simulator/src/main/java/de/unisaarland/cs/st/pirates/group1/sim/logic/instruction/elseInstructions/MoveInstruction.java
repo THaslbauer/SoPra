@@ -68,8 +68,8 @@ public class MoveInstruction extends ElseInstruction {
 		//lose morale if possible
 		int morale = ship.getMorale();
 		if(morale > 0){
-			ship.setMorale(--morale);
-			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, morale);
+			ship.setMorale(morale -1);
+			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, ship.getMorale());
 		}
 		//lose treasure if possible
 		if(ship.getLoad() > 0) {

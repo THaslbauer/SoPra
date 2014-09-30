@@ -35,21 +35,31 @@ public class UnmarkInstruction extends Instruction {
 		return type;
 	}
 
+	/**
+	 *  Deletes a Buoy of the given type from a Tile if it is there.
+	 *  Invariants: No Buoys in map <-> Buoy List not there (null in Buoy map)
+	 */
 	@Override
 	public void execute(Ship ship){
 		Tile tile = ship.getMyTile();
+		//get Buoys to look at, so we can see if the buoy is on the tile
 		Map<Faction, List<Buoy>> buoyMap = tile.getBuoyMap();
 		Faction shipFact = ship.getFaction();
 		List<Buoy> buoys = buoyMap.get(shipFact);
+		if(buoys == null)
+			return;
 		for(int i = 0; i < buoys.size(); i++) {
 			if(buoys.get(i).getType() == type) {
+				//buoy is on tile, remove and destroy
 				Buoy buoy = buoys.get(i);
 				buoys.remove(i);
 				logger.destroy(Entity.BUOY, buoy.getId());
 			}
 		}
+		//no buoys left? now remove the list from the map
 		if(buoys.isEmpty())
 			buoyMap.remove(shipFact);
+		//cycle and PC increase, never forget that!
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}

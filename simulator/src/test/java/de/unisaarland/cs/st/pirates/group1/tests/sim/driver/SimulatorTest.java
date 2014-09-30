@@ -81,7 +81,7 @@ public class SimulatorTest extends TestCase {
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 20; j++){
 				sim.step();
-				if(j == 0 && testKraken.getStepCount() != (stepCount+1))
+				if(j == 19 && testKraken.getStepCount() != (stepCount+1))
 					fail("Kraken wasn't stepped");
 			}
 			stepCount = testKraken.getStepCount();
@@ -357,7 +357,7 @@ public class SimulatorTest extends TestCase {
 		public Kraken releaseTheKraken(Tile tile) {
 			int nextID = super.getKrakenNextId();
 			Kraken k = new TestKraken(nextID, tile);
-			super.setKrakenNextId(nextID + 1);
+			super.setObjectsNextId(nextID + 1);
 			return k;
 		}
 
@@ -365,7 +365,7 @@ public class SimulatorTest extends TestCase {
 		public Ship createShip(Faction faction, Tile tile) {
 			int nextID = super.getShipNextId();
 			Ship s = new TestShip(faction, nextID, tile);
-			super.setKrakenNextId(nextID + 1);
+			super.setObjectsNextId(nextID + 1);
 			return s;
 		}
 

@@ -61,6 +61,7 @@ public class DropInstruction extends Instruction {
 			int newScore = ship.getFaction().increaseScore(treasure);
 			logger.fleetScore(ship.getFaction().getFactionID(), newScore);
 		}
+		//increase PC and cycle. Never forget!
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}

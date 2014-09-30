@@ -59,8 +59,9 @@ goto null;
 
 standard:sense 0;senst die Kachel vor sich
 if sense_celltype==island else ist_keine_insel; schauen ob vor uns insel ist
-refresh 0 else pick; wenn refresh möglich es tun sonst pickup
-pick:pickup 0 else liOre; pickup versuchen, wenn nicht möglich dann
+refresh 0 else pickthatup; wenn refresh möglich es tun sonst pickup
+pickthatup:pickup 0 else liOre; pickup versuchen, wenn nicht möglich dann
+goto rumdrehn; macht nach erfolgreichem pickup eine rumdrehaction
 
 ist_keine_insel:if sense_celltype==enemyhome else keine_insel_kein_enemyhome;
 goto liOre; wenn enemybase dann fahr links oder rechts weiter
@@ -73,7 +74,7 @@ move else standard;
 drop;
 if ship_condition<3 else keine_insel_kein_enemyhome_kein_home;
 repair else liOre;
-turn left;
+rumdrehn:turn left;
 turn left;
 turn left;
 goto standard;

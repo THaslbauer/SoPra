@@ -3,6 +3,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.logic;
 import java.util.LinkedList;
 
 import org.junit.Before;
+import org.junit.Test;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
@@ -13,6 +14,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
 import junit.framework.TestCase;
 
@@ -56,4 +58,26 @@ public class BasicInstructionTest extends TestCase {
 		point.setGUI(loggers);
 	}
 	
+	@Test
+	public void testCycling() {
+		Instruction test = new Instruction(testLogger) {
+			public void execute(Ship ship) {
+				cycle(ship);
+			}
+		};
+		for(int i = 0; i < 40; i++) {
+			test.execute(testShip);
+			if(i == 39)
+				assertTrue("Morale didn't change, was "+testShip.getMorale(), testShip.getMorale() == 3);
+			else
+				assertTrue("Morale changed, is now "+testShip.getMorale(), testShip.getMorale() == 4);
+		}
+		for(int i = 0; i < 40; i++) {
+			test.execute(testShip);
+			if(i == 39)
+				assertTrue("Morale didn't change, was "+testShip.getMorale(), testShip.getMorale() == 2);
+			else
+				assertTrue("Morale changed, is now "+testShip.getMorale(), testShip.getMorale() == 3);
+		}
+	}
 }

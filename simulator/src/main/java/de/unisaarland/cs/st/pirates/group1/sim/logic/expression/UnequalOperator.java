@@ -21,6 +21,11 @@ public class UnequalOperator extends Operator{
 	 */
 	public int evaluate (int[] registers)
 	{
+		if(checkLeftRight(registers))
+		{
+			return 0;
+		}
+		
 		if(leftval.evaluate(registers) != rightval.evaluate(registers))
 		{
 			return 1;

@@ -55,6 +55,7 @@ public class InstructionTest {
 	private Worldmap worldMap;
 	private Faction faction;
 	private Ship ship;
+	private Ship testShip2;
 	private Tile baseTile;
 	private Tile waterTile1;
 	private Tile waterTile2;
@@ -64,6 +65,9 @@ public class InstructionTest {
 	private int x;
 	private ExpectLogger expectLogger;
 	private EntityFactory entityFactory;
+	private Worldmap worldMap2;
+	private Tile waterTileMap2;
+	private Ship ship2;
 	
 	@Before
 	public void init(){
@@ -73,6 +77,7 @@ public class InstructionTest {
 		
 		//A worldMap with exactly one seatile
 		worldMap = new Worldmap6T(2,2,expectLogger,entityFactory);
+		worldMap2 = new Worldmap6T(2,2,expectLogger,entityFactory);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);
@@ -85,6 +90,15 @@ public class InstructionTest {
 		waterTile2 = worldMap.createSeaTile(position2);
 		islandTile1 = worldMap.createIslandTile(position3, true);
 		islandTile2 = worldMap.createIslandTile(position4, false);
+		
+		waterTileMap2 = worldMap2.createSeaTile(position1);
+		worldMap2.createSeaTile(position2);
+		Tile tr = worldMap2.createIslandTile(position3, true);
+		Tile ts = worldMap2.createIslandTile(position4, false);
+		worldMap2.createTreasure(9, tr);
+		worldMap2.createTreasure(9, ts);
+		
+		
 		expectLogger.expect(new AddCell(Cell.WATER, null, 0, 0));
 		expectLogger.expect(new AddCell(Cell.WATER, null, 1, 0));
 		expectLogger.expect(new AddCell(Cell.SUPPLY, null, 0, 1));
@@ -93,6 +107,7 @@ public class InstructionTest {
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
+		ship2 = new Ship(faction,1,waterTileMap2);
 		
 		//waterTile1.attach(ship);
 		
@@ -173,12 +188,13 @@ public class InstructionTest {
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
 		ship.setLoad(4);
+		expectLogger.clear();
 		//checks if create and notify is called
 		dropInstruction.execute(ship);
 		assertTrue(testGui.value == -1);
 		Key[] keys = {Key.VALUE, Key.X_COORD, Key.Y_COORD};
 		int[] values = {4, ship.getMyTile().getPosition().x, ship.getMyTile().getPosition().y};
-		expectLogger.expect(new Create(Entity.TREASURE, 0, keys, values));
+		expectLogger.expect(new Create(Entity.TREASURE, 2, keys, values));
 	}
 	
 	/**
@@ -259,15 +275,14 @@ public class InstructionTest {
 		
 		markInstruction.execute(ship);
 		List<Buoy> buoyList = ship.getMyTile().getBuoyMap().get(ship.getFaction());
-		
 		for(Buoy b :buoyList){
-			if(b.getId() == 0){
+			if(b.getType() == 0){
 				x += 1;
 			}else{
 				continue;
 			}
 		}
-		assertTrue(x == 1);
+		assertTrue(Integer.toString(x)+" is wrong",x == 1);
 	}
 	
 	/**
@@ -380,6 +395,28 @@ public class InstructionTest {
 	}
 	
 	/**
+	 * Tests if Island with treasure is sensed correctly
+	 * 
+	 */
+	@Test
+	public void treasureIslandSenseTest(){
+		Direction d = Direction.D1;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui,d);
+		
+		senseInstruction.execute(ship2);
+		
+		Register reg = Register.SENSE_CELLTYPE;
+		assertTrue(ship2.getRegister(reg) == CellType.ISLAND.ordinal());
+		
+		Register sup = Register.SENSE_SUPPLY;
+		assertTrue(ship2.getRegister(sup) == 1);
+		
+		Register no = Register.SENSE_TREASURE;
+		assertTrue(ship2.getRegister(no) == 1);
+	}
+	
+	/**
 	 * Tests if Island is sensed correctly
 	 */
 	@Test
@@ -419,6 +456,32 @@ public class InstructionTest {
 		assertTrue(ship.getRegister(Register.SENSE_MARKER2) == 0);
 		assertTrue(ship.getRegister(Register.SENSE_MARKER3) == 0);
 		assertTrue(ship.getRegister(Register.SENSE_MARKER4) == 0);
+		
+	}
+	
+	/**
+	 * Sense Test own Buoy
+	 */
+	@Test
+	public void OwnBuoySenseTestvier(){
+		Direction d = Direction.D0;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui, d);
+		Buoy b = worldMap.createBuoy(4, faction, waterTile2);
+		Buoy c = worldMap.createBuoy(3, faction, waterTile2);
+		Buoy e = worldMap.createBuoy(2, faction, waterTile2);
+		Buoy f = worldMap.createBuoy(1, faction, waterTile2);
+		
+		
+		senseInstruction.execute(ship);
+		
+		assertTrue(ship.getRegister(Register.SENSE_ENEMYMARKER) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER5) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER0) == 0);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER1) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER2) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER3) == 1);
+		assertTrue(ship.getRegister(Register.SENSE_MARKER4) == 1);
 		
 	}
 	/**
@@ -503,6 +566,7 @@ public class InstructionTest {
 		xs.add(buoy);
 		water.getBuoyMap().put(faction, xs);
 		
+		expectLogger.clear();
 		
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction unmarkInstruction = new UnmarkInstruction(testGui,0);
