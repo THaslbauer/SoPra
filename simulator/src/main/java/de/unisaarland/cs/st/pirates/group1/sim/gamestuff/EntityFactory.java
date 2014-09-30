@@ -81,5 +81,13 @@ public class EntityFactory {
 	public void setObjectsNextId(int objectsNextId) {
 		this.objectsNextId = objectsNextId;
 	}
+
+	public int getObjectsNextId() {
+		return objectsNextId;
+	}
+
+	public void setShipNextId(int shipNextId) {
+		this.shipNextId = shipNextId;
+	}
 	
 }
