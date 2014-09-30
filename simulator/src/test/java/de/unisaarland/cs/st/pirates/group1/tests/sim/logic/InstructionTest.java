@@ -188,12 +188,13 @@ public class InstructionTest {
 		Instruction dropInstruction = new DropInstruction(testGui);
 		
 		ship.setLoad(4);
+		expectLogger.clear();
 		//checks if create and notify is called
 		dropInstruction.execute(ship);
 		assertTrue(testGui.value == -1);
 		Key[] keys = {Key.VALUE, Key.X_COORD, Key.Y_COORD};
 		int[] values = {4, ship.getMyTile().getPosition().x, ship.getMyTile().getPosition().y};
-		expectLogger.expect(new Create(Entity.TREASURE, 0, keys, values));
+		expectLogger.expect(new Create(Entity.TREASURE, 2, keys, values));
 	}
 	
 	/**
@@ -274,15 +275,14 @@ public class InstructionTest {
 		
 		markInstruction.execute(ship);
 		List<Buoy> buoyList = ship.getMyTile().getBuoyMap().get(ship.getFaction());
-		
 		for(Buoy b :buoyList){
-			if(b.getId() == 0){
+			if(b.getType() == 0){
 				x += 1;
 			}else{
 				continue;
 			}
 		}
-		assertTrue(x == 1);
+		assertTrue(Integer.toString(x)+" is wrong",x == 1);
 	}
 	
 	/**
@@ -566,6 +566,7 @@ public class InstructionTest {
 		xs.add(buoy);
 		water.getBuoyMap().put(faction, xs);
 		
+		expectLogger.clear();
 		
 		TestGuiDropInstr testGui = new TestGuiDropInstr();
 		Instruction unmarkInstruction = new UnmarkInstruction(testGui,0);
