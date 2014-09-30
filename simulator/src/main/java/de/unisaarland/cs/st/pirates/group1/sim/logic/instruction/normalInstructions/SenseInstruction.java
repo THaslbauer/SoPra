@@ -53,10 +53,10 @@ public class SenseInstruction extends Instruction {
 		//get other CellType
 		ship.setRegister(Register.SENSE_CELLTYPE, neighbourTile.navigable(ship).ordinal());
 		//get if supply
-		if(neighbourTile.navigable(ship) == CellType.ISLAND) {
+//		if(neighbourTile.navigable(ship) == CellType.ISLAND) {
 			int supply = neighbourTile.isSupply() ? Expression.TRUE : Expression.FALSE;
 			ship.setRegister(Register.SENSE_SUPPLY, supply);
-		}
+//		}
 		//get if treasure
 		Treasure treasure = neighbourTile.getTreasure();
 		if(!(treasure == null || treasure.getValue() == 0)) {
