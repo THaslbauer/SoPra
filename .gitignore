@@ -1,5 +1,7 @@
-VP/*.vpp~*
-VP/*.vpp.*
-.classpath
-.project
-.settings/
+/target/
+/doc/
+*.ship
+*.map
+.fuse*
+*~
+.*
