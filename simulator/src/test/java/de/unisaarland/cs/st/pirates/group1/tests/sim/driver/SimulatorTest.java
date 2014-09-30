@@ -81,7 +81,7 @@ public class SimulatorTest extends TestCase {
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 20; j++){
 				sim.step();
-				if(j == 0 && testKraken.getStepCount() != (stepCount+1))
+				if(j == 19 && testKraken.getStepCount() != (stepCount+1))
 					fail("Kraken wasn't stepped");
 			}
 			stepCount = testKraken.getStepCount();
