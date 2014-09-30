@@ -30,7 +30,7 @@ public abstract class Instruction {
 	 * @param ship
 	 */
 	protected void cycle(Ship ship){
-		if(ship.getBoredom() == 40){
+		if(ship.getBoredom() == 39){
 			if(ship.getMorale() > 0) {
 				ship.setMorale(ship.getMorale()-1);
 				logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, ship.getMorale());
