@@ -29,7 +29,6 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructi
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.TurnInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.UnmarkInstruction;
-import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 
 /**
@@ -85,7 +84,6 @@ public class TacticsParser {
 			size = instruction_array.length;
 			
 			try{
-				int expr_num = instruction_array.length;
 				
 				String name = instruction_array[0].toLowerCase();
 				
@@ -188,7 +186,7 @@ public class TacticsParser {
 					}
 					
 				default:
-					throw new IllegalArgumentException("This instruction does not exist " + name);
+					throw new IllegalArgumentException("This instruction does not exist " + name + ".");
 				}
 			}
 			
