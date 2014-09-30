@@ -49,7 +49,7 @@ public class RefreshInstruction extends ElseInstruction
 			throw new IllegalArgumentException();
 		}
 		
-		Tile refreshTile = ship.getMyTile().getNeighbour(Heading.H0, dir);
+		Tile refreshTile = ship.getMyTile().getNeighbour(ship.getHeading(), dir);
 		int maxMorale    = Ship.getMaxmorale();
 		
 		
