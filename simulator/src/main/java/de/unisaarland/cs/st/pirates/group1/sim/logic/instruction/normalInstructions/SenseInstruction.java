@@ -13,6 +13,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Treasure;
+import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.sim.util.ShipType;
@@ -52,8 +53,10 @@ public class SenseInstruction extends Instruction {
 		//get other CellType
 		ship.setRegister(Register.SENSE_CELLTYPE, neighbourTile.navigable(ship).ordinal());
 		//get if supply
-		int supply = neighbourTile.isSupply() ? Expression.TRUE : Expression.FALSE;
-		ship.setRegister(Register.SENSE_SUPPLY, supply);
+		if(neighbourTile.navigable(ship) == CellType.ISLAND) {
+			int supply = neighbourTile.isSupply() ? Expression.TRUE : Expression.FALSE;
+			ship.setRegister(Register.SENSE_SUPPLY, supply);
+		}
 		//get if treasure
 		Treasure treasure = neighbourTile.getTreasure();
 		if(!(treasure == null || treasure.getValue() == 0)) {
@@ -76,10 +79,12 @@ public class SenseInstruction extends Instruction {
 			}
 		}
 		//if more elements in buoy Map : set enemy marker boolean
-		if(buoyMap.keySet().size() > hasOurBuoys)
-			ship.setRegister(Register.SENSE_ENEMYMARKER, Expression.TRUE);
-		else
-			ship.setRegister(Register.SENSE_ENEMYMARKER, Expression.FALSE);
+		ship.setRegister(Register.SENSE_ENEMYMARKER, Expression.FALSE);
+		for(Faction f : buoyMap.keySet()) {
+			List<Buoy> buoyList = buoyMap.get(f);
+			if(f != ship.getFaction() && !buoyList.isEmpty())
+				ship.setRegister(Register.SENSE_ENEMYMARKER, Expression.TRUE);
+		}
 		//look for other ship
 		Ship otherShip = neighbourTile.getShip();
 		if(otherShip != null){
@@ -103,12 +108,12 @@ public class SenseInstruction extends Instruction {
 	}
 
 	private void resetBuoys(Ship ship) {
-		ship.setRegister(Register.SENSE_MARKER0, 0);
-		ship.setRegister(Register.SENSE_MARKER1, 0);
-		ship.setRegister(Register.SENSE_MARKER2, 0);
-		ship.setRegister(Register.SENSE_MARKER3, 0);
-		ship.setRegister(Register.SENSE_MARKER4, 0);
-		ship.setRegister(Register.SENSE_MARKER5, 0);
+		ship.setRegister(Register.SENSE_MARKER0, Expression.FALSE);
+		ship.setRegister(Register.SENSE_MARKER1, Expression.FALSE);
+		ship.setRegister(Register.SENSE_MARKER2, Expression.FALSE);
+		ship.setRegister(Register.SENSE_MARKER3, Expression.FALSE);
+		ship.setRegister(Register.SENSE_MARKER4, Expression.FALSE);
+		ship.setRegister(Register.SENSE_MARKER5, Expression.FALSE);
 	}
 
 	/**

@@ -9,21 +9,16 @@ package de.unisaarland.cs.st.pirates.group1.sim.driver;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Semaphore;
 
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Kraken;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.InfoPoint;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.parser.MapParser;
@@ -182,16 +177,6 @@ public void setOutput(OutputStream output) {
 		this.tacticsFile = tacticsFile;
 	}
 
-	/**
-	 * converts the inputStream to String, taken from stackoverflow.com
-	 * @param is
-	 * @return the String that represents the map
-	 */
-	
-		private static String convertStreamToString(java.io.InputStream is) {
-		    java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
-		    return s.hasNext() ? s.next() : "";
-		}
 		
 	/**
 	 * Initializes the Simulator and also the Infopoint

@@ -6,13 +6,10 @@
 
 package de.unisaarland.cs.st.pirates.group1.main;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -37,7 +34,6 @@ public class Main {
 	private static int turns;
 	private static long seed;
 	private static InputStream mapFile;
-	private static String logFileLocation;
 	private static List<InputStream> tacticsFiles;
 	
 	public static void main(String[] args) {
