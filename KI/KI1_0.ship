@@ -69,7 +69,7 @@ goto liOre; wenn enemybase dann fahr links oder rechts weiter
 
 
 keine_insel_kein_enemyhome:if sense_celltype==home else keine_insel_kein_enemyhome_kein_home;
-move 0 else standard;
+move else standard;
 drop;
 if ship_condition<3 else keine_insel_kein_enemyhome_kein_home;
 repair else liOre;
