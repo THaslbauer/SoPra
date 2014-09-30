@@ -1,4 +1,4 @@
-package de.unisaarland.cs.st.pirates.group1.tests.sim.logic;
+package de.unisaarland.cs.st.pirates.group1.tests.sim.logic.instruction;
 
 import org.junit.Test;
 
@@ -10,6 +10,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.tests.sim.logic.BasicInstructionTest;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
