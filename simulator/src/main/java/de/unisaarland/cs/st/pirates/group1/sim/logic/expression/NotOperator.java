@@ -21,7 +21,7 @@ public class NotOperator extends Operator
 	public int evaluate(int[] registers)
 	{
 		if(leftval.evaluate(registers) == -1)
-			return -1;
+			return 0;
 		if(leftval.evaluate(registers) == 0)
 		{
 			return 1;
