@@ -59,6 +59,7 @@ public class UnmarkInstruction extends Instruction {
 		//no buoys left? now remove the list from the map
 		if(buoys.isEmpty())
 			buoyMap.remove(shipFact);
+		//cycle and PC increase, never forget that!
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
