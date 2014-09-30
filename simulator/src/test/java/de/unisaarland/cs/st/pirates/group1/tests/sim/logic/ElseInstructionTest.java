@@ -6,8 +6,11 @@
  */
 package de.unisaarland.cs.st.pirates.group1.tests.sim.logic;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.Random;
 
@@ -27,6 +30,8 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap6T;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Cell;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.EqualOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Expression;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.GreaterOperator;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.LessOperator;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Literal;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.Primary;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.expression.RegisterCall;
@@ -40,6 +45,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstruction
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RefreshInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions.RepairInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.DropInstruction;
+import de.unisaarland.cs.st.pirates.group1.sim.parser.TacticsParser;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
@@ -58,6 +64,7 @@ public class ElseInstructionTest {
 	private ExpectLogger logger;
 	private EntityFactory factory;
 	private int x;
+	private TacticsParser tacticsParser;
 	
 	@Before
 	public void init(){
@@ -67,6 +74,7 @@ public class ElseInstructionTest {
 		logger = new ExpectLogger();
 		factory = new EntityFactory();
 		worldMap = new Worldmap6T(2,2, logger, factory);
+		tacticsParser = new TacticsParser(logger);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);
@@ -90,6 +98,26 @@ public class ElseInstructionTest {
 		
 		//waterTile1.attach(ship);
 		
+	}
+	
+	/**
+	 * tests refresh
+	 * @throws UnsupportedEncodingException 
+	 */
+	@Test
+	public void refreshMoralMax() throws UnsupportedEncodingException{
+		ship.setRegister(Register.SHIP_DIRECTION,5);
+		ship.setCondition(3);
+		ship.setMorale(4);
+		ship.setLoad(4);
+		String myString = ""
+				+ "refresh 1 else 13\n";
+		
+		
+		InputStream is = new ByteArrayInputStream( myString.getBytes("utf-8") );
+		Instruction[] arr = tacticsParser.parseTactics(is, new Random(2));
+		arr[0].execute(ship);
+		assertTrue(ship.getPC()==1);
 	}
 	
 	//FlipZeroInstruction Test
@@ -129,7 +157,111 @@ public class ElseInstructionTest {
 		}
 	}
 	
+	/**
+	 * tests ifany
+	 * @throws UnsupportedEncodingException 
+	 */
+	@Test
+	public void pickupInvalid() throws UnsupportedEncodingException{
+		ship.setRegister(Register.SHIP_DIRECTION,5);
+		ship.setCondition(3);
+		ship.setMorale(4);
+		ship.setLoad(4);
+		String myString = ""
+				+ "sense 1\n"
+				+ "ifany sense_supply else 13";
+		
+		
+		InputStream is = new ByteArrayInputStream( myString.getBytes("utf-8") );
+		Instruction[] arr = tacticsParser.parseTactics(is, new Random(2));
+		arr[0].execute(ship);
+		arr[1].execute(ship);
+		assertTrue(ship.getPC()==2);
+	}
+	
+	/**
+	 * tests ifany an string is parsed and evaluated correctly
+	 * @throws UnsupportedEncodingException 
+	 */
+	@Test
+	public void ifTestTwo() throws UnsupportedEncodingException{
+		ship.setRegister(Register.SHIP_DIRECTION,5);
+		ship.setCondition(3);
+		ship.setMorale(4);
+		ship.setLoad(4);
+		String myString = "ifany ship_direction==4 ship_load<3 ship_moral<3 ship_condition<2 sense_supply sense_treasure else 13";
+		
+		
+		InputStream is = new ByteArrayInputStream( myString.getBytes("utf-8") );
+		Instruction[] arr = tacticsParser.parseTactics(is, new Random(2));
+		arr[0].execute(ship);
+		assertTrue(ship.getPC()==13);
+	}
+	
+	
+	/**
+	 * tests ifany an string is parsed and evaluated correctly
+	 * @throws UnsupportedEncodingException 
+	 */
+	@Test
+	public void ifTestOne() throws UnsupportedEncodingException{
+		ship.setRegister(Register.SHIP_DIRECTION,5);
+		ship.setCondition(3);
+		ship.setMorale(4);
+		ship.setLoad(4);
+		String myString = "ifany ship_direction==4 ship_load==3 ship_moral==3 ship_condition==2 sense_supply sense_treasure else 13";
+		
+		
+		InputStream is = new ByteArrayInputStream( myString.getBytes("utf-8") );
+		Instruction[] arr = tacticsParser.parseTactics(is, new Random(2));
+		arr[0].execute(ship);
+		assertTrue(ship.getPC()==13);
+	}
+	
 	//IfALlInstruction Test should evaluate to false and set the new PC
+	/**
+	 * tests if an exp array is evaluated to false correctly and the PC is set correctly
+	 */
+	@Test
+	public void ifAllInstructionSecondTest(){
+		//simulates the registerArray
+		
+		ship.setRegister(Register.SHIP_DIRECTION,5);
+		ship.setCondition(3);
+		ship.setMorale(4);
+		ship.setLoad(4);
+		
+		//calls Registers ship_direction ship_load ship_moral ship_condition
+		RegisterCall call14 = new RegisterCall(14);
+		RegisterCall call15 = new RegisterCall(15);
+		RegisterCall call16 = new RegisterCall(16);
+		RegisterCall call17 = new RegisterCall(17);
+		
+		//build a ExpressionArray for testing puropses
+		//and added two equalexpressions testing equality with 0 and 1
+		Primary prim5 = new Literal(5);
+		Primary prim4 = new Literal(4);
+		Primary prim3 = new Literal(3);
+		Expression first = new EqualOperator(call14,prim5);
+		Expression second = new LessOperator(call15,prim5);
+		Expression third = new GreaterOperator(call16,prim3);
+		Expression fourth = new LessOperator(call17,prim4);
+		
+		Expression[] exparr = new Expression[4];
+		exparr[0] = first;
+		exparr[1] = second;
+		exparr[2] = third;
+		exparr[3] = fourth;
+		
+		TestGuiDropInstr testGui = new TestGuiDropInstr();
+		Instruction ifAllInstruction = new IfAllInstruction(testGui, 12, exparr);
+		
+		
+		ifAllInstruction.execute(ship);
+		
+		assertTrue(ship.getPC() == 1);
+	}
+	
 	
 	/**
 	 * tests if an exp array is evaluated to false correctly and the PC is set correctly
