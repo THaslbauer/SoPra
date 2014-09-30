@@ -27,7 +27,24 @@ public class TacticsParserTest2 {
 	private String wrong_string4;
 	private String wrong_string5;
 	private String wrong_string6;
-	
+	private String wrong_string7;
+	private String wrong_string8;
+	private String wrong_string9;
+	private String wrong_string10;
+	private String wrong_string11;
+	private String wrong_string12;
+	private String wrong_string13;
+	private String wrong_string14;
+	private String wrong_string15;
+	private String wrong_string16;
+	private String wrong_string17;
+	private String wrong_string18;
+	private String wrong_string19;
+	private String wrong_string20;
+	private String wrong_string21;
+	private String wrong_string22;
+	private String wrong_string23;
+	private String wrong_string24;
 	
 	private InputStream correct_stream;
 	private InputStream wrong_stream1;
@@ -36,6 +53,25 @@ public class TacticsParserTest2 {
 	private InputStream wrong_stream4;
 	private InputStream wrong_stream5;
 	private InputStream wrong_stream6;
+	private InputStream wrong_stream7;
+	private InputStream wrong_stream8;
+	private InputStream wrong_stream9;
+	private InputStream wrong_stream10;
+	private InputStream wrong_stream11;
+	private InputStream wrong_stream12;
+	private InputStream wrong_stream13;
+	private InputStream wrong_stream14;
+	private InputStream wrong_stream15;
+	private InputStream wrong_stream16;
+	private InputStream wrong_stream17;
+	private InputStream wrong_stream18;
+	private InputStream wrong_stream19;
+	private InputStream wrong_stream20;
+	private InputStream wrong_stream21;
+	private InputStream wrong_stream22;
+	private InputStream wrong_stream23;
+	private InputStream wrong_stream24;
+	
 
 	
 	@Before 
@@ -115,18 +151,62 @@ public class TacticsParserTest2 {
 				+ "ifall ship_direction==ship_load ship_moral!=ship_condition else 678\n"
 				+ "ifall sense_shipdirection<sense_shipcondition ship_load>ship_moral else 67\n";
 		
+		//All possible type mismatches for sense_celltype
 		wrong_string1 =""
 				+ "if sense_celltype==friend else 3\n";
 		wrong_string2 = ""
-				+ "if sense_shiptype!=ship_direction else 4\n";
+				+ "if sense_celltype==sense_treasure else 5\n";
 		wrong_string3 = ""
-				+ "if sense_shiptype==enemyhome else 5\n";
-		wrong_string4 = ""
-				+ "if sense_celltype!=ship_moral else 3\n";
+				+ "if sense_celltype==ship_condition else 7\n";
+		wrong_string4 =""
+				+ "if sense_celltype!=friend else 3\n";
 		wrong_string5 = ""
-				+ "if ship_direction==friend else 5\n";
+				+ "if sense_celltype!=sense_treasure else 5\n";
 		wrong_string6 = ""
+				+ "if sense_celltype!=ship_moral else 2\n";
+		
+		//All possible type mismatches for sense_shiptype
+		wrong_string7 =""
+				+ "if sense_shiptype==ship_load else 5\n";
+		wrong_string8 = ""
+				+ "if sense_shiptype==enemyhome else 5\n";
+		wrong_string9 = ""
+				+ "if sense_shiptype==sense_marker0 else 3\n";
+		wrong_string10 = ""
+				+ "if sense_shiptype!=ship_direction else 4\n";
+		wrong_string11 = ""
+				+ "if sense_shiptype!=empty else 6\n";
+		wrong_string12 = ""
+				+ "if sense_shiptype!=sense_marker5 else 2\n";
+		
+		//A few type mismatches for int_register (maybe all)
+		wrong_string13 = ""
+				+ "if ship_load==sense_marker0 else 2\n";
+		wrong_string14 = ""
 				+ "if ship_load==island else 3\n";
+		wrong_string15 = ""
+				+ "if ship_direction==friend else 5\n";
+		wrong_string16 = ""
+				+ "if ship_load!=sense_marker0 else 2\n";
+		wrong_string17 = ""
+				+ "if ship_load!=island else 3\n";
+		wrong_string18 = ""
+				+ "if ship_direction!=friend else 5\n";
+		wrong_string19 = ""
+				+ "if ship_load<sense_marker0 else 2\n";
+		wrong_string20 = ""
+				+ "if ship_load<island else 3\n";
+		wrong_string21 = ""
+				+ "if ship_direction<friend else 5\n";
+		wrong_string22 = ""
+				+ "if ship_load>sense_marker0 else 2\n";
+		wrong_string23 = ""
+				+ "if ship_load>island else 3\n";
+		wrong_string24 = ""
+				+ "if ship_direction>friend else 5\n";
+		
+
+		
 		
 				
 		correct_stream = StreamHelper.asIS(correct_string);
@@ -136,7 +216,26 @@ public class TacticsParserTest2 {
 		wrong_stream4 = StreamHelper.asIS(wrong_string4);
 		wrong_stream5 = StreamHelper.asIS(wrong_string5);
 		wrong_stream6 = StreamHelper.asIS(wrong_string6);
+		wrong_stream7 = StreamHelper.asIS(wrong_string7);
+		wrong_stream8 = StreamHelper.asIS(wrong_string8);
+		wrong_stream9 = StreamHelper.asIS(wrong_string9);
+		wrong_stream10 = StreamHelper.asIS(wrong_string10);
+		wrong_stream11 = StreamHelper.asIS(wrong_string11);
+		wrong_stream12 = StreamHelper.asIS(wrong_string12);
+		wrong_stream13 = StreamHelper.asIS(wrong_string13);
+		wrong_stream14 = StreamHelper.asIS(wrong_string14);
+		wrong_stream15 = StreamHelper.asIS(wrong_string15);
+		wrong_stream16 = StreamHelper.asIS(wrong_string16);
+		wrong_stream17 = StreamHelper.asIS(wrong_string17);
+		wrong_stream18 = StreamHelper.asIS(wrong_string18);
+		wrong_stream19 = StreamHelper.asIS(wrong_string19);
+		wrong_stream20 = StreamHelper.asIS(wrong_string20);
+		wrong_stream21 = StreamHelper.asIS(wrong_string21);
+		wrong_stream22 = StreamHelper.asIS(wrong_string22);
+		wrong_stream23 = StreamHelper.asIS(wrong_string23);
+		wrong_stream24 = StreamHelper.asIS(wrong_string24);
 							
+		random = new Random(6);
 		
 		
 	}
@@ -144,7 +243,6 @@ public class TacticsParserTest2 {
 	
 	@Test
 	public void parseCorrectStream(){
-		random = new Random(6);
 		
 		try{
 
@@ -299,9 +397,322 @@ public class TacticsParserTest2 {
 		catch(Exception e){
 			throw new IllegalArgumentException("This is a correctStream but there was the exception " + e.toString());
 		}
-		
-		
+				
 		
 	}
+	
+	@Test
+	public void sense_celltype_TypeMismatch1(){
+		
+		try{
+			parser.parseTactics(wrong_stream1, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string1);
+	}
+	
+	@Test
+	public void sense_celltype_TypeMismatch2(){
+		
+		try{
+			parser.parseTactics(wrong_stream2, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string2);
+	}
+	
+	@Test
+	public void sense_celltype_TypeMismatch3(){
+		
+		try{
+			parser.parseTactics(wrong_stream3, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string3);
+	}
+	
+	@Test
+	public void sense_celltype_TypeMismatch4(){
+		
+		try{
+			parser.parseTactics(wrong_stream4, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string4);
+	}
+	
+	@Test
+	public void sense_celltype_TypeMismatch5(){
+		
+		try{
+			parser.parseTactics(wrong_stream5, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string5);
+	}
+	
+	@Test
+	public void sense_celltype_TypeMismatch6(){
+		
+		try{
+			parser.parseTactics(wrong_stream6, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string6);
+	}
+	
+	@Test
+	public void sense_shiptype_TypeMismatch1(){
+		
+		try{
+			parser.parseTactics(wrong_stream7, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string7);
+	}
+	
+	@Test
+	public void sense_shiptype_TypeMismatch2(){
+		
+		try{
+			parser.parseTactics(wrong_stream8, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string8);
+	}
+	
+	@Test
+	public void sense_shiptype_TypeMismatch3(){
+		
+		try{
+			parser.parseTactics(wrong_stream9, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string9);
+	}
+	
+	@Test
+	public void sense_shiptype_TypeMismatch4(){
+		
+		try{
+			parser.parseTactics(wrong_stream10, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string10);
+	}
+	
+	@Test
+	public void sense_shiptype_TypeMismatch5(){
+		
+		try{
+			parser.parseTactics(wrong_stream11, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string11);
+	}
+	
+	@Test
+	public void sense_shiptype_TypeMismatch6(){
+		
+		try{
+			parser.parseTactics(wrong_stream12, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string12);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch1(){
+		
+		try{
+			parser.parseTactics(wrong_stream13, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string13);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch2(){
+		
+		try{
+			parser.parseTactics(wrong_stream14, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string14);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch3(){
+		
+		try{
+			parser.parseTactics(wrong_stream15, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string15);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch4(){
+		
+		try{
+			parser.parseTactics(wrong_stream16, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string16);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch5(){
+		
+		try{
+			parser.parseTactics(wrong_stream17, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string17);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch6(){
+		
+		try{
+			parser.parseTactics(wrong_stream18, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string18);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch7(){
+		
+		try{
+			parser.parseTactics(wrong_stream19, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string19);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch8(){
+		
+		try{
+			parser.parseTactics(wrong_stream20, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string20);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch9(){
+		
+		try{
+			parser.parseTactics(wrong_stream21, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string21);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch10(){
+		
+		try{
+			parser.parseTactics(wrong_stream22, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string22);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch11(){
+		
+		try{
+			parser.parseTactics(wrong_stream23, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string23);
+	}
+	
+	@Test
+	public void int_register_TypeMismatch12(){
+		
+		try{
+			parser.parseTactics(wrong_stream24, random);
+		}
+		catch(Exception e){
+			return;
+		}
+		
+		fail("A type mismatch should have occured: " + wrong_string24);
+	}
+	
+	
 	
 }
