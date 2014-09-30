@@ -55,6 +55,7 @@ public class InstructionTest {
 	private Worldmap worldMap;
 	private Faction faction;
 	private Ship ship;
+	private Ship testShip2;
 	private Tile baseTile;
 	private Tile waterTile1;
 	private Tile waterTile2;
@@ -64,6 +65,9 @@ public class InstructionTest {
 	private int x;
 	private ExpectLogger expectLogger;
 	private EntityFactory entityFactory;
+	private Worldmap worldMap2;
+	private Tile waterTileMap2;
+	private Ship ship2;
 	
 	@Before
 	public void init(){
@@ -73,6 +77,7 @@ public class InstructionTest {
 		
 		//A worldMap with exactly one seatile
 		worldMap = new Worldmap6T(2,2,expectLogger,entityFactory);
+		worldMap2 = new Worldmap6T(2,2,expectLogger,entityFactory);
 		
 		//A TestFaction, Position and Tile
 		faction = new Faction("a",0);
@@ -85,6 +90,15 @@ public class InstructionTest {
 		waterTile2 = worldMap.createSeaTile(position2);
 		islandTile1 = worldMap.createIslandTile(position3, true);
 		islandTile2 = worldMap.createIslandTile(position4, false);
+		
+		waterTileMap2 = worldMap2.createSeaTile(position1);
+		worldMap2.createSeaTile(position2);
+		Tile tr = worldMap2.createIslandTile(position3, true);
+		Tile ts = worldMap2.createIslandTile(position4, false);
+		worldMap2.createTreasure(9, tr);
+		worldMap2.createTreasure(9, ts);
+		
+		
 		expectLogger.expect(new AddCell(Cell.WATER, null, 0, 0));
 		expectLogger.expect(new AddCell(Cell.WATER, null, 1, 0));
 		expectLogger.expect(new AddCell(Cell.SUPPLY, null, 0, 1));
@@ -93,6 +107,7 @@ public class InstructionTest {
 		
 		//A Test ship of the TestFaction with ID 1, if ship is attaching itself
 		ship = new Ship(faction,1,waterTile1);
+		ship2 = new Ship(faction,1,waterTileMap2);
 		
 		//waterTile1.attach(ship);
 		
@@ -377,6 +392,28 @@ public class InstructionTest {
 		senseInstruction.execute(ship);
 		Register reg = Register.SENSE_SHIPTYPE;
 		assertTrue(ship.getRegister(reg) == ShipType.FRIEND.ordinal());
+	}
+	
+	/**
+	 * Tests if Island with treasure is sensed correctly
+	 * 
+	 */
+	@Test
+	public void treasureIslandSenseTest(){
+		Direction d = Direction.D1;
+		TestGui testGui = new TestGuiNotify();
+		SenseInstruction senseInstruction = new SenseInstruction(testGui,d);
+		
+		senseInstruction.execute(ship2);
+		
+		Register reg = Register.SENSE_CELLTYPE;
+		assertTrue(ship2.getRegister(reg) == CellType.ISLAND.ordinal());
+		
+		Register sup = Register.SENSE_SUPPLY;
+		assertTrue(ship2.getRegister(sup) == 1);
+		
+		Register no = Register.SENSE_TREASURE;
+		assertTrue(ship2.getRegister(no) == 1);
 	}
 	
 	/**
