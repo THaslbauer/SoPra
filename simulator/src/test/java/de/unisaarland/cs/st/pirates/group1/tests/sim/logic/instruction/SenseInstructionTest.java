@@ -11,6 +11,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.SenseInstruction;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
+import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.tests.sim.logic.BasicInstructionTest;
 import de.unisaarland.cs.st.pirates.group1.tests.testUtil.ExpectLogger;
@@ -22,10 +23,10 @@ public class SenseInstructionTest extends BasicInstructionTest {
 	@Test
 	public void testSenseTreasure() {
 		Tile shipTile = testTile;
-		testTile = testMap.getTile(new Position(2,1));
+		testTile = testMap.getTile(new Position(2,2));
 		testMap.createTreasure(4, testTile);
 		testLogger.expect();
-		Instruction sense = new SenseInstruction(testLogger, Direction.D0);
+		Instruction sense = new SenseInstruction(testLogger, Direction.D1);
 		sense.execute(testShip);
 		testLogger.expect(new Notify(Entity.SHIP, testShip.getId(), Key.PC, 1));
 		int[] regs = testShip.getRegisters();
@@ -80,6 +81,7 @@ public class SenseInstructionTest extends BasicInstructionTest {
 	
 	@Test
 	public void testSenseBuoys() {
+		testShip.setHeading(Heading.H5);
 		Tile shipTile = testTile;
 		testTile = testMap.getTile(new Position(2,1));
 		testMap.createBuoy(0, testFaction, testTile);
@@ -97,7 +99,7 @@ public class SenseInstructionTest extends BasicInstructionTest {
 		Faction secondFaction = new Faction("enemy", 25);
 		testMap.createBuoy(1, secondFaction, testTile);
 		testLogger.expect();
-		Instruction sense = new SenseInstruction(testLogger, Direction.D0);
+		Instruction sense = new SenseInstruction(testLogger, Direction.D1);
 		sense.execute(testShip);
 		testLogger.expect(new Notify(Entity.SHIP, testShip.getId(), Key.PC, 1));
 		int[] regs = testShip.getRegisters();
