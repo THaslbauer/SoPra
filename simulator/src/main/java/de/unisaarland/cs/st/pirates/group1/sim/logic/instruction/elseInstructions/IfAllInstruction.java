@@ -45,17 +45,13 @@ public class IfAllInstruction extends ElseInstruction
 			throw new IllegalArgumentException();
 		}
 		
-		int value = 1;
 		
 		for(Expression condition : conditions)
 		{
-			value = value & condition.evaluate(ship.getRegisters());
-		}
-		
-		if(value != 1)
-		{
-			this.elseJump(ship);
-			return;
+			if(condition.evaluate(ship.getRegisters()) != 1) {
+				this.elseJump(ship);
+				return;
+			}
 		}
 		
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());

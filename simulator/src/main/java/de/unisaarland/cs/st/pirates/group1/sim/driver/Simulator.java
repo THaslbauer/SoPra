@@ -148,7 +148,7 @@ public class Simulator
 	 */
 	public void endOutput()
 	{
-		if(factions == null | factions.size() == 0)
+		if(factions == null || factions.size() == 0)
 			return;
 		// get the first factions score
 		int factionScore = factions.iterator().next().getScore();
@@ -215,13 +215,9 @@ public class Simulator
 		
 		for(Ship ship : ships)
 		{
-			if(ship.getCondition() != 0)
+			if(ship.getCondition() != 0 && ship.getFaction().equals(faction))
 			{
-				if(ship.getFaction().equals(faction))
-				{
-					ship_amount += 1;
-					
-				}
+				ship_amount += 1;
 			}
 		}
 		
@@ -242,12 +238,9 @@ public class Simulator
 		
 		for(Ship ship : ships)
 		{
-			if(ship.getCondition() != 0)
+			if(ship.getCondition() != 0 && ship.getFaction().equals(faction))
 			{
-				if(ship.getFaction().equals(faction))
-				{
-					load += ship.getLoad();
-				}
+				load += ship.getLoad();
 			}
 		}
 		

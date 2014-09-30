@@ -45,23 +45,15 @@ public class IfAnyInstruction extends ElseInstruction
 			throw new IllegalArgumentException();
 		}
 		
-		int value = 0;
-		
 		for(Expression condition : conditions)
 		{
-			value = value | condition.evaluate(ship.getRegisters());
+			if(condition.evaluate(ship.getRegisters()) == 1) {
+				logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
+				this.cycle(ship);
+				return;
+			}
 		}
-		
-		if(value != 1)
-		{
-			this.elseJump(ship);
-			return;
-		}
-		
-		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
-		this.cycle(ship);
-		
-		
+		this.elseJump(ship);
 	}
 
 }
