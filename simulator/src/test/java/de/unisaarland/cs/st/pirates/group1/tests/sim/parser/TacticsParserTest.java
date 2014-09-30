@@ -310,9 +310,6 @@ public class TacticsParserTest {
 				+ "goto 0"+"\n"
 				+ "sense 0"+"\n"
 				+ "if sense_celltype==empty else 19"+"\n"
-				+ "if sense_celltype==enemyhome else 19"+"\n"
-				+ "if sense_celltype==island else 19"+"\n"
-				+ "if sense_celltype==home else 19"+"\n"
 				+ "move else 21"+"\n"
 				+ "drop"+"\n"
 				+ "goto 0"+"\n"
@@ -614,13 +611,8 @@ public class TacticsParserTest {
 	 */
 	@Test
 	public void failMonsterInstructionTest(){
-		try{
+		
 			tacticsParser.parseTactics(brokenStreamMonster, random);
-					}catch(IllegalArgumentException e){
-						return;
-					}
-		fail("there should be a illegalargument exception raised because tried to parse: \" " + monsterString + "\" ." 
-				+ "see in the tacticsparsertestclass @before");
 	}
 	
 	
