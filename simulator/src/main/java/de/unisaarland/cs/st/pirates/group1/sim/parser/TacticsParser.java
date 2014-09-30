@@ -59,7 +59,7 @@ public class TacticsParser {
 	 * divide the string into string arrays where each element represents a part of an instruction.
 	 * 
 	 * @param input The input stream to use
-	 * @param random The random object for flipzero instruction
+	 * @param random The random object for the flipzero instruction
 	 */
 	public Instruction[] parseTactics(InputStream input, Random random){
 		
@@ -763,7 +763,7 @@ public class TacticsParser {
 	}
 	
 	/**
-	 * This method tells you if there is a bool register or its negation
+	 * This method tells you if there is a bool register 
 	 * @param s The string which should be tested
 	 * @return true if the string is a bool register or its negation
 	 */
@@ -798,7 +798,7 @@ public class TacticsParser {
 	
 	/**
 	 * 
-	 * @param s the string which should be a bool register
+	 * @param s the string which should be a negated bool register
 	 * @return returns true if there is a negated bool register
 	 */
 	private boolean isNegBoolRegister(String s){
