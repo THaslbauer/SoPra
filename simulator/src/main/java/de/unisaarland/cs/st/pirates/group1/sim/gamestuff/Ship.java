@@ -72,7 +72,7 @@ public class Ship extends Placable {
 		registers[9] = 0;	//SENSE_ENEMYMARKER,
 		registers[10] = -1;	//SENSE_SHIPTYPE,
 		registers[11] = -1;	//SENSE_SHIPDIRECTION,
-		registers[12] = -1;	//SENSE_SHIPLOADED,
+		registers[12] = 0;	//SENSE_SHIPLOADED,
 		registers[13] = -1;	//SENSE_SHIPCONDITION,
 	}
 	
