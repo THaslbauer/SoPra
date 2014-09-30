@@ -59,12 +59,16 @@ public class SenseInstruction extends Instruction {
 		if(!(treasure == null || treasure.getValue() == 0)) {
 			ship.setRegister(Register.SENSE_TREASURE, Expression.TRUE);
 		}
+		else
+			ship.setRegister(Register.SENSE_TREASURE, Expression.FALSE);
+		//reset Buoys
+		resetBuoys(ship);
 		//get all buoys
 		Map<Faction, List<Buoy>>buoyMap = neighbourTile.getBuoyMap();
 		//look for our faction's buoys
 		List<Buoy> buoys = buoyMap.get(ship.getFaction());
 		//count if our Bouy list is there
-		int hasOurBuoys = buoys == null ? Expression.FALSE : Expression.TRUE;
+		int hasOurBuoys = buoys == null ? 0 : 1;
 		//now iterate over the buoys, setting the appropriate register to true
 		if(hasOurBuoys == 1) {
 			for(Buoy b : buoys) {
@@ -74,6 +78,8 @@ public class SenseInstruction extends Instruction {
 		//if more elements in buoy Map : set enemy marker boolean
 		if(buoyMap.keySet().size() > hasOurBuoys)
 			ship.setRegister(Register.SENSE_ENEMYMARKER, Expression.TRUE);
+		else
+			ship.setRegister(Register.SENSE_ENEMYMARKER, Expression.FALSE);
 		//look for other ship
 		Ship otherShip = neighbourTile.getShip();
 		if(otherShip != null){
@@ -95,7 +101,16 @@ public class SenseInstruction extends Instruction {
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		super.cycle(ship);
 	}
-	
+
+	private void resetBuoys(Ship ship) {
+		ship.setRegister(Register.SENSE_MARKER0, 0);
+		ship.setRegister(Register.SENSE_MARKER1, 0);
+		ship.setRegister(Register.SENSE_MARKER2, 0);
+		ship.setRegister(Register.SENSE_MARKER3, 0);
+		ship.setRegister(Register.SENSE_MARKER4, 0);
+		ship.setRegister(Register.SENSE_MARKER5, 0);
+	}
+
 	/**
 	 * A method to encapsulate the setting of the marker registers.
 	 * @param ship
