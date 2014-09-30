@@ -8,6 +8,7 @@ import java.util.Random;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.*;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.normalInstructions.CyclingInstruction;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 
@@ -29,6 +30,7 @@ public class Simulator
 	private ExtendedLogWriter logger;							// the logger wich logs the creation of placables
 	private EntityFactory entityFactory;						// the factory which creates the placables
 	private Random random;										// an instance of the random class
+	private Instruction cyclingInstruction;						// the instruction to cycle a ship while the ship rest
 	
 	
 	public Simulator()
@@ -47,15 +49,16 @@ public class Simulator
 			throw new IllegalArgumentException();
 		}
 		
-		this.factions      = null;
-		this.ships         = new LinkedList<Ship>();
-		this.krakens       = new LinkedList<Kraken>();
-		this.worldmap      = null;
-		this.cycle         = 0;
-		this.maxCycle      = maxCycle;
-		this.logger        = logger;
-		this.entityFactory = new EntityFactory();
-		this.random        = null;
+		this.factions           = null;
+		this.ships              = new LinkedList<Ship>();
+		this.krakens            = new LinkedList<Kraken>();
+		this.worldmap           = null;
+		this.cycle              = 0;
+		this.maxCycle           = maxCycle;
+		this.logger             = logger;
+		this.entityFactory      = new EntityFactory();
+		this.random             = null;
+		this.cyclingInstruction = new CyclingInstruction(logger);
 	}
 	
 	/**
@@ -106,6 +109,7 @@ public class Simulator
 					//if resting, decrement restTime and notify new restTime
 					ship.setRestTime(ship.getRestTime() - 1);
 					this.logger.notify(Entity.SHIP, ship.getId(), Key.RESTING, ship.getRestTime());
+					this.cyclingInstruction.execute(ship);
 				}
 				//if not resting, execute instruction
 				else 
@@ -173,6 +177,7 @@ public class Simulator
 				if(ship.getFaction().equals(faction))
 				{
 					ship_amount += 1;
+					
 				}
 			}
 		}
