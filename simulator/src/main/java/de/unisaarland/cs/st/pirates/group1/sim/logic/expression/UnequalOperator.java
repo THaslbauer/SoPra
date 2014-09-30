@@ -3,7 +3,7 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.expression;
 /**
  * This class represents an unequal operator in the tactic programm
  * 
- * @author Nico und Schatz
+ * @author Nico
  *
  */
 public class UnequalOperator extends Operator{
