@@ -148,7 +148,7 @@ public class Simulator
 	 */
 	public void endOutput()
 	{
-		if(factions == null | factions.size() == 0)
+		if(factions == null || factions.size() == 0)
 			return;
 		// get the first factions score
 		int factionScore = factions.iterator().next().getScore();
