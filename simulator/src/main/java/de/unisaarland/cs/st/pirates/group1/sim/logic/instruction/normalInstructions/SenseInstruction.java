@@ -46,11 +46,11 @@ public class SenseInstruction extends Instruction {
 		Tile tile = ship.getMyTile();
 		Tile neighbourTile = tile.getNeighbour(ship.getHeading(), dir);
 		ship.setRegister(Register.SENSE_CELLTYPE, neighbourTile.navigable(ship).ordinal());
-		Treasure treasure = neighbourTile.getTreasure();
 		int supply = neighbourTile.isSupply() ? 1 : 0;
 		ship.setRegister(Register.SENSE_SUPPLY, supply);
+		Treasure treasure = neighbourTile.getTreasure();
 		if(!(treasure == null || treasure.getValue() == 0)) {
-			ship.setRegister(Register.SENSE_TREASURE, treasure.getValue());
+			ship.setRegister(Register.SENSE_TREASURE, 1);
 		}
 		Map<Faction, List<Buoy>>buoyMap = neighbourTile.getBuoyMap();
 		List<Buoy> buoys = buoyMap.get(ship.getFaction());
