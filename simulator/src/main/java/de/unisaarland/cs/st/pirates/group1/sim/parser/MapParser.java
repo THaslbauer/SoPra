@@ -1,21 +1,16 @@
 
 package de.unisaarland.cs.st.pirates.group1.sim.parser;
 
-import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 
 
-import java.util.InputMismatchException;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import de.unisaarland.cs.st.pirates.group1.sim.driver.Simulator;
-import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.EntityFactory;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Faction;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Position;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
@@ -61,7 +56,6 @@ public class MapParser {
 	 */
 	public void parseMap(InputStream stream, Simulator simulator) throws IllegalArgumentException, NullPointerException{
 		
-		HashMap<String, Faction> fact = factions;
 		
 		int width, height;
 		try(Scanner scan = new Scanner(stream)){
