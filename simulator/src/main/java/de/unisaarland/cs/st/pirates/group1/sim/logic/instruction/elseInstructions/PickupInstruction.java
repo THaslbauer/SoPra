@@ -70,6 +70,7 @@ public class PickupInstruction extends ElseInstruction {
 			morale += 2;
 			if(morale > Ship.getMaxmorale())
 				morale = Ship.getMaxmorale();
+			ship.setMorale(morale);
 			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, morale);
 			ship.resetBoredom();
 			logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());

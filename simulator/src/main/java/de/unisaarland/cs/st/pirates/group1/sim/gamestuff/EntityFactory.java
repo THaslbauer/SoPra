@@ -9,23 +9,15 @@ package de.unisaarland.cs.st.pirates.group1.sim.gamestuff;
 public class EntityFactory {
 
 	protected int shipNextId;
-	protected int treasureNextId;
-	protected int buoyNextId;
-	protected int krakenNextId;
+	protected int objectsNextId;
 	
 	public int getKrakenNextId() {
-		return krakenNextId;
-	}
-
-	public void setKrakenNextId(int krakenNextId) {
-		this.krakenNextId = krakenNextId;
+		return objectsNextId;
 	}
 
 	public EntityFactory(){
 		shipNextId = 0;
-		treasureNextId = 0;
-		buoyNextId = 0;
-		krakenNextId = 0;
+		objectsNextId = 0;
 	}
 	
 	/**
@@ -49,7 +41,7 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Buoy createBuoy(int type, Faction faction, Tile tile){
-		return new Buoy(type, faction, buoyNextId++, tile);
+		return new Buoy(type, faction, objectsNextId++, tile);
 	}
 	
 	/**
@@ -60,7 +52,7 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Treasure createTreasure(int value, Tile tile){
-		return new Treasure(value, treasureNextId++, tile);
+		return new Treasure(value, objectsNextId++, tile);
 	}
 	
 	/**
@@ -69,31 +61,33 @@ public class EntityFactory {
 	 * @return
 	 */
 	public Kraken releaseTheKraken(Tile tile){
-		return new Kraken(krakenNextId++, tile);
+		return new Kraken(objectsNextId++, tile);
 	}
 
 	public int getShipNextId() {
 		return shipNextId;
 	}
 
-	public void setShipNextId(int shipNextId) {
-		this.shipNextId = shipNextId;
-	}
-
 	public int getTreasureNextId() {
-		return treasureNextId;
+		return objectsNextId;
 	}
 
-	public void setTreasureNextId(int treasureNextId) {
-		this.treasureNextId = treasureNextId;
-	}
+
 
 	public int getBuoyNextId() {
-		return buoyNextId;
+		return objectsNextId;
 	}
 
-	public void setBuoyNextId(int buoyNextId) {
-		this.buoyNextId = buoyNextId;
+	public void setObjectsNextId(int objectsNextId) {
+		this.objectsNextId = objectsNextId;
+	}
+
+	public int getObjectsNextId() {
+		return objectsNextId;
+	}
+
+	public void setShipNextId(int shipNextId) {
+		this.shipNextId = shipNextId;
 	}
 	
 }
