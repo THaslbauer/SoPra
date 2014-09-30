@@ -73,15 +73,7 @@ public class Simulator
 	{
 		if(cycle > (maxCycle - 1))
 		{
-			for(Faction faction : factions)
-			{
-				int flotte_ladungen = calculateLoad(faction);
-				int flotte_schiffe  = calculateShipAmount(faction);
-				int flotte_tactic   = calculateTactic(faction);
-				
-				System.out.println("" + faction.getScore() + "(" + flotte_ladungen + "," + flotte_schiffe + "," + flotte_tactic + ")");
-			}
-			
+			this.endOutput();
 			throw new UnsupportedOperationException();
 		}
 		
@@ -145,6 +137,55 @@ public class Simulator
 			e.printStackTrace();
 		}
 		
+	}
+	
+	
+	/**
+	 * This method prints the scores of each faction. If the scores are
+	 * equal, this method prints the whole output. If not, it prints the
+	 * scores only.
+	 * 
+	 */
+	public void endOutput()
+	{
+		// get the first factions score
+		int factionScore = factions.iterator().next().getScore();
+		
+		boolean completeOutput = false;
+		
+		// tests if the other factions score is equal to the first one
+		for(Faction faction : factions)
+		{
+			if(faction.getScore() == factionScore)
+			{
+				completeOutput = true;
+			}
+			else
+			{
+				completeOutput = false;
+			}
+		}
+		
+		// print the complete output
+		if(completeOutput)
+		{
+			for(Faction faction : factions)
+			{
+				int flotte_ladungen = calculateLoad(faction);
+				int flotte_schiffe  = calculateShipAmount(faction);
+				int flotte_tactic   = calculateTactic(faction);
+				
+				System.out.println("" + faction.getScore() + "(" + flotte_ladungen + "," + flotte_schiffe + "," + flotte_tactic + ")");
+			}
+			
+			return;
+		}
+		
+		// don't print the complete output
+		for(Faction faction : factions)
+		{
+			System.out.println("" + faction.getScore());
+		}
 	}
 	
 	/**
