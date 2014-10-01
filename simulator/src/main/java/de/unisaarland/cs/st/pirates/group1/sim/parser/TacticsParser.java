@@ -204,7 +204,7 @@ public class TacticsParser {
 	}
 	
 	/**
-	 * This methods converts an input stream into a string.
+	 * This methods converts an input stream into a string. taken from stackoverflow.com !
 	 * @param input The input stream which should be converted to a string
 	 * @return the converted input stream as a string
 	 */
