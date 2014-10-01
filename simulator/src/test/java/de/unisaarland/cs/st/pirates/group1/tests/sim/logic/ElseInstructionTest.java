@@ -131,7 +131,7 @@ public class ElseInstructionTest {
 		ship.setMorale(4);
 		ship.setLoad(4);
 		String myString = ""
-				+ "refresh 1 else 13\n";
+				+ "refresh 2 else 13\n";
 		
 		
 		InputStream is = new ByteArrayInputStream( myString.getBytes("utf-8") );
@@ -188,7 +188,7 @@ public class ElseInstructionTest {
 		ship.setMorale(4);
 		ship.setLoad(4);
 		String myString = ""
-				+ "sense 1\n"
+				+ "sense 2\n"
 				+ "ifany sense_supply else 13";
 		
 		

@@ -103,7 +103,7 @@ public class SenseInstructionTest extends BasicInstructionTest {
 		sense.execute(testShip);
 		testLogger.expect(new Notify(Entity.SHIP, testShip.getId(), Key.PC, 1));
 		int[] regs = testShip.getRegisters();
-		int[] compRegs = {CellType.EMPTY.ordinal(), 0, 0, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, 0, 0, 4, 3};
+		int[] compRegs = {CellType.EMPTY.ordinal(), 0, 0, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, 5, 0, 4, 3};
 		compareRegisters(regs, compRegs);
 	}
 	

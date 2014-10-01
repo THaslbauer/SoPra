@@ -168,11 +168,13 @@ public class Ship extends Placable {
 	}
 
 	public Heading getHeading() {
+		int headi = registers[Register.SHIP_DIRECTION.ordinal()];
+		Heading heading = Heading.values()[headi];
 		return heading;
 	}
 
 	public void setHeading(Heading heading) {
-		this.heading = heading;
+		registers[Register.SHIP_DIRECTION.ordinal()] = heading.ordinal();
 	}
 
 	public int getCondition() {
