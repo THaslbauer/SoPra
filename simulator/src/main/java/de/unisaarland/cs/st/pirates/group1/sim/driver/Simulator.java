@@ -87,27 +87,12 @@ public class Simulator
 			
 		}
 		
-		String errorStr = "";
-		if(factions != null) {
-			for(Faction f : factions) {
-				errorStr = errorStr + f.getFactionID() + "\n";
-				for(int i = 0; i < 20; i++) {
-					try {
-						errorStr = errorStr + factions.get(i+30)+"\n";
-					}
-					catch(Exception e){}
-				}
-				errorStr = errorStr + "\n\n";
-			}
-		}
-		//TODO
-		if(factions != null && factions.size() == 3)
-			throw new UnsupportedOperationException(errorStr);
 		
 		// ship cycle
 		LinkedList<Ship> dummy = new LinkedList<Ship>(ships);
 		for(Ship ship : dummy)
 		{
+			
 			
 			//check if ship is ok
 			if(ship.getCondition() != 0)
@@ -140,6 +125,19 @@ public class Simulator
 			{
 				this.removeShip(ship);
 			}
+			String errorStr = "";
+			if(ship.getId() == 3 && factions != null && factions.size() == 3 && cycle == 36) {
+				for(int i = 0; i < 20; i++) {
+					try {
+						errorStr = errorStr + ship.getFaction().getInstruction(i+ship.getPC()-5)+"\n";
+					}
+					catch(Exception e){}
+				}
+				errorStr = errorStr + "\n\n";
+			}
+		//TODO
+		if(factions != null && factions.size() == 3)
+			throw new UnsupportedOperationException(errorStr);
 		}
 		
 		cycle += 1;
