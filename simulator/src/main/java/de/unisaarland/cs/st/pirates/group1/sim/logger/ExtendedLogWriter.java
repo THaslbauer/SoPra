@@ -26,16 +26,16 @@ public interface ExtendedLogWriter extends LogWriter{
 public void fight(Ship ship, Ship otherShip);
 
 /**
- * the additinal fightin Method, messaging the changes if a fight between a ship and a kraken appears.
+ * the additional fighting Method, messaging the changes if a fight between a ship and a kraken appears.
  * @param ship the ship which is actually stepping
- * @param kraken the kraken
+ * @param kraken the kraken that is chilling down the sea
  */
 
 public void fight(Ship ship, Kraken kraken);
 
 
 /**
- * notifies the registerchanges of a senseinstruction, which is not implemented in the standard LogWriter Interface
+ * notifies the register changes of a sense instruction, which is not implemented in the standard LogWriter Interface
  * @param ship the ship whos registers have to be updated
  */
 public void registerChange(Ship ship);

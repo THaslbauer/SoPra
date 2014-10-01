@@ -32,10 +32,7 @@ public class Controller {
 	private TacticsParser tacticsParser;
 	private ByteArrayOutputStream mapFile;
 	private List<ByteArrayOutputStream> tacticsFile;
-	//TODO CHECK IF THIS IS RIGHT
-	//the seed given from the main/command line
 	private long seed;
-	//the random object
 	private Random random;
 	private OutputStream output;
 	private String outputString;
@@ -73,18 +70,7 @@ public Controller(Simulator simulator, MapParser mapParser,
 
 public Controller(Simulator simulator, MapParser mapParser,
 		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, int seed, String logFileString){
-/*	this.simulator = simulator;
-	this.mapParser = mapParser;
-	this.tacticsParser = tacticsParser;
-	this.mapFile = mapFile;
-	this.tacticsFile = tacticsFile;
-	this.intSeed = seed;
-	this.random = new Random(seed);
-	this.output = output;
-	sema = new Semaphore(1);
-	*/
 	this(simulator, mapParser, tacticsParser, mapFile, tacticsFile, (long)seed, logFileString);
-	this.seed = seed;
 }
 
 private ByteArrayOutputStream createByteArrayOutputStreamFromFile(InputStream in) {
@@ -108,8 +94,6 @@ private ByteArrayOutputStream createByteArrayOutputStreamFromFile(InputStream in
 }
 	
 	/*
-	 * 
-	 * 
 	 * Setter and Getter
 	 */
 public long getSeed() {

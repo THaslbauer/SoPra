@@ -257,10 +257,4 @@ public OwnLogWriter notify(OwnLogWriter.Entity entity, int id, OwnLogWriter.Key 
 		throws NullPointerException,
 		IllegalArgumentException,
 		IllegalStateException;
-
-
-
-
-
-
 }
