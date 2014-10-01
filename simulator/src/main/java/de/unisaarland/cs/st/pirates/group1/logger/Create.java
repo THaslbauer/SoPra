@@ -3,7 +3,6 @@ package de.unisaarland.cs.st.pirates.group1.logger;
 import java.util.LinkedList;
 
 import de.unisaarland.cs.st.pirates.logger.LogWriter.*;
-import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 
 public class Create extends LogOperation {
 	public Entity entity;
@@ -51,12 +50,21 @@ public class Create extends LogOperation {
 		outer: for(Entry e : entries) {
 			for(Entry f : other.entries) {
 				if(e.key == f.key && e.value == f.value) {
-					break outer;
+					continue outer;
 				}
 			}
 			return false;
 		}
 		return true;	
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
+		result = prime * result + id;
+		return result;
 	}
 	
 }

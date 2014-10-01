@@ -14,17 +14,32 @@ public class Destroy extends LogOperation {
 	public String toString() {
 		return "Destroy "+entity+" with id "+id;
 	}
-	
-	public boolean equals(Object o) {
-		Destroy other;
-		try {
-			other = (Destroy) o;
-		} catch (ClassCastException e) {
-			return false;
-		}
-		
-		return entity == other.entity && id == other.id;
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((entity == null) ? 0 : entity.hashCode());
+		result = prime * result + id;
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Destroy other = (Destroy) obj;
+		if (entity != other.entity)
+			return false;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
 	
 	
 }
