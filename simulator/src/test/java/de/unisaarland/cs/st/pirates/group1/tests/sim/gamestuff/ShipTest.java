@@ -420,4 +420,17 @@ public class ShipTest {
 		fail("Second ship is not attached to tile");
 	}
 	
+	@Test
+	public void testSetWithRegisters() {
+		ship1 = new Ship(faction1, id1, tile1);
+		ship1.setCondition(2);
+		assertTrue("Ship's condition wasn't set both in registers and in other fields", ship1.getCondition() == 2 && ship1.getRegister(Register.SHIP_CONDITION) == 2);
+		ship1.setMorale(3);
+		assertTrue("Ship's morale wasn't set both in registers and in other fields", ship1.getMorale() == 3 && ship1.getRegister(Register.SHIP_MORAL) == 3);
+		ship1.setLoad(1);
+		assertTrue("Ship's load wasn't set both in registers and in other fields", ship1.getLoad() == 1 && ship1.getRegister(Register.SHIP_LOAD) == 1);
+		ship1.setHeading(Heading.H4);
+		assertTrue("Ship's heading wasn't set both in registers and in other fields", ship1.getHeading() == Heading.H4 && ship1.getRegister(Register.SHIP_DIRECTION) == 4);
+	}
+	
 }
