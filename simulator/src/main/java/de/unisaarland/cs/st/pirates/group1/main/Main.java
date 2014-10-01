@@ -36,6 +36,13 @@ public class Main {
 	private static InputStream mapFile;
 	private static List<InputStream> tacticsFiles;
 	
+	
+	/**
+	 * Reads all arguments and VM arguments into the local static fields and then calls construct(true) to build the simulator and start it.
+	 * VM arguments are: -Dlog=<logfile>, -Dturns=<cycle count>, -Dseed=<seed>.
+	 * Defaults for those are: null, 10000, 19580427
+	 * @param args The file paths for map and tactics, map comes first.
+	 */
 	public static void main(String[] args) {
 		
 		
@@ -82,22 +89,23 @@ public class Main {
 	
 	/**
 	 * constructs the simulator from the saved values
+	 * @param start The boolean if we should start.
 	 */
 	private static void construct(boolean start) {
 		construct(start, new LinkedList<ExtendedLogWriter>());
 	}
 	
 	/**
-	 * constructs the simulator from the saved values
+	 * Constructs the simulator from the saved values.
 	 * @param start the boolean flag to tell the controller to start the simulator
 	 * @param loggers the loggers/guis implementing the ExtendedLogWriter interface
 	 */
 	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
+		//build the random for the simulator
 		Random rand = new Random(seed);
+		//make InfoPoint to collect loggers
 		InfoPoint infoPoint = new InfoPoint();
 		//initializing reference loggers
-		//TODO second debug switch for this
-//		System.out.println("building refloggers");
 		List<LogWriter> refLoggers = new LinkedList<LogWriter>();
 		//right now just one logger
 		for(String name : LogProvider.supported()) {
@@ -105,50 +113,32 @@ public class Main {
 				refLoggers.add(LogProvider.createInstance(name));
 		}
 		infoPoint.setRefLoggers(refLoggers);
-		//TODO second debug flag
-//		System.out.println(System.getProperty("debug"));
+		//add debug logger to extended loggers
 		if(System.getProperty("dbg") != null) {
-//			System.out.println("debug mode enabled");
 			loggers.add(new OutLogger());
 		}
-		infoPoint.setGUI(loggers);
 		//set extended loggers
-		//TODO second debug switch
-//		System.out.println("set extended loggers");
+		infoPoint.setGUI(loggers);
 		Simulator sim = new Simulator(infoPoint,turns,rand);
 		MapParser mapParser = new MapParser();
 		TacticsParser tacticsParser = new TacticsParser(infoPoint);
 		Controller controller = new Controller(sim, mapParser, tacticsParser, 
 				mapFile, tacticsFiles, seed, log);
+		//init simulator
 		try {
-			//TODO second debug switch
-//			System.out.println("initializing");
 			controller.initializeSimulator();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
 			throw new IllegalStateException("Couldn't open file streams \n"+ e.getMessage()+"\n"+e.getCause());
 		}
-		//TODO see if we need to use this or not
-/*		catch(IllegalArgumentException e) {
-			// Illegal Input files !!! TODO
-			try {
-				infoPoint.close(); // Maybe this is enough
-//				System.out.println("Illegal Input. Exiting.");
-				throw e;
-			}
-			catch (IOException f) {
-				throw new IllegalStateException("Illegal input, I tried to close log, that didn't work, i have enough... :(\n"+f.getMessage());
-			} 
-			
-		}*/
 		
+		//start controller if start boolean is set
 		if(start) {
 			//starting controller
-			//TODO second debug switch
-//			System.out.println("starting controller");
 			controller.play();
 			try {
+				//if controller has stopped, close the InfoPoint and thus all loggers
 				infoPoint.close();
 			} catch (IllegalStateException | IOException e) {
 				System.err.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());

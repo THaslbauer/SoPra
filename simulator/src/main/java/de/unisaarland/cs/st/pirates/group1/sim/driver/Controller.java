@@ -49,7 +49,7 @@ public class Controller {
 	 * @param mapFile the mapfile, for parsing the map
 	 * @param tacticsFile the tacticsfile for parsing the tactics
 	 * @param seed the integer from the commandline giving us a valid seed
-	 * @param output the Output Steam, which is needed so the Controller can initialize the InfoPoint
+	 * @param logFileString The path for the output stream, which is needed so the Controller can initialize the InfoPoint
 	 */
 public Controller(Simulator simulator, MapParser mapParser,
 		TacticsParser tacticsParser, InputStream mapFile, List<InputStream> tacticsFile, long seed, String logFileString){
@@ -77,7 +77,9 @@ private ByteArrayOutputStream createByteArrayOutputStreamFromFile(InputStream in
 	byte[] buffer = new byte[1024];
 	int len;
 	ByteArrayOutputStream out = new ByteArrayOutputStream();
+	//read inputStream kB by kB and put it into a ByteArrayOutputStream.
 	try {
+		//read from stream, take length of read bytes and put those into the outputStream.
 		while ((len = in.read(buffer)) > -1 ) {
 			out.write(buffer, 0, len);
 		}
@@ -86,6 +88,7 @@ private ByteArrayOutputStream createByteArrayOutputStreamFromFile(InputStream in
 		throw new IllegalStateException("Map file couldn't be read!\n"+e.getMessage()+"\n"+e.getCause());
 	}
 	try {
+		//flush the outputStream so we have everything in memory
 		out.flush();
 	} catch (IOException e) {
 		throw new IllegalStateException("couldn't write to ByteArrayOutputStream");
@@ -174,6 +177,7 @@ public void initializeSimulator() throws IOException{
 	//dry run
 	this.dryRun();
 	
+	//if we aren't doing a dry run, create new output stream
 	if(!dryRunSet) {
 		if(outputString != null)
 			output = new FileOutputStream(outputString);
@@ -181,17 +185,18 @@ public void initializeSimulator() throws IOException{
 			output = new ByteArrayOutputStream();
 	}
 	
+	//read tactics from Streams
 	List<String> stringList = new LinkedList<String>();
 	for(ByteArrayOutputStream tactic : tacticsFile){
 		stringList.add(tactic.toString());
 	}
 	
 	
+	//turn the String tactics into a array
 	String[] stringArray = new String[stringList.size()];
 	for (int i = 0; i < stringList.size(); i++) {
 	    stringArray[i] = stringList.get(i);
 	}
-	//String[] strings = (String[])stringList.toArray();
 	
 	//initializes the LogWriter
 	try {
@@ -240,16 +245,23 @@ public void initializeSimulator() throws IOException{
 	simulator.getLogWriter().logStep();
 }
 
+	/**
+	 * this builds a second Controller which goes through the whole initialization process itself but doesn't write anything to disk.
+	 */
 	private void dryRun() {
+		//if we are already doing a dry run initialization, don't dryRun again.
 		if(dryRunSet)
 			return;
 		List<InputStream> tacticStreams = new LinkedList<>();
+		//create InputStreams from the tacticsFiles
 		for(ByteArrayOutputStream out : tacticsFile) {
 			tacticStreams.add(new ByteArrayInputStream(out.toByteArray()));
 		}
+		//create a new Controller for the dryRun.
 		Controller dryRun = new Controller(new Simulator(new InfoPoint(), new Random(seed)), new MapParser(), new TacticsParser(new InfoPoint()), new ByteArrayInputStream(mapFile.toByteArray()), tacticStreams, seed, outputString);
 		//set the dryRun bool flag -> voodoo
 		dryRun.dryRunSet = true;
+		//initialize it, should explode if some tactics are bad.
 		try {
 			dryRun.initializeSimulator();
 		}
@@ -266,12 +278,15 @@ public void initializeSimulator() throws IOException{
 	 * @return void
 	 */
 public void play(){
+	//acquire a lock so we only run one play loop at a time.
 	try {
 		sema.acquire();
 	} catch (InterruptedException e1) {
 		return;
 	}
-	//let the simulator do one step
+	//let the simulator do one step at a time, stop if an UnsupportedOperationException came (reached maxCycle)
+	//or if we got interrupted
+	//pause with pause()-Method.
 	boolean ende = false;
 	while(!ende && waitForUnpaused() && !Thread.interrupted()){
 		try{
@@ -281,12 +296,13 @@ public void play(){
 		}
 		
 	}
+	//release the semaphor as we stopped playing.
 	sema.release();
 }
 
 	/**
 	 * The order for the controller to pause the simulation loop
-	 * 
+	 * Has to be 'synchronized' for concurrency purposes.
 	 * @param
 	 * @return void
 	 */
@@ -294,15 +310,20 @@ synchronized public void pause(){
 	paused = true;
 	
 }
+
 	/**
 	 * the order for the controller to unpause the simulation loop
+	 * Has to be 'synchronized' for concurrency purposes.
 	 */
-
 synchronized public void unpause(){
 	paused = false;
 	notifyAll();
 }
 
+/**
+ * Wait method that blocks the loop in a paused state.
+ * @return
+ */
 synchronized private boolean waitForUnpaused(){
 	while(paused){
 		try {
