@@ -1305,19 +1305,6 @@ public class TacticsParserTest {
 				+ "see in the tacticsparsertestclass @before");
 	}
 	
-	/**
-	 * checks if there is an error raised while parsing a wrong If instruction
-	 */
-	@Test
-	public void failIfInstructionSix(){
-		try{
-			tacticsParser.parseTactics(brokenIfStreamSix, random);
-					}catch(IllegalArgumentException e){
-						return;
-					}
-		fail("there should be a illegalargument exception raised because tried to parse: \" " + brokenIfStringSix + "\" ." 
-				+ "see in the tacticsparsertestclass @before");
-	}
 	
 	/**
 	 * checks if there is an error raised while parsing a wrong If instruction
@@ -1862,7 +1849,7 @@ public class TacticsParserTest {
 		int ret2 = exp[1].evaluate(ship.getRegisters());
 		
 		assertTrue("The first exp should evaluate to false",
-				ret1 == 0);
+				ret1 == -1);
 		assertTrue("The secound exp should evaluate to true",
 				ret2 == 1);
 		
@@ -1903,7 +1890,7 @@ public class TacticsParserTest {
 		int ret2 = exp[1].evaluate(ship.getRegisters());
 		
 		assertTrue("The first exp should evaluate to false",
-				ret1 == 0);
+				ret1 == -1);
 		assertTrue("The secound exp should evaluate to true",
 				ret2 == 1);
 		
