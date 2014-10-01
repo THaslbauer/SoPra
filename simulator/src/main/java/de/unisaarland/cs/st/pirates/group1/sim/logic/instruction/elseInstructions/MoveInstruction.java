@@ -230,6 +230,8 @@ public class MoveInstruction extends ElseInstruction {
 		restTime += ship.getLoad() > 0 ? 2 : 0;
 		//look for demoralized crew
 		restTime += ship.getMorale() == 0 ? 2 : 0;
+		
+		restTime += ship.getCondition() == 1 ? 2 : 0;
 		ship.setRestTime(restTime);
 		logger.notify(Entity.SHIP, ship.getId(), Key.X_COORD, neighbourTile.getPosition().x);
 		
