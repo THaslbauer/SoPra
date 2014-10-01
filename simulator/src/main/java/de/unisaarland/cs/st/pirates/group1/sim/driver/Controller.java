@@ -34,7 +34,6 @@ public class Controller {
 	//TODO CHECK IF THIS IS RIGHT
 	//the seed given from the main/command line
 	private long seed;
-	private int intSeed;
 	//the random object
 	private Random random;
 	private OutputStream output;
@@ -84,7 +83,7 @@ public Controller(Simulator simulator, MapParser mapParser,
 	sema = new Semaphore(1);
 	*/
 	this(simulator, mapParser, tacticsParser, mapFile, tacticsFile, (long)seed, logFileString);
-	this.intSeed = seed;
+	this.seed = seed;
 }
 
 private ByteArrayOutputStream createByteArrayOutputStreamFromFile(InputStream in) {
