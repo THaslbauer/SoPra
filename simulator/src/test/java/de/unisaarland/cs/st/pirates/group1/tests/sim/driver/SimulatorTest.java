@@ -18,6 +18,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Worldmap;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
+import de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.Instruction;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Key;
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
@@ -272,7 +273,14 @@ public class SimulatorTest extends TestCase {
 	
 	@Test
 	public void testRemoveOnPCProblem() {
-		
+		sim.setEntityFactory(new EntityFactory());
+		Ship ship = sim.createShip(testFaction, testTile);
+		testFaction.setTactics(new Instruction[5]);
+		ship.setPC(40);
+		sim.step();
+		for(Ship s : sim.getShips()) {
+			
+		}
 	}
 
 	
