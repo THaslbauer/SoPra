@@ -2,6 +2,7 @@ package de.unisaarland.cs.st.pirates.group1.tests.sim.gamestuff;
 
 import static org.junit.Assert.*;
 
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -25,8 +26,8 @@ public class KrakenTest {
 	private static Worldmap myMap1, myMap2, myMap3, myMap4, myMap5;
 	private static Tile tile1, tile2, tile31, tile32, tile33,tile34, tile4;
 	
-	@BeforeClass
-	public static void init(){
+	@Before
+	public void init(){
 		
 		//map with 3 island tiles and one sea tile with a kraken attached to it
 	    myMap1 = new Worldmap6T(2,2, new ExpectLogger(), null);
