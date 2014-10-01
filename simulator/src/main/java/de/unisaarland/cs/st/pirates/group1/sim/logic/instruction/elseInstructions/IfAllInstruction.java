@@ -1,5 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
+import java.util.Arrays;
+
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
@@ -56,6 +58,12 @@ public class IfAllInstruction extends ElseInstruction
 		
 		logger.notify(Entity.SHIP, ship.getId(), Key.PC, ship.increasePC());
 		this.cycle(ship);
+	}
+
+	@Override
+	public String toString() {
+		return "IfAllInstruction [conditions=" + Arrays.toString(conditions)
+				+ "]";
 	}
 
 }

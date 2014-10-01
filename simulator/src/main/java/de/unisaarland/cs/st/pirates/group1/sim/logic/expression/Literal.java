@@ -38,5 +38,10 @@ public class Literal extends Primary
 	{
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "Literal [val=" + val + "]";
+	}
 	
 }

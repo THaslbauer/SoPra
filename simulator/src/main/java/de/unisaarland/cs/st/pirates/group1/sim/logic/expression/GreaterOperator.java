@@ -34,4 +34,11 @@ public class GreaterOperator extends Operator
 		
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "GreaterOperator [leftval=" + leftval + ", rightval=" + rightval
+				+ "]";
+	}
+	
 }

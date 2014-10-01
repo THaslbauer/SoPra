@@ -34,5 +34,11 @@ public class EqualOperator extends Operator
 		
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "EqualOperator [leftval=" + leftval + ", rightval=" + rightval
+				+ "]";
+	}
 	
 }

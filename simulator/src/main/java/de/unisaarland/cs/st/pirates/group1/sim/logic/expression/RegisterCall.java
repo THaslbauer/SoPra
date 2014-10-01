@@ -42,6 +42,11 @@ public class RegisterCall extends Primary
 	{
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "RegisterCall [index=" + index + "]";
+	}
 	
 	
 }

@@ -55,4 +55,9 @@ public class IfInstruction extends ElseInstruction
 		this.cycle(ship);
 	}
 
+	@Override
+	public String toString() {
+		return "IfInstruction [condition=" + condition + "]";
+	}
+
 }

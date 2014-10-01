@@ -34,4 +34,11 @@ public class LessOperator extends Operator
 		
 		return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "LessOperator [leftval=" + leftval + ", rightval=" + rightval
+				+ "]";
+	}
+	
 }

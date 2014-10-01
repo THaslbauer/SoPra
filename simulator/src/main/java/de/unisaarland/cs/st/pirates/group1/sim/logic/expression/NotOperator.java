@@ -29,5 +29,11 @@ public class NotOperator extends Operator
 		else
 			return 0;
 	}
+
+	@Override
+	public String toString() {
+		return "NotOperator [leftval=" + leftval + ", rightval=" + rightval
+				+ "]";
+	}
 	
 }

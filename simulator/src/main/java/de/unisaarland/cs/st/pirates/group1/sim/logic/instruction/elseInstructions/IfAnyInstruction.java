@@ -1,5 +1,7 @@
 package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructions;
 
+import java.util.Arrays;
+
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import de.unisaarland.cs.st.pirates.logger.LogWriter.Entity;
@@ -56,4 +58,10 @@ public class IfAnyInstruction extends ElseInstruction
 		this.elseJump(ship);
 	}
 
+	@Override
+	public String toString() {
+		return "IfAnyInstruction [conditions=" + Arrays.toString(conditions)
+				+ "]";
+	}
+	
 }

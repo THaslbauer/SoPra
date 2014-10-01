@@ -12,7 +12,7 @@ public class NotOperatorTest extends BasicOperatorTest {
 	@Test
 	public void testNotUnset() {
 		Expression notExpr = new NotOperator(new RegisterCall(Register.SENSE_SHIPLOADED.ordinal()));
-		assertTrue("Didn't evaluate to -1", notExpr.evaluate(testShip.getRegisters()) == -1);
+		assertTrue("Didn't evaluate to 0", notExpr.evaluate(testShip.getRegisters()) == 0);
 	}
 	
 	@Test

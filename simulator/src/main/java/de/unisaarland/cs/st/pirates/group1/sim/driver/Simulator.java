@@ -87,11 +87,23 @@ public class Simulator
 			
 		}
 		
+		String errorStr = "";
+		for(Faction f : factions) {
+			errorStr = errorStr + f.getFactionID() + "\n";
+			for(int i = 0; i < 20; i++) {
+				errorStr = errorStr + factions.get(i+30)+"\n";
+			}
+			errorStr = errorStr + "\n\n";
+		}
+		//TODO
+		if(factions.size() == 3)
+			throw new UnsupportedOperationException(errorStr);
 		
 		// ship cycle
 		LinkedList<Ship> dummy = new LinkedList<Ship>(ships);
 		for(Ship ship : dummy)
 		{
+			
 			//check if ship is ok
 			if(ship.getCondition() != 0)
 			{
