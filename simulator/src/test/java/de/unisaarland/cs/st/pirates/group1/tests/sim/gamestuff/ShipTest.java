@@ -90,19 +90,19 @@ public class ShipTest {
 		
 		
 		assertTrue(ship1.getRegister(Register.SENSE_CELLTYPE) == -1);
-		assertTrue(ship1.getRegister(Register.SENSE_ENEMYMARKER) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER0) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER1) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER2) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER3) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER4) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER5) == 0);
+		assertTrue(ship1.getRegister(Register.SENSE_ENEMYMARKER) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER0) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER1) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER2) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER3) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER4) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER5) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPCONDITION) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPDIRECTION) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPLOADED) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPTYPE) == -1);
-		assertTrue(ship1.getRegister(Register.SENSE_SUPPLY) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_TREASURE) == 0);
+		assertTrue(ship1.getRegister(Register.SENSE_SUPPLY) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_TREASURE) == -1);
 	}
 	
 	@Test
@@ -167,19 +167,19 @@ public class ShipTest {
 		ship1.clearSenseRegisters();
 		
 		assertTrue(ship1.getRegister(Register.SENSE_CELLTYPE) == -1);
-		assertTrue(ship1.getRegister(Register.SENSE_ENEMYMARKER) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER0) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER1) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER2) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER3) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER4) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_MARKER5) == 0);
+		assertTrue(ship1.getRegister(Register.SENSE_ENEMYMARKER) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER0) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER1) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER2) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER3) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER4) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_MARKER5) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPCONDITION) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPDIRECTION) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPLOADED) == -1);
 		assertTrue(ship1.getRegister(Register.SENSE_SHIPTYPE) == -1);
-		assertTrue(ship1.getRegister(Register.SENSE_SUPPLY) == 0);
-		assertTrue(ship1.getRegister(Register.SENSE_TREASURE) == 0);
+		assertTrue(ship1.getRegister(Register.SENSE_SUPPLY) == -1);
+		assertTrue(ship1.getRegister(Register.SENSE_TREASURE) == -1);
 		
 		
 	}
