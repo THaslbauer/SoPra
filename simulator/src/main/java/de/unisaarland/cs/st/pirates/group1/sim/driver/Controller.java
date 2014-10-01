@@ -3,6 +3,7 @@
  * 
  * @version 1.1
  * @author christopher
+ * @author thomas
  */
 
 package de.unisaarland.cs.st.pirates.group1.sim.driver;
