@@ -44,7 +44,7 @@ public class Kraken extends Placable {
 			log.notify(Entity.KRAKEN, id, Key.X_COORD, myTile.getPosition().x);
 			log.notify(Entity.KRAKEN, id, Key.Y_COORD, myTile.getPosition().y);
 		} catch (IllegalArgumentException e) { // cant move there, kraken there
-			//do nothing
+			return; // do nothing
 		} 
 	}
 

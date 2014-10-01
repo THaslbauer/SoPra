@@ -60,7 +60,7 @@ public class BasicExpressionTest extends TestCase {
 	
 	@Test
 	public void testFinals() {
-		assertTrue("final value of TRUE ist wrong", Expression.TRUE == 1);
-		assertTrue("final value of FALSE ist wrong", Expression.FALSE == 0);
+		assertTrue("final value of TRUE ist wrong", Expression.TRUE <= 1 && Expression.TRUE >= 1);
+		assertTrue("final value of FALSE ist wrong", Expression.FALSE <= 0&& Expression.FALSE >= 0);
 	}
 }

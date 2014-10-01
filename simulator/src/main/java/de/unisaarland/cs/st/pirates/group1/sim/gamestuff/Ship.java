@@ -55,7 +55,7 @@ public class Ship extends Placable {
 	}
 	
 	/**
-	 * Clears all registers (to unset / false)
+	 * Clears all registers (to unset (!!!))
 	 */
 	public void clearSenseRegisters() {
 		registers[0] = -1;	//SENSE_CELLTYPE,

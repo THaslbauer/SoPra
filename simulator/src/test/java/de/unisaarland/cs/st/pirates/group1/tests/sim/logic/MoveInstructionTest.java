@@ -223,13 +223,14 @@ public class MoveInstructionTest {
 	public void driveOnOwnBase() {
 		m1ship.setHeading(Heading.H2);
 		setPrivateField(m1ship, "boredom", 35);
-		m1ship.setMorale(1);
+		m1ship.setMorale(0);
+		m1ship.setLoad(3);
 		MoveInstruction mi = new MoveInstruction(elo, 42);
 		elo.clear();
 		mi.execute(m1ship);
 		moraleCheck(m1ship, 4);
 		posCheck(m1ship, 1, 2);
-		stuffCheck(m1ship, 1, 4, 0);
+		stuffCheck(m1ship, 1, 8, 0);
 		assertTrue(m1ship.getMorale() == 4);
 		elo.expectNothing();
 	}

@@ -119,7 +119,7 @@ public class RealMapTests {
 		tile = map.getTile(new Position(2,1));
 		try{
 		assertTrue("Incorrect tile",tile instanceof Sea);
-			assertTrue("Wrong kraken here",((Sea)tile).getKraken().getId() == 0);
+			assertTrue("Wrong kraken here",((Sea)tile).getKraken().getId() == 1);
 		} catch(Exception e) {
 			failIt("2,1",e);
 		}
@@ -165,7 +165,7 @@ public class RealMapTests {
 		tile = map.getTile(new Position(1,3));
 		try{
 		assertTrue("Incorrect tile",tile instanceof Sea);
-			assertTrue("Wrong kraken here",((Sea)tile).getKraken().getId() == 1);
+			assertTrue("Wrong kraken here",((Sea)tile).getKraken().getId() == 2);
 		} catch(Exception e) {
 			failIt("1,3",e);
 		}
@@ -174,7 +174,7 @@ public class RealMapTests {
 		try {
 		assertTrue("Incorrect tile",tile instanceof Island && ((Island)tile).isSupply() == false);
 			assertTrue("Incorrect treasure",tile.getTreasure().getValue() == 9);
-			assertTrue("Incorrect treasure id", tile.getTreasure().getId() == 1);
+			assertTrue("Incorrect treasure id", tile.getTreasure().getId() == 3);
 		} catch (Exception e) {
 			failIt("2,3",e);
 		}
@@ -206,10 +206,10 @@ public class RealMapTests {
 		tile = map.getTile(new Position(1,1));
 		Faction f4 = ((Base)tile).getFaction();
 		
-		assertTrue("Failed at faction 1", f1.getFactionID() == 0 && f1.getName() == "c");
-		assertTrue("Failed at faction 2", f2.getFactionID() == 1 && f2.getName() == "d");
-		assertTrue("Failed at faction 3", f3.getFactionID() == 2 && f3.getName() == "a");
-		assertTrue("Failed at faction 4", f4.getFactionID() == 3 && f4.getName() == "b");
+		assertTrue("Failed at faction 1", f1.getFactionID() == 2 && f1.getName() == "c");
+		assertTrue("Failed at faction 2", f2.getFactionID() == 3 && f2.getName() == "d");
+		assertTrue("Failed at faction 3", f3.getFactionID() == 0 && f3.getName() == "a");
+		assertTrue("Failed at faction 4", f4.getFactionID() == 1 && f4.getName() == "b");
 	}
 	
 	@Test

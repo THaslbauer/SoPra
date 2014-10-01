@@ -97,13 +97,16 @@ public class Worldmap6T extends Worldmap {
 			case 5 : {
 				dx = even ? 0 : 1;
 				dy = -1;
+				break;
 			}
-			default : { }
+			default : {
+				throw new IllegalStateException("This should not happen: Direction wrong!");
+			}
 		}
 		int newx = position.x + dx;
 		int newy = position.y + dy;
-		newx = newx >= width ? 0 : ( newx < 0 ? width-1 : newx );
-		newy = newy >= height ? 0 : ( newy < 0 ? height-1 : newy );
+		newx = newx >= width ? 0 :  newx < 0 ? width-1 : newx ;
+		newy = newy >= height ? 0 :  newy < 0 ? height-1 : newy ;
 		
 		return new Position(newx, newy);
 	}

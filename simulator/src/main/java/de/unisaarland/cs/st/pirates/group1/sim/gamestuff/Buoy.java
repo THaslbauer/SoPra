@@ -40,6 +40,9 @@ public class Buoy extends Placable {
 
 	@Override
 	protected void detachFrom(Tile tile) throws IllegalCallException {
+		//TODO
+		if(!myTile.equals(tile))
+			throw new NullPointerException("TILES UNEQUAL!!");
 		if(myTile.getBuoyMap().get(faction) == null)
 			throw new IllegalCallException("The list where i should be doesn't even exist :(");
 		if(!myTile.getBuoyMap().get(faction).contains(this))
@@ -49,19 +52,44 @@ public class Buoy extends Placable {
 
 	@Override
 	protected void attachTo(Tile tile) throws IllegalCallException {
+		//TODO
+		if(!myTile.equals(tile))
+			throw new NullPointerException("TILES UNEQUAL!!");
 		if(myTile.getBuoyMap().get(faction) == null)
 			myTile.getBuoyMap().put(faction, new LinkedList<Buoy>());
 		if(myTile.getBuoyMap().get(faction).contains(this))
 			throw new IllegalCallException("I am already in the list?? o.O");
 		myTile.getBuoyMap().get(faction).add(this);
 	}
-	
+
+
 	@Override
-	public boolean equals(Object o) {
-		if(!(o instanceof Buoy))
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((faction == null) ? 0 : faction.hashCode());
+		result = prime * result + type;
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		Buoy other = (Buoy)o;
-		return other.id == id;
+		if (getClass() != obj.getClass())
+			return false;
+		Buoy other = (Buoy) obj;
+		if (faction == null) {
+			if (other.faction != null)
+				return false;
+		} else if (!faction.equals(other.faction))
+			return false;
+		if (type != other.type)
+			return false;
+		return true;
 	}
 	
 }
