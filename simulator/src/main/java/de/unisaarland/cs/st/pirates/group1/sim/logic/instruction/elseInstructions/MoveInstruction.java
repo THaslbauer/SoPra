@@ -216,13 +216,6 @@ public class MoveInstruction extends ElseInstruction {
 		Tile neighbourTile = ship.getMyTile().getNeighbour(ship.getHeading(), Direction.D0);
 		ship.setMyTile(neighbourTile);
 		
-		//we have arrived, now look to see if we're home
-		CellType tileType = neighbourTile.navigable(ship);
-		assert(tileType == CellType.EMPTY || tileType == CellType.HOME);
-		if(tileType == CellType.HOME) {
-			ship.setMorale(Ship.getMaxmorale());
-			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, Ship.getMaxmorale());
-		}
 
 		//calculate restTime
 		int restTime = 4;
@@ -230,6 +223,15 @@ public class MoveInstruction extends ElseInstruction {
 		restTime += ship.getLoad() > 0 ? 2 : 0;
 		//look for demoralized crew
 		restTime += ship.getMorale() == 0 ? 2 : 0;
+		
+		//we have arrived, now look to see if we're home
+		CellType tileType = neighbourTile.navigable(ship);
+		assert(tileType == CellType.EMPTY || tileType == CellType.HOME);
+		
+		if(tileType == CellType.HOME) {
+			ship.setMorale(Ship.getMaxmorale());
+			logger.notify(Entity.SHIP, ship.getId(), Key.MORAL, Ship.getMaxmorale());
+		}
 		
 		ship.setRestTime(restTime);
 		logger.notify(Entity.SHIP, ship.getId(), Key.X_COORD, neighbourTile.getPosition().x);
