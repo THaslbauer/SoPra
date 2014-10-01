@@ -2,7 +2,6 @@ package de.unisaarland.cs.st.pirates.group1.sim.logic.instruction.elseInstructio
 
 import de.unisaarland.cs.st.pirates.group1.sim.util.CellType;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Direction;
-import de.unisaarland.cs.st.pirates.group1.sim.util.Heading;
 import de.unisaarland.cs.st.pirates.group1.sim.util.Register;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Ship;
 import de.unisaarland.cs.st.pirates.group1.sim.gamestuff.Tile;

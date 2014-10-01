@@ -269,6 +269,11 @@ public class SimulatorTest extends TestCase {
 		sim.setWorldmap(worldmap);
 		assertTrue("Setting / Getting of Worldmap didn't work", sim.getWorldmap() == worldmap);
 	}
+	
+	@Test
+	public void testRemoveOnPCProblem() {
+		
+	}
 
 	
 	/**

@@ -125,19 +125,20 @@ public class Simulator
 			{
 				this.removeShip(ship);
 			}
+			//TODO
 			String errorStr = "";
 			if(ship.getId() == 3 && factions != null && factions.size() == 3 && cycle == 36) {
-				for(int i = 0; i < 20; i++) {
+				for(int i = 0; i < 30; i++) {
 					try {
-						errorStr = errorStr + ship.getFaction().getInstruction(i+ship.getPC()-5)+"\n";
+						errorStr = errorStr + ship.getFaction().getInstruction(i+ship.getPC()-10)+"\n";
 					}
 					catch(Exception e){}
 				}
 				errorStr = errorStr + "\n\n";
 			}
-		//TODO
-		if(factions != null && factions.size() == 3)
-			throw new UnsupportedOperationException(errorStr);
+			//TODO
+			if(factions != null && factions.size() == 3)
+				throw new UnsupportedOperationException(errorStr);
 		}
 		
 		cycle += 1;
