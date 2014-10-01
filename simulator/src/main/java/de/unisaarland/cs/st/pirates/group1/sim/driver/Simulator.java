@@ -88,15 +88,20 @@ public class Simulator
 		}
 		
 		String errorStr = "";
-		for(Faction f : factions) {
-			errorStr = errorStr + f.getFactionID() + "\n";
-			for(int i = 0; i < 20; i++) {
-				errorStr = errorStr + factions.get(i+30)+"\n";
+		if(factions != null) {
+			for(Faction f : factions) {
+				errorStr = errorStr + f.getFactionID() + "\n";
+				for(int i = 0; i < 20; i++) {
+					try {
+						errorStr = errorStr + factions.get(i+30)+"\n";
+					}
+					catch(Exception e){}
+				}
+				errorStr = errorStr + "\n\n";
 			}
-			errorStr = errorStr + "\n\n";
 		}
 		//TODO
-		if(factions.size() == 3)
+		if(factions != null && factions.size() == 3)
 			throw new UnsupportedOperationException(errorStr);
 		
 		// ship cycle
