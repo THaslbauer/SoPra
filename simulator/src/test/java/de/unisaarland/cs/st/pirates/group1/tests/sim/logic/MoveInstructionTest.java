@@ -468,7 +468,7 @@ public class MoveInstructionTest {
 		} catch(NullPointerException e) {
 			fail("Treasure must be created");
 		}
-		elo.expect(new Create(Entity.TREASURE, 0, new Key[] {Key.VALUE, Key.X_COORD, Key.Y_COORD}, new int[] {1, 1, 1}));
+		elo.expect(new Create(Entity.TREASURE, 0, new Key[] {Key.VALUE, Key.X_COORD, Key.Y_COORD}, new int[] {1, 2, 1}));
 		assertTrue("load", m2ship.getLoad() == 4);
 		elo.expect(new Notify(Entity.SHIP, m2ship.getId(), Key.VALUE, 4));
 		elo.expect(new Destroy(Entity.SHIP, m2shipE2.getId()));

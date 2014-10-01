@@ -21,16 +21,44 @@ public class Fight extends OptionalLogOperation{
 		shipOnShip = false;
 	}
 	
-	public boolean equals(Object o) {
-		Fight other;
-		try {
-			other = (Fight)o;
-		} catch(ClassCastException e) {
-			return false;
-		}
-		return other.attacker == this.attacker && other.defender == this.defender;
-	}
 	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((attacker == null) ? 0 : attacker.hashCode());
+		result = prime * result
+				+ ((defender == null) ? 0 : defender.hashCode());
+		result = prime * result + (shipOnShip ? 1231 : 1237);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Fight other = (Fight) obj;
+		if (attacker == null) {
+			if (other.attacker != null)
+				return false;
+		} else if (!attacker.equals(other.attacker))
+			return false;
+		if (defender == null) {
+			if (other.defender != null)
+				return false;
+		} else if (!defender.equals(other.defender))
+			return false;
+		if (shipOnShip != other.shipOnShip)
+			return false;
+		return true;
+	}
+
 	public String toString() {
 		return attacker+" FOUGHT "+defender;
 	}
