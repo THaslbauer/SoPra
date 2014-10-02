@@ -1,0 +1,49 @@
+flipzero 3 else 6
+sense 0
+ifany sense_celltype==island sense_celltype==enemyhome sense_shiptype==friend else 6
+move else 3
+pickup 6 else 20
+goto 20
+flipzero 2 else 13
+sense 5
+ifany sense_celltype==island sense_celltype==enemyhome sense_shiptype==friend else 13
+turn left
+move else 10
+pickup 6 else 20
+goto 20
+sense 1
+ifany sense_celltype==island sense_celltype==enemyhome sense_shiptype==friend else 18
+turn right
+move else 16
+pickup 6 else 20
+turn left
+goto 0
+sense 0
+if sense_shiptype==enemy else 25
+move else 22
+pickup 6 else 20
+goto 20
+sense 5
+if sense_shiptype==enemy else 31
+turn left
+move else 28
+pickup 6 else 20
+goto 20
+sense 1
+if sense_shiptype==enemy else 37
+turn right
+move else 34
+pickup 6 else 20
+goto 20
+sense 0
+ifany sense_celltype==island sense_celltype==enemyhome sense_shiptype==friend else 43
+if sense_celltype==empty else 46
+move else 40
+pickup 6 else 20
+goto 20
+pickup 0 else 44
+turn left
+goto 20
+move else 46
+drop
+goto 0
