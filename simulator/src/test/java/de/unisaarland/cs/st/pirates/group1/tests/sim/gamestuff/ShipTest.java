@@ -66,9 +66,6 @@ public class ShipTest {
 		iarr[0] = instruction1;
 		iarr[1] = instruction1;
 		faction1.setTactics(iarr);
-	
-		
-		
 	}
 	
 	@Test
