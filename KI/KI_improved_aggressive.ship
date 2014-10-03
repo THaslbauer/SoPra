@@ -1,0 +1,166 @@
+flipzero 6 else 5 
+sense 0;	 								Schaue in Richtung 0 nach, ob dort hin gefahren werden kann
+ifany sense_celltype==empty sense_celltype==home else 5 
+move else 0 
+goto 27
+flipzero 5 else 13 
+sense 1; 									Schaue in Richtung 1 nach, ob dort hin gefahren werden kann		
+ifany sense_celltype==empty sense_celltype==home else 11 
+turn right;									Drehe um, sodass 1 das neue 0 wird
+move else 0 
+goto 27
+flipzero 2 else zwei
+goto 1 
+flipzero 4 else 22 
+sense 2; 									Schaue in Richtung 2 nach, ob dort hin gefahren werden kann
+ifany sense_celltype==empty sense_celltype==home else 20 
+turn right;									Drehe um, sodass 1 das neue 0 wird
+turn right;									Drehe um, sodass 2 das neue 0 wird
+move else 0 
+goto 27
+flipzero 2 else 23 
+goto 6 
+flipzero 3 else 32 
+sense 3;									untersuche Kachel in Richtung 0
+ifany sense_celltype==empty sense_celltype==home else 30 
+turn right;									nach rechts drehen
+turn right;									nach rechts drehen
+turn right;									nach rechts drehen
+move else 0 
+goto 48 
+flipzero 2 else 33 
+goto 14 
+flipzero 2 else 41 
+sense 4;									untersucht Kachel in richtung 4
+ifany sense_celltype==empty sense_celltype==home else 39 
+turn left;									drehe nach links
+turn left;									drehe nach links
+move else 0 
+goto 27
+flipzero 2 else 41 
+goto 23 
+sense 5;
+ifany sense_celltype==empty sense_celltype==home else wisedecision5
+turn right;
+move else 0 
+goto 27
+flipzero 2 else vier
+goto null
+sense 0;								untersuche Kachel in Richtung 0
+ifany sense_celltype==empty sense_celltype==home else otherdirection;		nachschauen, ob Kachel befahrbar
+ifall ship_condition>1 ship_moral>1 else 90 
+move else othershipnotdestroyed;						bewegen, sonst zum Fall übergehen, wenn anderes Schiff nicht besiegt werden konnte
+ifall sense_celltype==home ship_load>0 else 55 
+drop;
+goto 48 
+pickup 6 else 48 
+goto 48 
+flipzero 5 else 63 
+pickup 0 else 59 
+refresh 0 else 60 
+sense 1;									untersucht Kachel in Richtung 1
+turn right;									dreht sich in richtige Richtung
+goto 49 
+flipzero 4 else 70 
+pickup 0 else 65 
+refresh 0 else 66 
+sense 2;									untersucht Kachel in Richtung 1
+turn right;									dreht sich in richtige Richtung
+turn right;
+goto 49 
+flipzero 3 else 78 
+pickup 0 else 72 
+refresh 0 else 73 
+sense 3;									untersucht Kachel in Richtung 1
+turn right;									dreht sich in richtige Richtung
+turn right;
+turn right;
+goto 49 
+flipzero 2 else 85 
+pickup 0 else 80 
+refresh 0 else 81 
+sense 4;									untersucht Kachel in Richtung 1
+turn left;									in richtige Richtung drehen
+turn left;
+goto 49 
+pickup 0 else 86 
+refresh 0 else 87 
+sense 5;									untersucht Kachel in Richtung 1
+turn left;									in richtige Richtung drehen
+goto 49 
+pickup 0 else 91 
+sense 3;									untersuche Kachel in Richtung 3 um umzudrehen
+ifany sense_celltype==empty sense_celltype==home else 110 
+ifall sense_shiptype!=friend sense_shiptype!=enemy else 110 
+turn right;
+turn right;
+turn right;
+move else 110 
+sense 0;								untersuche Kachel in Richtung 0
+ifany sense_celltype==empty sense_celltype==home else 110 
+ifall sense_shiptype!=enemy sense_shiptype!=friend else 110 
+move else 110 
+if sense_celltype==home else 108 
+if ship_load>0 else 105 
+drop;										lade Schätze ab
+if ship_condition<2 else 107 
+repair else 107 
+goto 0 
+pickup 6 else 98 
+goto 98 
+flipzero 5 else 119 
+pickup 0 else 112 
+sense 1;
+turn right;									untersuche Kachel in Richtung 1
+ifany sense_celltype==empty sense_celltype==home else 119 
+ifall sense_shiptype!=enemy sense_shiptype!=friend else 119 
+move else 119 
+if sense_celltype==home else 108 
+if ship_load>0 else 105 
+flipzero 4 else 129 
+pickup 0 else 121 
+sense 2;
+turn right;	
+turn right;							
+ifany sense_celltype==empty sense_celltype==home else 129 
+ifall sense_shiptype!=enemy sense_shiptype!=friend else 129 
+move else 129 
+if sense_celltype==home else 108 
+if ship_load>0 else 105 
+flipzero 3 else 139 
+pickup 0 else 131 
+sense 4;
+turn left;
+turn left;								
+ifany sense_celltype==empty sense_celltype==home else 139 
+ifall sense_shiptype!=enemy sense_shiptype!=friend else 139 
+move else 139 
+if sense_celltype==home else 108 
+if ship_load>0 else 105 
+flipzero 2 else 148 
+pickup 0 else 141 
+sense 5;
+turn left;								
+ifany sense_celltype==empty sense_celltype==home else 148 
+ifall sense_shiptype!=enemy sense_shiptype!=friend else 148 
+move else 148 
+if sense_celltype==home else 108 
+if ship_load>0 else 105 
+pickup 0 else 149 
+sense 3;
+turn left;
+turn left;
+turn left;								
+ifany sense_celltype==empty sense_celltype==home else 158 
+ifall sense_shiptype!=enemy sense_shiptype!=friend else 158 
+move else 148 
+if sense_celltype==home else 108 
+if ship_load>0 else 105 
+flipzero 6 else 110 
+pickup 0 else 160 
+sense 0;
+ifany sense_celltype==empty sense_celltype==home else 148 
+ifall sense_shiptype!=enemy sense_shiptype!=friend else 148 
+move else 148 
+if sense_celltype==home else 108 
+if ship_load>0 else 105 

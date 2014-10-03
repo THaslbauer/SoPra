@@ -19,7 +19,10 @@
    <children>
       <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <content>
-            <Text fx:id="mapContentText" strokeType="OUTSIDE" strokeWidth="0.0" />
+            <Text fx:id="mapContentText" strokeType="OUTSIDE" strokeWidth="0.0">
+               <font>
+                  <Font name="DejaVu Sans Mono Bold" size="13.0" />
+               </font></Text>
          </content></ScrollPane>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
          <children>
