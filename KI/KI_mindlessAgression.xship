@@ -1,3 +1,5 @@
+// Moving from the base
+//
 MoveFromBase:flipzero 3 else MoveLeft
 sense 0
 ifall sense_celltype!=island sense_celltype!=enemyhome else MoveLeft
@@ -23,7 +25,8 @@ CanNotMove:turn left
 goto MoveFromBase
 
 
-
+// Battle Mode
+//
 BattleMode:sense 0
 if sense_shiptype==enemy else SenseLeft
 Battle_Direct:move else Battle_Direct
@@ -38,16 +41,36 @@ pickup 6 else BattleMode
 goto BattleMode
 
 SenseRight:sense 1
-if sense_shiptype==enemy else NoEnemyHere
+if sense_shiptype==enemy else Moving
 turn right
 Battle_Right:move else Battle_Right
 pickup 6 else BattleMode
 goto BattleMode
 
-NoEnemyHere:sense 0
+
+// Moving
+//
+Moving:flipzero 3 else GoLeft
 ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
 if sense_celltype==empty else DrivingHome
-Battle_Empty:move else Battle_Empty
+Battle_Empty1:move else Battle_Empty1
+pickup 6 else BattleMode
+goto BattleMode
+
+GoLeft:flipzero 2 else GoRight
+turn left
+sense 0
+ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
+if sense_celltype==empty else DrivingHome
+Battle_Empty2:move else Battle_Empty2
+pickup 6 else BattleMode
+goto BattleMode
+
+GoRight:turn right
+sense 0
+ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
+if sense_celltype==empty else DrivingHome
+Battle_Empty3:move else Battle_Empty3
 pickup 6 else BattleMode
 goto BattleMode
 
@@ -56,7 +79,8 @@ PleaseTurn:turn left
 goto BattleMode
 
 
-
+// Driving Home
+//
 DrivingHome:move else DrivingHome
 drop
 goto MoveFromBase
