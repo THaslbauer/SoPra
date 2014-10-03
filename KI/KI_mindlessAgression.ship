@@ -1,49 +1,64 @@
-flipzero 3 else 6
+flipzero 3 else MoveLeft
 sense 0
-ifall sense_celltype!=island sense_celltype!=enemyhome else 6
-move else 3
-pickup 6 else 20
-goto 20
-flipzero 2 else 13
+ifall sense_celltype!=island sense_celltype!=enemyhome else MoveLeft
+move else Moving_Direct
+pickup 6 else BattleMode
+goto BattleMode
+flipzero 2 else MoveRight
 sense 5
-ifall sense_celltype!=island sense_celltype!=enemyhome else 13
+ifall sense_celltype!=island sense_celltype!=enemyhome else MoveRight
 turn left
-move else 10
-pickup 6 else 20
-goto 20
+move else Moving_Left
+pickup 6 else BattleMode
+goto BattleMode
 sense 1
-ifall sense_celltype!=island sense_celltype!=enemyhome else 18
+ifall sense_celltype!=island sense_celltype!=enemyhome else CanNotMove
 turn right
-move else 16
-pickup 6 else 20
+move else Moving_Right
+pickup 6 else BattleMode
 turn left
-goto 0
+goto MoveFromBase
 sense 0
-if sense_shiptype==enemy else 25
-move else 22
-pickup 6 else 20
-goto 20
+if sense_shiptype==enemy else SenseLeft
+move else Battle_Direct
+pickup 6 else BattleMode
+goto BattleMode
 sense 5
-if sense_shiptype==enemy else 31
+if sense_shiptype==enemy else SenseRight
 turn left
-move else 28
-pickup 6 else 20
-goto 20
+move else Battle_Left
+pickup 6 else BattleMode
+goto BattleMode
 sense 1
-if sense_shiptype==enemy else 37
+if sense_shiptype==enemy else Moving
 turn right
-move else 34
-pickup 6 else 20
-goto 20
-sense 0
-ifall sense_celltype!=island sense_celltype!=enemyhome else 43
-if sense_celltype==empty else 46
-move else 40
-pickup 6 else 20
-goto 20
-pickup 0 else 44
+move else Battle_Right
+pickup 6 else BattleMode
+goto BattleMode
+flipzero 3 else GoLeft
+ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
+if sense_celltype==empty else DrivingHome
+move else Battle_Empty1
+pickup 6 else BattleMode
+goto BattleMode
+flipzero 2 else GoRight
 turn left
-goto 20
-move else 46
+sense 0
+ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
+if sense_celltype==empty else DrivingHome
+move else Battle_Empty2
+pickup 6 else BattleMode
+goto BattleMode
+turn right
+sense 0
+ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
+if sense_celltype==empty else DrivingHome
+move else Battle_Empty3
+pickup 6 else BattleMode
+goto BattleMode
+pickup 0 else PleaseTurn
+turn left
+goto BattleMode
+move else DrivingHome
 drop
-goto 0
+goto 0 
