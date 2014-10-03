@@ -106,9 +106,11 @@ public class SetUp extends GridPane {
 			Scanner mapScanner = new Scanner(mapFile);
 			mapScanner.useDelimiter("\\A");
 			mapString = mapScanner.next();
+			mapScanner.close();
 		}
 		catch(IOException e) {
 			MessageBox.displayMessage("Error with map file", "Could not read from the map file. Cause was:\n"+e.getCause());
+			return;
 		}
 		this.mapContentText.setText(mapString);
 	}
