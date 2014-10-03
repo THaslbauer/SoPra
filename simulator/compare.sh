@@ -6,7 +6,7 @@ right=${2}
 map=${3}
 OIFS=$IFS
 points[0]=0
-
+points[0]=0
 
 if [ -z ${4} ]
     then echo "Usage: ${0} <A>.ship <B>.ship <Map>.map <runs>"
