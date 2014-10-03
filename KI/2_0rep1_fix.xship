@@ -1,0 +1,119 @@
+anfang:flipzero 6 else nicht_0_dir_ships; lässt im mittel genau 1/6 der mschiffe in richtung 0 losziehen
+null:sense 0; Hier starten 0er Schiffe -- senst die Kachel genau vor sich
+ifany sense_celltype==home sense_celltype==empty else 0_failsense0;schaut ob kachel 0 befahrbar
+move else anfang;falls move fehlschlägt, spring zu anfang, wenn komischerweise schiff drauf steht
+sense 0;
+if sense_celltype==home else standard;
+goto belegt;
+
+goto standard;wandert in den standardfall
+
+0_failsense0:flipzero 2 else eins;springt zu 1/2 der fälle zu eins
+goto fuenf; springt zu 1/2 der fälle zu 5
+
+nicht_0_dir_ships:flipzero 5 else nicht_0_1_dir_ships; lässt im mittel genau 1/5 der übrigen schiffe in richtung 1 losziehen
+eins:sense 1; Hier starten 1er Schiffe -- senst die Kachel in Richtung 1
+ifany sense_celltype==home sense_celltype==empty else 1_failsense1;
+turn right;
+belegt:move else anfang; wenn komischerweise schiff drauf steht
+sense 0;
+if sense_celltype==home else standard;
+goto belegt;
+
+goto standard; wandert in den standardfall
+
+1_failsense1:flipzero 2 else null; springt in der Hälfte der Fälle zu null, sonst zu 2
+goto zwei; springt zu 1/2 der Fälle zu zwei
+
+nicht_0_1_dir_ships:flipzero 4 else nicht_0_1_2_dir_ships; lässt im mittel genau 1/4 der übrigen schiffe in richtung 2 losziehen
+zwei:sense 2; Hier starten 2er Schiffe -- senst die Kachel in Richtung 2
+ifany sense_celltype==home sense_celltype==empty else 2_failsense2; schaut ob Kachel in Richtung 2 befahrbar ist
+turn right;
+turn right;
+move else anfang; wenn schiff drauf steht
+if sense_celltype==home else standard;
+goto belegt;
+
+goto standard; mache mit dem Standard-Fall weiter
+
+2_failsense2:flipzero 2 else eins;geht in der Hälfte der Fälle zu 1 sonst zu drei
+goto drei; geht zu drei
+
+nicht_0_1_2_dir_ships:flipzero 3 else nicht_0_1_2_3_dir_ships; lässt im mittel genau 1/3 der übrigen schiffe in richtung 3 losziehen
+drei:sense 3; Hier starten 3er Schiffe -- senst die Kachel in Richtung 3
+ifany sense_celltype==home sense_celltype==empty else 3_failsense3; schaut ob Kachel in Richtung 3 befahrbar
+turn right;
+turn right;
+turn right;
+move else anfang; wenn schiff drauf steht
+if sense_celltype==home else standard;
+goto belegt;
+
+goto standard; mache mit dem Standard-Fall weiter
+
+3_failsense3:flipzero 2 else zwei;geht in der Hälfte der Fälle zu zwei, sonst zu vier
+goto vier; 
+
+nicht_0_1_2_3_dir_ships:flipzero 2 else fuenf; lässt im mittel genau 1/2 der übirgen schiffe in richtung 4 losziehen
+vier:sense 4; Hier starten 4er Schiffe -- senst die Kachel in Richtung 4
+ifany sense_celltype==home sense_celltype==empty else 4_failsense4; schaut ob Kachel in Richtung 4 befahrbar
+turn left;
+turn left;
+move else anfang; wenn schiff drauf steht
+if sense_celltype==home else standard;
+goto belegt;
+
+goto standard; mache mit dem Standard-Fall weiter
+
+4_failsense4:flipzero 2 else fuenf;geht in der Hälfte der Fälle zu  5 sonst zu 3
+goto drei;geh zu drei
+
+fuenf:sense 5; Hier starten 5er Schiffe -- senst die Kachel in Rictung 5
+if sense_celltype==empty else 5_failsense5;schaut ob Kachel in Richtung 5 befahrbar
+turn left;
+move else anfang; wenn schiff drauf steht
+if sense_celltype==home else standard;
+goto belegt;
+
+goto standard; mache mit dem Standard-Fall weiter
+
+5_failsense5:flipzero 2 else vier; geht in der Hälfte der Fälle zu vier, sonst zu null
+goto null;
+
+standard:sense 0;senst die Kachel vor sich
+pickup 0 else noLuck;
+noLuck:if sense_celltype==island else ist_keine_insel; schauen ob vor uns insel ist
+refresh 0 else thatup; wenn refresh möglich es tun sonst pickup
+thatup:pickup 0 else liOre; pickup versuchen, wenn nicht möglich dann
+goto rumdrehn; macht nach erfolgreichem pickup eine rumdrehaction
+
+ist_keine_insel:if sense_celltype==enemyhome else keine_insel_kein_enemyhome;
+goto liOre; wenn enemybase dann fahr links oder rechts weiter
+
+
+
+
+keine_insel_kein_enemyhome:if sense_celltype==home else keine_insel_kein_enemyhome_kein_home;
+move else standard;
+drop;
+if ship_condition==1 else rumdrehn;
+repair else rumdrehn;
+rumdrehn:turn left;
+turn left;
+turn left;
+goto standard;
+
+
+keine_insel_kein_enemyhome_kein_home:ifall sense_shiptype==enemy ship_moral<4 ship_condition<3 else fight_or_move;
+goto liOre;
+fight_or_move:move else liOre;
+goto standard;
+liOre:flipzero 2 else links;
+turn right;
+pickup 0 else versuchref;
+versuchref: refresh 0 else standard;
+goto standard;
+links:turn left;
+pickup 0 else versuchref;
+versuchref: refresh 0 else standard;
+goto standard;
