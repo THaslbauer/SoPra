@@ -87,12 +87,21 @@ public class Main {
 		construct(true);
 	}
 	
+	public static Controller build(String logLocation, int cycles, long gameSeed, InputStream map, List<InputStream> tactics, List<ExtendedLogWriter> loggers) {
+		log = logLocation;
+		turns = cycles;
+		seed = gameSeed;
+		mapFile = map;
+		tacticsFiles = tactics;
+		return construct(false, loggers);
+	}
+	
 	/**
 	 * constructs the simulator from the saved values
 	 * @param start The boolean if we should start.
 	 */
-	private static void construct(boolean start) {
-		construct(start, new LinkedList<ExtendedLogWriter>());
+	private static Controller construct(boolean start) {
+		return construct(start, new LinkedList<ExtendedLogWriter>());
 	}
 	
 	/**
@@ -100,7 +109,7 @@ public class Main {
 	 * @param start the boolean flag to tell the controller to start the simulator
 	 * @param loggers the loggers/guis implementing the ExtendedLogWriter interface
 	 */
-	private static void construct(boolean start, List<ExtendedLogWriter> loggers){
+	private static Controller construct(boolean start, List<ExtendedLogWriter> loggers){
 		//build the random for the simulator
 		Random rand = new Random(seed);
 		//make InfoPoint to collect loggers
@@ -144,6 +153,7 @@ public class Main {
 				System.err.println("Failed to close log: "+e.getMessage()+"\n"+e.getCause());
 			}
 		}
+		return controller;
 	}
 }
 
