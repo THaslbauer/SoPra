@@ -1,0 +1,274 @@
+// SHIPS BEGIN TO MOVE OUT OF THE BASE - RANDOMIZED VERSION
+
+
+begin:flipzero 6 else otherbegin; 						1/6 der Schiffe gehen in diesen Fall
+null:sense 0;	 								Schaue in Richtung 0 nach, ob dort hin gefahren werden kann
+ifany sense_celltype==empty sense_celltype==home else otherbegin; 		teste ob Kachel in Richtung 0 befahrbar
+move else begin;								geht zurück zum Anfang, wenn Schiff daneben
+goto standard
+
+otherbegin:flipzero 5 else 2otherbegin;						1/5 der Schiffe gehen in diesen Fall
+eins:sense 1; 									Schaue in Richtung 1 nach, ob dort hin gefahren werden kann		
+ifany sense_celltype==empty sense_celltype==home else wisedecision1;		Teste ob Kachel in Richtung 1 befahrbar
+turn right;									Drehe um, sodass 1 das neue 0 wird
+move else begin; 								geht zurück zum Anfang, wenn Schiff daneben 
+goto standard
+
+
+wisedecision1:flipzero 2 else zwei
+goto null;
+
+2otherbegin:flipzero 4 else 3otherbegin; 					1/4 der Schiffe gehen in diesen Fall
+zwei:sense 2; 									Schaue in Richtung 2 nach, ob dort hin gefahren werden kann
+ifany sense_celltype==empty sense_celltype==home else wisedecision2;		Teste ob Kachel in Richtung 2 befahrbar
+turn right;									Drehe um, sodass 1 das neue 0 wird
+turn right;									Drehe um, sodass 2 das neue 0 wird
+move else begin;								geht zurück zum anfang, wenn Schiff daneben
+goto standard
+
+
+wisedecision2:flipzero 2 else drei;						geht in der Hälfte der Fälle zu drei
+goto eins;									geht zu eins
+
+3otherbegin:flipzero 3 else 4otherbegin;					1/3 der Schiffe gehen in diesen Fall
+drei:sense 3;									untersuche Kachel in Richtung 0
+ifany sense_celltype==empty sense_celltype==home else wisedecision3;		entscheide, ob Kachel in Richtung 3 befahrbar
+turn right;									nach rechts drehen
+turn right;									nach rechts drehen
+turn right;									nach rechts drehen
+move else begin;								geht zurück zum Anfang, wenn Schiff daneben
+goto standard;
+
+
+wisedecision3:flipzero 2 else vier;						geht in der Hälfte der Fälle zu vier
+goto zwei;									geht zu zwei
+
+
+4otherbegin:flipzero 2 else 5otherbegin;					1/2 der Schiffe geht in diesen Fall
+vier:sense 4;									untersucht Kachel in richtung 4
+ifany sense_celltype==empty sense_celltype==home else wisedecision4;		entscheide, ob Kachel in Richtung 4 befahrbar
+turn left;									drehe nach links
+turn left;									drehe nach links
+move else begin;								geht zurück zum Anfang, wenn Schiff daneben
+goto standard
+
+
+wisedecision4:flipzero 2 else 5otherbegin;					geht in der hälfte der Fälle zu fuenf
+goto drei;									geht zu drei
+
+
+5otherbegin:sense 5;
+ifany sense_celltype==empty sense_celltype==home else wisedecision5
+turn right;
+move else begin;
+goto standard
+
+wisedecision5:flipzero 2 else vier
+goto null
+
+//END OF RANDOMIZED LEAVING OF THE BASE
+
+
+standard:flipzero 6 else standard1; 						geht in 1/6 der Fälle zu Standardfall 0
+sense 0;									sense Kachel 0
+ifall sense_shiptype==enemy ship_condition>1 sense_shipcondition<3 ship_moral>1 else mustfindhomeornoenemy2; teste ob ein feindliches Schiff angegriffen werden soll
+move else standard1;								versuche zu kämpfen, führe sonst einen anderen Standard-Fall durch
+sense 1;									unterusche Kachel in Richtung 1
+if sense_supply else standard1;							unterusche ob dort eine Proviantinsel ist
+refresh 1 else standard1;							nimm Proviant auf
+pickup 1 else goon;
+goon:sense 2;									untersuche Kachel in Richtung 2
+turn right;									Drehung, sodass man in Richtung 2 schaut
+turn right;									Drehung, sodass man in Richtung 2 schaut
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome; 	teste ob Kachel befahrbar
+move else standard;								fahre auf Kachel  
+if sense_celltype==home else standard;						schauen, ob man die Heimat erreicht hat					
+drop;										lade Schätze ab, wenn welche gefunden
+
+goto begin;									gehe zurück zum Anfang, da Heimat gefunden
+
+
+standard1:flipzero 5 else standard2;						geht in 1/5 der Fälle zu Standardfall 1
+sense 1;
+ifall sense_shiptype==enemy ship_condition>1 sense_shipcondition<3 ship_moral>1 else mustfindhomeornoenemy; teste ob ein feindliches Schiff angegriffen werden soll
+turn right;
+move else standard2;								versuche zu kämpfen, führe sonst einen anderen Standard-Fall durch
+sense 2;									untersuche Kachel in Richtung 2
+if sense_supply else standard2;							untersuche ob dort Proviantinsel
+refresh 2 else standard2;							nimm Proviant auf
+pickup 2 else goon;								nimm Schätze auf
+goon: sense 3;									untersuche Kachel in Richtung 3
+turn right;									umdrehen
+turn right;									umdrehen
+turn right;									umdrehen
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome; teste ob Kachel befahrbar
+move else standard;								fahre auf Kachel
+if sense_celltype==home else standard;
+drop;
+
+goto begin;									da Heimat gefunden, gehe zurück zum Anfang
+
+
+standard2:flipzero 4 else standard3; 						geht in 1/4 der Fälle zu Standardfall 2
+sense 2;
+ifall sense_shiptype==enemy ship_condition>1 sense_shipcondition<3 ship_moral>1 else mustfindhomeornoenemy6; teste ob ein feindliches Schiff angegriffen werden soll
+turn right;
+turn right;
+move else standard3;								versuche zu kämpfen, führe sonst einen anderen Standard-Fall durch
+sense 0;									untersuche Kachel in Richtung 2
+if sense_supply else standard3;							untersuche ob dort Proviantinsel
+refresh 0 else standard3;							nimm Proviant auf
+pickup 0 else goon;								nimm Schätze auf
+goon: sense 1;									untersuche Kachel in Richtung 3
+turn right;									umdrehen
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome; teste ob Kachel befahrbar
+move else standard;								fahre auf Kachel
+if sense_celltype==home else standard;
+drop;
+
+goto begin;
+
+standard3:flipzero 3 else standard4;						geht in 1/3 der Fälle zu Standarfall 4
+sense 3;
+ifall sense_shiptype==enemy ship_condition>1 sense_shipcondition<3 ship_moral>1 else mustfindhomeornoenemy3; teste ob ein feindliches Schiff angegriffen werden soll
+turn right;
+turn right;
+turn right;
+move else standard4;								versuche zu kämpfen, führe sonst einen anderen Standard-Fall durch
+sense 5;									untersuche Kachel in Richtung 2
+if sense_supply else standard4;							untersuche ob dort Proviantinsel
+refresh 5 else standard4;							nimm Proviant auf
+pickup 5 else goon;								nimm Schätze auf
+goon: sense 4;									untersuche Kachel in Richtung 3
+turn left;
+turn left;
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome; teste ob Kachel befahrbar
+move else standard;								fahre auf Kachel
+if sense_celltype==home else standard;						schau nach, ob Heimat gefunden
+drop;										lade Schätze ab
+
+goto begin;									gehe zurück zum Anfang
+
+standard4:flipzero 2 else standard5;						geht in 1/2 der Fälle zu Standardfall 5
+sense 4;
+ifall sense_shiptype==enemy ship_condition>1 sense_shipcondition<3 ship_moral>1 else mustfindhomeornoenemy4; teste ob ein feindliches Schiff angegriffen werden soll
+turn left;
+turn left;
+move else standard5;								versuche zu kämpfen, führe sonst einen anderen Standard-Fall durch
+sense 1;									untersuche Kachel in Richtung 2
+if sense_supply else standard5;							untersuche ob dort Proviantinsel
+refresh 1 else standard5;							nimm Proviant auf
+pickup 1 else goon;								nimm Schätze auf
+goon: sense 5;									untersuche Kachel in Richtung 3
+turn left;
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome; teste ob Kachel befahrbar
+move else standard;								fahre auf Kachel
+if sense_celltype==home else standard;						schau nach, ob Heimat gefunden
+drop;										lade Schätze ab
+
+goto begin;									gehe zurück zum Anfang
+
+
+standard5:sense 5;								untersuche Kachel in Richtung 5
+ifall sense_shiptype==enemy ship_condition>1 sense_shipcondition<3 ship_moral>1 else mustfindhomeornoenemy5; teste ob ein feindliches Schiff angegriffen werden soll
+turn left;
+move else standard;								versuche zu kämpfen, führe sonst einen anderen Standard-Fall durch
+sense 3;									untersuche Kachel in Richtung 2
+if sense_supply else standard;							untersuche ob dort Proviantinsel
+refresh 3 else standard;							nimm Proviant auf
+pickup 3 else goon;								nimm Schätze auf
+goon:sense 0;									untersuche Kachel in Richtung 3
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome; teste ob Kachel befahrbar
+move else standard;								fahre auf Kachel
+if sense_celltype==home else standard;						schau nach, ob Heimat gefunden
+drop;										lade Schätze ab
+
+goto begin;									
+			
+
+mustfindhomeornoenemy:if ship_condition<2 else standard;			Teste ob unbedingt nach Hause gefahren werden muss
+sense 0;									untersuche Kachel in Richtung 0
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome;			schaue nach, ob Kachel in Richtung 0 befahrbar und nicht Heimat
+pickup 0 else mustfindhomeornoenemy2;						versuche etwas aufzuheben
+move else mustfindhomeornoenemy2;						ziehe auf Kachel in Richtung 0
+if sense_celltype==home else mustfindhomeornoenemy2;						schaue nach, ob Heimat gefunden
+drop;
+repair else begin;
+
+goto begin;									Heimat gefunden, also zurück zum Anfang
+
+
+mustfindhomeornoenemy2:if ship_condition<2 else standard;			Teste ob unbedingt nach Hause gefahren werden muss
+sense 1;							untersuche Kachel in Richtung 1
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome;untersuche ob Kachel befahrbar
+pickup 1 else mustfindhomeornoenemy2;						versuche etwas aufzuheben
+turn right;
+move else mustfindhomeornoenemy2;						ziehe auf Kachel in Richtung 0
+if sense_celltype==home else mustfindhomeornoenemy3;					schaue nach, ob Heimat gefunden
+drop;
+repair else begin;
+
+goto begin;									Heimat gefunden, also zurück zum Anfang
+
+
+
+mustfindhomeornoenemy3:if ship_condition<2 else standard;			Teste ob unbedingt nach Hause gefahren werden muss
+sense 2;									untersuche Kachel in Richtung 2
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome;untersuche ob Kachel befahrbar
+pickup 2 else mustfindhomeornoenemy2;						versuche etwas aufzuheben
+turn right;
+turn right;
+move else mustfindhomeornoenemy2;						ziehe auf Kachel in Richtung 0
+if sense_celltype==home else mustfindhomeornoenemy4;				schaue nach, ob Heimat gefunden
+drop;
+repair else begin;								
+
+goto begin;									Heimat gefunden, also zurück zum Anfang
+
+
+mustfindhomeornoenemy4:if ship_condition<2 else standard;
+sense 5;									untersuche Kachel in Richtung 5
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome;untersuche ob Kachel befahrbar
+pickup 5 else mustfindhomeornoenemy2;						versuche etwas aufzuheben
+turn left;
+move else mustfindhomeornoenemy2;						ziehe auf Kachel in Richtung 0
+if sense_celltype==home else mustfindhomeornoenemy5;				schaue nach, ob Heimat gefunden
+drop;
+repair else begin;								
+
+goto begin;									Heimat gefunden, also zurück zum Anfang
+	
+
+mustfindhomeornoenemy5:if ship_condition<2 else standard;
+sense4;										untersuche Kachel in Richtung 4
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome;untersuche ob Kachel befahrbar
+pickup 4 else mustfindhomeornoenemy2;						versuche etwas aufzuheben
+turn left;
+turn left;
+move else mustfindhomeornoenemy2;						ziehe auf Kachel in Richtung 0
+if sense_celltype==home else mustfindhomeornoenemy6;				schaue nach, ob Heimat gefunden
+drop;
+repair else begin;								
+
+goto begin;									Heimat gefunden, also zurück zum Anfang
+
+
+mustfindhomeornoenemy6:if ship_condition<2 else standard;
+sense3;										untersuche Kachel in Richtung 3
+ifany sense_celltype==empty sense_celltype==home else enemybaseOrislandOrnothome;untersuche ob Kachel befahrbar
+pickup 3 else mustfindhomeornoenemy2;						versuche etwas aufzuheben
+turn left;
+turn left;
+turn left;
+move else mustfindhomeornoenemy2;						ziehe auf Kachel in Richtung 0
+if sense_celltype==home else mustfindhomeornoenemy;				schaue nach, ob Heimat gefunden
+drop;
+repair else begin;								
+
+goto begin;
+
+enemybaseOrislandOrnothome:if sense_celltype==island else standard;
+refresh 0 else standard;
+pickup 0 else standard;
+
+goto standard;

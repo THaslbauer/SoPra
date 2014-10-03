@@ -1,0 +1,94 @@
+flipzero 6 else 10 
+sense 0; Hier starten 0er Schiffe -- senst die Kachel genau vor sich
+ifany sense_celltype==home sense_celltype==empty else 8 
+move else 0 
+sense 0;
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 11 
+goto 55 
+flipzero 5 else 21 
+sense 1; Hier starten 1er Schiffe -- senst die Kachel in Richtung 1
+ifany sense_celltype==home sense_celltype==empty else 19 
+turn right;
+move else 0 
+sense 0;
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 1 
+goto 22 
+flipzero 4 else 32 
+sense 2; Hier starten 2er Schiffe -- senst die Kachel in Richtung 2
+ifany sense_celltype==home sense_celltype==empty else 30 
+turn right;
+turn right;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 11 
+goto 33 
+flipzero 3 else 44 
+sense 3; Hier starten 3er Schiffe -- senst die Kachel in Richtung 3
+ifany sense_celltype==home sense_celltype==empty else 42 
+turn right;
+turn right;
+turn right;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 22 
+goto 45 
+flipzero 2 else 55 
+sense 4; Hier starten 4er Schiffe -- senst die Kachel in Richtung 4
+ifany sense_celltype==home sense_celltype==empty else 53 
+turn left;
+turn left;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 55 
+goto 33 
+sense 5; Hier starten 5er Schiffe -- senst die Kachel in Rictung 5
+if sense_celltype==empty else 62 
+turn left;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 45 
+goto 1 
+sense 0;senst die Kachel vor sich
+pickup 0 else 66 
+if sense_celltype==island else 70 
+refresh 0 else 68 
+pickup 0 else 85 
+goto 77 
+if sense_celltype==enemyhome else 72 
+goto 85 
+if sense_celltype==home else 81 
+move else 64 
+drop;
+if ship_condition==1 else 77 
+repair else 77 
+turn left;
+turn left;
+turn left;
+goto 64 
+ifall sense_shiptype==enemy ship_moral<4 ship_condition<3 else 83 
+goto 85 
+move else 85 
+goto 64 
+flipzero 2 else 90 
+turn right;
+pickup 0 else 92 
+ refresh 0 else 64 
+goto 64 
+turn left;
+pickup 0 else 92 
+ refresh 0 else 64 
+goto 64 
