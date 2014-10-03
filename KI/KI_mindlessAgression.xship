@@ -50,13 +50,7 @@ goto BattleMode
 
 // Moving
 //
-Moving:flipzero 3 else GoLeft
-ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
-if sense_celltype==empty else DrivingHome
-Battle_Empty1:move else Battle_Empty1
-pickup 6 else BattleMode
-goto BattleMode
-
+Moving:flipzero 5 else GoStrait
 GoLeft:flipzero 2 else GoRight
 turn left
 sense 0
@@ -73,6 +67,14 @@ if sense_celltype==empty else DrivingHome
 Battle_Empty3:move else Battle_Empty3
 pickup 6 else BattleMode
 goto BattleMode
+
+GoStrait:flipzero 2 else GoLeft
+ifall sense_celltype!=island sense_celltype!=enemyhome else ShouldTurn
+if sense_celltype==empty else DrivingHome
+Battle_Empty1:move else Battle_Empty1
+pickup 6 else BattleMode
+goto BattleMode
+
 
 ShouldTurn:pickup 0 else PleaseTurn
 PleaseTurn:turn left
