@@ -45,7 +45,7 @@ public class MessageBox extends VBox {
     public static void displayMessage(String title, String text) {
     	System.out.println(text);
     	Stage error = new Stage();
-    	MessageBox errorM = new MessageBox(error, "Cycle count error", "Cycle count has to be number");
+    	MessageBox errorM = new MessageBox(error, title, text);
     	Scene errorS = new Scene(errorM);
     	error.setScene(errorS);
     	error.showAndWait();

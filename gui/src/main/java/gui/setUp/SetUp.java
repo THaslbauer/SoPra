@@ -2,12 +2,18 @@ package gui.setUp;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import de.unisaarland.cs.st.pirates.group1.logger.OutLogger;
+import de.unisaarland.cs.st.pirates.group1.main.Main;
+import de.unisaarland.cs.st.pirates.group1.sim.driver.Controller;
+import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import util.MessageBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -110,7 +116,7 @@ public class SetUp extends GridPane {
 	@FXML
 	void setLogfileButtonPressed(ActionEvent event) {
 		FileChooser fc = new FileChooser();
-		this.logFile = fc.showOpenDialog(ownStage);
+		this.logFile = fc.showSaveDialog(ownStage);
 	}
 
 	@FXML
@@ -147,29 +153,81 @@ public class SetUp extends GridPane {
 	void startButtonPressed(ActionEvent event) {
 		System.out.println("starting now");
 		try {
+			System.out.println(this.CycleField.getText());
 			this.cycleCount = Integer.parseInt(this.CycleField.getText());
 		}
 		catch (NumberFormatException e) {
-			MessageBox.displayMessage("Error with cycle count", "Cycle count can't be parsed");
+			MessageBox.displayMessage("Error with cycle count", "Cycle count can't be parsed, was:\n"+CycleField.getText()+"\nAborting now.");
+			return;
 		}
 		try {
 			this.delay = Integer.parseInt(this.DelayField.getText());
 		}
 		catch (NumberFormatException e) {
-			MessageBox.displayMessage("Error with delay", "Delay can't be parsed");
+			MessageBox.displayMessage("Error with delay", "Delay can't be parsed, was:\n"+DelayField.getText()+"\nAborting now.");
+			return;
 		}
 		try {
 			this.seed = Long.parseLong(this.SeedField.getText());
 		}
 		catch (NumberFormatException e) {
-			MessageBox.displayMessage("Error with seed", "Seed can't be parsed");
+			MessageBox.displayMessage("Error with seed", "Seed can't be parsed, was:\n"+SeedField.getText()+"\nAborting now.");
+			return;
 		}
+		List<InputStream> tactics = new LinkedList<InputStream>();
+		for(File f : tacticsFiles) {
+			try {
+			tactics.add(new FileInputStream(f));
+			}
+			catch(IOException e) {
+				MessageBox.displayMessage("Error with tactics", "Could not open tacticsfile "+f.getName()+"\nAborting now.");
+				return;
+			}
+		}
+		FileInputStream mapStream = null;
+		try {
+			mapStream = new FileInputStream(mapFile);
+		}
+		catch(IOException e) {
+			MessageBox.displayMessage("Error with map", "Could not open map file "+mapFile.getName());
+			return;
+		}
+		Controller controller;
+		List<ExtendedLogWriter> loggers = new LinkedList<ExtendedLogWriter>();
+		//TODO add the proper thing in here, instead of the debug logger
+		loggers.add(new OutLogger());
+		if(logFile == null)
+			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers);
+		else {
+			FileOutputStream out = null;
+			try {
+				out = new FileOutputStream(logFile);
+			}
+			catch (IOException e) {
+				MessageBox.displayMessage("Error with log", "Could not create log file "+logFile.getName()+", aborting.");
+				return;
+			}
+			PrintStream p = new PrintStream(out, true);
+			System.setOut(p);
+			controller = Main.build(logFile.getName(), cycleCount, seed, mapStream, tactics, loggers);
+		}
+		//TODO remove this when we actually play a game via the game screen
+		StartButton.setDisable(true);
+		MessageBox.displayMessage("Playing game now", "Game is now running, please wait");
+		controller.play();
+		StartButton.setDisable(false);
+			
 	}
 
 	public void deleteTactics(TacticsListElement tacticsListElement) {
 		int index = tacticsBox.getChildren().indexOf(tacticsListElement);
 		tacticsBox.getChildren().remove(index);
 		tacticsFiles.remove(index);
+		if(tacticsFiles.isEmpty()) {
+			tacticsFileAdded = false;
+			StartButton.setDisable(true);
+		}
+			
 	}
 
 	public void moveTacticsUp(TacticsListElement tacticsListElement) {
