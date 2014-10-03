@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="29.0" prefWidth="561.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="NameLabel" prefHeight="15.0" prefWidth="59.0" text="Label" />
+      <Label fx:id="PathLabel" prefHeight="15.0" prefWidth="311.0" text="PATH" />
+      <Button fx:id="ShowButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" text="Show" />
+      <Button fx:id="DownButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="34.0" text="D" />
+      <Button fx:id="UpButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="31.0" text="U" />
+      <Button fx:id="DeleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="28.0" text="X" />
+   </children>
+</HBox>
