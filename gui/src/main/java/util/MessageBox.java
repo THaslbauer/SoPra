@@ -14,11 +14,17 @@ import javafx.stage.Stage;
 public class MessageBox extends VBox {
 	
 	private Stage ownStage;
+
+	@FXML
+    private Button OKButton;
+
+    @FXML
+    private Text messageText;
 	
 	public MessageBox (Stage ownStage, String title, String messageText) {
 		this.ownStage = ownStage;
 		this.ownStage.setTitle(title);
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/util/MessageBox.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("MessageBox.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
 		try {
@@ -30,12 +36,6 @@ public class MessageBox extends VBox {
 		}
 		this.messageText.setText(messageText);
 	}
-
-	@FXML
-    private Button OKButton;
-
-    @FXML
-    private Text messageText;
 
     @FXML
     void onOKButtonClick(ActionEvent event) {

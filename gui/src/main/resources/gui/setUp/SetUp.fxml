@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -16,10 +17,13 @@
     <RowConstraints maxHeight="176.0" minHeight="10.0" prefHeight="176.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <content>
+            <Text fx:id="mapContentText" strokeType="OUTSIDE" strokeWidth="0.0" />
+         </content></ScrollPane>
       <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <children>
-            <ListView prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="tacticsListView" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </StackPane>
       <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
@@ -52,9 +56,26 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </VBox>
-      <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+      <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="StartButton" mnemonicParsing="false" onAction="#startButtonPressed" prefHeight="77.0" prefWidth="143.0" text="Start" />
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="LoadTacticsButton" mnemonicParsing="false" onAction="#loadTacticsButtonPressed" prefHeight="25.0" prefWidth="134.0" text="Load Tactics" />
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="StartButton" mnemonicParsing="false" onAction="#startButtonPressed" prefHeight="77.0" prefWidth="143.0" text="Start" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+         <children>
+            <Text fx:id="mapPathText" strokeType="OUTSIDE" strokeWidth="0.0" text="Map path is:" />
          </children>
       </VBox>
    </children>
