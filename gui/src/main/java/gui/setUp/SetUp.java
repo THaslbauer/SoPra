@@ -11,11 +11,13 @@ import java.util.Scanner;
 import util.MessageBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
@@ -81,7 +83,10 @@ public class SetUp extends GridPane {
 	private Button StartButton;
 	
 	@FXML
-    private ListView<?> tacticsListView;
+	private VBox tacticsBox;
+	
+
+	
 
 	@FXML
 	void loadMapButtonPressed(ActionEvent event) {
@@ -89,7 +94,6 @@ public class SetUp extends GridPane {
 		this.mapFile = fc.showOpenDialog(ownStage);
 		this.mapFileAdded = true;
 		this.StartButton.setDisable(!(mapFileAdded && tacticsFileAdded));
-		System.out.println("setting start disabled = "+!(tacticsFileAdded && mapFileAdded));
 		this.mapPathText.setText("Map path is: "+mapFile.getAbsolutePath());
 		String mapString = "";
 		try {
@@ -133,9 +137,9 @@ public class SetUp extends GridPane {
     void loadTacticsButtonPressed(ActionEvent event) {
 		FileChooser fc = new FileChooser();
 		File tactic = fc.showOpenDialog(ownStage);
+		tacticsBox.getChildren().add(new TacticsListElement(tactic, this));
 		tacticsFiles.add(tactic);
 		tacticsFileAdded = true;
-		System.out.println("setting start disabled = "+!(tacticsFileAdded && mapFileAdded));
 		StartButton.setDisable(!(tacticsFileAdded && mapFileAdded));
     }
 
@@ -160,6 +164,34 @@ public class SetUp extends GridPane {
 		catch (NumberFormatException e) {
 			MessageBox.displayMessage("Error with seed", "Seed can't be parsed");
 		}
+	}
+
+	public void deleteTactics(TacticsListElement tacticsListElement) {
+		int index = tacticsBox.getChildren().indexOf(tacticsListElement);
+		tacticsBox.getChildren().remove(index);
+		tacticsFiles.remove(index);
+	}
+
+	public void moveTacticsUp(TacticsListElement tacticsListElement) {
+		int index = tacticsBox.getChildren().indexOf(tacticsListElement);
+		if(index == 0)
+			return;
+		tacticsBox.getChildren().remove(index);
+		File tactics = tacticsFiles.get(index);
+		tacticsFiles.remove(index);
+		tacticsBox.getChildren().add(index -1, tacticsListElement);
+		tacticsFiles.add(index -1, tactics);
+	}
+
+	public void moveTacticsDown(TacticsListElement tacticsListElement) {
+		int index = tacticsBox.getChildren().indexOf(tacticsListElement);
+		if(index +1 == tacticsFiles.size()) 
+			return;
+		tacticsBox.getChildren().remove(index);
+		File tactics = tacticsFiles.get(index);
+		tacticsFiles.remove(index);
+		tacticsBox.getChildren().add(index +1, tacticsListElement);
+		tacticsFiles.add(index +1, tactics);
 	}
 
 }
