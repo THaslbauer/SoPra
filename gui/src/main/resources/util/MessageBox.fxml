@@ -9,7 +9,7 @@
 
 <fx:root alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="110.0" prefWidth="219.0" spacing="5.0" type="VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="messageText" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Button fx:id="OKButton" mnemonicParsing="false" onAction="#onOKButtonClick" text="OK" />
    </children>
    <padding>

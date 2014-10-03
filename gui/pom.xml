@@ -9,7 +9,15 @@
   	<dependency>
   		<groupId>de.unisaarland.cs.st</groupId>
   		<artifactId>pirates14-sim-group1</artifactId>
-  		<version>0.1</version>
   	</dependency>
   </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>de.unisaarland.cs.st</groupId>
+  			<artifactId>pirates14-sim-group1</artifactId>
+  			<version>0.1</version>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
