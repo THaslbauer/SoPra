@@ -18,6 +18,7 @@ import util.MessageBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -96,6 +97,7 @@ public class SetUp extends GridPane {
 
 	@FXML
 	void loadMapButtonPressed(ActionEvent event) {
+		mapContentText.setFont(Font.font("Monospaced"));
 		FileChooser fc = new FileChooser();
 		this.mapFile = fc.showOpenDialog(ownStage);
 		this.mapFileAdded = true;
@@ -106,9 +108,11 @@ public class SetUp extends GridPane {
 			Scanner mapScanner = new Scanner(mapFile);
 			mapScanner.useDelimiter("\\A");
 			mapString = mapScanner.next();
+			mapScanner.close();
 		}
 		catch(IOException e) {
 			MessageBox.displayMessage("Error with map file", "Could not read from the map file. Cause was:\n"+e.getCause());
+			return;
 		}
 		this.mapContentText.setText(mapString);
 	}
