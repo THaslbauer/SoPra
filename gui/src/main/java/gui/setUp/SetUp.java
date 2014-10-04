@@ -147,7 +147,8 @@ public class SetUp extends GridPane {
     void loadTacticsButtonPressed(ActionEvent event) {
 		FileChooser fc = new FileChooser();
 		File tactic = fc.showOpenDialog(ownStage);
-		tacticsBox.getChildren().add(new TacticsListElement(tactic, this));
+		TacticsListElement tacticsElem = new TacticsListElement(tactic, this);
+		tacticsBox.getChildren().add(tacticsElem);
 		tacticsFiles.add(tactic);
 		tacticsFileAdded = true;
 		StartButton.setDisable(!(tacticsFileAdded && mapFileAdded));
@@ -203,6 +204,7 @@ public class SetUp extends GridPane {
 		if(logFile == null)
 			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers);
 		else {
+			PrintStream oldout = System.out;
 			FileOutputStream out = null;
 			try {
 				out = new FileOutputStream(logFile);
@@ -214,6 +216,14 @@ public class SetUp extends GridPane {
 			PrintStream p = new PrintStream(out, true);
 			System.setOut(p);
 			controller = Main.build(logFile.getName(), cycleCount, seed, mapStream, tactics, loggers);
+			System.setOut(oldout);
+			p.close();
+			try {
+			out.close();
+			}
+			catch(IOException e) {
+				throw new IllegalStateException("Somehow could not close file stream");
+			}
 		}
 		//TODO remove this when we actually play a game via the game screen
 		StartButton.setDisable(true);
@@ -227,7 +237,7 @@ public class SetUp extends GridPane {
 		int index = tacticsBox.getChildren().indexOf(tacticsListElement);
 		tacticsBox.getChildren().remove(index);
 		tacticsFiles.remove(index);
-		if(tacticsFiles.isEmpty()) {
+		if(tacticsFiles.size() == 0) {
 			tacticsFileAdded = false;
 			StartButton.setDisable(true);
 		}

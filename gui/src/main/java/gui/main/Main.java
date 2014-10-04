@@ -10,7 +10,9 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		SetUp p = new SetUp(primaryStage);
-		Scene s = new Scene(p, 200, 200);
+		Scene s = new Scene(p, 600, 550);
+		primaryStage.setMinHeight(550);
+		primaryStage.setMinWidth(700);
 		primaryStage.setScene(s);
 		primaryStage.show();
 	}

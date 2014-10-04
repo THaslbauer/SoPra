@@ -6,28 +6,28 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root id="SetUp" fx:id="SetUp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500" minWidth="600" prefHeight="500" prefWidth="600.0" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root id="SetUp" fx:id="SetUp" maxWidth="1.7976931348623157E308" type="GridPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="150.0" prefWidth="150.0" />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="300" />
+    <ColumnConstraints hgrow="SOMETIMES" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="125.0" minHeight="125.0" prefHeight="125.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="340.0" minHeight="340" prefHeight="340.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="180.0" minHeight="180.0" prefHeight="180.0" vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ScrollPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <ScrollPane prefHeight="350.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <content>
             <Text fx:id="mapContentText" strokeType="OUTSIDE" strokeWidth="0.0">
                <font>
                   <Font name="DejaVu Sans Mono Bold" size="13.0" />
                </font></Text>
          </content></ScrollPane>
-      <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
+      <VBox prefHeight="350.0" prefWidth="100.0" spacing="5.0" GridPane.rowIndex="1">
          <children>
-            <Button fx:id="LoadMapButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadMapButtonPressed" prefHeight="25.0" prefWidth="130.0" text="Load Map" />
-            <Button fx:id="SetLogfileButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setLogfileButtonPressed" prefHeight="25.0" prefWidth="130.0" text="Set Logfile" />
+            <Button fx:id="LoadMapButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#loadMapButtonPressed" prefHeight="25.0" prefWidth="140.0" text="Load Map" />
+            <Button fx:id="SetLogfileButton" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#setLogfileButtonPressed" prefHeight="25.0" prefWidth="140.0" text="Set Logfile" />
             <VBox maxWidth="1.7976931348623157E308">
                <children>
                   <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Cycles" />
@@ -56,29 +56,25 @@
       </VBox>
       <VBox alignment="BOTTOM_LEFT" maxWidth="1.7976931348623157E308" spacing="5.0" GridPane.rowIndex="2">
          <children>
-            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <children>
-                  <Button fx:id="LoadTacticsButton" mnemonicParsing="false" onAction="#loadTacticsButtonPressed" prefHeight="25.0" prefWidth="134.0" text="Load Tactics" />
-               </children>
-            </VBox>
-            <VBox alignment="BOTTOM_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-               <children>
-                  <Button fx:id="StartButton" mnemonicParsing="false" onAction="#startButtonPressed" prefHeight="77.0" prefWidth="143.0" text="Start" />
-               </children>
-            </VBox>
+            <Button fx:id="StartButton" mnemonicParsing="false" onAction="#startButtonPressed" prefHeight="80.0" prefWidth="140.0" text="Start" />
          </children>
          <padding>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </padding>
       </VBox>
-      <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+      <VBox alignment="BOTTOM_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" GridPane.columnIndex="1">
          <children>
             <Text fx:id="mapPathText" strokeType="OUTSIDE" strokeWidth="0.0" text="Map path is:" />
          </children>
       </VBox>
-      <ScrollPane hbarPolicy="NEVER" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <ScrollPane maxWidth="1.7976931348623157E308" minHeight="200.0" minWidth="600.0" prefHeight="200.0" prefWidth="600.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <content>
-            <VBox fx:id="tacticsBox" prefHeight="150.0" prefWidth="100.0" />
+            <VBox minHeight="-Infinity" minWidth="-Infinity" prefWidth="600.0">
+               <children>
+                  <Button fx:id="LoadTacticsButton" mnemonicParsing="false" onAction="#loadTacticsButtonPressed" prefHeight="25.0" prefWidth="140.0" text="Load Tactics" />
+                  <VBox fx:id="tacticsBox" prefHeight="200.0" prefWidth="100.0" />
+               </children>
+            </VBox>
          </content>
       </ScrollPane>
    </children>
