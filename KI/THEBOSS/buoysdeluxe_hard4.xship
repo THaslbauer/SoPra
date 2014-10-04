@@ -178,7 +178,15 @@ goto STRAIGHTFROMBASE;
 //places a buoy that points to base
 //if a ship enters this state, it has to go to the random state after that
 //
-PLACEBUOY:if ship_direction==0 else dir_not_0;
+PLACEBUOY:if sense_celltype==island else NOTT;
+refresh 1 else poock;
+poock:pickup 1 else NOTT;
+goto HOMESWEETHOME;
+refresh 5 else pock;
+pock:pickup 5 else NOTT;
+goto HOMESWEETHOME;
+
+NOTT:if ship_direction==0 else dir_not_0;
 mark 3;
 goto RANDOMMODE;
 
@@ -225,8 +233,23 @@ turn right;
 goto HOMESWEETHOME;
 
 YAY:move else YAY;
+if ship_load>0 else anfang;
 drop;
+sense 5;
+if sense_celltype==home else KAHN;
 turn left;
+NOCH:move else NOCH;
+turn left;
+turn left;
+goto STRAIGHTFROMBASE;
+KAHN:sense 1;
+if sense_celltype==home else AUFSEE;
+turn right;
+NOCH2:move else NOCH2;
+turn right;
+turn right;
+goto STRAIGHTFROMBASE;
+AUFSEE:turn left;
 turn left;
 turn left;
 goto STRAIGHTFROMBASE;
@@ -247,12 +270,8 @@ goto STRAIGHTFROMBASE;
 //
 RANDOMMODE:flipzero 2 else links;
 turn right;
-pickup 0 else versuchref;
-versuchref: refresh 0 else BIATCHMO;
 goto BIATCHMO;
 links:turn left;
-pickup 0 else versuchref;
-versuchref: refresh 0 else BIATCHMO;
 goto BIATCHMO;
 
 BIATCHMO:sense 0;
@@ -276,11 +295,9 @@ NOIS:if sense_celltype==enemyhome else WATERANDBUOY;
 goto RANDOMMODE;
 
 WATERANDBUOY:if sense_celltype==home else NOTHOMEBIATCH;
-TRYAGAIN:move else TRYAGAIN;
-drop;
-goto anfang;
+goto YAY;
 NOTHOMEBIATCH:if ship_load>0 else MOVETHENRANDOM;
-move else WATERANDBUOY;
+TRYAGAIN2:move else TRYAGAIN2;
 ifany sense_marker0 sense_marker1 sense_marker2 else test1;
 
 if sense_marker0 else Nicht0; SENSE MARKER 0

@@ -1,0 +1,347 @@
+flipzero 6 else 10 
+sense 0; Hier starten 0er Schiffe -- senst die Kachel genau vor sich
+ifany sense_celltype==home sense_celltype==empty else 8 
+move else 0 
+sense 0;
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 11 
+goto 55 
+flipzero 5 else 21 
+sense 1; Hier starten 1er Schiffe -- senst die Kachel in Richtung 1
+ifany sense_celltype==home sense_celltype==empty else 19 
+turn right;
+move else 0 
+sense 0;
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 1 
+goto 22 
+flipzero 4 else 32 
+sense 2; Hier starten 2er Schiffe -- senst die Kachel in Richtung 2
+ifany sense_celltype==home sense_celltype==empty else 30 
+turn right;
+turn right;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 11 
+goto 33 
+flipzero 3 else 44 
+sense 3; Hier starten 3er Schiffe -- senst die Kachel in Richtung 3
+ifany sense_celltype==home sense_celltype==empty else 42 
+turn right;
+turn right;
+turn right;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 22 
+goto 45 
+flipzero 2 else 55 
+sense 4; Hier starten 4er Schiffe -- senst die Kachel in Richtung 4
+ifany sense_celltype==home sense_celltype==empty else 53 
+turn left;
+turn left;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 55 
+goto 33 
+sense 5; Hier starten 5er Schiffe -- senst die Kachel in Rictung 5
+if sense_celltype==empty else 62 
+turn left;
+move else 0 
+if sense_celltype==home else 64 
+goto 14 
+goto 64 
+flipzero 2 else 45 
+goto 1 
+if ship_direction==0 else 67 
+mark 3;
+goto 82 
+if ship_direction==1 else 70 
+mark 4;
+goto 82 
+if ship_direction==2 else 73 
+mark 5;
+goto 82 
+if ship_direction==3 else 76 
+mark 0;
+goto 82 
+if ship_direction==4 else 79 
+mark 1;
+goto 82 
+if ship_direction==5 else 155 
+mark 2;
+goto 82 
+sense 0;
+ifall sense_shiptype==enemy ship_moral>2 sense_shipcondition==1 ship_condition>1 else 90 
+move else 64 
+pickup 6 else 64 
+turn left;
+turn left;
+turn left;
+goto 127 
+ifall sense_celltype!=island sense_celltype!=enemyhome else 93 
+move else 102 
+goto 64 
+if sense_celltype==island else 100 
+refresh 0 else 95 
+pickup 0 else 102 
+turn left;
+turn left;
+turn left;
+goto 127 
+move else 102 
+goto 64 
+if sense_celltype==island else 109 
+refresh 1 else 104 
+pickup 1 else 109 
+goto 127 
+refresh 5 else 107 
+pickup 5 else 109 
+goto 127 
+if ship_direction==0 else 112 
+mark 3;
+goto 155 
+if ship_direction==1 else 115 
+mark 4;
+goto 155 
+if ship_direction==2 else 118 
+mark 5;
+goto 155 
+if ship_direction==3 else 121 
+mark 0;
+goto 155 
+if ship_direction==4 else 124 
+mark 1;
+goto 155 
+if ship_direction==5 else 155 
+mark 2;
+goto 155 
+sense 0;
+if sense_celltype!=home else 134 
+move else 131 
+goto 127 
+turn left;
+turn right;
+goto 127 
+move else 134 
+if ship_load>0 else 0 
+drop;
+sense 5;
+if sense_celltype==home else 144 
+turn left;
+move else 140 
+turn left;
+turn left;
+goto 64 
+sense 1;
+if sense_celltype==home else 151 
+turn right;
+move else 147 
+turn right;
+turn right;
+goto 64 
+turn left;
+turn left;
+turn left;
+goto 64 
+flipzero 2 else 158 
+turn right;
+goto 160 
+turn left;
+goto 160 
+sense 0;
+ifany sense_marker0 sense_marker1 sense_marker2 sense_marker3 sense_marker4 sense_marker5 else 163 
+goto 177 
+ifall sense_celltype!=island sense_celltype!=enemyhome else 171 
+if sense_shiptype==enemy else 169 
+ifall ship_moral>2 ship_condition>1 else 155 
+move else 155 
+pickup 6 else 155 
+goto 160 
+move else 155 
+goto 160 
+if sense_celltype==island else 175 
+pickup 0 else 173 
+refresh 0 else 155 
+goto 155 
+if sense_celltype==enemyhome else 177 
+goto 155 
+if sense_celltype==home else 179 
+goto 134 
+if ship_load>0 else 345 
+move else 180 
+ifany sense_marker0 sense_marker1 sense_marker2 else 264 
+if sense_marker0 else 209 
+if ship_direction<3 else 195 
+if ship_direction==0 else 187 
+move else 185 
+goto 127 
+if ship_direction==1 else 191 
+turn left;
+move else 189 
+goto 127 
+turn left;
+turn left;
+move else 193 
+goto 127 
+if ship_direction==3 else 201 
+turn right;
+turn right;
+turn right;
+move else 199 
+goto 127 
+if ship_direction==4 else 206 
+turn right;
+turn right;
+move else 204 
+goto 127 
+turn right;
+move else 185 
+goto 127 
+if sense_marker1 else 236 
+if ship_direction<3 else 221 
+if ship_direction==0 else 215 
+turn right;
+move else 213 
+goto 127 
+if ship_direction==1 else 218 
+move else 216 
+goto 127 
+turn left;
+move else 219 
+goto 127 
+if ship_direction==3 else 226 
+turn left;
+turn left;
+move else 224 
+goto 127 
+if ship_direction==4 else 232 
+turn left;
+turn left;
+turn left;
+move else 230 
+goto 127 
+turn right;
+turn right;
+move else 185 
+goto 127 
+if sense_marker2 else 264 
+if ship_direction<3 else 249 
+if ship_direction==0 else 243 
+turn right;
+turn right;
+move else 185 
+goto 127 
+if ship_direction==1 else 247 
+turn right;
+move else 185 
+goto 127 
+move else 185 
+goto 127 
+if ship_direction==3 else 253 
+turn left;
+move else 185 
+goto 127 
+if ship_direction==4 else 258 
+turn left;
+turn left;
+move else 185 
+goto 127 
+turn right;
+turn right;
+turn right;
+turn right;
+move else 185 
+goto 127 
+if sense_marker3 else 291 
+if ship_direction<3 else 280 
+if ship_direction==0 else 272 
+turn right;
+turn right;
+turn right;
+move else 185 
+goto 127 
+if ship_direction==1 else 277 
+turn right;
+turn right;
+move else 185 
+goto 127 
+turn right;
+move else 185 
+goto 127 
+if ship_direction==3 else 283 
+move else 185 
+goto 127 
+if ship_direction==4 else 287 
+turn left;
+move else 185 
+goto 127 
+turn left;
+turn left;
+move else 185 
+goto 127 
+if sense_marker4 else 318 
+if ship_direction<3 else 308 
+if ship_direction==0 else 298 
+turn left;
+turn left;
+move else 185 
+goto 127 
+if ship_direction==1 else 304 
+turn right;
+turn right;
+turn right;
+move else 185 
+goto 127 
+turn right;
+turn right;
+move else 185 
+goto 127 
+if ship_direction==3 else 312 
+turn right;
+move else 185 
+goto 127 
+if ship_direction==4 else 315 
+move else 185 
+goto 127 
+turn left;
+move else 185 
+goto 127 
+if sense_marker4 else 155 
+if ship_direction<3 else 335 
+if ship_direction==0 else 325 
+turn left;
+turn left;
+move else 185 
+goto 127 
+if ship_direction==1 else 331 
+turn right;
+turn right;
+turn right;
+move else 185 
+goto 127 
+turn right;
+turn right;
+move else 185 
+goto 127 
+if ship_direction==3 else 339 
+turn right;
+move else 185 
+goto 127 
+if ship_direction==4 else 342 
+move else 185 
+goto 127 
+turn left;
+move else 185 
+goto 127 
+move else 155 
+goto 155 
