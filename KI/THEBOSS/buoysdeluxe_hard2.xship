@@ -134,7 +134,7 @@ goto SE;
 //stay in straight mode
 //checks ob genger
 SE:sense 0;
-ifall sense_shiptype==enemy ship_moral==4 ship_condition>1 else NICHTBEFAHRBARONE;
+ifall sense_shiptype==enemy ship_moral>2 sense_shipcondition==1 ship_condition>1 else NICHTBEFAHRBARONE;
 move else STRAIGHTFROMBASE;
 pickup 6 else STRAIGHTFROMBASE;
 turn left;
@@ -260,9 +260,9 @@ ifany sense_marker0 sense_marker1 sense_marker2 sense_marker3 sense_marker4 sens
 goto WATERANDBUOY;
 irgendwie:ifall sense_celltype!=island sense_celltype!=enemyhome else CANNOT;
 if sense_shiptype==enemy else IMMA;
-ifall ship_moral==4 ship_condition==3 sense_shipcondition==1 else RANDOMMODE;
+ifall ship_moral>2 ship_condition>1 else RANDOMMODE;
 move else RANDOMMODE;
-pickup 0 else RANDOMMODE;
+pickup 6 else RANDOMMODE;
 goto BIATCHMO;
 IMMA:move else RANDOMMODE;
 goto BIATCHMO;
