@@ -30,6 +30,8 @@ if [ ! -z ${5} ]; then
     done
 fi
 
+flipped=$flip
+
 if [ -z "$SIM" ]; then
     sim="./sim.jar"
     else sim=$SIM
@@ -75,11 +77,21 @@ if [ $flip -eq 1 ]; then
     right=$temp
     flip=0
     fruns=$((runs*2))
+    tempp=$((points[0]))
+    points[0]=$((points[1]))
+    points[1]=$((tempp))
     if [ $loud -eq 1 ]; then echo; fi
     else break
 fi
 
 done
+
+if [ $flipped -eq 1 ]; then
+    tempp=$((points[0]))
+    points[0]=$((points[1]))
+    points[1]=$((tempp))
+fi
+
 
 echo
 for (( i=0; i<2; i++)); do
