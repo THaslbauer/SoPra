@@ -1,5 +1,8 @@
 package gui.setUp;
 
+import game.GameContent;
+import gui.WorldView;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,6 +20,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import util.MessageBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -42,6 +46,9 @@ public class SetUp extends GridPane {
 	private boolean tacticsFileAdded;
 	private List<File> tacticsFiles;
 	
+	//von Jens
+	private GridPane gameRoot;
+	
 	public SetUp(Stage stage) {
 		this.ownStage = stage;
 		this.tacticsFiles = new LinkedList<File>();
@@ -57,6 +64,16 @@ public class SetUp extends GridPane {
 		}
 		StartButton.setDisable(true);
 		ownStage.setTitle("Simulator: configuration");
+		
+		// von Jens: load the actual game view here so it can be passed later to the worldview
+			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/gui/game/Game.fxml"));
+			try{
+				gameRoot = loader2.load();
+			} catch(IOException e) {
+				e.printStackTrace();
+				throw new UnsupportedOperationException(e.getCause());
+			}
+		// /von Jens
 	}
 	
 	@FXML
@@ -200,8 +217,12 @@ public class SetUp extends GridPane {
 		List<ExtendedLogWriter> loggers = new LinkedList<ExtendedLogWriter>();
 		//TODO add the proper thing in here, instead of the debug logger
 		loggers.add(new OutLogger());
+		//von Jens: I added it here, please change this the way you like =)
+			GameContent.wv = new WorldView(gameRoot);
+			loggers.add(GameContent.wv);	
+		// /von Jens
 		if(logFile == null)
-			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers);
+			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers); //TODO debug edited
 		else {
 			FileOutputStream out = null;
 			try {
@@ -218,6 +239,11 @@ public class SetUp extends GridPane {
 		//TODO remove this when we actually play a game via the game screen
 		StartButton.setDisable(true);
 		MessageBox.displayMessage("Playing game now", "Game is now running, please wait");
+		// von Jens: weiß nicht genau wie das hier funktionieren soll, ich schreibe mich hier einfach mal rein :D
+			Scene gameView = new Scene(gameRoot, 1024,768);
+			ownStage.setScene(gameView);
+			ownStage.show();
+		// /von Jens
 		controller.play();
 		StartButton.setDisable(false);
 			
