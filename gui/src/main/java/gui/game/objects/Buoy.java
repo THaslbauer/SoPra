@@ -1,4 +1,4 @@
-package game;
+package gui.game.objects;
 
 public class Buoy extends Passive {
 	public final int faction;

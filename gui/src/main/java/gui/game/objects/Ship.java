@@ -1,4 +1,4 @@
-package game;
+package gui.game.objects;
 
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;

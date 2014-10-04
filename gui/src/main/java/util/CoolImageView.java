@@ -7,7 +7,7 @@ public class CoolImageView extends ImageView {
 	public CoolImageView(Image image) {
 		super(image);
 	}
-
+//TODO WHY
 	@Override
 	public boolean isResizable() {
 		return true;

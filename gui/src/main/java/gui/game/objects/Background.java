@@ -1,4 +1,4 @@
-package game;
+package gui.game.objects;
 
 import util.CoolImageView;
 import javafx.scene.image.Image;

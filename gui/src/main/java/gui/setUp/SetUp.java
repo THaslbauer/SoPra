@@ -1,7 +1,8 @@
 package gui.setUp;
 
-import game.GameContent;
 import gui.WorldView;
+import gui.game.Game;
+import gui.game.objects.GameContent;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,36 +47,6 @@ public class SetUp extends GridPane {
 	private boolean tacticsFileAdded;
 	private List<File> tacticsFiles;
 	
-	//von Jens
-	private GridPane gameRoot;
-	
-	public SetUp(Stage stage) {
-		this.ownStage = stage;
-		this.tacticsFiles = new LinkedList<File>();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("SetUp.fxml"));
-		loader.setController(this);
-		loader.setRoot(this);
-		try {
-		loader.load();
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e.getCause());
-		}
-		StartButton.setDisable(true);
-		ownStage.setTitle("Simulator: configuration");
-		
-		// von Jens: load the actual game view here so it can be passed later to the worldview
-			FXMLLoader loader2 = new FXMLLoader(getClass().getResource("/gui/game/Game.fxml"));
-			try{
-				gameRoot = loader2.load();
-			} catch(IOException e) {
-				e.printStackTrace();
-				throw new UnsupportedOperationException(e.getCause());
-			}
-		// /von Jens
-	}
-	
 	@FXML
 	private Text mapPathText;
 	
@@ -108,6 +79,23 @@ public class SetUp extends GridPane {
 	
 	@FXML
 	private VBox tacticsBox;
+	
+	public SetUp(Stage stage) {
+		this.ownStage = stage;
+		this.tacticsFiles = new LinkedList<File>();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("SetUp.fxml"));
+		loader.setController(this);
+		loader.setRoot(this);
+		try {
+		loader.load();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e.getCause());
+		}
+		StartButton.setDisable(true);
+		ownStage.setTitle("Simulator: configuration");
+	}
 	
 
 	
@@ -215,29 +203,46 @@ public class SetUp extends GridPane {
 			return;
 		}
 		Controller controller;
+		Stage gameStage = new Stage();
+		Game game = new Game(gameStage, this.ownStage);
 		List<ExtendedLogWriter> loggers = new LinkedList<ExtendedLogWriter>();
 		//TODO add the proper thing in here, instead of the debug logger
 		loggers.add(new OutLogger());
-		//von Jens: I added it here, please change this the way you like =)
-			GameContent.wv = new WorldView(gameRoot);
-			loggers.add(GameContent.wv);	
-		// /von Jens
+		//TODO clean this up
+		WorldView wv = new WorldView(game);
+		loggers.add(wv);	
+		PrintStream oldout = System.out;
+		PrintStream p = null;
+		FileOutputStream out = null;
 		if(logFile == null)
 			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers); //TODO debug edited
 		else {
-			PrintStream oldout = System.out;
-			FileOutputStream out = null;
 			try {
 				out = new FileOutputStream(logFile);
 			}
 			catch (IOException e) {
 				MessageBox.displayMessage("Error with log", "Could not create log file "+logFile.getName()+", aborting.");
+				//so many IOExceptions Q_Q
+				try {
+				mapStream.close();
+				}
+				catch(IOException f) {
+					throw new IllegalStateException("Closing of MapStream didn't work");
+				}
 				return;
 			}
-			PrintStream p = new PrintStream(out, true);
+			p = new PrintStream(out, true);
 			System.setOut(p);
 			controller = Main.build(logFile.getName(), cycleCount, seed, mapStream, tactics, loggers);
 			System.setOut(oldout);
+		}
+		//TODO remove this when we actually play a game via the game screen
+		StartButton.setDisable(true);
+		MessageBox.displayMessage("Playing game now", "Game is now running, please wait");
+		//TODO load stage here and don't let controller play
+		controller.play();
+		StartButton.setDisable(false);
+		if(logFile != null) {
 			p.close();
 			try {
 			out.close();
@@ -246,17 +251,6 @@ public class SetUp extends GridPane {
 				throw new IllegalStateException("Somehow could not close file stream");
 			}
 		}
-		//TODO remove this when we actually play a game via the game screen
-		StartButton.setDisable(true);
-		MessageBox.displayMessage("Playing game now", "Game is now running, please wait");
-		// von Jens: weiß nicht genau wie das hier funktionieren soll, ich schreibe mich hier einfach mal rein :D
-			Scene gameView = new Scene(gameRoot, 1024,768);
-			ownStage.setScene(gameView);
-			ownStage.show();
-		// /von Jens
-		controller.play();
-		StartButton.setDisable(false);
-			
 	}
 
 	public void deleteTactics(TacticsListElement tacticsListElement) {

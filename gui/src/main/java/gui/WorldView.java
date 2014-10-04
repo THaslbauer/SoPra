@@ -1,15 +1,15 @@
 package gui;
 
-import game.Background;
-import game.Buoy;
-import game.GElement;
-import game.GameContent;
-import game.Kraken;
-import game.Passive;
-import game.Ship;
-import game.Tile;
-import game.Tile.Type;
-import game.Treasure;
+import gui.game.objects.Background;
+import gui.game.objects.Buoy;
+import gui.game.objects.GElement;
+import gui.game.objects.GameContent;
+import gui.game.objects.Kraken;
+import gui.game.objects.Passive;
+import gui.game.objects.Ship;
+import gui.game.objects.Tile;
+import gui.game.objects.Treasure;
+import gui.game.objects.Tile.Type;
 
 import java.io.IOException;
 import java.io.OutputStream;
