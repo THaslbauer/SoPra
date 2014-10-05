@@ -1,0 +1,706 @@
+//
+//
+//--------START---------"MOVINGOUT"
+//lässt schiffe möglichst random aus der base fahren
+//
+//
+
+anfang:flipzero 2 else UNTEN; lässt im mittel genau 1/6 der mschiffe in richtung 0 losziehen
+turn left;
+turn left;
+sense 0; Hier starten 0er Schiffe -- senst die Kachel genau vor sich
+ifany sense_celltype==home sense_celltype==empty else anfang;
+move else UTURN;
+goto STRAIGHTFROMBASE;wandert in den standardfall
+
+
+
+UNTEN:turn right;
+sense 0; Hier starten 0er Schiffe -- senst die Kachel genau vor sich
+ifany sense_celltype==home sense_celltype==empty else anfang;schaut ob kachel 0 befahrbar
+move else UTURN;falls move fehlschlägt, spring zu anfang, wenn komischerweise schiff drauf steht
+goto STRAIGHTFROMBASE;
+
+UTURN:turn right;
+turn right;
+turn right;
+move else UTURN;
+goto STRAIGHTFROMBASE;
+
+
+
+
+//
+//
+//---------ENDE------------"MOVINGOUT"
+//
+//
+//
+
+
+
+//
+//
+//---------START-------------"STRAIGHTFROMBASE"
+//
+//
+//
+
+
+STRAIGHTFROMBASE:if ship_direction<3 else SBINAER345;
+if ship_direction==0 else SBINAER12;
+mark 3;
+goto SE;
+
+SBINAER12:if ship_direction==1 else SBINAER2;
+mark 4;
+goto SE;
+
+SBINAER2:mark 5;
+goto SE;
+
+SBINAER345:if ship_direction==3 else SBINAER45;
+mark 0;
+goto SE;
+
+SBINAER45:if ship_direction==4 else SBINAER5;
+mark 1;
+goto SE;
+
+SBINAER5:mark 2;
+goto SE;
+
+//stay in straight mode
+//checks ob genger
+SE:sense 0;
+ifall sense_celltype!=island sense_celltype!=enemyhome else NICHTBEFAHRBAR;
+//ist befahrbar also versucht zu fahren, wenn eigenes schiff es blockiert, buoy und random
+move else RANDOMMODE;
+//bewegung hat geklappt, also danach nochmal
+goto STRAIGHTFROMBASE;
+
+NICHTBEFAHRBAR:if sense_celltype==island else STRAIGHT_NOISLE; check ob insel
+refresh 0 else aufheben; versucht zu refreshen
+aufheben:pickup 0 else RANDOMMODE;versucht schatz von insel aufzuheben, sonst random
+//picked up treasure, so go back immediately
+turn left;
+turn left;
+turn left;
+goto HOMESWEETHOME;
+
+//if there is no ilse after sensing
+STRAIGHT_NOISLE:move else RANDOMMODE;
+goto STRAIGHTFROMBASE;
+
+
+
+//
+//
+//-----------ENDE-----------------"STRAIGHTFROMBASE"
+//
+//
+//
+
+
+
+//
+//
+//----------START------------------"PLACEBUOY"
+//places a buoy that points to base AND GOES TO RANDOMMODE
+//if a ship enters this state, it has to go to the random state after that
+//
+PLACEBUOY:if ship_direction<3 else BINAER345;
+if ship_direction==0 else BINAER12;
+mark 3;
+goto RANDOMMODE;
+
+BINAER12:if ship_direction==1 else BINAER2;
+mark 4;
+goto RANDOMMODE;
+
+BINAER2:mark 5;
+goto RANDOMMODE;
+
+BINAER345:if ship_direction==3 else BINAER45;
+mark 0;
+goto RANDOMMODE;
+
+BINAER45:if ship_direction==4 else BINAER5;
+mark 1;
+goto RANDOMMODE;
+
+BINAER5:mark 2;
+goto RANDOMMODE;
+
+
+//
+//
+//-----------ENDE----------------"PLACEBUOY"
+//
+//
+//
+
+//
+//
+//------------START--------------------"HOMESWEETHOME"
+//this is a state where the ship trys to follow a buoy that showed the right way home
+//
+//
+HOMESWEETHOME:sense 0;
+if sense_celltype!=home else YAY;
+move else AUSWEICH;
+goto HOMESWEETHOME;
+AUSWEICH:turn left;
+turn right;
+goto HOMESWEETHOME;
+
+YAY:move else YAY;
+if ship_load>0 else RESET; TODO STREITEN
+drop;
+sense 5;
+if sense_celltype==home else KAHN;
+turn left;
+NOCH:move else NOCH;
+turn left;
+turn left;
+goto STRAIGHTFROMBASE;
+KAHN:sense 1;
+if sense_celltype==home else AUFSEE;
+turn right;
+NOCH2:move else NOCH2;
+turn right;
+turn right;
+goto STRAIGHTFROMBASE;
+AUFSEE:turn left;
+turn left;
+turn left;
+goto STRAIGHTFROMBASE;
+
+
+//
+//
+//-----------------ENDE---------------"HOMESWEETHOME"
+//
+//
+//
+
+//
+//
+//--------------START-------------------"RANDOMMODE"
+//
+//
+//
+
+RANDOMMODE:flipzero 2 else linksnopi;
+turn right;
+goto BIATCHMO;
+linksnopi:turn left;
+goto BIATCHMO;
+
+BIATCHMO:sense 0;
+ifany sense_marker0 sense_marker1 sense_marker2 sense_marker3 sense_marker4 sense_marker5 else irgendwie;
+goto WATERANDBUOY;
+irgendwie:ifall sense_celltype!=island sense_celltype!=enemyhome else CANNOT;
+if sense_shiptype==enemy else IMMA;
+ifall ship_moral>2 ship_condition>1 else RANDOMMODE;
+move else RANDOMMODE;
+//pickup 6 else RANDOMMODE; brauchen wir nicht!
+goto BIATCHMO;
+IMMA:move else RANDOMMODE;
+goto BIATCHMO;
+
+CANNOT:if sense_celltype==island else RANDOMMODE; TODO NEUE SPRUNGMARKE; WENN MAN KEIN PICKUP BRAUCHT
+refresh 0 else othertry;
+othertry:pickup 0 else NEWPI;
+NEWPI:pickup 1 else NEWPO;
+NEWPO:pickup 5 else RANDOMMODE;
+goto RANDOMMODE;
+
+
+WATERANDBUOY:if sense_celltype==home else NOTHOMEBIATCH;
+if ship_load>0 else MOVETHENRESET;
+goto YAY;
+NOTHOMEBIATCH:if ship_load>0 else MOVETHENFOLLOWFLIP;
+move else RANDOMMODE; TODO CHECK IF HERE FORCE MOVE, OR FLIPMOVE
+ifany sense_marker0 sense_marker1 sense_marker2 else test1;
+
+if sense_marker0 else Nicht0; SENSE MARKER 0
+
+//TODO: CHECK THIS SHIAT
+if ship_direction<3 else bigger3;
+if ship_direction==0 else 1or2;
+WAITFORIT:move else WAITFORIT;
+goto HOMESWEETHOME;
+
+
+1or2:if ship_direction==1 else Mark0_2;
+turn left;
+WAITFORIT1:move else WAITFORIT1;
+goto HOMESWEETHOME;
+
+Mark0_2:turn left;
+turn left;
+WAITFORIT2:move else WAITFORIT2;
+goto HOMESWEETHOME;
+
+bigger3:if ship_direction==3 else Mark0_4or5;
+turn right;
+turn right;
+turn right;
+WAITFORIT3:move else WAITFORIT3;
+goto HOMESWEETHOME;
+
+Mark0_4or5:if ship_direction==4 else Mark0_5;
+turn right;
+turn right;
+WAITFORIT4:move else WAITFORIT4;
+goto HOMESWEETHOME;
+
+Mark0_5:turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Nicht0:if sense_marker1 else NICHT0_1; SENSE MARKER 1
+
+if ship_direction<3 else bigger3_1;
+if ship_direction==0 else 1or2_1;
+turn right;
+WAITFORIT6:move else WAITFORIT6;
+goto HOMESWEETHOME;
+
+
+1or2_1:if ship_direction==1 else Mark0_2_1;
+WAITFORIT7:move else WAITFORIT7;
+goto HOMESWEETHOME;
+
+Mark0_2_1:turn left;
+WAITFORIT8:move else WAITFORIT8;
+goto HOMESWEETHOME;
+
+bigger3_1:if ship_direction==3 else Mark0_4or5_1;
+turn left;
+turn left;
+WAITFORIT9:move else WAITFORIT9;
+goto HOMESWEETHOME;
+
+Mark0_4or5_1:if ship_direction==4 else Mark0_5_1;
+turn left;
+turn left;
+turn left;
+WAITFORIT10:move else WAITFORIT10;
+goto HOMESWEETHOME;
+
+Mark0_5_1:turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+NICHT0_1:if sense_marker2 else test1; SENSE MARKER 2
+
+if ship_direction<3 else bigger3_2;
+if ship_direction==0 else 1or2_2;
+turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+
+1or2_2:if ship_direction==1 else Mark0_2_2;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_2_2:move else WAITFORIT;
+goto HOMESWEETHOME;
+
+bigger3_2:if ship_direction==3 else Mark0_4or5_2;
+turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_4or5_2:if ship_direction==4 else Mark0_5_2;
+turn left;
+turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_5_2:turn right;
+turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+
+test1:if sense_marker3 else 4ODER5; SENSE MARKER 3
+
+if ship_direction<3 else bigger3_3;
+if ship_direction==0 else 1or2_3;
+turn right;
+turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+
+1or2_3:if ship_direction==1 else Mark0_2_3;
+turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_2_3:turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+bigger3_3:if ship_direction==3 else MARIT;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+MARIT:if ship_direction==4 else Mark0_5_3;
+turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_5_3:turn left;
+turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+4ODER5:if sense_marker4 else NUR5; SENSE MARKER 4
+
+if ship_direction<3 else bigger3_4;
+if ship_direction==0 else 1or2_4;
+turn left;
+turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+
+1or2_4:if ship_direction==1 else Mark0_2_4;
+turn right;
+turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_2_4:turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+bigger3_4:if ship_direction==3 else Mark0_4or5_4;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_4or5_4:if ship_direction==4 else Mark0_5_4;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_5_4:turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+NUR5:if sense_marker4 else RANDOMMODE; SENSE MARKER 5
+
+if ship_direction<3 else bigger3_5;
+if ship_direction==0 else 1or2_5;
+turn left;
+turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+
+1or2_5:if ship_direction==1 else Mark0_2_5;
+turn right;
+turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_2_5:turn right;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+bigger3_5:if ship_direction==3 else Mark0_4or5_5;
+turn right;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_4or5_5:if ship_direction==4 else Mark0_5_5;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+Mark0_5_5:turn left;
+move else WAITFORIT;
+goto HOMESWEETHOME;
+
+//
+//
+//--------------ENDE---------------------"RANDOMMODE"
+//
+//
+//
+
+
+//
+//
+//------------------START-------------------"FOLLOWTHATBUOYS"
+//
+//
+//
+
+FOLLOWTHATBUOYS:ifany sense_marker0 sense_marker1 sense_marker2 else atest1;
+
+if sense_marker0 else aNicht0; SENSE MARKER 0
+
+//TODO: CHECK THIS SHIAT
+if ship_direction<3 else abigger3;
+if ship_direction==0 else a1or2;
+turn left;
+turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+
+a1or2:if ship_direction==1 else aMark0_2;
+turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_2:turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+abigger3:if ship_direction==3 else aMark0_4or5;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_4or5:if ship_direction==4 else aMark0_5;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_5:turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aNicht0:if sense_marker1 else aNICHT0_1; SENSE MARKER 1
+
+if ship_direction<3 else abigger3_1;
+if ship_direction==0 else a1or2_1;
+turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+
+a1or2_1:if ship_direction==1 else aMark0_2_1;
+turn right;
+turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_2_1:turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+abigger3_1:if ship_direction==3 else aMark0_4or5_1;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_4or5_1:if ship_direction==4 else aMark0_5_1;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_5_1:turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aNICHT0_1:if sense_marker2 else atest1; SENSE MARKER 2
+
+if ship_direction<3 else abigger3_2;
+if ship_direction==0 else a1or2_2;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+
+a1or2_2:if ship_direction==1 else aMark0_2_2;
+turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_2_2:turn right;
+turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+abigger3_2:if ship_direction==3 else aMark0_4or5_2;
+turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_4or5_2:if ship_direction==4 else aMark0_5_2;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+//add a move here if nötig
+aMark0_5_2:goto STRAIGHTFROMBASE;
+
+
+atest1:if sense_marker3 else a4ODER5; SENSE MARKER 3
+
+if ship_direction<3 else abigger3_3;
+if ship_direction==0 else a1or2_3;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+
+a1or2_3:if ship_direction==1 else aMark0_2_3;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_2_3:turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+abigger3_3:if ship_direction==3 else aMARIT;
+turn left;
+turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMARIT:if ship_direction==4 else aMark0_5_3;
+turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_5_3:turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+a4ODER5:if sense_marker4 else aNUR5; SENSE MARKER 4
+
+if ship_direction<3 else abigger3_4;
+if ship_direction==0 else a1or2_4;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+
+a1or2_4:if ship_direction==1 else aMark0_2_4;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_2_4:turn left;;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+abigger3_4:if ship_direction==3 else aMark0_4or5_4;
+turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_4or5_4:if ship_direction==4 else aMark0_5_4;
+turn right;
+turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_5_4:turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aNUR5:if sense_marker4 else RANDOMMODE; SENSE MARKER 5
+
+if ship_direction<3 else abigger3_5;
+if ship_direction==0 else a1or2_5;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+
+a1or2_5:if ship_direction==1 else aMark0_2_5;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_2_5:turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+abigger3_5:if ship_direction==3 else aMark0_4or5_5;
+turn left;
+turn left;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_4or5_5:if ship_direction==4 else aMark0_5_5;
+turn right;
+turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+aMark0_5_5:turn right;
+turn right;
+//move else FOLLOWWAITFORIT;
+goto STRAIGHTFROMBASE;
+
+
+//
+//
+//-------------------ENDE-------------"FOLLOWTHATBUOYS"
+//
+//
+//
+
+
+MOVETHENRANDOM:move else RANDOMMODE;
+goto RANDOMMODE;
+
+
+MOVETHENRESET:move else RANDOMMODE;
+RESET:if ship_direction<3 else DIR345;
+if ship_direction==0 else DIR12;
+goto anfang;
+DIR12:if ship_direction==1 else DIR2;
+turn left;
+goto anfang;
+DIR2:turn left;
+turn left;
+goto anfang;
+DIR345:if ship_direction==3 else DIR45;
+turn right;
+turn right;
+turn right;
+goto anfang;
+DIR45:if ship_direction==4 else DIR5:
+turn right;
+turn right;
+goto anfang;
+DIR5:turn right;
+goto anfang;
+
+MOVETHENFOLLOWFLIP:move else RANDOMMODE;
+flipzero 2 else FOLLOW;
+goto RANDOMMODE;
+FOLLOW:goto FOLLOWTHATBUOYS;
