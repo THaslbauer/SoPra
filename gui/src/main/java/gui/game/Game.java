@@ -36,7 +36,7 @@ public class Game extends GridPane {
 		this.setUp = setUp;
 		this.paused = true;
 		this.wv = wv;
-//		this.add(wv, 1, 1);
+		this.add(wv, 1, 1);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
