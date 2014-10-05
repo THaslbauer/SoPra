@@ -1,4 +1,4 @@
-package gui;
+package gui.game;
 
 import gui.game.objects.Background;
 import gui.game.objects.Buoy;
@@ -37,13 +37,12 @@ import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 import de.unisaarland.cs.st.pirates.logger.LogWriter;
 
-public class WorldView implements de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter {
+public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter {
 
 	private LinkedList<Transition> transitions = new LinkedList<Transition>();
 	public Duration deltaMS = new Duration(500); // Important value!!
 	
-	public WorldView(GridPane parent) {
-		this.parent = parent;
+	public WorldView(Game parent) {
 		initGUIStuff();
 	}
 	
@@ -163,8 +162,8 @@ public class WorldView implements de.unisaarland.cs.st.pirates.group1.sim.logger
 			}
 			default : {}
 		} // end switch
-		
-		popUpAppear(ge);
+		//TODO: wtf is das hier? es funzt auf jeden fall grad ned
+//		popUpAppear(ge);
 		ge.node.fitWidthProperty().bind(tileSize);
 		ge.node.setPreserveRatio(true);
 		GameContent.tiles[x][y].add(ge);
@@ -332,8 +331,6 @@ public class WorldView implements de.unisaarland.cs.st.pirates.group1.sim.logger
 	
 	/* --- GUI - STUFF */
 	
-	private GridPane parent;
-	private AnchorPane root = new AnchorPane();
 	private GridPane map1 = new GridPane() {
 		@Override
 		protected double computePrefHeight(double width) {
@@ -369,9 +366,8 @@ public class WorldView implements de.unisaarland.cs.st.pirates.group1.sim.logger
 		height.set(300);
 		// !!
 		
-		parent.add(root, 1, 1);
-		root.getChildren().add(map1);
-		root.getChildren().add(map2);
+		this.getChildren().add(map1);
+		this.getChildren().add(map2);
 		
 		
 //		map1.prefWidthProperty().set(width.get());
@@ -399,13 +395,6 @@ public class WorldView implements de.unisaarland.cs.st.pirates.group1.sim.logger
 	}
 	
 	
-	public void popUpAppear(GElement ge) {
-		if(Game.fastMode) { // add Transition
-			
-		} else {
-			
-		}
-	}
 	
 	public void disappear(GElement ge) {
 		
