@@ -300,6 +300,10 @@ public void play(){
 	sema.release();
 }
 
+public void step() throws UnsupportedOperationException{
+	simulator.step();
+}
+
 	/**
 	 * The order for the controller to pause the simulation loop
 	 * Has to be 'synchronized' for concurrency purposes.
