@@ -1,6 +1,6 @@
 package gui.game.objects;
 
-import gui.WorldView;
+import gui.game.WorldView;
 
 import java.util.ArrayList;
 import java.util.HashMap;

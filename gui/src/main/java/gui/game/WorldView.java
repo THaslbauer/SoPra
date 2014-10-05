@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.rmi.CORBA.Tie;
 
@@ -42,7 +43,7 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 	private LinkedList<Transition> transitions = new LinkedList<Transition>();
 	public Duration deltaMS = new Duration(500); // Important value!!
 	
-	public WorldView(Game parent) {
+	public WorldView(double width, double height) {
 		initGUIStuff();
 	}
 	
@@ -351,15 +352,15 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 	public final double magicNumber = 1.66666666666666666666666666666;
 	
 	private void initGUIStuff() {
-		seaImage = new Image(""+getClass().getResource("/gui/game/sea.png"));
-		supplyImage = new Image(""+getClass().getResource("/gui/game/supply.png"));
-		islandImage = new Image(""+getClass().getResource("/gui/game/island.png"));
-		baseImage = new Image(""+getClass().getResource("/gui/game/base.png"));
-		krakenImage = new Image(""+getClass().getResource("/gui/game/kraken.png"));
-		treasureImage = new Image(""+getClass().getResource("/gui/game/treasure.png"));
-		buoyImage = new Image(""+getClass().getResource("/gui/game/buoy.png"));
-		shipImages[0] = new Image(""+getClass().getResource("/gui/game/ship_a.png"));
-		shipImages[1] = new Image(""+getClass().getResource("/gui/game/ship_b.png"));
+		seaImage = new Image(""+getClass().getResource("objects/sea.png"));
+		supplyImage = new Image(""+getClass().getResource("objects/supply.png"));
+		islandImage = new Image(""+getClass().getResource("objects/island.png"));
+		baseImage = new Image(""+getClass().getResource("objects/base.png"));
+		krakenImage = new Image(""+getClass().getResource("objects/kraken.png"));
+		treasureImage = new Image(""+getClass().getResource("objects/treasure.png"));
+		buoyImage = new Image(""+getClass().getResource("objects/buoy.png"));
+		shipImages[0] = new Image(""+getClass().getResource("objects/ship_a.png"));
+		shipImages[1] = new Image(""+getClass().getResource("objects/ship_b.png"));
 		
 		// somehow determine the available space TODO TODO TODO
 		width.set(500);
@@ -400,7 +401,10 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 		
 	}
 
-	
+	public Animation[] getCycleAnimations() {
+		//TODO implement
+		return new Animation[0];
+	}
 	
 	
 	

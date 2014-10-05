@@ -1,6 +1,6 @@
 package gui.game.objects;
 
-import gui.WorldView;
+import gui.game.WorldView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import de.unisaarland.cs.st.pirates.logger.LogWriter;

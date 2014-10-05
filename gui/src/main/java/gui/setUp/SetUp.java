@@ -1,7 +1,7 @@
 package gui.setUp;
 
-import gui.WorldView;
 import gui.game.Game;
+import gui.game.WorldView;
 import gui.game.objects.GameContent;
 
 import java.io.File;
@@ -202,21 +202,25 @@ public class SetUp extends GridPane {
 			MessageBox.displayMessage("Error with map", "Could not open map file "+mapFile.getName());
 			return;
 		}
+		//create all initial stuff
 		Controller controller;
-		Stage gameStage = new Stage();
-		Game game = new Game(gameStage, this.ownStage);
+		//create logger list
 		List<ExtendedLogWriter> loggers = new LinkedList<ExtendedLogWriter>();
 		//TODO add the proper thing in here, instead of the debug logger
+		//create a debug logger
 		loggers.add(new OutLogger());
 		//TODO clean this up
-		WorldView wv = new WorldView(game);
+		//create our GUI logger
+		WorldView wv = new WorldView(800, 600);
 		loggers.add(wv);	
+		//now: Stream-redirection-voodoo if we hav to save the debug output to file
 		PrintStream oldout = System.out;
 		PrintStream p = null;
 		FileOutputStream out = null;
 		if(logFile == null)
 			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers); //TODO debug edited
 		else {
+			//here be voodoo
 			try {
 				out = new FileOutputStream(logFile);
 			}
@@ -236,12 +240,14 @@ public class SetUp extends GridPane {
 			controller = Main.build(logFile.getName(), cycleCount, seed, mapStream, tactics, loggers);
 			System.setOut(oldout);
 		}
-		//TODO remove this when we actually play a game via the game screen
-		StartButton.setDisable(true);
-		MessageBox.displayMessage("Playing game now", "Game is now running, please wait");
 		//TODO load stage here and don't let controller play
-		controller.play();
-		StartButton.setDisable(false);
+		Stage gameStage = new Stage();
+		Game game = new Game(gameStage, this.ownStage, controller, wv);
+		gameStage.setWidth(1000);
+		gameStage.setHeight(800);
+		ownStage.hide();
+		gameStage.showAndWait();
+		
 		if(logFile != null) {
 			p.close();
 			try {
