@@ -8,9 +8,11 @@ import util.MessageBox;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -65,10 +67,14 @@ public class TacticsListElement extends HBox {
 			tac.useDelimiter("\\A");
 			t.setText(tac.next());
 			tac.close();
-			VBox root = new VBox(t);
+			ScrollPane root = new ScrollPane();
+			root.setContent(t);
 			Scene tacticsScene = new Scene(root);
 			Stage fileDisplay = new Stage();
 			fileDisplay.setScene(tacticsScene);
+			fileDisplay.setTitle(tacticsFile.getName());
+			fileDisplay.setMinWidth(400);
+			fileDisplay.setMinHeight(500);
 			fileDisplay.show();
 		}
 		catch(IOException e) {

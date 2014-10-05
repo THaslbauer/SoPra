@@ -1,5 +1,9 @@
 package gui.setUp;
 
+import gui.WorldView;
+import gui.game.Game;
+import gui.game.objects.GameContent;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -17,6 +21,7 @@ import de.unisaarland.cs.st.pirates.group1.sim.logger.ExtendedLogWriter;
 import util.MessageBox;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -41,23 +46,6 @@ public class SetUp extends GridPane {
 	private boolean mapFileAdded;
 	private boolean tacticsFileAdded;
 	private List<File> tacticsFiles;
-	
-	public SetUp(Stage stage) {
-		this.ownStage = stage;
-		this.tacticsFiles = new LinkedList<File>();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("SetUp.fxml"));
-		loader.setController(this);
-		loader.setRoot(this);
-		try {
-		loader.load();
-		}
-		catch(IOException e) {
-			e.printStackTrace();
-			throw new UnsupportedOperationException(e.getCause());
-		}
-		StartButton.setDisable(true);
-		ownStage.setTitle("Simulator: configuration");
-	}
 	
 	@FXML
 	private Text mapPathText;
@@ -91,6 +79,23 @@ public class SetUp extends GridPane {
 	
 	@FXML
 	private VBox tacticsBox;
+	
+	public SetUp(Stage stage) {
+		this.ownStage = stage;
+		this.tacticsFiles = new LinkedList<File>();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("SetUp.fxml"));
+		loader.setController(this);
+		loader.setRoot(this);
+		try {
+		loader.load();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+			throw new UnsupportedOperationException(e.getCause());
+		}
+		StartButton.setDisable(true);
+		ownStage.setTitle("Simulator: configuration");
+	}
 	
 
 	
@@ -147,7 +152,8 @@ public class SetUp extends GridPane {
     void loadTacticsButtonPressed(ActionEvent event) {
 		FileChooser fc = new FileChooser();
 		File tactic = fc.showOpenDialog(ownStage);
-		tacticsBox.getChildren().add(new TacticsListElement(tactic, this));
+		TacticsListElement tacticsElem = new TacticsListElement(tactic, this);
+		tacticsBox.getChildren().add(tacticsElem);
 		tacticsFiles.add(tactic);
 		tacticsFileAdded = true;
 		StartButton.setDisable(!(tacticsFileAdded && mapFileAdded));
@@ -197,37 +203,61 @@ public class SetUp extends GridPane {
 			return;
 		}
 		Controller controller;
+		Stage gameStage = new Stage();
+		Game game = new Game(gameStage, this.ownStage);
 		List<ExtendedLogWriter> loggers = new LinkedList<ExtendedLogWriter>();
 		//TODO add the proper thing in here, instead of the debug logger
 		loggers.add(new OutLogger());
+		//TODO clean this up
+		WorldView wv = new WorldView(game);
+		loggers.add(wv);	
+		PrintStream oldout = System.out;
+		PrintStream p = null;
+		FileOutputStream out = null;
 		if(logFile == null)
-			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers);
+			controller = Main.build(null, cycleCount, seed, mapStream, tactics, loggers); //TODO debug edited
 		else {
-			FileOutputStream out = null;
 			try {
 				out = new FileOutputStream(logFile);
 			}
 			catch (IOException e) {
 				MessageBox.displayMessage("Error with log", "Could not create log file "+logFile.getName()+", aborting.");
+				//so many IOExceptions Q_Q
+				try {
+				mapStream.close();
+				}
+				catch(IOException f) {
+					throw new IllegalStateException("Closing of MapStream didn't work");
+				}
 				return;
 			}
-			PrintStream p = new PrintStream(out, true);
+			p = new PrintStream(out, true);
 			System.setOut(p);
 			controller = Main.build(logFile.getName(), cycleCount, seed, mapStream, tactics, loggers);
+			System.setOut(oldout);
 		}
 		//TODO remove this when we actually play a game via the game screen
 		StartButton.setDisable(true);
 		MessageBox.displayMessage("Playing game now", "Game is now running, please wait");
+		//TODO load stage here and don't let controller play
 		controller.play();
 		StartButton.setDisable(false);
-			
+		if(logFile != null) {
+			p.close();
+			try {
+			out.close();
+			}
+			catch(IOException e) {
+				throw new IllegalStateException("Somehow could not close file stream");
+			}
+		}
 	}
 
 	public void deleteTactics(TacticsListElement tacticsListElement) {
 		int index = tacticsBox.getChildren().indexOf(tacticsListElement);
 		tacticsBox.getChildren().remove(index);
 		tacticsFiles.remove(index);
-		if(tacticsFiles.isEmpty()) {
+		if(tacticsFiles.size() == 0) {
 			tacticsFileAdded = false;
 			StartButton.setDisable(true);
 		}
