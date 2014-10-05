@@ -70,7 +70,7 @@ turn left;
 turn right;
 goto 64 
 move else 71 
-if ship_load>0 else 411 
+if ship_load>0 else 409 
 drop;
 sense 5;
 if sense_celltype==home else 81 
@@ -112,9 +112,9 @@ pickup 1 else 111
 pickup 5 else 92 
 goto 92 
 if sense_celltype==home else 116 
-if ship_load>0 else 410 
+if ship_load>0 else 408 
 goto 71 
-if ship_load>0 else 431 
+if ship_load>0 else 429 
 move else 92 
 ifany sense_marker0 sense_marker1 sense_marker2 else 200 
 if sense_marker0 else 146 
@@ -252,132 +252,131 @@ goto 64
 turn left;
 move else 122 
 goto 64 
-if sense_marker4 else 92 
-if ship_direction<3 else 271 
-if ship_direction==0 else 261 
+if ship_direction<3 else 269 
+if ship_direction==0 else 259 
+turn left;
+move else 122 
+goto 64 
+if ship_direction==1 else 264 
 turn left;
 turn left;
 move else 122 
 goto 64 
-if ship_direction==1 else 267 
 turn right;
 turn right;
 turn right;
 move else 122 
 goto 64 
+if ship_direction==3 else 274 
 turn right;
-turn right;
-move else 122 
-goto 64 
-if ship_direction==3 else 275 
 turn right;
 move else 122 
 goto 64 
 if ship_direction==4 else 278 
+turn right;
 move else 122 
 goto 64 
-turn left;
 move else 122 
 goto 64 
-ifany sense_marker0 sense_marker1 sense_marker2 else 345 
-if sense_marker0 else 303 
-if ship_direction<3 else 295 
-if ship_direction==0 else 289 
+ifany sense_marker0 sense_marker1 sense_marker2 else 344 
+if sense_marker0 else 302 
+if ship_direction<3 else 294 
+if ship_direction==0 else 288 
 turn left;
 turn left;
 turn left;
 goto 17 
-if ship_direction==1 else 293 
+if ship_direction==1 else 292 
 turn right;
 turn right;
 goto 17 
 turn right;
 goto 17 
-if ship_direction==3 else 297 
+if ship_direction==3 else 296 
 goto 17 
-if ship_direction==4 else 300 
-turn left;
-goto 17 
-turn left;
-turn left;
-goto 17 
-if sense_marker1 else 324 
-if ship_direction<3 else 317 
-if ship_direction==0 else 309 
-turn left;
-turn left;
-goto 17 
-if ship_direction==1 else 314 
-turn right;
-turn right;
-turn right;
-goto 17 
-turn right;
-turn right;
-goto 17 
-if ship_direction==3 else 320 
-turn right;
-goto 17 
-if ship_direction==4 else 322 
-goto 17 
-turn left;
-goto 17 
-if sense_marker2 else 345 
-if ship_direction<3 else 337 
-if ship_direction==0 else 329 
-turn left;
-goto 17 
-if ship_direction==1 else 333 
-turn left;
-turn left;
-goto 17 
-turn right;
-turn right;
-turn right;
-goto 17 
-if ship_direction==3 else 341 
-turn right;
-turn right;
-goto 17 
-if ship_direction==4 else 344 
-turn right;
-goto 17 
-goto 17 
-if sense_marker3 else 366 
-if ship_direction<3 else 355 
-if ship_direction==0 else 349 
-goto 17 
-if ship_direction==1 else 352 
+if ship_direction==4 else 299 
 turn left;
 goto 17 
 turn left;
 turn left;
 goto 17 
-if ship_direction==3 else 360 
+if sense_marker1 else 323 
+if ship_direction<3 else 316 
+if ship_direction==0 else 308 
+turn left;
+turn left;
+goto 17 
+if ship_direction==1 else 313 
+turn right;
+turn right;
+turn right;
+goto 17 
+turn right;
+turn right;
+goto 17 
+if ship_direction==3 else 319 
+turn right;
+goto 17 
+if ship_direction==4 else 321 
+goto 17 
+turn left;
+goto 17 
+if sense_marker2 else 344 
+if ship_direction<3 else 336 
+if ship_direction==0 else 328 
+turn left;
+goto 17 
+if ship_direction==1 else 332 
+turn left;
+turn left;
+goto 17 
+turn right;
+turn right;
+turn right;
+goto 17 
+if ship_direction==3 else 340 
+turn right;
+turn right;
+goto 17 
+if ship_direction==4 else 343 
+turn right;
+goto 17 
+goto 17 
+if sense_marker3 else 365 
+if ship_direction<3 else 354 
+if ship_direction==0 else 348 
+goto 17 
+if ship_direction==1 else 351 
+turn left;
+goto 17 
+turn left;
+turn left;
+goto 17 
+if ship_direction==3 else 359 
 turn left;
 turn left;
 turn left;
 goto 17 
-if ship_direction==4 else 364 
+if ship_direction==4 else 363 
 turn right;
 turn right;
 goto 17 
 turn right;
 goto 17 
-if sense_marker4 else 387 
-if ship_direction<3 else 375 
-if ship_direction==0 else 371 
+if sense_marker4 else 386 
+if ship_direction<3 else 374 
+if ship_direction==0 else 370 
 turn right;
 goto 17 
-if ship_direction==1 else 373 
+if ship_direction==1 else 372 
 goto 17 
 turn left;;
 goto 17 
-if ship_direction==3 else 379 
+if ship_direction==3 else 378 
 turn left;
 turn left;
 goto 17 
-if ship_direction==4 else 384 
+if ship_direction==4 else 383 
 turn right;
 turn right;
 turn right;
@@ -385,51 +384,50 @@ goto 17
 turn right;
 turn right;
 goto 17 
-if sense_marker4 else 92 
-if ship_direction<3 else 396 
-if ship_direction==0 else 392 
+if ship_direction<3 else 395 
+if ship_direction==0 else 391 
+turn right;
 turn right;
 goto 17 
 if ship_direction==1 else 394 
-goto 17 
-turn left;
-goto 17 
-if ship_direction==3 else 400 
-turn left;
-turn left;
-goto 17 
-if ship_direction==4 else 405 
-turn right;
-turn right;
 turn right;
 goto 17 
+goto 17 
+if ship_direction==3 else 398 
+turn left;
+goto 17 
+if ship_direction==4 else 402 
+turn left;
+turn left;
+goto 17 
+turn right;
 turn right;
 turn right;
 goto 17 
 move else 92 
 goto 92 
 move else 92 
-if ship_direction<3 else 420 
-if ship_direction==0 else 414 
+if ship_direction<3 else 418 
+if ship_direction==0 else 412 
 goto 0 
-if ship_direction==1 else 417 
+if ship_direction==1 else 415 
 turn left;
 goto 0 
 turn left;
 turn left;
 goto 0 
-if ship_direction==3 else 425 
+if ship_direction==3 else 423 
 turn right;
 turn right;
 turn right;
 goto 0 
-if ship_direction==4 else 429 
+if ship_direction==4 else 427 
 turn right;
 turn right;
 goto 0 
 turn right;
 goto 0 
 move else 92 
-flipzero 2 else 434 
+flipzero 2 else 432 
 goto 92 
-goto 281 
+goto 280 

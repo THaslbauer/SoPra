@@ -401,39 +401,39 @@ Mark0_5_4:turn left;
 move else WAITFORIT;
 goto HOMESWEETHOME;
 
-NUR5:if sense_marker4 else RANDOMMODE; SENSE MARKER 5
+//SENSE MARKER 5
 
-if ship_direction<3 else bigger3_5;
+NUR5:if ship_direction<3 else bigger3_5;
 if ship_direction==0 else 1or2_5;
-turn left;
 turn left;
 move else WAITFORIT;
 goto HOMESWEETHOME;
 
 
 1or2_5:if ship_direction==1 else Mark0_2_5;
-turn right;
-turn right;
-turn right;
+turn left;
+turn left;
 move else WAITFORIT;
 goto HOMESWEETHOME;
 
 Mark0_2_5:turn right;
+turn right;
 turn right;
 move else WAITFORIT;
 goto HOMESWEETHOME;
 
 bigger3_5:if ship_direction==3 else Mark0_4or5_5;
 turn right;
+turn right;
 move else WAITFORIT;
 goto HOMESWEETHOME;
 
 Mark0_4or5_5:if ship_direction==4 else Mark0_5_5;
+turn right;
 move else WAITFORIT;
 goto HOMESWEETHOME;
 
-Mark0_5_5:turn left;
-move else WAITFORIT;
+Mark0_5_5:move else WAITFORIT;
 goto HOMESWEETHOME;
 
 //
@@ -630,37 +630,37 @@ turn right;
 //move else FOLLOWWAITFORIT;
 goto STRAIGHTFROMBASE;
 
-aNUR5:if sense_marker4 else RANDOMMODE; SENSE MARKER 5
+//SENSE MARKER 5
 
-if ship_direction<3 else abigger3_5;
+aNUR5:if ship_direction<3 else abigger3_5;
 if ship_direction==0 else a1or2_5;
+turn right;
 turn right;
 //move else FOLLOWWAITFORIT;
 goto STRAIGHTFROMBASE;
 
 
 a1or2_5:if ship_direction==1 else aMark0_2_5;
+turn right;
 //move else FOLLOWWAITFORIT;
 goto STRAIGHTFROMBASE;
 
-aMark0_2_5:turn left;
+aMark0_2_5:goto STRAIGHTFROMBASE;
 //move else FOLLOWWAITFORIT;
-goto STRAIGHTFROMBASE;
 
 abigger3_5:if ship_direction==3 else aMark0_4or5_5;
-turn left;
 turn left;
 //move else FOLLOWWAITFORIT;
 goto STRAIGHTFROMBASE;
 
 aMark0_4or5_5:if ship_direction==4 else aMark0_5_5;
-turn right;
-turn right;
-turn right;
+turn left;
+turn left;
 //move else FOLLOWWAITFORIT;
 goto STRAIGHTFROMBASE;
 
 aMark0_5_5:turn right;
+turn right;
 turn right;
 //move else FOLLOWWAITFORIT;
 goto STRAIGHTFROMBASE;
