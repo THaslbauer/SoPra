@@ -48,6 +48,9 @@ public class Game extends GridPane {
 			throw new UnsupportedOperationException(e.getCause());
 		}
 		playPauseButton.setText("Play");
+		// von Jens
+		this.add(wv, 1, 1);
+		// /von Jens
 	}
 
 	@FXML

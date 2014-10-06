@@ -2,8 +2,6 @@ package gui.setUp;
 
 import gui.game.Game;
 import gui.game.WorldView;
-import gui.game.objects.GameContent;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -34,6 +32,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class SetUp extends GridPane {
 
@@ -211,7 +210,7 @@ public class SetUp extends GridPane {
 		loggers.add(new OutLogger());
 		//TODO clean this up
 		//create our GUI logger
-		WorldView wv = new WorldView(800, 600);
+		WorldView wv = new WorldView(800, 600, new Duration(500)); // TODO set Duration properly
 		loggers.add(wv);	
 		//now: Stream-redirection-voodoo if we hav to save the debug output to file
 		PrintStream oldout = System.out;
@@ -245,6 +244,7 @@ public class SetUp extends GridPane {
 		Game game = new Game(gameStage, this.ownStage, controller, wv);
 		gameStage.setWidth(1000);
 		gameStage.setHeight(800);
+		gameStage.setScene(new Scene(game));
 		ownStage.hide();
 		gameStage.showAndWait();
 		
