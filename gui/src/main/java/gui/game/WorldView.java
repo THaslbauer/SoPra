@@ -304,6 +304,7 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 	public LogWriter notify(Entity ent, int id, Key k, int val)
 			throws NullPointerException, IllegalArgumentException,
 			IllegalStateException {
+		//TODO add missing cases!
 		switch(ent) {
 			case SHIP : {
 				Ship s = ships.get(id);
