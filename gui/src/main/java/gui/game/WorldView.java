@@ -15,7 +15,9 @@ import java.util.LinkedList;
 
 import util.CoolImageView;
 import javafx.animation.Animation;
+import javafx.animation.RotateTransition;
 import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.beans.InvalidationListener;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.value.ChangeListener;
@@ -250,24 +252,26 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 	public LogWriter destroy(Entity arg0, int arg1)
 			throws NullPointerException, IllegalArgumentException,
 			IllegalStateException {
-//		if(arg0 == Entity.SHIP) {
-//			Ship s = GameContent.ships.get(arg1);
-//			if(s.fighting) { // OMG this ship has lost a fight! Let it explode
-//				
-//			} else if(s.beaching) { // OMG this ship beached! break it hard and EXPLODE!
-//				
-//			} else { // Lol this ship's pc ran out. Let's make the biggest explosion ever!!
-//				
-//			}
-//			GameContent.tiles[s.x][s.y].getChildren().remove(s.node);
-//			GameContent.ships.remove(arg1);
-//		}
-//		else {
-//			Passive s = GameContent.passives.get(arg1);
-//			disappear(s);
-//			GameContent.tiles[s.x][s.y].getChildren().remove(s.node);
-//			GameContent.passives.remove(arg1);
-//		}
+		if(arg0 == Entity.SHIP) {
+			Ship s = ships.get(arg1);
+			if(s.fighting) { // OMG this ship has lost a fight! Let it explode
+				
+			} else if(s.beaching) { // OMG this ship beached! break it hard and EXPLODE!
+				
+			} else { // Lol this ship's pc ran out. Let's make the biggest explosion ever!!
+				
+			}
+			GridPane n = (GridPane) s.getParent();
+			n.getChildren().remove(s);
+			ships.remove(arg1);
+		}
+		else {
+			Passive s = passives.get(arg1);
+			disappear(s);
+			GridPane n = (GridPane) s.getParent();
+			n.getChildren().remove(s);
+			passives.remove(arg1);
+		}
 		return this;
 	}
 
@@ -300,68 +304,68 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 	public LogWriter notify(Entity ent, int id, Key k, int val)
 			throws NullPointerException, IllegalArgumentException,
 			IllegalStateException {
-//		switch(ent) {
-//			case SHIP : {
-//				Ship s = GameContent.ships.get(id);
-//				switch(k) {
-//					case X_COORD : {
-//						TranslateTransition tt = new TranslateTransition();
-//						tt.setNode(s.node);
-//						int dx = val - s.x;
-//						Duration delay = s.fighting ? new Duration(100) : new Duration(0);
-//						tt.setDelay(delay); // make fight animation before
-//						tt.setDuration(deltaMS.subtract(delay));
-//						tt.setToX(dx*sizePerTile);
-//						transitions.add(tt);
-//						s.x = val;
-//						break;
-//					}
-//					case Y_COORD : {
-//						TranslateTransition tt = new TranslateTransition(deltaMS, s.node);
-//						int dy = val - s.y;
-//						Duration delay = s.fighting ? new Duration(100) : new Duration(0);
-//						tt.setDelay(delay); // make fight animation before
-//						tt.setDuration(deltaMS.subtract(delay));
-//						tt.setToY(dy*sizePerTile);
-//						transitions.add(tt);
-//						s.y = val;
-//						break;
-//					}
-//					case DIRECTION : {
-//						RotateTransition rt = new RotateTransition(deltaMS, s.node);
-//						rt.setFromAngle(60 * s.direction); 
-//						rt.setToAngle(60 * val);
-//						s.direction = val;
-//						transitions.add(rt);
-//						break;
-//					}
-//				}
-//				break;
-//			} // SHIP
-//			case KRAKEN : {
-//				Kraken kraken = (Kraken)GameContent.passives.get(id);
-//				if(k == Key.X_COORD) {
-//					TranslateTransition tt = new TranslateTransition(deltaMS, kraken.node);
-//					int dx = val - kraken.x;
-//					tt.setByX(dx*sizePerTile);
-//					transitions.add(tt);
-//					kraken.x = val;
-//				} else if(k == Key.Y_COORD) {
-//					TranslateTransition tt = new TranslateTransition(deltaMS, kraken.node);
-//					int dy = val - kraken.y;
-//					tt.setByY(dy*sizePerTile);
-//					transitions.add(tt);
-//					kraken.y = val;
-//				}
-//				break;
-//			}
-//			case BUOY:
-//				break;
-//			case TREASURE:
-//				break;
-//			default:
-//				break;
-//		}
+		switch(ent) {
+			case SHIP : {
+				Ship s = ships.get(id);
+				switch(k) {
+					case X_COORD : {
+						TranslateTransition tt = new TranslateTransition();
+						tt.setNode(s);
+						int dx = val - s.x;
+						Duration delay = s.fighting ? new Duration(100) : new Duration(0);
+						tt.setDelay(delay); // make fight animation before
+						tt.setDuration(deltaMS.subtract(delay));
+						tt.setToX(dx*tileSize.get());
+						transitions.add(tt);
+						s.x = val;
+						break;
+					}
+					case Y_COORD : {
+						TranslateTransition tt = new TranslateTransition(deltaMS, s);
+						int dy = val - s.y;
+						Duration delay = s.fighting ? new Duration(100) : new Duration(0);
+						tt.setDelay(delay); // make fight animation before
+						tt.setDuration(deltaMS.subtract(delay));
+						tt.setToY(dy*tileSize.get());
+						transitions.add(tt);
+						s.y = val;
+						break;
+					}
+					case DIRECTION : {
+						RotateTransition rt = new RotateTransition(deltaMS, s);
+						rt.setFromAngle(60 * s.direction); 
+						rt.setToAngle(60 * val);
+						s.direction = val;
+						transitions.add(rt);
+						break;
+					}
+				}
+				break;
+			} // SHIP
+			case KRAKEN : {
+				Kraken kraken = (Kraken)passives.get(id);
+				if(k == Key.X_COORD) {
+					TranslateTransition tt = new TranslateTransition(deltaMS, kraken);
+					int dx = val - kraken.x;
+					tt.setByX(dx*tileSize.get());
+					transitions.add(tt);
+					kraken.x = val;
+				} else if(k == Key.Y_COORD) {
+					TranslateTransition tt = new TranslateTransition(deltaMS, kraken);
+					int dy = val - kraken.y;
+					tt.setByY(dy*tileSize.get());
+					transitions.add(tt);
+					kraken.y = val;
+				}
+				break;
+			}
+			case BUOY:
+				break;
+			case TREASURE:
+				break;
+			default:
+				break;
+		}
 		return this;
 	}
 
@@ -412,8 +416,8 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 	
 	// Size - stuff
 	private DoubleBinding tileSize; // The Size of a Tile as is, regardless of spacing stuff and shit
-	private DoubleBinding tileWidth; // The width that a tile should have in grid (with spacing)
-	private DoubleBinding tileHeight; // The width that a tile should have in grid (with spacing)
+	//private DoubleBinding tileWidth; // The width that a tile should have in grid (with spacing)
+	//private DoubleBinding tileHeight; // The width that a tile should have in grid (with spacing)
 	
 	public int xs=0, ys=0;
 	private int spaceWidth = 100, spaceHeight = 100;
