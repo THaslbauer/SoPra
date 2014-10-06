@@ -218,9 +218,9 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 				passives.put(arg1,treasure);
 				treasure.setImage(treasureImage);
 				if(y % 2 != 0)  // ungerade
-					treasuremap2.add(treasure, x, y);
+					map2.add(treasure, x, (y-1)/2);
 				else
-					treasuremap1.add(treasure, x, y);
+					map1.add(treasure, x, y/2);
 				ge = treasure;
 				break;
 			}
@@ -229,9 +229,9 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 				passives.put(arg1, buoy);
 				buoy.setImage(buoyImage);
 				if(y % 2 != 0)  // ungerade
-					buoymap2.add(buoy, x, y);
+					map2.add(buoy, x, y);
 				else
-					buoymap1.add(buoy, x, y);
+					map1.add(buoy, x, y);
 				ge = buoy;
 				break;
 			}
@@ -401,10 +401,6 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 	
 	private GridPane map1 = new GridPane();
 	private GridPane map2 = new GridPane();
-	private GridPane buoymap1 = new GridPane();
-	private GridPane buoymap2 = new GridPane();
-	private GridPane treasuremap1 = new GridPane();
-	private GridPane treasuremap2 = new GridPane();
 	
 	
 	// Image Stuff
@@ -434,7 +430,7 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 		shipImages[0] = new Image(""+getClass().getResource("objects/ship_a.png"));
 		shipImages[1] = new Image(""+getClass().getResource("objects/ship_b.png"));
 		
-		this.getChildren().addAll(map1,map2,buoymap1,buoymap2,treasuremap1,treasuremap2);
+		this.getChildren().addAll(map1,map2);
 	}
 	
 	private void initRestOfGUIStuff() {
@@ -451,8 +447,6 @@ public class WorldView extends AnchorPane implements de.unisaarland.cs.st.pirate
 		
 		Insets insets = new Insets(65,0,0,65*0.6);
 		map2.paddingProperty().set(insets);
-		buoymap2.paddingProperty().set(insets);
-		treasuremap2.paddingProperty().set(insets);
 		
 	}
 	

@@ -246,7 +246,6 @@ public class SetUp extends GridPane {
 		gameStage.setScene(gameScene);
 		gameStage.setWidth(1000);
 		gameStage.setHeight(800);
-		gameStage.setScene(new Scene(game));
 		ownStage.hide();
 		gameStage.showAndWait();
 		
