@@ -241,8 +241,8 @@ public class SetUp extends GridPane {
 		}
 		//TODO load stage here and don't let controller play
 		Stage gameStage = new Stage();
-		Game game = new Game(gameStage, this.ownStage, controller, wv);
-		Scene gameScene = new Scene(game);
+		Game game = new Game(gameStage, this.ownStage, controller, wv, delay);
+		Scene gameScene = new Scene(game, 1000, 800);
 		gameStage.setScene(gameScene);
 		gameStage.setWidth(1000);
 		gameStage.setHeight(800);
