@@ -277,13 +277,18 @@ public void initializeSimulator() throws IOException{
 	 * @param
 	 * @return void
 	 */
-public void play(){
+	public void play(){
+		play(0);
+	}
+	
+public void play(long delay){
 	//acquire a lock so we only run one play loop at a time.
 	try {
 		sema.acquire();
 	} catch (InterruptedException e1) {
 		return;
 	}
+	System.out.println("playing now");
 	//let the simulator do one step at a time, stop if an UnsupportedOperationException came (reached maxCycle)
 	//or if we got interrupted
 	//pause with pause()-Method.
@@ -294,8 +299,16 @@ public void play(){
 		}catch(UnsupportedOperationException e){
 			ende = true;
 		}
-		
+		try {
+		Thread.sleep(delay);
+		}
+		catch(InterruptedException e) {
+			System.out.println("interrupted, aborting now");
+			sema.release();
+			return;
+		}
 	}
+	System.out.println("done");
 	//release the semaphor as we stopped playing.
 	sema.release();
 }
@@ -312,6 +325,7 @@ public void step() throws UnsupportedOperationException{
 	 */
 synchronized public void pause(){
 	paused = true;
+	System.out.println("paused");
 	
 }
 
@@ -321,6 +335,7 @@ synchronized public void pause(){
 	 */
 synchronized public void unpause(){
 	paused = false;
+	System.out.println("unpaused");
 	notifyAll();
 }
 
@@ -329,6 +344,7 @@ synchronized public void unpause(){
  * @return
  */
 synchronized private boolean waitForUnpaused(){
+	System.out.println("waiting");
 	while(paused){
 		try {
 			wait();
@@ -336,6 +352,7 @@ synchronized private boolean waitForUnpaused(){
 			return false;
 		}
 	}
+	System.out.println("finished waiting");
 	return true;
 }
 

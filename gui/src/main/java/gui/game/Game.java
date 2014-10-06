@@ -19,10 +19,11 @@ public class Game extends GridPane {
 	private Stage setUp;
 	private boolean paused;
 	private boolean fastMode;
-	private Controller controller;
+	private final Controller controller;
 	private WorldView wv;
 	private int cycleCount;
 	private int delay;
+	private Thread controllerThread;
 
 	@FXML
 	private Button playPauseButton;
@@ -39,7 +40,7 @@ public class Game extends GridPane {
 	@FXML
 	private Slider speedSlider;
 
-	public Game(Stage ownStage, Stage setUp, Controller controller, WorldView wv, int delay) {
+	public Game(Stage ownStage, Stage setUp, Controller contr, WorldView wv, final int delay) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("Game.fxml"));
 		loader.setController(this);
 		loader.setRoot(this);
@@ -51,7 +52,7 @@ public class Game extends GridPane {
 			throw new UnsupportedOperationException(e.getCause());
 		}
 		this.fastMode = true;
-		this.controller = controller;
+		this.controller = contr;
 		this.ownStage = ownStage;
 		this.ownStage.setTitle("Simulator: running");
 		this.setUp = setUp;
@@ -62,18 +63,30 @@ public class Game extends GridPane {
 		this.add(wv, 1, 1);
 		this.cycleCounter.setText("Cycle count:\n"+cycleCount);
 		playPauseButton.setText("Play");
+		controller.pause();
+		Runnable contrRun = new Runnable() {
+			
+			public void run() {
+				controller.play((long)delay);
+			}
+		};
+		controllerThread = new Thread(contrRun);
+		controllerThread.start();
 	}
 
 	@FXML
 	void playPauseButtonClicked(ActionEvent event) {
 		if(paused) {
+			this.paused = false;
 			this.playPauseButton.setText("Pause");
-			paused = false;
-			runGame();
+			System.out.println("unpausing");
+			controller.unpause();
 		}
 		else {
+			this.paused = true;
 			this.playPauseButton.setText("Play");
-			paused = true;
+			System.out.println("pausing");
+			controller.pause();
 		}
 	}
 
@@ -97,7 +110,7 @@ public class Game extends GridPane {
 
 	@FXML
 	void stopButtonClicked(ActionEvent event) {
-
+		controllerThread.interrupt();
 	}
 
 	public boolean fastMode() {
