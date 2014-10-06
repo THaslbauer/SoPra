@@ -26,7 +26,7 @@
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="5.0">
                <children>
                   <Button fx:id="playPauseButton" mnemonicParsing="false" onAction="#playPauseButtonClicked" prefHeight="40.0" prefWidth="133.0" text="Button" />
-                  <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopButtonClicked" prefHeight="40.0" prefWidth="133.0" text="Button" />
+                  <Button fx:id="stopButton" mnemonicParsing="false" onAction="#stopButtonClicked" prefHeight="40.0" prefWidth="133.0" text="Stop / Abort" />
                </children>
             </VBox>
          </children>
